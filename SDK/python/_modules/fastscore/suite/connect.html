@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fastscore.suite.connect &#8212; FastScore SDK 1.6.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.6.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head>
+  <body role="document">
+      <div class="header" role="banner"><h1 class="heading"><a href="../../../index.html">
+          <span>FastScore SDK 1.6.0 documentation</span></a></h1>
+        <h2 class="heading"><span>fastscore.suite.connect</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for fastscore.suite.connect</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">..v1</span> <span class="k">import</span> <span class="n">configuration</span>
+<span class="kn">from</span> <span class="nn">..v2</span> <span class="k">import</span> <span class="n">configuration</span> <span class="k">as</span> <span class="n">configuration2</span>
+<span class="kn">from</span> <span class="nn">..v1</span> <span class="k">import</span> <span class="n">ConnectApi</span>
+<span class="kn">from</span> <span class="nn">..v2</span> <span class="k">import</span> <span class="n">ConnectApi</span> <span class="k">as</span> <span class="n">ConnectApi2</span>
+<span class="kn">from</span> <span class="nn">..v1</span> <span class="k">import</span> <span class="n">LoginApi</span>
+<span class="kn">from</span> <span class="nn">..v1.rest</span> <span class="k">import</span> <span class="n">ApiException</span>
+
+<span class="kn">from</span> <span class="nn">.instance</span> <span class="k">import</span> <span class="n">InstanceBase</span>
+<span class="kn">from</span> <span class="nn">.model_manage</span> <span class="k">import</span> <span class="n">ModelManage</span>
+<span class="kn">from</span> <span class="nn">.engine</span> <span class="k">import</span> <span class="n">Engine</span>
+<span class="kn">from</span> <span class="nn">..errors</span> <span class="k">import</span> <span class="n">FastScoreError</span>
+
+<span class="kn">from</span> <span class="nn">..pneumo</span> <span class="k">import</span> <span class="n">PneumoSock</span>
+<span class="kn">import</span> <span class="nn">six</span>
+<span class="k">if</span> <span class="n">six</span><span class="o">.</span><span class="n">PY2</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urlparse</span> <span class="k">import</span> <span class="n">urlparse</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">urlparse</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="c1">#configuration.debug = True</span>
+
+<span class="k">if</span> <span class="n">six</span><span class="o">.</span><span class="n">PY2</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib</span> <span class="k">import</span> <span class="n">quote</span><span class="p">,</span> <span class="n">unquote</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">quote</span><span class="p">,</span> <span class="n">unquote</span>
+
+<span class="kn">import</span> <span class="nn">urllib3</span>
+<span class="n">urllib3</span><span class="o">.</span><span class="n">disable_warnings</span><span class="p">(</span><span class="n">urllib3</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">InsecureRequestWarning</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">set_auth_cookie</span><span class="p">(</span><span class="n">auth_secret</span><span class="p">,</span> <span class="n">client1</span><span class="p">,</span> <span class="n">client2</span><span class="p">):</span>
+    <span class="n">cookie</span> <span class="o">=</span> <span class="s1">&#39;connect.sid=&#39;</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="n">auth_secret</span><span class="p">)</span>
+    <span class="n">client1</span><span class="o">.</span><span class="n">cookie</span> <span class="o">=</span> <span class="n">cookie</span>
+    <span class="n">client2</span><span class="o">.</span><span class="n">cookie</span> <span class="o">=</span> <span class="n">cookie</span>
+
+<span class="k">def</span> <span class="nf">unset_auth_cookie</span><span class="p">(</span><span class="n">client1</span><span class="p">,</span> <span class="n">client2</span><span class="p">):</span>
+    <span class="n">client1</span><span class="o">.</span><span class="n">cookie</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">client2</span><span class="o">.</span><span class="n">cookie</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Connect"><a class="viewcode-back" href="../../../api.html#fastscore.suite.Connect">[docs]</a><span class="k">class</span> <span class="nc">Connect</span><span class="p">(</span><span class="n">InstanceBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An instance of a Connect service.</span>
+
+<span class="sd">    Typically, an interaction with FastScore starts with:</span>
+
+<span class="sd">    &gt;&gt;&gt; from fastscore.suite import Connect</span>
+<span class="sd">    &gt;&gt;&gt; connect = Connect(&quot;https://localhost:8000&quot;)</span>
+
+<span class="sd">    Afterwards, you can use &#39;connect&#39; to access other FastScore instances.</span>
+<span class="sd">    For example:</span>
+
+<span class="sd">    &gt;&gt;&gt; engine = connect.lookup(&#39;engine&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proxy_prefix</span><span class="p">,</span> <span class="n">auth_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param proxy_prefix: URL of the FastScore proxy endpoint</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;://&#39;</span> <span class="ow">in</span> <span class="n">proxy_prefix</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Proxy prefix must be an URL, e.g. https://dashboard:8000&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">proxy_prefix</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;https:&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Proxy prefix must use HTTPS scheme&quot;</span><span class="p">)</span>
+
+        <span class="c1"># https://localhost:8000/api/1/service</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">configuration</span><span class="o">.</span><span class="n">host</span><span class="p">)</span>
+        <span class="n">base_path</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">path</span>
+        <span class="n">configuration</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">proxy_prefix</span> <span class="o">+</span> <span class="n">base_path</span>
+        <span class="n">configuration</span><span class="o">.</span><span class="n">verify_ssl</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># REST API v2</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">configuration2</span><span class="o">.</span><span class="n">host</span><span class="p">)</span>
+        <span class="n">base_path</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">path</span>
+        <span class="n">configuration2</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">proxy_prefix</span> <span class="o">+</span> <span class="n">base_path</span>
+        <span class="n">configuration2</span><span class="o">.</span><span class="n">verify_ssl</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">Connect</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="s1">&#39;connect&#39;</span><span class="p">,</span> <span class="s1">&#39;connect&#39;</span><span class="p">,</span> <span class="n">ConnectApi</span><span class="p">(),</span> <span class="n">ConnectApi2</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_prefix</span> <span class="o">=</span> <span class="n">proxy_prefix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_resolved</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_preferred</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_target</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_auth_secret</span> <span class="o">=</span> <span class="n">auth_secret</span>
+        <span class="k">if</span> <span class="n">auth_secret</span><span class="p">:</span>
+            <span class="n">set_auth_cookie</span><span class="p">(</span><span class="n">auth_secret</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">api_client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg2</span><span class="o">.</span><span class="n">api_client</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pneumo</span> <span class="o">=</span>  <span class="n">Connect</span><span class="o">.</span><span class="n">PneumoProxy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets/Sets the target instance. When set, the target instance also</span>
+<span class="sd">        becomes the preferred instance of the service it represents.</span>
+
+<span class="sd">        &gt;&gt;&gt; engine = connect.get(&#39;engine-3&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; connect.target = engine</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target</span>
+
+    <span class="nd">@target</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prefer</span><span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">api</span><span class="p">,</span> <span class="n">instance</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_target</span> <span class="o">=</span> <span class="n">instance</span>
+
+    <span class="k">class</span> <span class="nc">PneumoProxy</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connect</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connect</span> <span class="o">=</span> <span class="n">connect</span>
+
+        <span class="k">def</span> <span class="nf">socket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">PneumoSock</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connect</span><span class="o">.</span><span class="n">_proxy_prefix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Unable to open Pneumo socket&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">history</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asjson</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">history</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connect</span><span class="o">.</span><span class="n">swg2</span><span class="o">.</span><span class="n">pneumo_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connect</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">asjson</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">history</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">PneumoSock</span><span class="o">.</span><span class="n">makemsg</span><span class="p">,</span> <span class="n">history</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Unable to retrieve Pneumo history&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pneumo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Access Pneumo messages.</span>
+
+<span class="sd">        &gt;&gt;&gt; pneumo = connect.pneumo.socket()</span>
+<span class="sd">        &gt;&gt;&gt; pneumo.recv()</span>
+<span class="sd">        &gt;&gt;&gt; pneumo.close()</span>
+
+<span class="sd">        &gt;&gt;&gt; connect.pneumo.history()</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pneumo</span>
+
+<div class="viewcode-block" id="Connect.lookup"><a class="viewcode-back" href="../../../api.html#fastscore.suite.Connect.lookup">[docs]</a>    <span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves an preferred/default instance of a named service.</span>
+
+<span class="sd">        &gt;&gt;&gt; engine = connect.lookup(&#39;engine&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; engine.name</span>
+<span class="sd">        &#39;engine-1&#39;</span>
+
+<span class="sd">        :param sname: a FastScore service name, e.g. &#39;model-manage&#39;.</span>
+<span class="sd">        :returns: a FastScore instance object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">sname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferred</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preferred</span><span class="p">[</span><span class="n">sname</span><span class="p">])</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">xx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">connect_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">api</span><span class="o">=</span><span class="n">sname</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot retrieve fleet info&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xx</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">health</span> <span class="o">==</span> <span class="s1">&#39;ok&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="s2">&quot;No instances of service &#39;</span><span class="si">%s</span><span class="s2">&#39; configured&quot;</span> <span class="o">%</span> <span class="n">sname</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; instance is unhealthy&quot;</span> <span class="o">%</span> <span class="n">xx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="s2">&quot;All </span><span class="si">%d</span><span class="s2"> instances of service &#39;</span><span class="si">%s</span><span class="s2">&#39; are unhealthy&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="n">m</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Connect.get"><a class="viewcode-back" href="../../../api.html#fastscore.suite.Connect.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves a (cached) reference to the named instance.</span>
+
+<span class="sd">        &gt;&gt;&gt; mm = connect.get(&#39;model-manage-1&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; mm.name</span>
+<span class="sd">        &#39;model-manage-1&#39;</span>
+
+<span class="sd">        :param name: a FastScore instance name.</span>
+<span class="sd">        :returns: a FastScore instance object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;connect&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolved</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolved</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">xx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">connect_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot retrieve &#39;</span><span class="si">%s</span><span class="s2">&#39; instance info&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">xx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">health</span> <span class="o">==</span> <span class="s1">&#39;ok&#39;</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">xx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">instance</span> <span class="o">=</span> <span class="n">Connect</span><span class="o">.</span><span class="n">make_instance</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">api</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_resolved</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">instance</span>
+            <span class="k">return</span> <span class="n">instance</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="s2">&quot;Instance &#39;</span><span class="si">%s</span><span class="s2">&#39; not found&quot;</span> <span class="o">%</span> <span class="n">name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="s2">&quot;Instance &#39;</span><span class="si">%s</span><span class="s2">&#39; is unhealthy&quot;</span> <span class="o">%</span> <span class="n">name</span>
+        <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="n">m</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Connect.prefer"><a class="viewcode-back" href="../../../api.html#fastscore.suite.Connect.prefer">[docs]</a>    <span class="k">def</span> <span class="nf">prefer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Marks the named instance as preferred for a given service.</span>
+
+<span class="sd">        &gt;&gt;&gt; connect.prefer(&#39;engine&#39;, &#39;engine-3&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; engine = connect.lookup(&#39;engine&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; engine.name</span>
+<span class="sd">        &#39;engine-3&#39;</span>
+
+<span class="sd">        :param sname: a FastScore service name, e.g. &#39;model-manage&#39;.</span>
+<span class="sd">        :param name: the name of preferred instance of the given service.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_preferred</span><span class="p">[</span><span class="n">sname</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span></div>
+
+<div class="viewcode-block" id="Connect.login"><a class="viewcode-back" href="../../../api.html#fastscore.suite.Connect.login">[docs]</a>    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Login to FastScore.</span>
+
+<span class="sd">        :param username: a user name.</span>
+<span class="sd">        :param password: a password.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">save</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">api_client</span><span class="o">.</span><span class="n">host</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">unset_auth_cookie</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">api_client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg2</span><span class="o">.</span><span class="n">api_client</span><span class="p">)</span>
+            <span class="n">login_api</span> <span class="o">=</span> <span class="n">LoginApi</span><span class="p">()</span>
+            <span class="n">login_api</span><span class="o">.</span><span class="n">api_client</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_prefix</span>
+            <span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">headers</span><span class="p">)</span> <span class="o">=</span> <span class="n">login_api</span><span class="o">.</span><span class="n">login_post_with_http_info</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">cookie</span> <span class="o">=</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;set-cookie&#39;</span><span class="p">]</span>
+            <span class="c1"># connect.sid=s%3A_co96d1eLi2Iwu2JJATxPbhBlVaFSGV4.G53EHnUrubrL87LFEKiSArJ%2BIN05FbwRVRGGkGS6ysM;</span>
+            <span class="n">auth_secret</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">cookie</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">api_client</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">save</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_auth_secret</span> <span class="o">=</span> <span class="n">auth_secret</span>
+            <span class="n">set_auth_cookie</span><span class="p">(</span><span class="n">auth_secret</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">api_client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg2</span><span class="o">.</span><span class="n">api_client</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">api_client</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">save</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Access denied&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Connect.configure"><a class="viewcode-back" href="../../../api.html#fastscore.suite.Connect.configure">[docs]</a>    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the FastScore configuration.</span>
+
+<span class="sd">        &gt;&gt;&gt; with open(&#39;config.yaml&#39;) as f:</span>
+<span class="sd">        &gt;&gt;&gt;   connect.configure(yaml.load(f))</span>
+<span class="sd">        False</span>
+
+<span class="sd">        :param config: a dict describing a FastScore configuration.</span>
+<span class="sd">        :returns: True, if an existing configuration has been replaced and False,</span>
+<span class="sd">            otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Configuration must be a dictionary&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="n">status</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">config_put_with_http_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> \
+                <span class="n">config</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">config</span><span class="p">),</span> \
+                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/x-yaml&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">204</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Unable to set FastScore configuration&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Connect.get_config"><a class="viewcode-back" href="../../../api.html#fastscore.suite.Connect.get_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the current FastScore configuration.</span>
+
+<span class="sd">        &gt;&gt;&gt; connect.config(&#39;db&#39;)</span>
+<span class="sd">        {</span>
+<span class="sd">          &#39;username&#39;: &#39;root&#39;,</span>
+<span class="sd">          &#39;host&#39;: &#39;database&#39;,</span>
+<span class="sd">          &#39;password&#39;: &#39;root&#39;,</span>
+<span class="sd">          &#39;type&#39;: &#39;mysql&#39;,</span>
+<span class="sd">          &#39;port&#39;: 3306</span>
+<span class="sd">        }</span>
+
+<span class="sd">        :param section: gets only the named section of the configuration</span>
+<span class="sd">        :returns: a dict with the FastScore configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">section</span><span class="p">:</span>
+                <span class="c1"># Swagger does not check parameter type</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Section must be a string&quot;</span><span class="p">)</span>
+                <span class="n">conf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">config_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> \
+                    <span class="n">q</span><span class="o">=</span><span class="n">section</span><span class="p">,</span> \
+                    <span class="n">accept</span><span class="o">=</span><span class="s1">&#39;application/x-yaml&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">conf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">config_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> \
+                    <span class="n">accept</span><span class="o">=</span><span class="s1">&#39;application/x-yaml&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">conf</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ApiException</span><span class="p">)</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span> <span class="c1">## not yet configured</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot retrieve configuration&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Connect.fleet"><a class="viewcode-back" href="../../../api.html#fastscore.suite.Connect.fleet">[docs]</a>    <span class="k">def</span> <span class="nf">fleet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves metadata for all running instances.</span>
+
+<span class="sd">        :returns: an array of dicts describing running FastScore instances. Each</span>
+<span class="sd">            dict contains the following fields:</span>
+
+<span class="sd">            * **id**: the internal instance id (do not use)</span>
+<span class="sd">            * **api**: the service name, e.g. &#39;model-manage&#39;</span>
+<span class="sd">            * **release**: the instance release, e.g &#39;1.5&#39;</span>
+<span class="sd">            * **built_on**: the human-readable build date and time</span>
+<span class="sd">            * **host**: the host name of the instance REST API</span>
+<span class="sd">            * **port**: the port of the instance REST API</span>
+<span class="sd">            * **health**: the current health status of the instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">connect_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot retrieve fleet info&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">make_instance</span><span class="p">(</span><span class="n">api</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">api</span> <span class="o">==</span> <span class="s1">&#39;model-manage&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ModelManage</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">api</span> <span class="o">==</span> <span class="s1">&#39;engine&#39;</span>
+            <span class="k">return</span> <span class="n">Engine</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Connect.dump"><a class="viewcode-back" href="../../../api.html#fastscore.suite.Connect.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">savefile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the Connect parameters to a file.</span>
+
+<span class="sd">        &gt;&gt;&gt; connect.dump(&quot;.fastscore&quot;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cap</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;proxy-prefix&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_prefix</span><span class="p">,</span>
+                <span class="s1">&#39;preferred&#39;</span><span class="p">:</span>    <span class="bp">self</span><span class="o">.</span><span class="n">_preferred</span><span class="p">,</span>
+                <span class="s1">&#39;target-name&#39;</span><span class="p">:</span>  <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;auth-secret&#39;</span><span class="p">:</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_auth_secret</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">savefile</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">cap</span><span class="p">,</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">f</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Unable to save Connect info&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Connect.load"><a class="viewcode-back" href="../../../api.html#fastscore.suite.Connect.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">savefile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recreates a Connect instance from a file.</span>
+
+<span class="sd">        &gt;&gt;&gt; connect = Connect.load(&quot;.fastscore&quot;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">savefile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">cap</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="n">auth_secret</span> <span class="o">=</span> <span class="n">cap</span><span class="p">[</span><span class="s1">&#39;auth-secret&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;auth-secret&#39;</span> <span class="ow">in</span> <span class="n">cap</span> <span class="k">else</span> <span class="kc">None</span>
+                <span class="n">connect</span> <span class="o">=</span> <span class="n">Connect</span><span class="p">(</span><span class="n">cap</span><span class="p">[</span><span class="s1">&#39;proxy-prefix&#39;</span><span class="p">],</span> <span class="n">auth_secret</span><span class="p">)</span>
+                <span class="n">connect</span><span class="o">.</span><span class="n">_preferred</span> <span class="o">=</span> <span class="n">cap</span><span class="p">[</span><span class="s1">&#39;preferred&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">cap</span><span class="p">[</span><span class="s1">&#39;target-name&#39;</span><span class="p">]:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">connect</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cap</span><span class="p">[</span><span class="s1">&#39;target-name&#39;</span><span class="p">])</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="k">pass</span>
+                <span class="k">return</span> <span class="n">connect</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Unable to recreate a Connect instance&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span></div></div>
+</pre></div>
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Open Data Group.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

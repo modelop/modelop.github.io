@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fastscore.suite.model_manage &#8212; FastScore SDK 1.6.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.6.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head>
+  <body role="document">
+      <div class="header" role="banner"><h1 class="heading"><a href="../../../index.html">
+          <span>FastScore SDK 1.6.0 documentation</span></a></h1>
+        <h2 class="heading"><span>fastscore.suite.model_manage</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for fastscore.suite.model_manage</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">.instance</span> <span class="k">import</span> <span class="n">InstanceBase</span>
+<span class="kn">from</span> <span class="nn">..model</span> <span class="k">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelMetadata</span>
+<span class="kn">from</span> <span class="nn">..schema</span> <span class="k">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">SchemaMetadata</span>
+<span class="kn">from</span> <span class="nn">..stream</span> <span class="k">import</span> <span class="n">Stream</span><span class="p">,</span> <span class="n">StreamMetadata</span>
+<span class="kn">from</span> <span class="nn">..sensor</span> <span class="k">import</span> <span class="n">Sensor</span><span class="p">,</span> <span class="n">SensorMetadata</span>
+<span class="kn">from</span> <span class="nn">..errors</span> <span class="k">import</span> <span class="n">FastScoreError</span>
+<span class="kn">from</span> <span class="nn">..v1.rest</span> <span class="k">import</span> <span class="n">ApiException</span>
+
+<span class="kn">from</span> <span class="nn">..constants</span> <span class="k">import</span> <span class="n">MODEL_CONTENT_TYPES</span>
+
+<span class="kn">from</span> <span class="nn">..v1</span> <span class="k">import</span> <span class="n">ModelManageApi</span>
+<span class="kn">from</span> <span class="nn">..v2</span> <span class="k">import</span> <span class="n">ModelManageApi</span> <span class="k">as</span> <span class="n">ModelManageApi2</span>
+
+<span class="kn">from</span> <span class="nn">.secrets</span> <span class="k">import</span> <span class="n">hide</span>
+
+<div class="viewcode-block" id="ModelManage"><a class="viewcode-back" href="../../../api.html#fastscore.suite.ModelManage">[docs]</a><span class="k">class</span> <span class="nc">ModelManage</span><span class="p">(</span><span class="n">InstanceBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An instance of a Model Manage service. Use :class:`.Connect` to create a</span>
+<span class="sd">    ModelManage instance:</span>
+
+<span class="sd">    &gt;&gt;&gt; mm = connect.lookup(&#39;model-manage&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">ModelBag</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manage</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mm</span> <span class="o">=</span> <span class="n">model_manage</span>
+
+        <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">model_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot list models&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">model_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">_return</span><span class="o">=</span><span class="s1">&#39;type&#39;</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">ModelMetadata</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
+
+        <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="p">(</span><span class="n">source</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">headers</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">model_get_with_http_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ApiException</span><span class="p">)</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span> <span class="c1"># less scary</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Model &#39;</span><span class="si">%s</span><span class="s2">&#39; not found&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot retrieve &#39;</span><span class="si">%s</span><span class="s2">&#39; model&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+            <span class="n">ct</span> <span class="o">=</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;content-type&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">mtype</span><span class="p">,</span><span class="n">ct1</span> <span class="ow">in</span> <span class="n">MODEL_CONTENT_TYPES</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">ct1</span> <span class="o">==</span> <span class="n">ct</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">Model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mtype</span><span class="o">=</span><span class="n">mtype</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">model_manage</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Unexpected model MIME type &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">ct</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">what</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Model assignment not allowed (use update() method)&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">model_delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ApiException</span><span class="p">)</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span> <span class="c1"># less scary</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Model &#39;</span><span class="si">%s</span><span class="s2">&#39; not found&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot remove model &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">SchemaBag</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manage</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mm</span> <span class="o">=</span> <span class="n">model_manage</span>
+
+        <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">schema_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot list schemas&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">schema_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+                    <span class="k">yield</span> <span class="n">SchemaMetadata</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot iterate schemas&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">schema_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ApiException</span><span class="p">)</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Schema &#39;</span><span class="si">%s</span><span class="s2">&#39; not found&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot retrieve &#39;</span><span class="si">%s</span><span class="s2">&#39; schema&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Schema</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">model_manage</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">what</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Schema assignment not allowed (use update() method)&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">schema_delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ApiException</span><span class="p">)</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Schema &#39;</span><span class="si">%s</span><span class="s2">&#39; not found&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot remove schema &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">StreamBag</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manage</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mm</span> <span class="o">=</span> <span class="n">model_manage</span>
+
+        <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">stream_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot list streams&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">stream_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">StreamMetadata</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">desc</span> <span class="o">=</span> <span class="n">hide</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">stream_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ApiException</span><span class="p">)</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Stream &#39;</span><span class="si">%s</span><span class="s2">&#39; not found&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot retrieve &#39;</span><span class="si">%s</span><span class="s2">&#39; stream&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Stream</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="n">model_manage</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">what</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Stream assignment not allowed (use update() method&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">stream_delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ApiException</span><span class="p">)</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Stream &#39;</span><span class="si">%s</span><span class="s2">&#39; not found&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot remove stream &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">SensorBag</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manage</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mm</span> <span class="o">=</span> <span class="n">model_manage</span>
+
+        <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">sensor_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot list sensors&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">sensor_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+                    <span class="k">yield</span> <span class="n">SensorMetadata</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot iterate sensors&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">desc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">sensor_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ApiException</span><span class="p">)</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Sensor &#39;</span><span class="si">%s</span><span class="s2">&#39; not found&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot retrieve &#39;</span><span class="si">%s</span><span class="s2">&#39; sensor&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Sensor</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span> <span class="n">model_manage</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">what</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Sensor assignment not allowed (use update() method&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">sensor_delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ApiException</span><span class="p">)</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Sensor &#39;</span><span class="si">%s</span><span class="s2">&#39; not found&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot remove sensor &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ModelManage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;model-manage&#39;</span><span class="p">,</span> \
+                    <span class="n">ModelManageApi</span><span class="p">(),</span> <span class="n">ModelManageApi2</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_models</span> <span class="o">=</span> <span class="n">ModelManage</span><span class="o">.</span><span class="n">ModelBag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_schemata</span> <span class="o">=</span> <span class="n">ModelManage</span><span class="o">.</span><span class="n">SchemaBag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_streams</span> <span class="o">=</span> <span class="n">ModelManage</span><span class="o">.</span><span class="n">StreamBag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sensors</span> <span class="o">=</span> <span class="n">ModelManage</span><span class="o">.</span><span class="n">SensorBag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A collection of :class:`.Model` objects indexed by model name.</span>
+
+<span class="sd">        &gt;&gt;&gt; mm.models.names()</span>
+<span class="sd">        [u&#39;model-1&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; model = mm.models[&#39;model-1&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; model.mtype</span>
+<span class="sd">        &#39;python&#39;</span>
+<span class="sd">        &gt;&gt;&gt; del mm.models[&#39;model-1&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; mm.models.names()</span>
+<span class="sd">        []</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_models</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">schemata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A collection of :class:`.Schema` objects indexed schema name. The</span>
+<span class="sd">        alternative name for the property is &#39;schemas&#39;.</span>
+
+<span class="sd">        &gt;&gt;&gt; from fastscore import Schema</span>
+<span class="sd">        &gt;&gt;&gt; s = Schema(&#39;schema-1&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; s.source = &#39;{&quot;type&quot;: &quot;string&quot;}&#39;</span>
+<span class="sd">        &gt;&gt;&gt; s.update(mm)</span>
+<span class="sd">        False   # Success; schema created, not updated</span>
+<span class="sd">        &gt;&gt;&gt; mm.schemata.names()</span>
+<span class="sd">        [&#39;schema-1&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; del mm.schemata[&#39;schema-1&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; mm.schemata.names()</span>
+<span class="sd">        []</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schemata</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">schemas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schemata</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">streams</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A collection of :class:`.Stream` objects indexed by stream name.</span>
+
+<span class="sd">        &gt;&gt;&gt; mm.streams.names()</span>
+<span class="sd">        [&#39;demo-1&#39;,&#39;demo-2]</span>
+<span class="sd">        &gt;&gt;&gt; mm.streams[&#39;demo-1&#39;].desc</span>
+<span class="sd">        {u&#39;Description&#39;: u&#39;A demo stream... }</span>
+<span class="sd">        &gt;&gt;&gt; del.strems[&#39;demo-2&#39;]</span>
+<span class="sd">        &gt;&gt; mm.streams.names()</span>
+<span class="sd">        [&#39;demo-1&#39;]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_streams</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sensors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A collection of :class:`.Sensor` objects indexed by sensor name.</span>
+
+<span class="sd">        &gt;&gt;&gt; from fastscore import Sensor</span>
+<span class="sd">        &gt;&gt;&gt; s = Sensor(&#39;sensor-1&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; s.desc = {&#39;tap&#39;: &#39;manifold.input.records.size&#39;,... }</span>
+<span class="sd">        &gt;&gt;&gt; s.update(mm)</span>
+<span class="sd">        False   # Success; sensor created, not updated</span>
+<span class="sd">        &gt;&gt;&gt; mm.sensors.names()</span>
+<span class="sd">        [&#39;sensor-1&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; del mm.sensors[&#39;sensor-1&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; mm.sensors.names()</span>
+<span class="sd">        []</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensors</span>
+
+    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">source</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Model source property not set&quot;</span><span class="p">)</span>
+        <span class="n">ct</span> <span class="o">=</span> <span class="n">MODEL_CONTENT_TYPES</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">mtype</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="n">status</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">model_put_with_http_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="n">ct</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">204</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+           <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot save model &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">save_schema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">schema</span><span class="o">.</span><span class="n">source</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Schema source property not set&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="n">status</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">schema_put_with_http_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">schema</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">204</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+           <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot save schema &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">save_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">stream</span><span class="o">.</span><span class="n">desc</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Stream descriptor property not set&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="n">status</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">stream_put_with_http_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="n">stream</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">stream</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">204</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+           <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot save stream &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">stream</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">save_sensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sensor</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">sensor</span><span class="o">.</span><span class="n">desc</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Sensor descriptor property not set&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="n">status</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">sensor_put_with_http_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="n">sensor</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">sensor</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">204</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+           <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot save sensor &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span></div>
+</pre></div>
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Open Data Group.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>
