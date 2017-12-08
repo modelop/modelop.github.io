@@ -1,0 +1,1148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Developer interface &#8212; FastScore SDK 1.6.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.6.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Unfinished/incomplete" href="dev/todo.html" />
+    <link rel="prev" title="Advanced Usage" href="user/advanced.html" /> 
+  </head>
+  <body role="document">
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>FastScore SDK 1.6.0 documentation</span></a></h1>
+        <h2 class="heading"><span>Developer interface</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="user/advanced.html">Advanced Usage</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="dev/todo.html">Unfinished/incomplete</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="module-fastscore">
+<span id="developer-interface"></span><span id="api"></span><h1>Developer interface<a class="headerlink" href="#module-fastscore" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-fastscore.suite">
+<span id="service-instances"></span><h2>Service instances<a class="headerlink" href="#module-fastscore.suite" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastscore.suite.Connect">
+<em class="property">class </em><code class="descclassname">fastscore.suite.</code><code class="descname">Connect</code><span class="sig-paren">(</span><em>proxy_prefix</em>, <em>auth_secret=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of a Connect service.</p>
+<p>Typically, an interaction with FastScore starts with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">fastscore.suite</span> <span class="k">import</span> <span class="n">Connect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span> <span class="o">=</span> <span class="n">Connect</span><span class="p">(</span><span class="s2">&quot;https://localhost:8000&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Afterwards, you can use &#8216;connect&#8217; to access other FastScore instances.
+For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="fastscore.suite.Connect.active_sensors">
+<code class="descname">active_sensors</code><a class="headerlink" href="#fastscore.suite.Connect.active_sensors" title="Permalink to this definition">¶</a></dt>
+<dd><p>A collection of currently installed sensors indexed by id.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">active_sensors</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">[8]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">active_sensors</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">id</span>
+<span class="go">8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">tap</span>
+<span class="go">manifold.input.records.count</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">uninstall</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">active_sensors</span><span class="o">.</span><span class="n">ids</span><span class="p">()</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Connect.check_health">
+<code class="descname">check_health</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fastscore.suite.Connect.check_health" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves version information from the instance. A successful reply indicates
+that the instance is healthy.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">check_health</span><span class="p">()</span>
+<span class="go">{</span>
+<span class="go">  &#39;id&#39;: &#39;366e5030-d773-49cb-8b28-9b1b9d173c79&#39;,</span>
+<span class="go">  &#39;built_on&#39;: &#39;Thu May 11 12:53:39 UTC 2017&#39;,</span>
+<span class="go">  &#39;release&#39;: &#39;1.5&#39;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Connect.configure">
+<code class="descname">configure</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.configure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the FastScore configuration.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;config.yaml&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="n">connect</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> &#8211; a dict describing a FastScore configuration.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True, if an existing configuration has been replaced and False,
+otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Connect.dump">
+<code class="descname">dump</code><span class="sig-paren">(</span><em>savefile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the Connect parameters to a file.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;.fastscore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Connect.fleet">
+<code class="descname">fleet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.fleet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.fleet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves metadata for all running instances.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">an array of dicts describing running FastScore instances. Each
+dict contains the following fields:<ul class="simple">
+<li><strong>id</strong>: the internal instance id (do not use)</li>
+<li><strong>api</strong>: the service name, e.g. &#8216;model-manage&#8217;</li>
+<li><strong>release</strong>: the instance release, e.g &#8216;1.5&#8217;</li>
+<li><strong>built_on</strong>: the human-readable build date and time</li>
+<li><strong>host</strong>: the host name of the instance REST API</li>
+<li><strong>port</strong>: the port of the instance REST API</li>
+<li><strong>health</strong>: the current health status of the instance.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Connect.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a (cached) reference to the named instance.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;model-manage-1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;model-manage-1&#39;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; a FastScore instance name.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a FastScore instance object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Connect.get_config">
+<code class="descname">get_config</code><span class="sig-paren">(</span><em>section=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.get_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.get_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the current FastScore configuration.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s1">&#39;db&#39;</span><span class="p">)</span>
+<span class="go">{</span>
+<span class="go">  &#39;username&#39;: &#39;root&#39;,</span>
+<span class="go">  &#39;host&#39;: &#39;database&#39;,</span>
+<span class="go">  &#39;password&#39;: &#39;root&#39;,</span>
+<span class="go">  &#39;type&#39;: &#39;mysql&#39;,</span>
+<span class="go">  &#39;port&#39;: 3306</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>section</strong> &#8211; gets only the named section of the configuration</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a dict with the FastScore configuration.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Connect.get_swagger">
+<code class="descname">get_swagger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fastscore.suite.Connect.get_swagger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the Swagger specification of the API supported by the
+instance.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">get_swagger</span><span class="p">()</span>
+<span class="go">{u&#39;info&#39;:...}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="fastscore.suite.Connect.load">
+<em class="property">static </em><code class="descname">load</code><span class="sig-paren">(</span><em>savefile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recreates a Connect instance from a file.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span> <span class="o">=</span> <span class="n">Connect</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;.fastscore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Connect.login">
+<code class="descname">login</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Login to FastScore.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>username</strong> &#8211; a user name.</li>
+<li><strong>password</strong> &#8211; a password.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Connect.lookup">
+<code class="descname">lookup</code><span class="sig-paren">(</span><em>sname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.lookup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves an preferred/default instance of a named service.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;engine-1&#39;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sname</strong> &#8211; a FastScore service name, e.g. &#8216;model-manage&#8217;.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a FastScore instance object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.Connect.pneumo">
+<code class="descname">pneumo</code><a class="headerlink" href="#fastscore.suite.Connect.pneumo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access Pneumo messages.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pneumo</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">pneumo</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pneumo</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pneumo</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">pneumo</span><span class="o">.</span><span class="n">history</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Connect.prefer">
+<code class="descname">prefer</code><span class="sig-paren">(</span><em>sname</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.prefer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.prefer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Marks the named instance as preferred for a given service.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">prefer</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">,</span> <span class="s1">&#39;engine-3&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;engine-3&#39;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sname</strong> &#8211; a FastScore service name, e.g. &#8216;model-manage&#8217;.</li>
+<li><strong>name</strong> &#8211; the name of preferred instance of the given service.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.Connect.tapping_points">
+<code class="descname">tapping_points</code><a class="headerlink" href="#fastscore.suite.Connect.tapping_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of tapping points supported by the instance.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">tapping_points</span>
+<span class="go">[&#39;sys.memory&#39;,... ]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.Connect.target">
+<code class="descname">target</code><a class="headerlink" href="#fastscore.suite.Connect.target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets/Sets the target instance. When set, the target instance also
+becomes the preferred instance of the service it represents.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;engine-3&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">engine</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fastscore.suite.ModelManage">
+<em class="property">class </em><code class="descclassname">fastscore.suite.</code><code class="descname">ModelManage</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/model_manage.html#ModelManage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.ModelManage" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of a Model Manage service. Use <a class="reference internal" href="#fastscore.suite.Connect" title="fastscore.suite.Connect"><code class="xref py py-class docutils literal"><span class="pre">Connect</span></code></a> to create a
+ModelManage instance:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;model-manage&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="fastscore.suite.ModelManage.active_sensors">
+<code class="descname">active_sensors</code><a class="headerlink" href="#fastscore.suite.ModelManage.active_sensors" title="Permalink to this definition">¶</a></dt>
+<dd><p>A collection of currently installed sensors indexed by id.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">active_sensors</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">[8]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">active_sensors</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">id</span>
+<span class="go">8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">tap</span>
+<span class="go">manifold.input.records.count</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">uninstall</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">active_sensors</span><span class="o">.</span><span class="n">ids</span><span class="p">()</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.ModelManage.check_health">
+<code class="descname">check_health</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fastscore.suite.ModelManage.check_health" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves version information from the instance. A successful reply indicates
+that the instance is healthy.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">check_health</span><span class="p">()</span>
+<span class="go">{</span>
+<span class="go">  &#39;id&#39;: &#39;366e5030-d773-49cb-8b28-9b1b9d173c79&#39;,</span>
+<span class="go">  &#39;built_on&#39;: &#39;Thu May 11 12:53:39 UTC 2017&#39;,</span>
+<span class="go">  &#39;release&#39;: &#39;1.5&#39;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.ModelManage.get_swagger">
+<code class="descname">get_swagger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fastscore.suite.ModelManage.get_swagger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the Swagger specification of the API supported by the
+instance.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">get_swagger</span><span class="p">()</span>
+<span class="go">{u&#39;info&#39;:...}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.ModelManage.models">
+<code class="descname">models</code><a class="headerlink" href="#fastscore.suite.ModelManage.models" title="Permalink to this definition">¶</a></dt>
+<dd><p>A collection of <a class="reference internal" href="#fastscore.Model" title="fastscore.Model"><code class="xref py py-class docutils literal"><span class="pre">Model</span></code></a> objects indexed by model name.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">names</span><span class="p">()</span>
+<span class="go">[u&#39;model-1&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s1">&#39;model-1&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">mtype</span>
+<span class="go">&#39;python&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">mm</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s1">&#39;model-1&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">names</span><span class="p">()</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.ModelManage.schemata">
+<code class="descname">schemata</code><a class="headerlink" href="#fastscore.suite.ModelManage.schemata" title="Permalink to this definition">¶</a></dt>
+<dd><p>A collection of <a class="reference internal" href="#fastscore.Schema" title="fastscore.Schema"><code class="xref py py-class docutils literal"><span class="pre">Schema</span></code></a> objects indexed schema name. The
+alternative name for the property is &#8216;schemas&#8217;.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">fastscore</span> <span class="k">import</span> <span class="n">Schema</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="s1">&#39;schema-1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s1">&#39;{&quot;type&quot;: &quot;string&quot;}&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+<span class="go">False   # Success; schema created, not updated</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">schemata</span><span class="o">.</span><span class="n">names</span><span class="p">()</span>
+<span class="go">[&#39;schema-1&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">mm</span><span class="o">.</span><span class="n">schemata</span><span class="p">[</span><span class="s1">&#39;schema-1&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">schemata</span><span class="o">.</span><span class="n">names</span><span class="p">()</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.ModelManage.sensors">
+<code class="descname">sensors</code><a class="headerlink" href="#fastscore.suite.ModelManage.sensors" title="Permalink to this definition">¶</a></dt>
+<dd><p>A collection of <a class="reference internal" href="#fastscore.Sensor" title="fastscore.Sensor"><code class="xref py py-class docutils literal"><span class="pre">Sensor</span></code></a> objects indexed by sensor name.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">fastscore</span> <span class="k">import</span> <span class="n">Sensor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Sensor</span><span class="p">(</span><span class="s1">&#39;sensor-1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;tap&#39;</span><span class="p">:</span> <span class="s1">&#39;manifold.input.records.size&#39;</span><span class="p">,</span><span class="o">...</span> <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+<span class="go">False   # Success; sensor created, not updated</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">sensors</span><span class="o">.</span><span class="n">names</span><span class="p">()</span>
+<span class="go">[&#39;sensor-1&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">mm</span><span class="o">.</span><span class="n">sensors</span><span class="p">[</span><span class="s1">&#39;sensor-1&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">sensors</span><span class="o">.</span><span class="n">names</span><span class="p">()</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.ModelManage.streams">
+<code class="descname">streams</code><a class="headerlink" href="#fastscore.suite.ModelManage.streams" title="Permalink to this definition">¶</a></dt>
+<dd><p>A collection of <a class="reference internal" href="#fastscore.Stream" title="fastscore.Stream"><code class="xref py py-class docutils literal"><span class="pre">Stream</span></code></a> objects indexed by stream name.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">streams</span><span class="o">.</span><span class="n">names</span><span class="p">()</span>
+<span class="go">[&#39;demo-1&#39;,&#39;demo-2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">streams</span><span class="p">[</span><span class="s1">&#39;demo-1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">desc</span>
+<span class="go">{u&#39;Description&#39;: u&#39;A demo stream... }</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span><span class="o">.</span><span class="n">strems</span><span class="p">[</span><span class="s1">&#39;demo-2&#39;</span><span class="p">]</span>
+<span class="go">&gt;&gt; mm.streams.names()</span>
+<span class="go">[&#39;demo-1&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.ModelManage.tapping_points">
+<code class="descname">tapping_points</code><a class="headerlink" href="#fastscore.suite.ModelManage.tapping_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of tapping points supported by the instance.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">tapping_points</span>
+<span class="go">[&#39;sys.memory&#39;,... ]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fastscore.suite.Engine">
+<em class="property">class </em><code class="descclassname">fastscore.suite.</code><code class="descname">Engine</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>An Engine instance.</p>
+<dl class="attribute">
+<dt id="fastscore.suite.Engine.active_model">
+<code class="descname">active_model</code><a class="headerlink" href="#fastscore.suite.Engine.active_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The currently loaded model information.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;model-manage&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">stream</span><span class="o">.</span><span class="n">active_model</span><span class="o">.</span><span class="n">name</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">stream</span><span class="o">.</span><span class="n">active_model</span><span class="o">.</span><span class="n">jets</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An ActiveModelInfo object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.Engine.active_sensors">
+<code class="descname">active_sensors</code><a class="headerlink" href="#fastscore.suite.Engine.active_sensors" title="Permalink to this definition">¶</a></dt>
+<dd><p>A collection of currently installed sensors indexed by id.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">active_sensors</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">[8]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">active_sensors</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">id</span>
+<span class="go">8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">tap</span>
+<span class="go">manifold.input.records.count</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">uninstall</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">active_sensors</span><span class="o">.</span><span class="n">ids</span><span class="p">()</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.Engine.active_streams">
+<code class="descname">active_streams</code><a class="headerlink" href="#fastscore.suite.Engine.active_streams" title="Permalink to this definition">¶</a></dt>
+<dd><p>A collection of active streams indexed by a slot.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;model-manage&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">stream</span><span class="o">.</span><span class="n">active_streams</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Engine.check_health">
+<code class="descname">check_health</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fastscore.suite.Engine.check_health" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves version information from the instance. A successful reply indicates
+that the instance is healthy.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">check_health</span><span class="p">()</span>
+<span class="go">{</span>
+<span class="go">  &#39;id&#39;: &#39;366e5030-d773-49cb-8b28-9b1b9d173c79&#39;,</span>
+<span class="go">  &#39;built_on&#39;: &#39;Thu May 11 12:53:39 UTC 2017&#39;,</span>
+<span class="go">  &#39;release&#39;: &#39;1.5&#39;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Engine.get_swagger">
+<code class="descname">get_swagger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fastscore.suite.Engine.get_swagger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the Swagger specification of the API supported by the
+instance.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">get_swagger</span><span class="p">()</span>
+<span class="go">{u&#39;info&#39;:...}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Engine.input">
+<code class="descname">input</code><span class="sig-paren">(</span><em>data</em>, <em>slot</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write data to a REST stream attached to the slot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; The data to write to the stream.</li>
+<li><strong>slot</strong> &#8211; The stream slot.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Engine.load_model">
+<code class="descname">load_model</code><span class="sig-paren">(</span><em>model</em>, <em>force_inline=False</em>, <em>embedded_schemas={}</em>, <em>dry_run=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a model into this engine.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> &#8211; A Model object.</li>
+<li><strong>force_inline</strong> &#8211; If True, force all attachments to load inline. If False,
+attachments may be loaded by reference.</li>
+<li><strong>embedded_schemas</strong> &#8211; A dict of schemas to send with the request to stop
+the Engine from contacting Model Manage when resolving schemas.</li>
+<li><strong>dry_run</strong> &#8211; If True, do not actually load the model, check for
+errors only.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Engine.output">
+<code class="descname">output</code><span class="sig-paren">(</span><em>slot</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads data from the REST stream attached to the slot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>slot</strong> &#8211; The stream slot.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Engine.pause">
+<code class="descname">pause</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.pause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.pause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pauses the engine. The result depends on the current state of the
+engine. A running engine changes its state to PAUSED. An initializing
+engine will pause upon startup. In all other states the operation is
+ignored.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.Engine.policy">
+<code class="descname">policy</code><a class="headerlink" href="#fastscore.suite.Engine.policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set/get the import policy.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;engine-1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;import&#39;</span><span class="p">,</span> <span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">engine</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;import&#39;</span><span class="p">,</span> <span class="s1">&#39;python&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Engine.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the engine. A loaded model is unloaded. All open streams are
+closed. The engine changes its state to INIT.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Engine.scale">
+<code class="descname">scale</code><span class="sig-paren">(</span><em>factor</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the number of running model instances.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.Engine.state">
+<code class="descname">state</code><a class="headerlink" href="#fastscore.suite.Engine.state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current state of the engine.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">&#8216;INIT&#8217;, &#8216;RUNNING&#8217;, &#8216;PAUSED&#8217;, &#8216;FINISHING&#8217;, or &#8216;FINISHED&#8217;.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.suite.Engine.tapping_points">
+<code class="descname">tapping_points</code><a class="headerlink" href="#fastscore.suite.Engine.tapping_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of tapping points supported by the instance.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">tapping_points</span>
+<span class="go">[&#39;sys.memory&#39;,... ]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Engine.unpause">
+<code class="descname">unpause</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.unpause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.unpause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpauses the engine.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.suite.Engine.verify_data">
+<code class="descname">verify_data</code><span class="sig-paren">(</span><em>sid</em>, <em>rec</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.verify_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.verify_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify schema against a prepared schema.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sid</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The schema id.</li>
+<li><strong>rec</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The data record to verify.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastscore.FastScoreError">
+<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">FastScoreError</code><span class="sig-paren">(</span><em>message</em>, <em>caused_by=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/errors.html#FastScoreError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.FastScoreError" title="Permalink to this definition">¶</a></dt>
+<dd><p>A FastScore exception.</p>
+<p>SDK functions throw only FastScoreError exceptions. An SDK function
+either succeeds or throws an exception. The return value of a SDK function
+is always valid.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="pneumo">
+<h2>Pneumo<a class="headerlink" href="#pneumo" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastscore.PneumoSock">
+<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">PneumoSock</code><span class="sig-paren">(</span><em>proxy_prefix</em>, <em>timeout=None</em>, <em>src=None</em>, <em>type=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/pneumo.html#PneumoSock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.PneumoSock" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Pneumo websocket.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pneumo</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">pneumo</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pneumo</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+<span class="go">LogMsg(src=..., timestamp=..., ...)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="fastscore.PneumoSock.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/pneumo.html#PneumoSock.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.PneumoSock.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the Pneumo socket.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.PneumoSock.recv">
+<code class="descname">recv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/pneumo.html#PneumoSock.recv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.PneumoSock.recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receives the next Pneumo message.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="models">
+<h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastscore.Model">
+<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>name</em>, <em>mtype='python'</em>, <em>source=None</em>, <em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an analytic model. A model can be created directly:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">fastscore</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="s1">&#39;model-1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">mtype</span> <span class="o">=</span> <span class="s1">&#39;python&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s1">&#39;...&#39;</span>
+</pre></div>
+</div>
+<p>Or, retrieved from a Model Manage instance:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;model-manage&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s1">&#39;model-1&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>A directly-created model must be saved to make attachment and snapshot
+manipulation functions available:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;model-manage&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">names</span><span class="p">()</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="fastscore.Model.attachments">
+<code class="descname">attachments</code><a class="headerlink" href="#fastscore.Model.attachments" title="Permalink to this definition">¶</a></dt>
+<dd><p>A collection of model attachments. See <a class="reference internal" href="#fastscore.model.Attachment" title="fastscore.model.Attachment"><code class="xref py py-class docutils literal"><span class="pre">Attachment</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.Model.deploy">
+<code class="descname">deploy</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/model.html#Model.deploy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Model.deploy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deploy this model to an engine.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>engine</strong> &#8211; The Engine instance to use.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.Model.mtype">
+<code class="descname">mtype</code><a class="headerlink" href="#fastscore.Model.mtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>A model type:</p>
+<ul class="simple">
+<li><strong>pfa-json</strong>: a PFA model in JSON format.</li>
+<li><strong>pfa-yaml</strong>: a PFA model in YAML format.</li>
+<li><strong>pfa-pretty</strong>: a PrettyPFA model.</li>
+<li><strong>h2o-java</strong>: an H20 model.</li>
+<li><strong>python</strong>: a Python model.</li>
+<li><strong>python3</strong>: a Python 3 model.</li>
+<li><strong>R</strong>: an R model.</li>
+<li><strong>java</strong>: a Java model.</li>
+<li><strong>c</strong>: a C model.</li>
+<li><strong>octave</strong>: an Octave model.</li>
+<li><strong>sas</strong>: a SAS model.</li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.Model.name">
+<code class="descname">name</code><a class="headerlink" href="#fastscore.Model.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A model name, e.g. &#8216;model-1&#8217;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.Model.source">
+<code class="descname">source</code><a class="headerlink" href="#fastscore.Model.source" title="Permalink to this definition">¶</a></dt>
+<dd><p>The source code of the model.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="attachments">
+<h2>Attachments<a class="headerlink" href="#attachments" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastscore.model.Attachment">
+<em class="property">class </em><code class="descclassname">fastscore.model.</code><code class="descname">Attachment</code><span class="sig-paren">(</span><em>name</em>, <em>atype=None</em>, <em>datafile=None</em>, <em>datasize=None</em>, <em>model=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/attachment.html#Attachment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.model.Attachment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a model attachment. An attachment can be created directly but it
+must (ultimately) associated with the model:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">att</span> <span class="o">=</span> <span class="n">fastscore</span><span class="o">.</span><span class="n">Attachment</span><span class="p">(</span><span class="s1">&#39;att-1&#39;</span><span class="p">,</span> <span class="n">datafile</span><span class="o">=</span><span class="s1">&#39;/tmp/att1.zip&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s1">&#39;model-1&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">att</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>atype</strong> &#8211; An attachment type. Guessed from the data file name if omitted.</li>
+<li><strong>datafile</strong> &#8211; The data file.</li>
+<li><strong>model</strong> &#8211; The model instance.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="fastscore.model.Attachment.atype">
+<code class="descname">atype</code><a class="headerlink" href="#fastscore.model.Attachment.atype" title="Permalink to this definition">¶</a></dt>
+<dd><p>An attachment type.</p>
+<ul class="simple">
+<li><strong>zip</strong> A ZIP archive.</li>
+<li><strong>tgz</strong> A gzipped tarball.</li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.model.Attachment.datafile">
+<code class="descname">datafile</code><a class="headerlink" href="#fastscore.model.Attachment.datafile" title="Permalink to this definition">¶</a></dt>
+<dd><p>A name of the file that contains the attachment data. The attachment is downloaded
+when this property is first accessed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.model.Attachment.datasize">
+<code class="descname">datasize</code><a class="headerlink" href="#fastscore.model.Attachment.datasize" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the attachment. Checking the attachment size does NOT trigger the download.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.model.Attachment.name">
+<code class="descname">name</code><a class="headerlink" href="#fastscore.model.Attachment.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>An attachment name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.model.Attachment.upload">
+<code class="descname">upload</code><span class="sig-paren">(</span><em>model=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/attachment.html#Attachment.upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.model.Attachment.upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the attachment to the model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> &#8211; The model instance. Can be None if the model instance has been provided
+when the attachemnet was created.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="snapshots">
+<h2>Snapshots<a class="headerlink" href="#snapshots" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastscore.model.Snapshot">
+<em class="property">class </em><code class="descclassname">fastscore.model.</code><code class="descname">Snapshot</code><span class="sig-paren">(</span><em>snapid</em>, <em>created_on</em>, <em>stype</em>, <em>size</em>, <em>model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/snapshot.html#Snapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.model.Snapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a snapshot of a model state. Do not create directly. Use the model&#8217;s snapshots collection:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s1">&#39;model-1&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">snapshots</span><span class="o">.</span><span class="n">browse</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[{&#39;id&#39;: &#39;yu647a&#39;,...}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">snap</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">snapshots</span><span class="p">[</span><span class="s1">&#39;yu&#39;</span><span class="p">]</span>  <span class="c1"># prefix is enough</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="fastscore.model.Snapshot.created_on">
+<code class="descname">created_on</code><a class="headerlink" href="#fastscore.model.Snapshot.created_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>A date the snapshot has been taken.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.model.Snapshot.id">
+<code class="descname">id</code><a class="headerlink" href="#fastscore.model.Snapshot.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A snapshot id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.model.Snapshot.restore">
+<code class="descname">restore</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/snapshot.html#Snapshot.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.model.Snapshot.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore the model state using the snapshot.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">snap</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">snapshots</span><span class="p">[</span><span class="s1">&#39;yu&#39;</span><span class="p">]</span>  <span class="c1"># prefix is enough</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">snap</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.model.Snapshot.size">
+<code class="descname">size</code><a class="headerlink" href="#fastscore.model.Snapshot.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>A size of the snapshot in bytes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="streams">
+<h2>Streams<a class="headerlink" href="#streams" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastscore.Stream">
+<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">Stream</code><span class="sig-paren">(</span><em>name</em>, <em>desc=None</em>, <em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/stream.html#Stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>A FastScore stream. A stream can be created directly:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="s1">&#39;stream-1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Transport&#39;</span><span class="p">:</span><span class="o">...</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Or, retrieved from a Model Manage instance:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;model-manage&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">streams</span><span class="p">[</span><span class="s1">&#39;stream-1&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="fastscore.Stream.attach">
+<code class="descname">attach</code><span class="sig-paren">(</span><em>engine</em>, <em>slot</em>, <em>dry_run=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/stream.html#Stream.attach"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream.attach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attach the stream to the engine.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>slot</strong> &#8211; The stream slot.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.Stream.desc">
+<code class="descname">desc</code><a class="headerlink" href="#fastscore.Stream.desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>A stream descriptor (a dict).</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">streams</span><span class="p">[</span><span class="s1">&#39;stream-1&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span><span class="o">.</span><span class="n">desc</span>
+<span class="go">{&#39;Transport&#39;: {&#39;Type&#39;: &#39;discard&#39;}, &#39;Encoding&#39;: &#39;json&#39;}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.Stream.name">
+<code class="descname">name</code><a class="headerlink" href="#fastscore.Stream.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A stream name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.Stream.rate">
+<code class="descname">rate</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/stream.html#Stream.rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream.rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Measures the stream throughput outside of a data pipeline.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>engine</strong> &#8211; An Engine instance to use.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.Stream.sample">
+<code class="descname">sample</code><span class="sig-paren">(</span><em>engine</em>, <em>n=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/stream.html#Stream.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a few sample records from the stream.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>engine</strong> &#8211; An Engine instance to use.</li>
+<li><strong>n</strong> &#8211; A number of records to retrieve (default: 10).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An array of base64-encoded records.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.Stream.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/stream.html#Stream.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the stream to Model Manage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_manage</strong> &#8211; The Model Manage instance to use. If None, the Model Manage instance
+must have been provided when then stream was created.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="schemata">
+<h2>Schemata<a class="headerlink" href="#schemata" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastscore.Schema">
+<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">Schema</code><span class="sig-paren">(</span><em>name</em>, <em>source=None</em>, <em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/schema.html#Schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>An Avro schema. It can be created direct</p>
+<dl class="attribute">
+<dt id="fastscore.Schema.name">
+<code class="descname">name</code><a class="headerlink" href="#fastscore.Schema.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A schema name.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.Schema.source">
+<code class="descname">source</code><a class="headerlink" href="#fastscore.Schema.source" title="Permalink to this definition">¶</a></dt>
+<dd><p>A schema source, e.g. {&#8216;type&#8217;: &#8216;array&#8217;, &#8216;items&#8217;: &#8216;int&#8217;}.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.Schema.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/schema.html#Schema.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Schema.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the schema to Model Manage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_manage</strong> &#8211; The Model Manage instance to use. If None, the Model Manage instance
+must have been provided when then schema was created.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.Schema.verify">
+<code class="descname">verify</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/schema.html#Schema.verify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Schema.verify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asks the engine the check the schema.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">id of the loaded schema. The identifier can be used to validate</td>
+</tr>
+</tbody>
+</table>
+<p>data records:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sid</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">validate_data</span><span class="p">(</span><span class="n">sid</span><span class="p">,</span> <span class="n">rec</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="sensors">
+<h2>Sensors<a class="headerlink" href="#sensors" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastscore.Sensor">
+<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">Sensor</code><span class="sig-paren">(</span><em>name</em>, <em>desc=None</em>, <em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/sensor.html#Sensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Sensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a FastScore sensor. A sensor can be created directly:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sensor</span> <span class="o">=</span> <span class="n">fastscore</span><span class="o">.</span><span class="n">Sensor</span><span class="p">(</span><span class="s1">&#39;sensor-1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sensor</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;tap&#39;</span><span class="p">:</span> <span class="s1">&#39;manifold.input.records.size&#39;</span><span class="p">,</span><span class="o">...</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Or, retreieved from Model Manage:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;model-manage&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">sensors</span><span class="p">[</span><span class="s1">&#39;sensor-1&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">desc</span>
+<span class="go">{...}</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="fastscore.Sensor.desc">
+<code class="descname">desc</code><a class="headerlink" href="#fastscore.Sensor.desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sensor descriptor (a dict).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.Sensor.install">
+<code class="descname">install</code><span class="sig-paren">(</span><em>target</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/sensor.html#Sensor.install"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Sensor.install" title="Permalink to this definition">¶</a></dt>
+<dd><p>Install/attach the sensor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>target</strong> &#8211; The instance to attach the sensor to.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastscore.Sensor.name">
+<code class="descname">name</code><a class="headerlink" href="#fastscore.Sensor.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sensor name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastscore.Sensor.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/sensor.html#Sensor.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Sensor.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the sensor to Model Manage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_manage</strong> &#8211; The Model Manage instance to use. If None, the Model Manage instance
+must have been provided when then sensor was created.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-fastscore.deploy">
+<span id="deploy"></span><h2>Deploy<a class="headerlink" href="#module-fastscore.deploy" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="user/advanced.html">Advanced Usage</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="dev/todo.html">Unfinished/incomplete</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Open Data Group.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>
