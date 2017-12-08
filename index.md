@@ -8,7 +8,16 @@ Welcome to Open Data Group's documentation!
 
 ### API Reference
 
+The basic method of interaction with FastScore is through each service's RESTful
+API. [A complete API reference is available here.](API/)
+
 ### SDK Documentation
+
+FastScore has open-source SDKs in several languages:
+
+- [Python SDK](SDK/python/)
+- R SDK
+- Scala SDK
 
 ## Other Projects
 
