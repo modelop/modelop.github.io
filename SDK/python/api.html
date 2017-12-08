@@ -8,8 +8,8 @@
     
     <title>Developer interface &#8212; FastScore SDK 1.6.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -21,9 +21,9 @@
         SOURCELINK_SUFFIX: '.txt'
       };
     </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Unfinished/incomplete" href="dev/todo.html" />
@@ -54,7 +54,7 @@
 <span id="service-instances"></span><h2>Service instances<a class="headerlink" href="#module-fastscore.suite" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastscore.suite.Connect">
-<em class="property">class </em><code class="descclassname">fastscore.suite.</code><code class="descname">Connect</code><span class="sig-paren">(</span><em>proxy_prefix</em>, <em>auth_secret=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastscore.suite.</code><code class="descname">Connect</code><span class="sig-paren">(</span><em>proxy_prefix</em>, <em>auth_secret=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/connect.html#Connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>An instance of a Connect service.</p>
 <p>Typically, an interaction with FastScore starts with:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">fastscore.suite</span> <span class="k">import</span> <span class="n">Connect</span>
@@ -102,7 +102,7 @@ that the instance is healthy.</p>
 
 <dl class="method">
 <dt id="fastscore.suite.Connect.configure">
-<code class="descname">configure</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.configure" title="Permalink to this definition">¶</a></dt>
+<code class="descname">configure</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/connect.html#Connect.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.configure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the FastScore configuration.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;config.yaml&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>  <span class="n">connect</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
@@ -124,7 +124,7 @@ otherwise.</td>
 
 <dl class="method">
 <dt id="fastscore.suite.Connect.dump">
-<code class="descname">dump</code><span class="sig-paren">(</span><em>savefile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.dump" title="Permalink to this definition">¶</a></dt>
+<code class="descname">dump</code><span class="sig-paren">(</span><em>savefile</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/connect.html#Connect.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.dump" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves the Connect parameters to a file.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;.fastscore&quot;</span><span class="p">)</span>
 </pre></div>
@@ -133,7 +133,7 @@ otherwise.</td>
 
 <dl class="method">
 <dt id="fastscore.suite.Connect.fleet">
-<code class="descname">fleet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.fleet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.fleet" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fleet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/connect.html#Connect.fleet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.fleet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves metadata for all running instances.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -157,7 +157,7 @@ dict contains the following fields:<ul class="simple">
 
 <dl class="method">
 <dt id="fastscore.suite.Connect.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.get" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/connect.html#Connect.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves a (cached) reference to the named instance.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;model-manage-1&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">name</span>
@@ -178,7 +178,7 @@ dict contains the following fields:<ul class="simple">
 
 <dl class="method">
 <dt id="fastscore.suite.Connect.get_config">
-<code class="descname">get_config</code><span class="sig-paren">(</span><em>section=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.get_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.get_config" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_config</code><span class="sig-paren">(</span><em>section=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/connect.html#Connect.get_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.get_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the current FastScore configuration.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s1">&#39;db&#39;</span><span class="p">)</span>
 <span class="go">{</span>
@@ -215,7 +215,7 @@ instance.</p>
 
 <dl class="staticmethod">
 <dt id="fastscore.suite.Connect.load">
-<em class="property">static </em><code class="descname">load</code><span class="sig-paren">(</span><em>savefile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.load" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">load</code><span class="sig-paren">(</span><em>savefile</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/connect.html#Connect.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Recreates a Connect instance from a file.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span> <span class="o">=</span> <span class="n">Connect</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;.fastscore&quot;</span><span class="p">)</span>
 </pre></div>
@@ -224,7 +224,7 @@ instance.</p>
 
 <dl class="method">
 <dt id="fastscore.suite.Connect.login">
-<code class="descname">login</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.login" title="Permalink to this definition">¶</a></dt>
+<code class="descname">login</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/connect.html#Connect.login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.login" title="Permalink to this definition">¶</a></dt>
 <dd><p>Login to FastScore.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -242,7 +242,7 @@ instance.</p>
 
 <dl class="method">
 <dt id="fastscore.suite.Connect.lookup">
-<code class="descname">lookup</code><span class="sig-paren">(</span><em>sname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.lookup" title="Permalink to this definition">¶</a></dt>
+<code class="descname">lookup</code><span class="sig-paren">(</span><em>sname</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/connect.html#Connect.lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.lookup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves an preferred/default instance of a named service.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">name</span>
@@ -277,7 +277,7 @@ instance.</p>
 
 <dl class="method">
 <dt id="fastscore.suite.Connect.prefer">
-<code class="descname">prefer</code><span class="sig-paren">(</span><em>sname</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/connect.html#Connect.prefer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.prefer" title="Permalink to this definition">¶</a></dt>
+<code class="descname">prefer</code><span class="sig-paren">(</span><em>sname</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/connect.html#Connect.prefer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Connect.prefer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Marks the named instance as preferred for a given service.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span><span class="o">.</span><span class="n">prefer</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">,</span> <span class="s1">&#39;engine-3&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;engine&#39;</span><span class="p">)</span>
@@ -324,7 +324,7 @@ becomes the preferred instance of the service it represents.</p>
 
 <dl class="class">
 <dt id="fastscore.suite.ModelManage">
-<em class="property">class </em><code class="descclassname">fastscore.suite.</code><code class="descname">ModelManage</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/model_manage.html#ModelManage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.ModelManage" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastscore.suite.</code><code class="descname">ModelManage</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/model_manage.html#ModelManage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.ModelManage" title="Permalink to this definition">¶</a></dt>
 <dd><p>An instance of a Model Manage service. Use <a class="reference internal" href="#fastscore.suite.Connect" title="fastscore.suite.Connect"><code class="xref py py-class docutils literal"><span class="pre">Connect</span></code></a> to create a
 ModelManage instance:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;model-manage&#39;</span><span class="p">)</span>
@@ -457,7 +457,7 @@ alternative name for the property is &#8216;schemas&#8217;.</p>
 
 <dl class="class">
 <dt id="fastscore.suite.Engine">
-<em class="property">class </em><code class="descclassname">fastscore.suite.</code><code class="descname">Engine</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastscore.suite.</code><code class="descname">Engine</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/engine.html#Engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine" title="Permalink to this definition">¶</a></dt>
 <dd><p>An Engine instance.</p>
 <dl class="attribute">
 <dt id="fastscore.suite.Engine.active_model">
@@ -537,7 +537,7 @@ instance.</p>
 
 <dl class="method">
 <dt id="fastscore.suite.Engine.input">
-<code class="descname">input</code><span class="sig-paren">(</span><em>data</em>, <em>slot</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.input" title="Permalink to this definition">¶</a></dt>
+<code class="descname">input</code><span class="sig-paren">(</span><em>data</em>, <em>slot</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/engine.html#Engine.input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.input" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write data to a REST stream attached to the slot.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -555,7 +555,7 @@ instance.</p>
 
 <dl class="method">
 <dt id="fastscore.suite.Engine.load_model">
-<code class="descname">load_model</code><span class="sig-paren">(</span><em>model</em>, <em>force_inline=False</em>, <em>embedded_schemas={}</em>, <em>dry_run=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.load_model" title="Permalink to this definition">¶</a></dt>
+<code class="descname">load_model</code><span class="sig-paren">(</span><em>model</em>, <em>force_inline=False</em>, <em>embedded_schemas={}</em>, <em>dry_run=False</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/engine.html#Engine.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.load_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load a model into this engine.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -578,7 +578,7 @@ errors only.</li>
 
 <dl class="method">
 <dt id="fastscore.suite.Engine.output">
-<code class="descname">output</code><span class="sig-paren">(</span><em>slot</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.output" title="Permalink to this definition">¶</a></dt>
+<code class="descname">output</code><span class="sig-paren">(</span><em>slot</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/engine.html#Engine.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads data from the REST stream attached to the slot.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -592,7 +592,7 @@ errors only.</li>
 
 <dl class="method">
 <dt id="fastscore.suite.Engine.pause">
-<code class="descname">pause</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.pause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.pause" title="Permalink to this definition">¶</a></dt>
+<code class="descname">pause</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/engine.html#Engine.pause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.pause" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pauses the engine. The result depends on the current state of the
 engine. A running engine changes its state to PAUSED. An initializing
 engine will pause upon startup. In all other states the operation is
@@ -612,14 +612,14 @@ ignored.</p>
 
 <dl class="method">
 <dt id="fastscore.suite.Engine.reset">
-<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.reset" title="Permalink to this definition">¶</a></dt>
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/engine.html#Engine.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the engine. A loaded model is unloaded. All open streams are
 closed. The engine changes its state to INIT.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastscore.suite.Engine.scale">
-<code class="descname">scale</code><span class="sig-paren">(</span><em>factor</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.scale" title="Permalink to this definition">¶</a></dt>
+<code class="descname">scale</code><span class="sig-paren">(</span><em>factor</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/engine.html#Engine.scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.scale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Changes the number of running model instances.</p>
 </dd></dl>
 
@@ -649,13 +649,13 @@ closed. The engine changes its state to INIT.</p>
 
 <dl class="method">
 <dt id="fastscore.suite.Engine.unpause">
-<code class="descname">unpause</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.unpause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.unpause" title="Permalink to this definition">¶</a></dt>
+<code class="descname">unpause</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/engine.html#Engine.unpause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.unpause" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unpauses the engine.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastscore.suite.Engine.verify_data">
-<code class="descname">verify_data</code><span class="sig-paren">(</span><em>sid</em>, <em>rec</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/suite/engine.html#Engine.verify_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.verify_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">verify_data</code><span class="sig-paren">(</span><em>sid</em>, <em>rec</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/suite/engine.html#Engine.verify_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.suite.Engine.verify_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verify schema against a prepared schema.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -678,7 +678,7 @@ closed. The engine changes its state to INIT.</p>
 <h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastscore.FastScoreError">
-<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">FastScoreError</code><span class="sig-paren">(</span><em>message</em>, <em>caused_by=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/errors.html#FastScoreError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.FastScoreError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">FastScoreError</code><span class="sig-paren">(</span><em>message</em>, <em>caused_by=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/errors.html#FastScoreError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.FastScoreError" title="Permalink to this definition">¶</a></dt>
 <dd><p>A FastScore exception.</p>
 <p>SDK functions throw only FastScoreError exceptions. An SDK function
 either succeeds or throws an exception. The return value of a SDK function
@@ -690,7 +690,7 @@ is always valid.</p>
 <h2>Pneumo<a class="headerlink" href="#pneumo" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastscore.PneumoSock">
-<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">PneumoSock</code><span class="sig-paren">(</span><em>proxy_prefix</em>, <em>timeout=None</em>, <em>src=None</em>, <em>type=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/pneumo.html#PneumoSock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.PneumoSock" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">PneumoSock</code><span class="sig-paren">(</span><em>proxy_prefix</em>, <em>timeout=None</em>, <em>src=None</em>, <em>type=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/pneumo.html#PneumoSock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.PneumoSock" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Pneumo websocket.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pneumo</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">pneumo</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pneumo</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
@@ -699,13 +699,13 @@ is always valid.</p>
 </div>
 <dl class="method">
 <dt id="fastscore.PneumoSock.close">
-<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/pneumo.html#PneumoSock.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.PneumoSock.close" title="Permalink to this definition">¶</a></dt>
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/pneumo.html#PneumoSock.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.PneumoSock.close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Close the Pneumo socket.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastscore.PneumoSock.recv">
-<code class="descname">recv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/pneumo.html#PneumoSock.recv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.PneumoSock.recv" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/pneumo.html#PneumoSock.recv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.PneumoSock.recv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receives the next Pneumo message.</p>
 </dd></dl>
 
@@ -716,7 +716,7 @@ is always valid.</p>
 <h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastscore.Model">
-<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>name</em>, <em>mtype='python'</em>, <em>source=None</em>, <em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Model" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>name</em>, <em>mtype='python'</em>, <em>source=None</em>, <em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents an analytic model. A model can be created directly:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">fastscore</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="s1">&#39;model-1&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">mtype</span> <span class="o">=</span> <span class="s1">&#39;python&#39;</span>
@@ -744,7 +744,7 @@ manipulation functions available:</p>
 
 <dl class="method">
 <dt id="fastscore.Model.deploy">
-<code class="descname">deploy</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/model.html#Model.deploy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Model.deploy" title="Permalink to this definition">¶</a></dt>
+<code class="descname">deploy</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/model.html#Model.deploy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Model.deploy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deploy this model to an engine.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -794,7 +794,7 @@ manipulation functions available:</p>
 <h2>Attachments<a class="headerlink" href="#attachments" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastscore.model.Attachment">
-<em class="property">class </em><code class="descclassname">fastscore.model.</code><code class="descname">Attachment</code><span class="sig-paren">(</span><em>name</em>, <em>atype=None</em>, <em>datafile=None</em>, <em>datasize=None</em>, <em>model=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/attachment.html#Attachment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.model.Attachment" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastscore.model.</code><code class="descname">Attachment</code><span class="sig-paren">(</span><em>name</em>, <em>atype=None</em>, <em>datafile=None</em>, <em>datasize=None</em>, <em>model=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/attachment.html#Attachment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.model.Attachment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents a model attachment. An attachment can be created directly but it
 must (ultimately) associated with the model:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">att</span> <span class="o">=</span> <span class="n">fastscore</span><span class="o">.</span><span class="n">Attachment</span><span class="p">(</span><span class="s1">&#39;att-1&#39;</span><span class="p">,</span> <span class="n">datafile</span><span class="o">=</span><span class="s1">&#39;/tmp/att1.zip&#39;</span><span class="p">)</span>
@@ -846,7 +846,7 @@ when this property is first accessed.</p>
 
 <dl class="method">
 <dt id="fastscore.model.Attachment.upload">
-<code class="descname">upload</code><span class="sig-paren">(</span><em>model=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/attachment.html#Attachment.upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.model.Attachment.upload" title="Permalink to this definition">¶</a></dt>
+<code class="descname">upload</code><span class="sig-paren">(</span><em>model=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/attachment.html#Attachment.upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.model.Attachment.upload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds the attachment to the model.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -866,7 +866,7 @@ when the attachemnet was created.</td>
 <h2>Snapshots<a class="headerlink" href="#snapshots" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastscore.model.Snapshot">
-<em class="property">class </em><code class="descclassname">fastscore.model.</code><code class="descname">Snapshot</code><span class="sig-paren">(</span><em>snapid</em>, <em>created_on</em>, <em>stype</em>, <em>size</em>, <em>model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/snapshot.html#Snapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.model.Snapshot" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastscore.model.</code><code class="descname">Snapshot</code><span class="sig-paren">(</span><em>snapid</em>, <em>created_on</em>, <em>stype</em>, <em>size</em>, <em>model</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/snapshot.html#Snapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.model.Snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents a snapshot of a model state. Do not create directly. Use the model&#8217;s snapshots collection:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s1">&#39;model-1&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">snapshots</span><span class="o">.</span><span class="n">browse</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -888,7 +888,7 @@ when the attachemnet was created.</td>
 
 <dl class="method">
 <dt id="fastscore.model.Snapshot.restore">
-<code class="descname">restore</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/snapshot.html#Snapshot.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.model.Snapshot.restore" title="Permalink to this definition">¶</a></dt>
+<code class="descname">restore</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/snapshot.html#Snapshot.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.model.Snapshot.restore" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restore the model state using the snapshot.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">snap</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">snapshots</span><span class="p">[</span><span class="s1">&#39;yu&#39;</span><span class="p">]</span>  <span class="c1"># prefix is enough</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">snap</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
@@ -909,7 +909,7 @@ when the attachemnet was created.</td>
 <h2>Streams<a class="headerlink" href="#streams" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastscore.Stream">
-<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">Stream</code><span class="sig-paren">(</span><em>name</em>, <em>desc=None</em>, <em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/stream.html#Stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">Stream</code><span class="sig-paren">(</span><em>name</em>, <em>desc=None</em>, <em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/stream.html#Stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>A FastScore stream. A stream can be created directly:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="s1">&#39;stream-1&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stream</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Transport&#39;</span><span class="p">:</span><span class="o">...</span><span class="p">}</span>
@@ -922,7 +922,7 @@ when the attachemnet was created.</td>
 </div>
 <dl class="method">
 <dt id="fastscore.Stream.attach">
-<code class="descname">attach</code><span class="sig-paren">(</span><em>engine</em>, <em>slot</em>, <em>dry_run=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/stream.html#Stream.attach"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream.attach" title="Permalink to this definition">¶</a></dt>
+<code class="descname">attach</code><span class="sig-paren">(</span><em>engine</em>, <em>slot</em>, <em>dry_run=False</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/stream.html#Stream.attach"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream.attach" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attach the stream to the engine.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -953,7 +953,7 @@ when the attachemnet was created.</td>
 
 <dl class="method">
 <dt id="fastscore.Stream.rate">
-<code class="descname">rate</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/stream.html#Stream.rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream.rate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">rate</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/stream.html#Stream.rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream.rate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Measures the stream throughput outside of a data pipeline.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -967,7 +967,7 @@ when the attachemnet was created.</td>
 
 <dl class="method">
 <dt id="fastscore.Stream.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>engine</em>, <em>n=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/stream.html#Stream.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream.sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>engine</em>, <em>n=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/stream.html#Stream.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves a few sample records from the stream.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -988,7 +988,7 @@ when the attachemnet was created.</td>
 
 <dl class="method">
 <dt id="fastscore.Stream.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/stream.html#Stream.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream.update" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update</code><span class="sig-paren">(</span><em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/stream.html#Stream.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Stream.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves the stream to Model Manage.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1008,7 +1008,7 @@ must have been provided when then stream was created.</td>
 <h2>Schemata<a class="headerlink" href="#schemata" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastscore.Schema">
-<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">Schema</code><span class="sig-paren">(</span><em>name</em>, <em>source=None</em>, <em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/schema.html#Schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Schema" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">Schema</code><span class="sig-paren">(</span><em>name</em>, <em>source=None</em>, <em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/schema.html#Schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Schema" title="Permalink to this definition">¶</a></dt>
 <dd><p>An Avro schema. It can be created direct</p>
 <dl class="attribute">
 <dt id="fastscore.Schema.name">
@@ -1024,7 +1024,7 @@ must have been provided when then stream was created.</td>
 
 <dl class="method">
 <dt id="fastscore.Schema.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/schema.html#Schema.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Schema.update" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update</code><span class="sig-paren">(</span><em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/schema.html#Schema.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Schema.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves the schema to Model Manage.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1039,7 +1039,7 @@ must have been provided when then schema was created.</td>
 
 <dl class="method">
 <dt id="fastscore.Schema.verify">
-<code class="descname">verify</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/schema.html#Schema.verify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Schema.verify" title="Permalink to this definition">¶</a></dt>
+<code class="descname">verify</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/schema.html#Schema.verify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Schema.verify" title="Permalink to this definition">¶</a></dt>
 <dd><p>Asks the engine the check the schema.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1064,7 +1064,7 @@ must have been provided when then schema was created.</td>
 <h2>Sensors<a class="headerlink" href="#sensors" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastscore.Sensor">
-<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">Sensor</code><span class="sig-paren">(</span><em>name</em>, <em>desc=None</em>, <em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/sensor.html#Sensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Sensor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastscore.</code><code class="descname">Sensor</code><span class="sig-paren">(</span><em>name</em>, <em>desc=None</em>, <em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/sensor.html#Sensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Sensor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents a FastScore sensor. A sensor can be created directly:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sensor</span> <span class="o">=</span> <span class="n">fastscore</span><span class="o">.</span><span class="n">Sensor</span><span class="p">(</span><span class="s1">&#39;sensor-1&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sensor</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;tap&#39;</span><span class="p">:</span> <span class="s1">&#39;manifold.input.records.size&#39;</span><span class="p">,</span><span class="o">...</span><span class="p">}</span>
@@ -1085,7 +1085,7 @@ must have been provided when then schema was created.</td>
 
 <dl class="method">
 <dt id="fastscore.Sensor.install">
-<code class="descname">install</code><span class="sig-paren">(</span><em>target</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/sensor.html#Sensor.install"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Sensor.install" title="Permalink to this definition">¶</a></dt>
+<code class="descname">install</code><span class="sig-paren">(</span><em>target</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/sensor.html#Sensor.install"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Sensor.install" title="Permalink to this definition">¶</a></dt>
 <dd><p>Install/attach the sensor.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1105,7 +1105,7 @@ must have been provided when then schema was created.</td>
 
 <dl class="method">
 <dt id="fastscore.Sensor.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastscore/sensor.html#Sensor.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Sensor.update" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update</code><span class="sig-paren">(</span><em>model_manage=None</em><span class="sig-paren">)</span><a class="reference internal" href="modules/fastscore/sensor.html#Sensor.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastscore.Sensor.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves the sensor to Model Manage.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
