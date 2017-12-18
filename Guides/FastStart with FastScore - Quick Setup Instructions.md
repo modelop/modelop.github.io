@@ -23,7 +23,7 @@ If you have not already, [click here to download!](http://www.opendatagroup.com/
   
 Navigate to the "File" menu and select "Import Appliance"
 
-![OVA Image][https://github.com/opendatagroup/opendatagroup.github.io/images/OVA1.png]
+![OVA Image][opendatagroup.github.io/images/OVA1.png]
 
 ## 3. Review Default Settings
 
@@ -32,7 +32,7 @@ Navigate to the "File" menu and select "Import Appliance"
 
 When you are finished modifying your settings, click Import.
 
-![OVA Image][https://github.com/opendatagroup/opendatagroup.github.io/images/OVA2.png]
+![OVA Image][opendatagroup.github.io/images/OVA2.png]
 
 * The import process will start: This might take several minutes
 * When the importing process is complete, the newly created machine will show up in the VirtualBox Manager list
@@ -42,7 +42,7 @@ When you are finished modifying your settings, click Import.
 1. Click the FastScore Demo 1.6.1 machine in the list of virtual machines
 2. Click Start from the toolbar - the boot process might take a few minutes and the console screen will be blank (or show Ubuntu start-up animation) during that time
 
-![OVA Image][https://github.com/opendatagroup/opendatagroup.github.io/images/OVA3.png]
+![OVA Image][opendatagroup.github.io/images/OVA3.png]
 
 3. When the boot is complete, you will be presented with a prompt to login
 
