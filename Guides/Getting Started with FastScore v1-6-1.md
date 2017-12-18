@@ -364,7 +364,7 @@ First, if you are not running FastScore on your local machine (for example, if y
 
 To access the Dashboard, take your browser to the FastScore host machine at port 8000. If all goes well , you will be greeted by this screen: 
 
-![Home Screen][opendatagroup.github.io/images/HomeScreen.png]
+![Home Screen](opendatagroup.github.io/images/HomeScreen.png)
 
 [//]: # (<p class="callout danger">
 If, instead, you get an "Application Initialization Error," check your configuration file for any errors, and verify that you have followed all of the FastScore CLI configuration steps. If the `fastscore fleet` command shows both Model Manage and your Engine containers working properly, then the problem most likely has to do with Dashboard's proxy service or your host machine's network traffic settings.
@@ -397,11 +397,11 @@ Models can be added with `model add <name> <file>`, and removed with `model remo
 #### Models via the Dashboard
 The Dashboard provides functionality to add and manage models. To upload a model, under the Models tab, select the "Upload model" button, and choose a model from your local machine. Alternatively, "select model", depicted below, allows you to select an existing model from the model manager by name.
 
-![Model Load][opendatagroup.github.io/images/ModelLoad1.png]
+![Model Load](opendatagroup.github.io/images/ModelLoad1.png)
 
 Additionally, models can be added, removed, inspected, and edited from the Models tab under Model Manage:
 
-![Model Load][opendatagroup.github.io/images/ModelLoad.png]
+![Model Load](opendatagroup.github.io/images/ModelLoad.png)
 
 ### <a name="section-models-in-python-and-r"></a>Models in Python and R
 All models are added to FastScore and executed using the same CLI commands, namely:
@@ -619,7 +619,7 @@ When using Docker volume linking to link a directory on the host machine to the 
 #### Streams via the Dashboard
 Analogously to models, streams can also be manipulated from the Dashboard. Selecting the "Streams" tab under Model Manage displays the following view:
 
-![Streams][opendatagroup.github.io/images/Streams.png]
+![Streams](opendatagroup.github.io/images/Streams.png)
 
 ### <a name="section-engine-parameters"></a>Engine Parameters
 Engine parameters, such as the number of Engine instances currently running, as well as information about the model, are displayed on the Dashboard Engine tab.
