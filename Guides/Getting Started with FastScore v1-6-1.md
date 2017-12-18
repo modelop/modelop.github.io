@@ -2,23 +2,33 @@
 title: "Getting Started with FastScore v1.6.1"
 description: "This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.6.1 of FastScore.\n\nIf you need support or have questions, please email us:  [support@opendatagroup.com](mailto:support@opendatagroup.com)"
 ---
-#  **Contents**
-1. [Installing FastScore](#installing-fastscore)  
-   1.1 [Prerequisites](#section-prerequisites)
-   1.2 [Start FastScore Microservices Suite with Docker Compose (Recommended)](#section-start-fastscore-microservices-suite-with-docker-compose-recommended-)
-   1.3 [Start FastScore Microservices Suite (Manually)](#section-start-fastscore-microservices-suite-manually-)
-   1.4 [Installing the FastScore CLI](#installing-the-fastscore-cli)
+
+# Getting Started with FastScore v1.6.1
+This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.6.1 of FastScore.
+
+If you need support or have questions, please email us: support@opendatagroup.com
+
+# Contents
+
+1. [Installing FastScore](#installing-fastscore)
+  
+    1.1 [Prerequisites](#section-prerequisites)
+    1.2 [Start FastScore Microservices Suite with Docker Compose (Recommended)](#section-start-fastscore-microservices-suite-with-docker-compose-recommended-)
+    1.3 [Start FastScore Microservices Suite (Manually)](#section-start-fastscore-microservices-suite-manually-)
+    1.4 [Installing the FastScore CLI](#installing-the-fastscore-cli)
 2. [Configuring and Starting FastScore](#configuring-and-starting-fastscore)
-   2.1 [FastScore Configuration Files](#section-fastscore-configuration-files)
-   2.2 [Connecting to and Configuring FastScore with the FastScore CLI](#section-connecting-to-and-configuring-fastscore-with-the-fastscore-cli)
-   2.3 [Using the FastScore Dashboard](#section-using-the-fastscore-dashboard)
+
+    2.1 [FastScore Configuration Files](#section-fastscore-configuration-files)
+    2.2 [Connecting to and Configuring FastScore with the FastScore CLI](#section-connecting-to-and-configuring-fastscore-with-the-fastscore-cli)
+    2.3 [Using the FastScore Dashboard](#section-using-the-fastscore-dashboard)
 3. [Working with Models and Streams](#working-with-models-and-streams)
-   3.1 [Creating and Loading Models](#section-creating-and-loading-assets-into-fastscore-model-manage)
-   3.2 [Models in Python and R](#section-models-in-python-and-r)
-   3.3 [Input and Output Schema](#section-input-and-output-schema)
-   3.4 [Input and Output Streams](#section-input-and-output-streams)
-   3.5 [Engine Parameters](#section-engine-parameters)
-   3.6 [Running a Model in FastScore](#section-running-a-model-in-fastscore)
+
+    3.1 [Creating and Loading Models](#section-creating-and-loading-assets-into-fastscore-model-manage)
+    3.2 [Models in Python and R](#section-models-in-python-and-r)
+    3.3 [Input and Output Schema](#section-input-and-output-schema)
+    3.4 [Input and Output Streams](#section-input-and-output-streams)
+    3.5 [Engine Parameters](#section-engine-parameters)
+    3.6 [Running a Model in FastScore](#section-running-a-model-in-fastscore)
 
 
 ## <a name="installing-fastscore"></a>Installing FastScore
@@ -89,7 +99,7 @@ Add the database to Model Manage in the usual way for Docker volumes:
     ```docker run -it -d --net=host --rm -v db:/var/lib/mysql fastscore/model-manage-mysql:1.6.1 ``` (see more below)
 
 #### Example Docker Compose File
-Below is an example Docker Compose file that will start a full suite of FastScore services with one engine:
+Below is an example Docker Compose file that will start a full suite of FastScore services with two engines:
 
 ``` yaml
 version: '2'
@@ -336,6 +346,7 @@ First, if you are not running FastScore on your local machine (for example, if y
 To access the Dashboard, take your browser to the FastScore host machine at port 8000. If all goes well , you will be greeted by this screen: 
 
 ![Home Screen](images/HomeScreen.png)
+*On the left-hand side of the Dashboard are four sections: engine-1, engine-2, model-manage-1, Connect. These correspond to the Engine microservices, the Model Manage microservice, and the Connect microservice. The green dots on the engines and model manage indicate that they are currently running correctly. If you have configured additional engine containers, they will also appear on the side.*
 
 > If, instead, you get an "Application Initialization Error," check your configuration file for any errors, and verify that you have followed all of the FastScore CLI configuration steps. If the `fastscore fleet` command shows both Model Manage and your Engine containers working properly, then the problem most likely has to do with Dashboard's proxy service or your host machine's network traffic settings.
 
@@ -372,6 +383,7 @@ The Dashboard provides functionality to add and manage models. To upload a model
 Additionally, models can be added, removed, inspected, and edited from the Models tab under Model Manage:
 
 ![Model Load](images/ModelLoad.png)
+*The screenshot above shows the model manager tab, and an existing "auto_gbm.py" model. Models can be removed, saved, created, uploaded, or downloaded from this view. Note that after creating or modifying a model in this view, it must still be selected for use from the Engine tab.*
 
 ### <a name="section-models-in-python-and-r"></a>Models in Python and R
 All models are added to FastScore and executed using the same CLI commands, namely:
@@ -590,6 +602,7 @@ A similar stream descriptor can be used for the output stream to write the outpu
 Analogously to models, streams can also be manipulated from the Dashboard. Selecting the "Streams" tab under Model Manage displays the following view:
 
 ![Streams](images/Streams.png)
+*On the left, existing Stream Descriptors are displayed. New Stream Descriptors can be added and existing ones edited from this view. The example above displays a simple file stream, which will load the `input_data.jsons` file located in the `/root/data directory` of the Engine Docker container.*
 
 ### <a name="section-engine-parameters"></a>Engine Parameters
 Engine parameters, such as the number of Engine instances currently running, as well as information about the model, are displayed on the Dashboard Engine tab.
