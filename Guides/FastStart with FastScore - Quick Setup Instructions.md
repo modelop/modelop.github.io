@@ -57,7 +57,7 @@ FastScore is now up and running.
 The FastScore Dashboard is accessible from your host: https://127.0.0.1:15080
 You may also SSH into the box with the following command:
 
-```
+``` bash
 $ ssh -p 15022 fastscore@127.0.0.1
 ```
 
@@ -67,7 +67,7 @@ You are now ready to start scoring!
 
 In addition to “hello-world”, FastScore OVA comes with pre-installed Gradient Boosting Machine (GBM) model example. In order to run it: 
 
-```
+``` bash
 $ cd GBM
 $ ./prep.sh
 $ ./run.sh
@@ -75,7 +75,7 @@ $ ./run.sh
 
 Note that first run might take time since required model packages are being installed into container. To view the output of the example (gbm_output.json):
 
-```
+``` bash
 $ cd /opt/data
 $ less gbm_output.json
 ```
@@ -84,7 +84,7 @@ Press `q` to escape.
 
 You can start / stop / get status from / restart FastScore service using the following set of commands (make sure to use “sudo”): 
 
-```
+``` bash
 $ sudo service fastscore start 
 $ sudo service fastscore stop 
 $ sudo service fastscore status 
@@ -93,7 +93,7 @@ $ sudo service fastscore restart
 
 Optionally, you can install FastScore CLI on your host running Virtual Box. This is how you connect CLI to FastScore on VM:
 
-```
+``` bash
 $ fastscore connect https://127.0.0.1:15080
 ```
 
