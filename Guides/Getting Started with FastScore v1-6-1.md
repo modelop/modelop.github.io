@@ -4,36 +4,21 @@ description: "This is a guide for installing and running FastScore. It contains 
 ---
 #  **Contents**
 1. [Installing FastScore](#installing-fastscore)  
-
-  1.1 [Prerequisites](#section-prerequisites)
-  
-  1.2 [Start FastScore Microservices Suite with Docker Compose (Recommended)](#section-start-fastscore-microservices-suite-with-docker-compose-recommended-)
-  
-  1.3 [Start FastScore Microservices Suite (Manually)](#section-start-fastscore-microservices-suite-manually-)
-  
-  1.4 [Installing the FastScore CLI](#installing-the-fastscore-cli)
-  
+   1.1 [Prerequisites](#section-prerequisites)
+   1.2 [Start FastScore Microservices Suite with Docker Compose (Recommended)](#section-start-fastscore-microservices-suite-with-docker-compose-recommended-)
+   1.3 [Start FastScore Microservices Suite (Manually)](#section-start-fastscore-microservices-suite-manually-)
+   1.4 [Installing the FastScore CLI](#installing-the-fastscore-cli)
 2. [Configuring and Starting FastScore](#configuring-and-starting-fastscore)
-
-  2.1 [FastScore Configuration Files](#section-fastscore-configuration-files)
-  
-  2.2 [Connecting to and Configuring FastScore with the FastScore CLI](#section-connecting-to-and-configuring-fastscore-with-the-fastscore-cli)
-  
-  2.3 [Using the FastScore Dashboard](#section-using-the-fastscore-dashboard)
-  
+   2.1 [FastScore Configuration Files](#section-fastscore-configuration-files)
+   2.2 [Connecting to and Configuring FastScore with the FastScore CLI](#section-connecting-to-and-configuring-fastscore-with-the-fastscore-cli)
+   2.3 [Using the FastScore Dashboard](#section-using-the-fastscore-dashboard)
 3. [Working with Models and Streams](#working-with-models-and-streams)
-
-  3.1 [Creating and Loading Models](#section-creating-and-loading-assets-into-fastscore-model-manage)
-  
-  3.2 [Models in Python and R](#section-models-in-python-and-r)
-  
-  3.3 [Input and Output Schema](#section-input-and-output-schema)
-  
-  3.4 [Input and Output Streams](#section-input-and-output-streams)
-  
-  3.5 [Engine Parameters](#section-engine-parameters)
-  
-  3.6 [Running a Model in FastScore](#section-running-a-model-in-fastscore)
+   3.1 [Creating and Loading Models](#section-creating-and-loading-assets-into-fastscore-model-manage)
+   3.2 [Models in Python and R](#section-models-in-python-and-r)
+   3.3 [Input and Output Schema](#section-input-and-output-schema)
+   3.4 [Input and Output Streams](#section-input-and-output-streams)
+   3.5 [Engine Parameters](#section-engine-parameters)
+   3.6 [Running a Model in FastScore](#section-running-a-model-in-fastscore)
 
 
 ## <a name="installing-fastscore"></a>Installing FastScore
@@ -49,30 +34,23 @@ $ sudo apt-get install docker.io
 
 It's also useful (recommended but not mandatory) to have Docker Compose installed. Installation instructions can be found here: [docs.docker.com/compose/install/](http://docs.docker.com/compose/install/).
 
-[//]: # (<p class="callout warning">
-On MacOS, Docker actually runs inside of a virtual machine (see Docker's documentation here: [https://docs.docker.com/machine/](https://docs.docker.com/machine/) ). In order to make sure all of the ports and IP addresses are handled correctly, you'll need to run the commands from inside this virtual machine.
-To start the virtual machine and give it the name "default", use the following command:
+> On MacOS, Docker actually runs inside of a virtual machine (see Docker's documentation here: [https://docs.docker.com/machine/](https://docs.docker.com/machine/) ). In order to make sure all of the ports and IP addresses are handled correctly, you'll need to run the commands from inside this virtual machine.
+> To start the virtual machine and give it the name "default", use the following command:
+> ``` bash
+> $ docker-machine create --driver=virtualbox default
+> ```
+> This uses [VirtualBox](https://www.virtualbox.org) as the driver for the virtual machine. If you don't have it already, you should download the [VirtualBox client](https://www.virtualbox.org/wiki/Downloads) to manage the docker-machine. Among other things, this can be used to set up port forwarding for the virtual machine, which may be needed later.
+> To switch to this environment for the default virtual machine, use the following command:
+> ``` bash
+> $ eval $(docker-machine env default)
+> ```
+> The virtual machine's IP address can be retrieved with the docker-machine ip command, e.g.,
+> ``` bash
+> $ docker-machine ip
+> 192.168.99.100
+> ```
+> This IP address should be used as the FastScore host machine IP address.
 
-``` bash
-$ docker-machine create --driver=virtualbox default
-```
-
-This uses [VirtualBox](https://www.virtualbox.org) as the driver for the virtual machine. If you don't have it already, you should download the [VirtualBox client](https://www.virtualbox.org/wiki/Downloads) to manage the docker-machine. Among other things, this can be used to set up port forwarding for the virtual machine, which may be needed later.
-To switch to this environment for the default virtual machine, use the following command:
-
-``` bash
-$ eval $(docker-machine env default)
-```
-
-The virtual machine's IP address can be retrieved with the docker-machine ip command, e.g.,
- 
-``` bash
-$ docker-machine ip
-192.168.99.100
-```
-
-This IP address should be used as the FastScore host machine IP address.
-</p>)
 
 
 Once Docker has been installed, there are only a few steps needed to get FastScore running.
@@ -245,16 +223,12 @@ sudo python setup.py install
 This will install the required dependencies. The FastScore CLI is a Python tool, so it doesn't need to be compiled, and the setup script should automatically add the CLI to `$PATH`. 
 
 
-[//]: # (<p class="callout danger">
-`python-setuptools` and `python-dev` (i.e. header files) are required to properly install the FastScore CLI. These may or may not be already present on your system. If not, you will need to install them.
-For example:
-
-``` bash
-$ sudo apt-get install python-setuptools
-$ sudo apt-get install python-dev
-```
-
-</p>)
+> `python-setuptools` and `python-dev` (i.e. header files) are required to properly install the FastScore CLI. These may or may not be already present on your system. If not, you will need to install them.
+> For example:
+> ``` bash
+> $ sudo apt-get install python-setuptools
+> $ sudo apt-get install python-dev
+> ```
 
 
 Once you've installed the FastScore CLI, check that it works by executing the following command in your terminal. Also see [FastScore Command Line Interface](https://opendatagroup.github.io/Product%20Documentation/FastScore%20Command%20Line%20Interface.html) for more information on subcommands.
@@ -322,10 +296,7 @@ fastscore:
 
 Configuration files are written in YAML. The configuration file above specifies the host machines and ports for the Model Manage container, the MySQL database container used by Model Manage, and two Engine containers, all hosted on the same machine. Additionally, Pneumo, an asynchronous notification library used by FastScore, is configured to communicate via Kafka. 
 
-[//]: # (<p class="callout danger">
-
-The example file above is designed for use on a Linux machine; you will need to modify it for use in other settings (e.g. MacOS). And, as discussed above, you must create the db volume with ```docker volume create db``` (or remove the volume link from `database`)
-</p>)
+> The example file above is designed for use on a Linux machine; you will need to modify it for use in other settings (e.g. MacOS). And, as discussed above, you must create the db volume with ```docker volume create db``` (or remove the volume link from `database`)
 
 ### <a name="section-connecting-to-and-configuring-fastscore-with-the-fastscore-cli"></a>Connecting to and Configuring FastScore with the FastScore CLI
 Once the FastScore suite of services is running, we have to configure Connect using the file we created earlier. 
@@ -366,9 +337,8 @@ To access the Dashboard, take your browser to the FastScore host machine at port
 
 ![Home Screen](images/HomeScreen.png)
 
-[//]: # (<p class="callout danger">
-If, instead, you get an "Application Initialization Error," check your configuration file for any errors, and verify that you have followed all of the FastScore CLI configuration steps. If the `fastscore fleet` command shows both Model Manage and your Engine containers working properly, then the problem most likely has to do with Dashboard's proxy service or your host machine's network traffic settings.
-</p>)
+> If, instead, you get an "Application Initialization Error," check your configuration file for any errors, and verify that you have followed all of the FastScore CLI configuration steps. If the `fastscore fleet` command shows both Model Manage and your Engine containers working properly, then the problem most likely has to do with Dashboard's proxy service or your host machine's network traffic settings.
+
 
 ## <a name="working-with-models-and-streams"></a>Working with Models and Streams
 
@@ -469,7 +439,8 @@ R models feature much of the same functionality as Python models, as well as the
 action <- function(datum) {
   x <- datum$x
   y <- datum$y
-  emit(x + y)\n}
+  emit(x + y)
+}
 ```
 
 ### <a name="section-input-and-output-schema"></a>Input and Output Schema
@@ -612,9 +583,8 @@ This will link the `./data` directory on the host machine to the `/root/data` di
 ```
 
 A similar stream descriptor can be used for the output stream to write the output scores to a file in the same directory. 
-[//]: # (<p class="callout warning">
-When using Docker volume linking to link a directory on the host machine to the Engine instance, Docker must have privileges to read and write from the specified directory. Additionally, the directory on the container must be chosen carefully, as its contents will be overwritten with the contents of the corresponding host directory upon linking. `/root/data` is safe (as it only contains the demo datafiles), but other directories on the container (e.g., `/usr`) may not be.
-</p>)
+> When using Docker volume linking to link a directory on the host machine to the Engine instance, Docker must have privileges to read and write from the specified directory. Additionally, the directory on the container must be chosen carefully, as its contents will be overwritten with the contents of the corresponding host directory upon linking. `/root/data` is safe (as it only contains the demo datafiles), but other directories on the container (e.g., `/usr`) may not be.
+
 
 #### Streams via the Dashboard
 Analogously to models, streams can also be manipulated from the Dashboard. Selecting the "Streams" tab under Model Manage displays the following view:
