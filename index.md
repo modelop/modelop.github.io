@@ -6,6 +6,9 @@ Welcome to Open Data Group's documentation!
 
 ### Documentation
 
+-[Guides](Guides/)
+-[Product Documentation](Product Documentation/)
+
 ### API Reference
 
 The basic method of interaction with FastScore is through each service's RESTful
