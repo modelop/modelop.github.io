@@ -338,7 +338,7 @@ model-manage-1  model-manage  ok
 
 Now we're ready to start scoring.
 
-## Using the FastScore Dashboard
+## <a name="section-using-the-fastscore-dashboard"></a>Using the FastScore Dashboard
 FastScore's Dashboard provides a convenient user interface for reviewing engine status and managing models, schemas, sensors, and streams. However, as compared to the FastScore CLI, it requires a few additional setup steps to get things running. 
 
 First, if you are not running FastScore on your local machine (for example, if you have FastScore running on a cloud service platform), you will need to allow incoming and outgoing traffic on port 8000 (used by the FastScore Dashboard). You will also need to have configured FastScore as described in the previous section.
