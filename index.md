@@ -22,9 +22,7 @@ FastScore has open-source SDKs in several languages:
 - R SDK
 - Scala SDK
 
-### Examples and Tutorials
-
-- [Gradient Boosting Regressor](Gradient Boosting Regressor.md)
+### [Examples and Tutorials](Examples and Tutorials/)
 
 ## Other Projects
 
