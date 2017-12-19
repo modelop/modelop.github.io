@@ -24,7 +24,7 @@ FastScore has open-source SDKs in several languages:
 
 ### Examples and Tutorials
 
-- [Gradient Boosting Regressor](Examples and Tutorial/Gradient Boosting Regressor.md)
+- [Gradient Boosting Regressor](Gradient Boosting Regressor.md)
 
 ## Other Projects
 
