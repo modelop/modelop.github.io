@@ -17,12 +17,10 @@ The possible entries are:
 
 | Entry | Description |
 | --- | --- |
-| `<my-lib>: prohibit` | Do not load the model and issue an error. |
-| `my-lib>: warn` | Allow the model to run, but issue a warning. |
-| `<my-lib>: install` | Install the library using the default command. |
-| `<my-lib>:` | Install the library using a custom command. |
-| `    policy: install' |  |
-| `    command: <command>` |  |
+| <my-lib>: prohibit | Do not load the model and issue an error. |
+| <my-lib>: warn | Allow the model to run, but issue a warning. |
+| <my-lib>: install | Install the library using the default command. |
+| <my-lib>:<br>    policy: install<br>    command: <command> | Install the library using a custom command. |
 
 
 The engine knows the standard install commands for all runners. For example, for Python, the engine would use `pip install <my-lib>`. 
