@@ -2,6 +2,8 @@
 title: "Gradient Boosting Regressor"
 description: "Difficulty: Intermediate"
 ---
+# Gradient Boosting Regressor Example
+
 Gradient Boosting Regressors (GBR) are ensemble decision tree regressor models. In this example, we will show how to prepare a GBR model for use in FastScore. We'll be constructing a model to estimate the insurance risk of various automobiles. The data for this example is freely available from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Automobile).
 
 The model will be constructed in Python using [SciKit Learn](http://scikit-learn.org/stable/modules/ensemble.html#gradient-boosting), and both input and output data streams will use Kafka. This example demonstrates several features of FastScore:
@@ -20,7 +22,7 @@ All of the files needed to run this example are included [at the bottom of this 
 
 Each of these libraries can be installed using `pip`. 
 
-# A Brief Review of Gradient Boosting Regressors
+## A Brief Review of Gradient Boosting Regressors
 
 Gradient boosting regressors are a type of inductively generated tree ensemble model. At each step, a new tree is trained against the negative gradient of the loss function, which is analogous to (or identical to, in the case of least-squares error) the residual error.
 
@@ -29,15 +31,15 @@ More information on gradient boosting can be found below:
 * [Wikipedia](https://en.wikipedia.org/wiki/Gradient_boosting)
 * [SciKit Learn Gradient Boosting documentation](http://scikit-learn.org/stable/modules/ensemble.html#gradient-boosting)
 
-# Training and Running a GBR Model in SciKit Learn
+## Training and Running a GBR Model in SciKit Learn
 
 This section reviews how to train a GBR model using SciKit Learn in Python.
 
-## The Dataset and the Model
+### The Dataset and the Model
 
 In this example, we're using a GBR model to estimate insurance risk for various types of automobiles from various features of the vehicle. The scores produced are numbers between -3 and +3, where lower scores indicate safer vehicles.
 
-## Transforming Features
+### Transforming Features
 
 To get the best results from our GBR model, we need to do some preprocessing of the input data. To keep the model itself as simple as possible, we will separate the feature preprocessing from the actual scoring, and encapsulate it in its own module:
 
@@ -120,7 +122,7 @@ The `FeatureTransformer` class performs these imputations using two functions. F
 
 The `transform` function is used during model scoring to perform streaming imputations of input records. The imputing is done using the information about the mean, variance, and categorical variables determined from the `fit` function. 
 
-## Training the Model
+### Training the Model
 
 We will use SciKit Learn to build and train our GBR model. First, import the following libraries:
 
@@ -165,7 +167,7 @@ with open("gbmFit.pkl", "wb") as pickle_file:
 
 Note that, because we're including our custom class `FeatureTransformer` as part of our data pipeline, we'll need to include the custom class file `FeatureTransformer.py` along with the actual pickled object `gbmFit.pkl` in our attachment.
 
-## Scoring new records
+### Scoring new records
 
 Once the GBR model is trained, scoring new data is easy:
 
@@ -191,11 +193,11 @@ def score(record):
 
 In fact, as we'll see below, this model can be adapted essentially without modification for running in FastScore.
 
-# Loading the Model in FastScore
+## Loading the Model in FastScore
 
 Loading our GBR model to FastScore can be broken into two steps: preparing the model code and creating the input and output streams. 
 
-## Preparing the model for FastScore
+### Preparing the model for FastScore
 
 In the previous section, we created a small Python script to score our incoming auto records using the trained gradient boosting regressor and our custom feature transformer. In this example, the training of the model has already been done, so we'll only need to adapt the trained model to produce scores.
 
@@ -232,7 +234,7 @@ Let's briefly review what changes were made between this script (which is ready 
 * The logic to load our pickled `gbmFit` object and any other initialization code is now put in a well-defined `begin` method, to be executed when the job starts. 
 * Finally, because our custom class is contained in the attachment, we have to load it using Python's `imp` module (as opposed to `from FeatureTransformer import FeatureTransformer`).
 
-## Input and Output Schemas
+### Input and Output Schemas
 
 FastScore uses AVRO schemas to enforce type validation on model inputs and outputs. Both input/output streams, as well as the models themselves, must specify schemas.
 
@@ -277,7 +279,7 @@ The output schema is much simpler---the output of the model will just be a doubl
 { "type":"double" }
 ```
 
-## Input and Output Stream Descriptors
+### Input and Output Stream Descriptors
 
 One of the key features of FastScore is that it enforces strong type contracts on model inputs and outputs: a model's inputs are guaranteed to match the specified input format, as are its outputs. The input and output streams are described using stream descriptors. In this example, we'll be using Kafka to both send and receive scores. 
 
@@ -310,9 +312,9 @@ The input stream descriptor includes the more complicated schema, encapsulating 
 }
 ```
 
-## Starting and Configuring FastScore
+### Starting and Configuring FastScore
 
-This step may differ if you're using a custom FastScore deployment. If you're just using the  [standard deployment from the Getting Started Guide](doc:getting-started-with-fastscore#section-using-fastscore-with-docker-compose-recommended-), starting up FastScore is as easy as executing the following command:
+This step may differ if you're using a custom FastScore deployment. If you're just using the  [standard deployment from the Getting Started Guide](https://opendatagroup.github.io/Guides/Getting%20Started%20with%20FastScore%20v1-6-1.html#section-start-fastscore-microservices-suite-with-docker-compose-recommended-), starting up FastScore is as easy as executing the following command:
 
 ``` bash
 docker-compose up -d
@@ -344,7 +346,7 @@ engine-1        engine        ok
 model-manage-1  model-manage  ok
 ```
 
-## Adding Packages to FastScore
+### Adding Packages to FastScore
 
 The model code we've written uses the `pandas` and `sklearn` Python packages, which we'll need to add to the FastScore Engine container. (It also uses the `numpy` package, but this is installed in FastScore by default.)
 
@@ -381,7 +383,7 @@ docker commit [name of engine container] [name for new engine image]
 
 (After committing the new image, you'll have to update your docker-compose file to use the new image you created). 
 
-## Creating the Attachment
+### Creating the Attachment
 
 In this section, it is assumed that you have created the model file `score_auto_gbm.py` as well as the input and output stream descriptors `gbm-in.json` and `gbm-out.json`, and  the pickled FeatureTransformer `gbmFit.pkl` and FeatureTransformer module `FeatureTransformer.py`. 
 
@@ -392,7 +394,7 @@ Once you've created these files, package these along with the FeatureTransformer
 
 You can call the attachment whatever you like---in the code sample, we've named it `gbm.tar.gz`
 
-## Adding the model and stream descriptors
+### Adding the model and stream descriptors
 
 Now that we've created the model, stream descriptors, schemas, and attachment, it's time to add them to FastScore. This can be done through the command line, or using Dashboard.
 
@@ -420,7 +422,7 @@ After adding the model, attachment, and streams to FastScore, you can inspect th
 
 *The GBR model in FastScore's Dashboard.*
 
-# Delivering Scores using Kafka
+## Delivering Scores using Kafka
 
 The final step is to run the model, and deliver input records and output scores with Kafka. Kafka producers and consumers can be implemented in many languages. In the example code attached to this tutorial, we include a simple Scala Kafka client (`kafkaesq`), which streams the contents of a file line-by-line over a specified input topic, and then prints any responses received on a specified output topic. However, FastScore is compatible with any implementation of Kafka producer/consumer. 
 
@@ -438,13 +440,13 @@ python kafkaesq --input-file /path/to/input/file.json input output
 
 And that's it! Once you're done, stop the job with `fastscore job stop`. 
 
-# Source code for this Example
+## Source code for this Example
 
 [Download the source files for this example (GBM_example.tar.gz).](https://github.com/opendatagroup/fastscore-tutorials/raw/master/GBM_example.tar.gz)
 
 This archive contains all of the code used in this example.
 
-# Related Articles
+## Related Articles
 
 1. [SciKit-Learn: Gradient Tree Boosting](http://scikit-learn.org/stable/modules/ensemble.html#gradient-boosting)
 2. [Wikipedia: Gradient Boosting](https://en.wikipedia.org/wiki/Gradient_boosting)

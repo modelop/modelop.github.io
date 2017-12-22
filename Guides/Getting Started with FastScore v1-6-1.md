@@ -438,7 +438,7 @@ def end():
     pass
 ```
 
-This model returns the sum of two numbers. Note that we are able to import Python's standard modules, such as the `pickle` module. Non-default packages can also be added using [Import Policies, as described here](https://opendatagroup.github.io/Product%20Documentation/Import%20Policies.html). Custom classes and packages can be loaded using attachments, as described in the [Gradient Boosting Regressor tutorial]().
+This model returns the sum of two numbers. Note that we are able to import Python's standard modules, such as the `pickle` module. Non-default packages can also be added using [Import Policies, as described here](https://opendatagroup.github.io/Product%20Documentation/Import%20Policies.html). Custom classes and packages can be loaded using attachments, as described in the [Gradient Boosting Regressor tutorial](https://opendatagroup.github.io/Examples%20and%20Tutorials/Gradient%20Boosting%20Regressor.html).
 
 #### R Models
 R models feature much of the same functionality as Python models, as well as the same constraint: the user must define an action function to perform the actual scoring. For example, the analogous model to the Python model above is

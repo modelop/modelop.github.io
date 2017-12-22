@@ -2,9 +2,11 @@
 title: "Model Deploy"
 excerpt: "New in v1.5!"
 ---
+# Model Deploy
+
 FastScore Model Deploy is a containerized Jupyter notebook server with FastScore's model deployment and Jupyter integration toolkit built in. It is built on top of the [Jupyter data science Docker image](https://hub.docker.com/r/jupyter/datascience-notebook/). Model Deploy provides model creation and deployment tools for R and Python (2 & 3) notebooks, as well as for PFA (through Python 2). 
 
-# Starting Model Deploy
+## Starting Model Deploy
 
 Start Model Deploy with the following command:
 ```
@@ -16,7 +18,7 @@ Model Deploy may also be started with any of the additional configuration option
 
 Once the container is created, it will be accessible from port 8888 (by default) on the host machine, using the token generated during the startup process. 
 
-# Model Deploy functionality
+## Model Deploy functionality
 
 Model Deploy provides a number of features to make it easy to migrate a model into FastScore:
 

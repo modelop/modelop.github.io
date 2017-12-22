@@ -2,15 +2,13 @@
 title: "Schema Reference"
 excerpt: ""
 ---
-[block:api-header]
-{
-  "type": "basic",
-  "title": "Overview"
-}
-[/block]
+# Schema Reference
+
+## Overview
+
 FastScore enforces strict typing of engine inputs and outputs at two levels: stream input/output, and model input/output. Types are declared using [AVRO schema](https://avro.apache.org/docs/1.8.1/). 
 
-To support this functionality, FastScore's Model Manage maintains a database of named AVRO schemas. Python and R models must then reference their input and output schemas using smart comments. (PrettyPFA and PFA models instead explicitly include their AVRO types as part of the model format.) [Stream descriptors](doc:stream-descriptors) may either reference a named schema from Model Manage, or they may explicitly declare schemas.
+To support this functionality, FastScore's Model Manage maintains a database of named AVRO schemas. Python and R models must then reference their input and output schemas using smart comments. (PrettyPFA and PFA models instead explicitly include their AVRO types as part of the model format.) [Stream descriptors](https://opendatagroup.github.io/Product%20Documentation/Stream%20Descriptors.html) may either reference a named schema from Model Manage, or they may explicitly declare schemas.
 
 In either case, FastScore performs the following type checks:
 
@@ -21,48 +19,44 @@ In either case, FastScore performs the following type checks:
 3. When output is produced by the model: the outcoming data is checked against the model and stream's output schemas. 
 
 Failures of any of these checks are reported: schema incompatibilities between the model and the input or output streams will produce an error, and the engine will not run the job. Input or output records that are rejected due to schema incompatibility appear as Pneumo messages, and a report of rejected records is also shown in Dashboard's Engine panel.
-[block:api-header]
-{
-  "type": "basic",
-  "title": "Examples"
-}
-[/block]
-The following model takes in a record with three fields (`name`, `x` and `y`), and returns the product of the two numbers.
-[block:code]
-{
-  "codes": [
-    {
-      "code": "# fastscore.input: named-array\n# fastscore.output: named-double\n\ndef action(datum):\n      my_name = datum['name']\n      x = datum['x']\n      y = datum['y']\n      yield {'name': my_name, 'product':x*y}",
-      "language": "python",
-      "name": "model.py"
-    }
-  ]
-}
-[/block]
-The corresponding input and output AVRO schema are:
-[block:code]
-{
-  "codes": [
-    {
-      "code": "{\n  \"type\":\"record\",\n  \"name\":\"input\",\n  \"fields\": [\n    {\"name\":\"name\", \"type\":\"string\"},\n    {\"name\":\"x\", \"type\":\"double\"},\n    {\"name\":\"y\", \"type\":\"double\"}\n    ]\n}",
-      "language": "json",
-      "name": "named-array.avsc"
-    }
-  ]
-}
-[/block]
+## Examples
 
-[block:code]
+The following model takes in a record with three fields (`name`, `x` and `y`), and returns the product of the two numbers.
+``` python
+# fastscore.input: named-array
+# fastscore.output: named-double
+
+def action(datum):
+      my_name = datum['name']
+      x = datum['x']
+      y = datum['y']
+      yield {'name': my_name, 'product':x*y}
+```
+
+The corresponding input and output AVRO schema are:
+``` json
 {
-  "codes": [
-    {
-      "code": "{\n  \"type\":\"record\",\n  \"name\":\"output\",\n  \"fields\": [\n    {\"name\":\"name\", \"type\":\"string\"},\n    {\"name\":\"product\", \"type\":\"double\"}\n    ]\n}",
-      "language": "json",
-      "name": "named-double.avsc"
-    }
-  ]
+  "type":"record",
+  "name":"input",
+  "fields": [
+    {"name":"name", "type":"string"},
+    {"name":"x", "type":"double"},
+    {"name":"y", "type":"double"}
+    ]
 }
-[/block]
+```
+
+``` json
+{
+  "type":"record",
+  "name":"output",
+  "fields": [
+    {"name":"name", "type":"string"},
+    {"name":"product", "type":"double"}
+    ]
+}
+```
+
 So, for example, this model may take as input the JSON record
 ```
 {"name":"Bob", "x":4.0, "y":1.5}
@@ -72,13 +66,13 @@ and score this record to produce
 {"name":"Bob", "product":"6.0"}
 ```
 
-[Once FastScore is running](doc:getting-started-with-fastscore), we can add the model and associated schemas to model manage with the following commands:
+[Once FastScore is running](https://opendatagroup.github.io/Guides/Getting%20Started%20with%20FastScore%20v1-6-1.html), we can add the model and associated schemas to model manage with the following commands:
 ```
 fastscore schema add named-array named-array.avsc
 fastscore schema add named-double named-double.avsc
 fastscore model add my_model model.py
 ```
-Assuming that additionally, we have [configured the input and output stream descriptors](doc:stream-descriptors) to use our schemas, we can then run the job with
+Assuming that additionally, we have [configured the input and output stream descriptors](https://opendatagroup.github.io/Product%20Documentation/Stream%20Descriptors.html) to use our schemas, we can then run the job with
 ```
 fastscore job run my_model <input stream name> <output stream name>
 ```

@@ -2,53 +2,34 @@
 title: "LDAP Authentication"
 excerpt: "New in v1.4!"
 ---
+# LDAP Authentication
+
 Starting with FastScore v1.4, the FastScore Dashboard and Proxy support Microsoft Active Directory user authentication using [Vault](https://www.vaultproject.io/). To achieve this functionality, FastScore uses Vault to securely store the Active Directory configuration details. This page describes how to make use of authentication in FastScore.
-[block:api-header]
-{
-  "title": "Connecting FastScore to Vault"
-}
-[/block]
+
+## Connecting FastScore to Vault
+
+
 This section assumes you already possess an existing Vault service. If you haven't configured Vault yet, [read the Vault configuration section below](#configuring-vault-in-docker).
 
 Authentication in FastScore is achieved through the Dashboard service. Recall from the [Getting Started Guide](doc:getting-started-with-fastscore) that Dashboard is designed to serve as a proxy for the FastScore fleet's REST API, as well as a visual configuration and diagnostic aid. By default, authentication is not enabled in Dashboard. To enable it, set the following environment variables:
-[block:parameters]
-{
-  "data": {
-    "h-0": "Name",
-    "h-1": "Default Value",
-    "h-2": "Description",
-    "h-3": "",
-    "0-0": "`AUTH_SERVICE`",
-    "0-1": "(none)",
-    "0-2": "Set to `ldap` to enable authentication.",
-    "1-0": "`VAULT_HOST`",
-    "1-1": "`127.0.0.1`",
-    "1-2": "The Vault server IP or hostname.",
-    "2-0": "`VAULT_PORT`",
-    "2-1": "`8200`",
-    "2-2": "The Vault server port.",
-    "3-0": "`VAULT_TOKEN`",
-    "3-1": "(none)",
-    "3-2": "Token which should be used for access to the Vault.",
-    "4-0": "`VAULT_SSL`",
-    "4-1": "`false`",
-    "4-2": "Whether or not to use SSL with the Vault.",
-    "6-0": "`VAULT_CACERT`",
-    "6-1": "(none)",
-    "6-2": "Path to the CA certificate.",
-    "5-0": "`VAULT_SSL_VERIFY`",
-    "5-1": "`false`",
-    "5-2": "Whether to validate SSL requests."
-  },
-  "cols": 3,
-  "rows": 7
-}
-[/block]
+
+| Name | Default Value | Description |
+| --- | --- | --- |
+| `AUTH_SERVICE` | (none) | Set to `ldap` to enable authentication. |
+| `VAULT_HOST` | `127.0.0.1` | The Vault server IP or hostname. |
+| `VAULT_PORT` | `8200` | The Vault server port. |
+| `VAULT_TOKEN` | (none) | Token which should be used for access to the Vault. |
+| `VAULT_SSL` | `false` | Whether or not to use SSL with the Vault. |
+| `VAULT_SSL_VERIFY` | `false` | Whether to validate SSL requests. |
+| `VAULT_CACERT` | (none) | Path to the CA certificate. |
+
+
 As seen from this table, the Dashboard must be provided with the Vault token and CA certificate to connect to the Vault. Generating the Vault token is discussed in the next section.
 
-## Authentication in the CLI
+### Authentication in the CLI
 
 The latest version of the FastScore CLI supports the authentication scheme described above. Usernames and passwords can be passed to the FastScore CLI's `connect` command. For example, the command
+
 ```
 fastscore connect https://dashboard-ip:8000 foo:bar
 ```
@@ -56,9 +37,10 @@ attempts to authenticate with username "foo" and password "bar". If the password
 
 Note that the FastScore CLI will save the authentication secret to the file "`.fastscore`" located in the current working directory. 
 
-## Authentication with the REST API
+### Authentication with the REST API
 
 To authenticate via the REST API, use a POST request to `/1/login` with the username and password, e.g.,
+
 ```
 POST /1/login HTTP/1.1
 Host: localhost:3000
@@ -66,118 +48,82 @@ Content-Type: application/x-www-form-urlencoded
  
 username=admin&password=admin
 ```
+
 If the user has been successfully authenticated, the request will return **200 OK** together with cookies. After authorization, all subsequent requests should contain the cookie. 
 
 If the REST API command fails, it may return the following error codes:
+
 * 401: Returned if the user has no access to LDAP, or the wrong credentials were sent.
 * 500: Returned if there's an LDAP server configuration error, or the server is not reachable.
 
-## Authentication with the Dashboard
+### Authentication with the Dashboard
 
 Entry point to configuration is https://localhost:3000/configuration
 At first you will be automatically redirect to the create configuration page. After initial configuration users can change the LDAP configuration via the configuration page.
 
 The user should create an admin password and set up the initial LDAP configuration. 
-[block:image]
-{
-  "images": [
-    {
-      "image": [
-        "https://files.readme.io/42f7e1b-LDAP_2.png",
-        "LDAP 2.png",
-        1019,
-        785,
-        "#35bbd2"
-      ]
-    }
-  ]
-}
-[/block]
+[!LDAP 2](images/LDAP 2.png)
 
-[block:image]
-{
-  "images": [
-    {
-      "image": [
-        "https://files.readme.io/4c8bf11-LDAP_3.png",
-        "LDAP 3.png",
-        1045,
-        802,
-        "#35bbd3"
-      ]
-    }
-  ]
-}
-[/block]
+[!LDAP 3](images/LDAP 3.png)
+
 At the end of configuration create process the user will see a Root Token and Unseal Key for manual manipulating with Vault in case any errors occur or maintenance is needed. 
 
-[block:image]
-{
-  "images": [
-    {
-      "image": [
-        "https://files.readme.io/463968a-LDAP_1.png",
-        "LDAP 1.png",
-        1052,
-        797,
-        "#e3e4e4"
-      ]
-    }
-  ]
-}
-[/block]
-Below is the Admin login page.  
-[block:image]
-{
-  "images": [
-    {
-      "image": [
-        "https://files.readme.io/6fd4ed7-LDAP_4.png",
-        "LDAP 4.png",
-        972,
-        739,
-        "#34bcd4"
-      ]
-    }
-  ]
-}
-[/block]
+[!LDAP 1](images/LDAP 1.png)
 
-[block:api-header]
-{
-  "title": "Configuring Vault in Docker"
-}
-[/block]
+Below is the Admin login page.  
+[!LDAP 4](images/LDAP 4.png)
+
+## <a name="#configuring-vault-in-docker"></a> Configuring Vault in Docker
+
 In order to use authentication with the Dashboard, you need to have Vault running. Vault is a secure credentials repository, and it can be run either as a native binary, or in a Docker container. In this segment, we'll use the latter option. 
 
-## Setting up the Vault Container
+### Setting up the Vault Container
 
 Use the following Docker-Compose file to start the Vault container:
-[block:code]
-{
-  "codes": [
-    {
-      "code": "version: '2'\nservices:\n vault:\n    image: vault:latest\n    network_mode: \"host\"\n    tty: true\n    stdin_open: true\n    command: server\n    cap_add:\n      - IPC_LOCK\n # uncomment these lines if you're using aufs\n #   environment:\n #     SKIP_SETCAP: \"True\"\n    volumes:\n      - ./vault-config:/vault/config\n",
-      "language": "yaml",
-      "name": "vault-compose.yml"
-    }
-  ]
-}
-[/block]
+
+``` yaml
+version: '2'
+services:
+ vault:
+    image: vault:latest
+    network_mode: "host"
+    tty: true
+    stdin_open: true
+    command: server
+    cap_add:
+      - IPC_LOCK
+ # uncomment these lines if you're using aufs
+ #   environment:
+ #     SKIP_SETCAP: "True"
+    volumes:
+      - ./vault-config:/vault/config
+```
+
 Note that compose file links the local directory `vault-config` to the corresponding directory `/vault/config` in the container. This can be used to load configuration files and certificates into the Vault container. Additionally, the environment variable `SKIP_SETCAP` is currently commented out---uncomment this if you're using Docker's `aufs` filesystem (as of v0.6.3, there are some issues using `IPC_LOCK` on an `aufs` Docker filesystem).
 
 Inside of the `vault` directory, create a subdirectory named `config` and put your Vault configuration file there. An example Vault configuration file might look like:
-[block:code]
+
+``` yaml
 {
-  "codes": [
-    {
-      "code": "{\n    \"backend\": {\n      \"file\": {\n        \"path\": \"/vault/file\"\n      }\n    },\n    \"listener\": {\n      \"tcp\": {\n        \"address\": \"0.0.0.0:8200\",\n        \"tls_disable\": 0,\n        \"tls_cert_file\": \"/vault/config/server.crt\",\n        \"tls_key_file\": \"/vault/config/server.key\"\n       }\n    },\n  \"default_lease_ttl\": \"168h\",\n  \"max_lease_ttl\": \"720h\",\n  \"disable_mlock\": true\n}\n",
-      "language": "json",
-      "name": "config.json"
-    }
-  ]
+    "backend": {
+      "file": {
+        "path": "/vault/file"
+      }
+    },
+    "listener": {
+      "tcp": {
+        "address": "0.0.0.0:8200",
+        "tls_disable": 0,
+        "tls_cert_file": "/vault/config/server.crt",
+        "tls_key_file": "/vault/config/server.key"
+      }
+    },
+  "default_lease_ttl": "168h",
+  "max_lease_ttl": "720h",
+  "disable_mlock": true
 }
-[/block]
+```
+
 In this configuration file, `server.crt` and `server.key` are your server's certificate and key---add these files to the `vault-config` folder as well.
 
 Start the vault container with
@@ -202,7 +148,7 @@ vault_1         | ==> Vault server started! Log data will stream in below:
 vault_1         | 
 ```
 
-## Configuring Vault
+### <a name="configuring-vault"></a>Configuring Vault
 
 The Vault container can be interacted with through both a CLI and a REST API. For simplicity, we'll focus on using the CLI. All CLI commands can be executed on both a local machine, or within the Vault container itself---we'll use `docker exec` to run the commands within the container.
 
@@ -264,17 +210,18 @@ If the command succeeds, the Vault will respond with
 Success! Data written to: secret/ldap-configuration
 ```
 In order to make this accessible from the Dashboard, we'll have to create an access policy. Our policy is configured with the file:
-[block:code]
-{
-  "codes": [
-    {
-      "code": "path \"secret/ldap-configuration\" {\n    policy = \"read\"\n}\n \n \npath \"secret/ldap-configuration\" {\n    policy = \"read\"\n}\n",
-      "language": "text",
-      "name": "policy.hcl"
-    }
-  ]
+
+```
+path "secret/ldap-configuration" {
+    policy = "read"
 }
-[/block]
+
+
+path "secret/ldap-configuration" {
+    policy = "read"
+}
+```
+
 Set the policy for the `ldap-configuration` secret by copying the file `policy.hcl` to `vault-config` and running the command:
 ```
 docker-compose exec vault vault policy-write dashboard-service-policy /vault/config/policy.hcl
@@ -328,7 +275,7 @@ Add the `role_id` and `secret_id` to the Dashboard service in Vault:
 docker-compose exec vault vault write auth/approle/login role_id=[role_id] secret_id=[secret_id]
 ```
 
-# Authorized Users
+## Authorized Users
 
 In the [section on Configuring Vault](#configuring-vault), we have provided an example configuration to connect to Microsoft Active Directory. Other LDAP-enabled directories will be supported as well. We have stored the following details in Vault in order to properly authenticate and authorize users:
 

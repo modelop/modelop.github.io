@@ -2,7 +2,7 @@
 title: "Release Notes for FastScore v1.6.1"
 excerpt: ""
 ---
-##Highlights
+## Highlights
 Version 1.6 of FastScore introduces multiple input and output streams connected to an engine, Octave and MATLAB runner, and access to the R SDK.
 
 ## 1.6.1 
