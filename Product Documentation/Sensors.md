@@ -134,6 +134,7 @@ Eight sensors are installed in each engine by default:
 ```
 
 ![Sensor1](images/Sensor1.png)
+*This graph shows the Memory usage metrics that the sensor is capturing.*
 
 ![Sensor1](images/Sensor2.png)
 *These graphs show the throughput and count of records with that are rejected due to some specific issue and records that are accepted.*

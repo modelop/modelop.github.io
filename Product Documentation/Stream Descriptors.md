@@ -2,7 +2,9 @@
 title: "Stream Descriptors"
 excerpt: "Documentation for stream descriptors"
 ---
-# Contents
+# Stream Descriptors
+
+## Contents
 
 1. [Overview](#overview)
 2. [Field Descriptions](#field-descriptions)
@@ -331,7 +333,7 @@ This example writes a sequence of AVRO-binary typed data to a Kafka stream.
     "Type": "kafka",
     "BootstrapServers": ["127.0.0.1:9092"],
     "Topic": "data-feed-1",
-    "Partition": 0\
+    "Partition": 0
   },
   "Envelope": null,
   "Encoding": "avro-binary",

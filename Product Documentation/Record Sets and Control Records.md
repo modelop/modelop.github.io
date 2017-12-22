@@ -134,7 +134,7 @@ Control Records have representations in each of the supported encodings, as desc
 | Encoding | end | set | pig | Notes |
 | --- | --- | --- | --- | --- |
 | null | `\\xfastscore.end` | `\\xfastscore.set` | `\\xfastscore.pig` | The record size must be at least 12 bytes. If there are at least 12 more bytes after the 12-byte prefix, then it contains the ID and timestamp encoded using the `'!Q'` Python struct format. Any data that follow is the value of the `misc` property. |
-| utf-8 | `\\u262efastscore.end` | `\\u262efastscore.set` | `\\u262efastscore.pig` | ID, timestamp, and `misc` values may be appended separated by pipes. For example, `'\\u262efastscore.pig|1234|3476304987|misc-data'`. |
+| utf-8 | `\\u262efastscore.end` | `\\u262efastscore.set` | `\\u262efastscore.pig` | ID, timestamp, and `misc` values may be appended separated by pipes. For example, `'\u262efastscore.pig|1234|3476304987|misc-data'`. |
 | json | `{"$fastscore":"end"}` | `{"$fastscore":"set"}` | `{"$fastscore":"pig"}` | ID, timestamp, and `misc` values can be added as properties. |
 
 

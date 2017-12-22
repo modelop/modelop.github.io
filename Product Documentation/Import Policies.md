@@ -17,24 +17,10 @@ The possible entries are:
 
 | Entry | Description |
 | --- | --- |
-| ```
-<my-lib>: prohibit
-``` 
-| Do not load the model and issue an error. |
-| ```
-<my-lib>: warn
-``` 
-| Allow the model to run, but issue a warning. |
-| ```
-<my-lib>: install
-``` |
-| Install the library using the default command. |
-| ```
-<my-lib>:
-    policy: install
-    command: <command>
-``` |
-| Install the library using a custom command. |
+| ```<br><my-lib>: prohibit<br>``` | Do not load the model and issue an error. |
+| ```<br><my-lib>: warn<br>``` | Allow the model to run, but issue a warning. |
+| ```<br><my-lib>: install<br>``` | Install the library using the default command. |
+| ```<br><my-lib>: <br>    policy: install<br>    command: <command><br>``` | Install the library using a custom command. |
 
 
 The engine knows the standard install commands for all runners. For example, for Python, the engine would use `pip install <my-lib>`. 
@@ -47,7 +33,8 @@ socket: warn
 scikit-learn:
   policy: install
   command: pip install scikit-learn=3.2.1
-nose: install",
+nose: install
+```
 
 A model runner's import policy manifest is loaded from the `import.policy` file located in the appropriate directory in the engine's filesystem:
 

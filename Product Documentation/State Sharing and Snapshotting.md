@@ -93,7 +93,7 @@ fastscore snapshot list <model name>
 fastscore snapshot restore <model name> <snapshot id>
 ```
 
-The `snapshot list` command shows the saved snapshots for a given model. The `snapshot restore` command restores the specified snapshot for a particular model. Snapshots are automatically created upon receipt of an end-of-stream message, but these end-of-stream messages can be introduced as control records into the data stream for streaming transports (e.g. Kafka). For more information on control records, see [Record Sets and Control Records](doc:record-sets). 
+The `snapshot list` command shows the saved snapshots for a given model. The `snapshot restore` command restores the specified snapshot for a particular model. Snapshots are automatically created upon receipt of an end-of-stream message, but these end-of-stream messages can be introduced as control records into the data stream for streaming transports (e.g. Kafka). For more information on control records, see [Record Sets and Control Records](https://opendatagroup.github.io/Product%20Documentation/Record%20Sets%20and%20Control%20Records.html). 
 
 To enable snapshots, use the `fastscore.snapshots` smart comment:
 ```

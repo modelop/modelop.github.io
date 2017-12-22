@@ -173,9 +173,9 @@ Add or remove sensor descriptors. These commands are covered in more detail at [
 | `show` | sensor name | Displays the sensor descriptor for the named sensor. | `fastscore sensor show my-sensor` |
 | `remove` | sensor name | Removes the named sensor from Model Manage. | `fastscore sensor remove my-sensor` |
 | `install` | sensor name | Installs a sensor. The sensor connects to the tapping point and starts collecting data according to its descriptor. The command returns the tap id of installed sensor. | `fastscore sensor install my-sensor` |
-| `uninstall` | tap id | The tap id returned by installing the sensor is needed to uninstall the sensor. | `fastscore sensor points` |
-| `inspect` | tap id (optional) | Describes the installed sensor or all installed sensors if <tap-id> is omitted. | `fastscore sensor uninstall 2` |
-| `points` | (none) | Prints information about all available tapping points. | `fastscore sensor inspect` |
+| `uninstall` | tap id | The tap id returned by installing the sensor is needed to uninstall the sensor. | `fastscore sensor uninstall 2` |
+| `inspect` | tap id (optional) | Describes the installed sensor or all installed sensors if <tap-id> is omitted. | `fastscore sensor inspect` |
+| `points` | (none) | Prints information about all available tapping points. | `fastscore sensor points` |
 
 
 ### Snapshot
@@ -207,8 +207,8 @@ The stream commands add, remove, and sample streams.
 | `show` | stream name | Display the contents of the named stream descriptor. | `fastscore stream show file-in` |
 | `sample` | stream name, number of items (optional) | Prints the specified number of records from the named stream. | `fastscore stream sample file-in` |
 | `remove` | stream name | Removes the named stream from Model Manage. | `fastscore stream remove kafka-stream` |
-| `detach` | stream name, slot | Attach a stream to the engine in a specified slot (even are for inputs and odd are for outputs) | `fastscore stream attach kafka-stream-in 0` |
-| `attach` | slot | Detach a stream from a specified slot. | `fastscore stream detach 1` |
+| `attach` | stream name, slot | Attach a stream to the engine in a specified slot (even are for inputs and odd are for outputs) | `fastscore stream attach kafka-stream-in 0` |
+| `detach` | slot | Detach a stream from a specified slot. | `fastscore stream detach 1` |
 | `inspect` | slot (optional) | View streams in the specified slot | `fastscore stream inspect 0` |
 | `verify` | stream name, slot | Run a descriptor validity check to ensure the stream transport will work and produce data. | `fastscore stream verify kafka-stream-in 0` |
 

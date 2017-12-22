@@ -11,7 +11,7 @@ Starting with FastScore v1.4, the FastScore Dashboard and Proxy support Microsof
 
 This section assumes you already possess an existing Vault service. If you haven't configured Vault yet, [read the Vault configuration section below](#configuring-vault-in-docker).
 
-Authentication in FastScore is achieved through the Dashboard service. Recall from the [Getting Started Guide](doc:getting-started-with-fastscore) that Dashboard is designed to serve as a proxy for the FastScore fleet's REST API, as well as a visual configuration and diagnostic aid. By default, authentication is not enabled in Dashboard. To enable it, set the following environment variables:
+Authentication in FastScore is achieved through the Dashboard service. Recall from the [Getting Started Guide](https://opendatagroup.github.io/Guides/Getting%20Started%20with%20FastScore%20v1-6-1.html) that Dashboard is designed to serve as a proxy for the FastScore fleet's REST API, as well as a visual configuration and diagnostic aid. By default, authentication is not enabled in Dashboard. To enable it, set the following environment variables:
 
 | Name | Default Value | Description |
 | --- | --- | --- |
@@ -62,18 +62,18 @@ Entry point to configuration is https://localhost:3000/configuration
 At first you will be automatically redirect to the create configuration page. After initial configuration users can change the LDAP configuration via the configuration page.
 
 The user should create an admin password and set up the initial LDAP configuration. 
-[!LDAP 2](images/LDAP 2.png)
+![LDAP 2](images/LDAP 2.png)
 
-[!LDAP 3](images/LDAP 3.png)
+![LDAP 3](images/LDAP 3.png)
 
 At the end of configuration create process the user will see a Root Token and Unseal Key for manual manipulating with Vault in case any errors occur or maintenance is needed. 
 
-[!LDAP 1](images/LDAP 1.png)
+![LDAP 1](images/LDAP 1.png)
 
 Below is the Admin login page.  
-[!LDAP 4](images/LDAP 4.png)
+![LDAP 4](images/LDAP 4.png)
 
-## <a name="#configuring-vault-in-docker"></a> Configuring Vault in Docker
+## <a name="configuring-vault-in-docker"></a> Configuring Vault in Docker
 
 In order to use authentication with the Dashboard, you need to have Vault running. Vault is a secure credentials repository, and it can be run either as a native binary, or in a Docker container. In this segment, we'll use the latter option. 
 
@@ -294,6 +294,7 @@ searchBase="dc=odg,dc=local"
 * The search filter defining which attribute maps to username and criteria for user authorization:
 ```
 searchFilters="(&(SamAccountName={{username}})(memberOf=CN=fastscore-dashboard-users,CN=Users,DC=odg,DC=local))"
+```
 * LDAP URL defining the protocol (`ldap` or `ldaps`, server address, and port):
 ```
 url="ldaps://odgad.odg.local:3269"
