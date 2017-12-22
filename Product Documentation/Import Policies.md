@@ -17,10 +17,12 @@ The possible entries are:
 
 | Entry | Description |
 | --- | --- |
-| ```<br><my-lib>: prohibit<br>``` | Do not load the model and issue an error. |
-| ```<br><my-lib>: warn<br>``` | Allow the model to run, but issue a warning. |
-| ```<br><my-lib>: install<br>``` | Install the library using the default command. |
-| ```<br><my-lib>: <br>    policy: install<br>    command: <command><br>``` | Install the library using a custom command. |
+| `<my-lib>: prohibit` | Do not load the model and issue an error. |
+| `my-lib>: warn` | Allow the model to run, but issue a warning. |
+| `<my-lib>: install` | Install the library using the default command. |
+| `<my-lib>:` | Install the library using a custom command. |
+| `    policy: install' |  |
+| `    command: <command>` |  |
 
 
 The engine knows the standard install commands for all runners. For example, for Python, the engine would use `pip install <my-lib>`. 
@@ -44,4 +46,4 @@ A model runner's import policy manifest is loaded from the `import.policy` file 
 
 In FastScore 1.4, the import policy for a model runner is fixed as soon as a model is loaded into the engine, so any changes to import policies must be made _before_ running a model. To copy a new manifest into the container, use the [`docker cp`](https://docs.docker.com/engine/reference/commandline/cp/) command or an equivalent.
 
-Adding import policies to an engine through the command `fastscore policy set my-policy.yml` is now available with v1.6. See [FastScore Command Line Interface](doc:fastscore-command-line-interface) for more information on subcommands.
+Adding import policies to an engine through the command `fastscore policy set my-policy.yml` is now available with v1.6. See [FastScore Command Line Interface](https://opendatagroup.github.io/Product%20Documentation/FastScore%20Command%20Line%20Interface.html) for more information on subcommands.

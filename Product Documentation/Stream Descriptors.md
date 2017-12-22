@@ -299,7 +299,7 @@ The following is an example of an HTTP stream.
     "Separator": "\\r\\n"
   },
   "Encoding": null,
-  "Schema": null\
+  "Schema": null
 }
 ```
 
