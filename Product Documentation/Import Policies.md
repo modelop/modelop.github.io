@@ -20,7 +20,7 @@ The possible entries are:
 | `<my-lib>: prohibit` | Do not load the model and issue an error. |
 | `<my-lib>: warn` | Allow the model to run, but issue a warning. |
 | `<my-lib>: install` | Install the library using the default command. |
-| `<my-lib>:`<br>`    policy: install`<br>`    command: <command>` | Install the library using a custom command. |
+| `<my-lib>:`<br>&nbsp;&nbsp;&nbsp;&nbsp;`policy: install`<br>&nbsp;&nbsp;&nbsp;&nbsp;`command: <command>` | Install the library using a custom command. |
 
 
 The engine knows the standard install commands for all runners. For example, for Python, the engine would use `pip install <my-lib>`. 
