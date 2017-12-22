@@ -11,24 +11,21 @@ If you need support or have questions, please email us: support@opendatagroup.co
 # Contents
 
 1. [Installing FastScore](#installing-fastscore)
-  
-    1.1 [Prerequisites](#section-prerequisites)
-    1.2 [Start FastScore Microservices Suite with Docker Compose (Recommended)](#section-start-fastscore-microservices-suite-with-docker-compose-recommended-)
-    1.3 [Start FastScore Microservices Suite (Manually)](#section-start-fastscore-microservices-suite-manually-)
-    1.4 [Installing the FastScore CLI](#installing-the-fastscore-cli)
+    1. [Prerequisites](#section-prerequisites)
+    2. [Start FastScore Microservices Suite with Docker Compose (Recommended)](#section-start-fastscore-microservices-suite-with-docker-compose-recommended-)
+    3. [Start FastScore Microservices Suite (Manually)](#section-start-fastscore-microservices-suite-manually-)
+    4. [Installing the FastScore CLI](#installing-the-fastscore-cli)
 2. [Configuring and Starting FastScore](#configuring-and-starting-fastscore)
-
-    2.1 [FastScore Configuration Files](#section-fastscore-configuration-files)
-    2.2 [Connecting to and Configuring FastScore with the FastScore CLI](#section-connecting-to-and-configuring-fastscore-with-the-fastscore-cli)
-    2.3 [Using the FastScore Dashboard](#section-using-the-fastscore-dashboard)
+    1. [FastScore Configuration Files](#section-fastscore-configuration-files)
+    2. [Connecting to and Configuring FastScore with the FastScore CLI](#section-connecting-to-and-configuring-fastscore-with-the-fastscore-cli)
+    3. [Using the FastScore Dashboard](#section-using-the-fastscore-dashboard)
 3. [Working with Models and Streams](#working-with-models-and-streams)
-
-    3.1 [Creating and Loading Models](#section-creating-and-loading-assets-into-fastscore-model-manage)
-    3.2 [Models in Python and R](#section-models-in-python-and-r)
-    3.3 [Input and Output Schema](#section-input-and-output-schema)
-    3.4 [Input and Output Streams](#section-input-and-output-streams)
-    3.5 [Engine Parameters](#section-engine-parameters)
-    3.6 [Running a Model in FastScore](#section-running-a-model-in-fastscore)
+    1. [Creating and Loading Models](#section-creating-and-loading-assets-into-fastscore-model-manage)
+    2. [Models in Python and R](#section-models-in-python-and-r)
+    3. [Input and Output Schema](#section-input-and-output-schema)
+    4. [Input and Output Streams](#section-input-and-output-streams)
+    5. [Engine Parameters](#section-engine-parameters)
+    6. [Running a Model in FastScore](#section-running-a-model-in-fastscore)
 
 
 ## <a name="installing-fastscore"></a>Installing FastScore
