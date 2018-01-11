@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% seo %}
+    <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
+  </head>
+  <body>
+      <div class="pagecontent">
+        <div class="header">
+            <div class="header-content">
+                <a href="https://www.opendatagroup.com" style="border-width: 0px; border: 0px;">
+                    <img src="{{ "/assets/images/odg_logo_new_header.png"  | relative_url }}"
+                         style="width: 145.45px; border-width: 0px; border: 0px"
+                         alt="Open Data Group" title="Open Data Group" sizes="(max-width: 600px) 100vw, 600px"
+                         width="145.45">
+                </a>
+
+                <ul class="menu" style="float: right;">
+                    <li><a href="https://www.opendatagroup.com/analytic-deployment-technology-fastscore">Analytic Deployment Technology</a></li>
+                    <li><a href="https://www.opendatagroup.com/solutions">Solutions</a></li>
+                    <li><a href="https://www.opendatagroup.com/resource">Resources</a></li>
+                    <li><a href="https://www.opendatagroup.com/about-us">About Us</a></li>
+                    <li><a href="https://www.opendatagroup.com/blog">Blog</a></li>
+                </ul>
+
+            </div>
+        </div>
+
+        <!-- Current Path -->
+        <div class="docspath">
+        <a href="{{ "/" | absolute_url }}">Home</a> {{ page.dir | replace: "%20", " " | replace: "/", " > " }} {{ page.title }}
+        </div>
+
+        <!-- Markdown content -->
+        <div class="container-lg px-3 my-5 markdown-body">
+
+
+          {{ content }}
+
+          {% if site.github.private != true and site.github.license %}
+          <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+            This site is open source. {% github_edit_link "Improve this page" %}.
+          </div>
+          {% endif %}
+        </div>
+        <!-- end markdown content -->
+
+        <div class="footer">
+
+            <div class="bottom-links">
+                <div class="contact-info">
+                    <p> <img src="{{ "/assets/images/odg_logo_new_white.png"  | relative_url }}" style="width:185px;border-width:0px;border:0px;margin-bottom:40px;"
+                        alt="Open Data Group" title="Open Data Group"
+                        width="185"> </p>
+                    <p>312.605.9650 <br /> <a href="mailto:sales@opendatagroup.com">sales@opendatagroup.com</a></p>
+
+                    <p>222 South Riverside Plaza <br />
+                        Suite 2800 <br />
+                        Chicago, IL 60606 </p>
+                </div>
+                <div class="bottom-links-section">
+                    <div class="column1">
+                        <h1>Analytic Deployment Technology</h1>
+                        <ul>
+                            <li><a href="//www.opendatagroup.com/analytic-deployment-technology-fastscore/#challenges" target="_self">Analytic Deployment Challenges</a></li>
+                            <li><a href="//www.opendatagroup.com/analytic-deployment-technology-fastscore/#how-it-fits" target="_self">How FastScore™ Fits In</a></li>
+                            <li><a href="//www.opendatagroup.com/analytic-deployment-technology-fastscore/#features" target="_self">FastScore™ Features</a></li>
+                            <li><a href="//www.opendatagroup.com/analytic-deployment-technology-fastscore/#integrations" target="_self">Integrate with Any Production Environment</a></li>
+                        </ul>
+                    </div>
+                    <div class="column2">
+                        <h1>Solutions</h1>
+                        <ul>
+                            <li><a href="https://www.opendatagroup.com/analytic-professionals" target="_self">For Analytic Professionals</a></li>
+                            <li><a href="https://www.opendatagroup.com/it-leaders" target="_self">For IT Leaders</a></li>
+                            <li><a href="https://www.opendatagroup.com/business-leaders" target="_self">For Business Leaders</a></li>
+                        </ul>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="column1">
+                        <h1>Resources</h1>
+                        <ul>
+                            <li><a href="https://www.opendatagroup.com/resources" target="_self">White Papers</a></li>
+                            <li><a href="https://www.opendatagroup.com/resources" target="_self">Webinars</a></li>
+                            <li><a href="https://www.opendatagroup.com/blog" target="_self">Blog</a></li>
+                            <li><a href="http://docs.opendatagroup.com" target="_self">Documentation</a></li>
+                        </ul>
+                    </div>
+                    <div class="column2">
+                        <h1>About Us</h1>
+                        <ul>
+                            <li><a href="//www.opendatagroup.com/about-us/#our-story" target="_self">Our Story</a></li>
+                            <li><a href="//www.opendatagroup.com/about-us/#leadership" target="_self">Our Leadership</a></li>
+                            <li><a href="//www.opendatagroup.com/about-us/#partners" target="_self">Our Partners</a></li>
+                        </ul>
+                    </div>
+                </div>
+            <div>
+
+            <div class="divider"></div>
+            <div class="copyright">
+                <span class="company-copyright">© 2018 Open Data Group</span>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{{ "assets/javascript/anchor-js/anchor.min.js" | relative_url }}"></script>
+    <script>anchors.add();</script>
+    {% if site.google_analytics %}
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', '{{ site.google_analytics }}', 'auto');
+      ga('send', 'pageview');
+    </script>
+    {% endif %}
+  </body>
+</html>
