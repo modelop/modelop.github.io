@@ -236,6 +236,8 @@ n_iterations = 1500
 batch_size = 100
 
 with graph.as_default() as g:
+    tf.set_random_seed(seed)
+    np.random.seed(seed)
     loss = tf.reduce_mean(tf.square(outputs - y))
     optimizer = tf.train.AdamOptimizer(learning_rate = learning_rate)
     training_op = optimizer.minimize(loss)
@@ -245,16 +247,18 @@ with graph.as_default() as g:
     with tf.Session(graph = graph) as sess:
         init.run()
         for iteration in range(n_iterations):
-            X_batch, y_batch = make_training_sequences(training_data, batch_size, n_steps, seed)
+            X_batch, y_batch = make_training_sequences(training_data,
+                                batch_size, n_steps, seed + iteration)
             sess.run(training_op, feed_dict = {X: X_batch, y: y_batch})
             if iteration % 100 == 0:
                 mse = loss.eval(feed_dict = {X: X_batch, y: y_batch})
                 print(iteration, "\tMSE:", mse)
         saver.save(sess, './{}'.format(save_name))
+
 ```
 
 With the settings above on a moderately powerful machine, the training process
-takes ~5 minutes, and the model converges to a MSE of about 0.0016. The trained
+takes ~5 minutes, and the model converges to a MSE of about 0.0013. The trained
 model is saved to `tf_sp500_lstm`.
 
 Generating predictions with the model is straightforward:
@@ -316,3 +320,6 @@ plot_predict_date(split_date, sp500['Adjusted Normalized Close'], steps_forward 
 ```
 
 ![Predicted vs Observed, Test Data](images/example_observed_vs_predicted_2007-06-01.png)
+
+We've achieved a MSE of 9.75e-5 on our test data, which is pretty good
+given that the model was only trained on pre-crisis data.
