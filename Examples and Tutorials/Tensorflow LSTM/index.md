@@ -1,4 +1,4 @@
-# Tensorflow LSTM
+# TensorFlow LSTM
 
 In this tutorial, we'll create an LSTM neural network using time series data (
 historical S&P 500 closing prices), and then deploy this model in FastScore.
@@ -171,10 +171,10 @@ This function accepts several inputs:
 * `seed` is a random seed to use. Fixing the seed will make training data
   generation reproducible.
 
-## Implementing the Model in Tensorflow
+## Implementing the Model in TensorFlow
 
 With our input data scaled and normalized, and a function defined to generate
-training data, we're now ready to build our model. Begin by importing Tensorflow:
+training data, we're now ready to build our model. Begin by importing TensorFlow:
 ```python
 import tensorflow as tf
 ```
@@ -321,5 +321,160 @@ plot_predict_date(split_date, sp500['Adjusted Normalized Close'], steps_forward 
 
 ![Predicted vs Observed, Test Data](images/example_observed_vs_predicted_2007-06-01.png)
 
-We've achieved a MSE of 9.75e-5 on our test data, which is pretty good
+We've achieved a MSE of 0.00028 on our test data, which is pretty good
 given that the model was only trained on pre-crisis data.
+
+## FastScore Deployment
+
+Deploying our trained model in FastScore is straightforward. A FastScore Python
+model script must define an `action` method, and may additionally define `begin`
+and `end` methods for intialization/uninitialization, as well as any user-defined
+functions or imports needed.
+
+For initialization, we'll define a `begin` function that creates all of the
+same TensorFlow variables we constructed for model training, and initializes
+our session:
+
+```python
+def begin():
+    tf.logging.set_verbosity(tf.logging.WARN)
+
+    global past_days
+    past_days = []
+
+    global n_steps, X, outputs, sess
+    n_steps = 30
+    n_inputs = 1
+    n_outputs = 1
+    n_layers = 3
+    n_units = 100
+    save_name = 'tf_sp500_lstm'
+
+    X = tf.placeholder(tf.float32, [None, n_steps, n_inputs])
+    y = tf.placeholder(tf.float32, [None, n_steps, n_outputs])
+    layers = [tf.contrib.rnn.BasicLSTMCell(num_units = n_units) for k in range(n_layers)]
+    cell = tf.contrib.rnn.OutputProjectionWrapper(
+      tf.contrib.rnn.MultiRNNCell(layers), output_size = n_outputs)
+    outputs, states = tf.nn.dynamic_rnn(cell, X, dtype=tf.float32)
+    saver = tf.train.Saver()
+    sess = tf.Session()
+    saver.restore(sess, './{}'.format(save_name))
+```
+
+Using the `global` keyword makes all of these variables accessible later in
+other methods. We also have a `past_days` variable---when deployed, this model
+will receive individual prices as inputs, and we'll accumulate the last 30 of them
+in `past_days`. In contrast to the model training code, we're not using context
+management to control our TensorFlow session---instead, the session is manually
+started in the `begin` method, and we'll manually close it at the end of the
+model run with the `end` method:
+
+```python
+def end():
+    sess.close()
+```
+
+Next, let's copy our `predict` method over from the model testing, and make some
+slight modifications:
+
+```python
+def predict(inputs):
+    if len(inputs[0,:,0]) < n_steps:
+        raise Exception("Insufficient inputs! X should be an array of shape (1, k, 1) where k >= n_steps")
+
+    preds = []
+    steps_forward = len(inputs[0,:,0]) - n_steps + 1
+    for j in range(0, steps_forward):
+        X_in = inputs[:,j:j+n_steps,:]
+        y_pred = sess.run(outputs, feed_dict = {X: X_in})
+        preds.append(y_pred[0,-1,0]) # add the last one
+    return np.array(preds).reshape(-1, len(preds), 1)
+```
+
+The `predict` method has been slightly simplified: we no longer restore the session
+from the save file (it is already restored and opened in the `begin` method), but
+is otherwise identical.
+
+Finally, the `action` method is the hook that the FastScore engine uses to produce
+scores. It will take as input a closing price, and produce as output the prediction
+for the next day's closing price.
+
+```python
+def action(x):
+    global past_days
+    past_days.append(x)
+    past_days = past_days[-n_steps:]
+    if len(past_days) == n_steps:
+        result = predict(np.array(past_days).reshape(-1, n_steps, 1))[0, 0, 0]
+        yield result
+```
+
+Because the TensorFlow model uses 30 days' worth of prices to make predictions,
+we need to keep track of the last 30 inputs received. (Recall that the 30 days is
+determined by the `n_steps` variable). Tracking the previous inputs is handled by
+`past_days`, which was initialized in the `begin` method to an empty
+list. As written, the model will only produce output when it has accumulated enough
+inputs to make a prediction.
+
+The inputs and outputs of this model will be doubles, so let's add smart comments
+to the top of the model code to indicate this. In total, our FastScore-ready
+model is:
+
+```python
+# fastscore.schema.0: double
+# fastscore.schema.1: double
+
+import tensorflow as tf
+import numpy as np
+
+def begin():
+    tf.logging.set_verbosity(tf.logging.WARN)
+
+    global past_days
+    past_days = []
+
+    global n_steps, X, outputs, sess
+    n_steps = 30
+    n_inputs = 1
+    n_outputs = 1
+    n_layers = 3
+    n_units = 100
+    save_name = 'tf_sp500_lstm'
+
+    X = tf.placeholder(tf.float32, [None, n_steps, n_inputs])
+    y = tf.placeholder(tf.float32, [None, n_steps, n_outputs])
+    layers = [tf.contrib.rnn.BasicLSTMCell(num_units = n_units) for k in range(n_layers)]
+    cell = tf.contrib.rnn.OutputProjectionWrapper(
+      tf.contrib.rnn.MultiRNNCell(layers), output_size = n_outputs)
+    outputs, states = tf.nn.dynamic_rnn(cell, X, dtype=tf.float32)
+    saver = tf.train.Saver()
+    sess = tf.Session()
+    saver.restore(sess, './{}'.format(save_name))
+
+def predict(inputs):
+    if len(inputs[0,:,0]) < n_steps:
+        raise Exception("Insufficient inputs! X should be an array of shape (1, k, 1) where k >= n_steps")
+
+    preds = []
+    steps_forward = len(inputs[0,:,0]) - n_steps + 1
+    for j in range(0, steps_forward):
+        X_in = inputs[:,j:j+n_steps,:]
+        y_pred = sess.run(outputs, feed_dict = {X: X_in})
+        preds.append(y_pred[0,-1,0]) # add the last one
+    return np.array(preds).reshape(-1, len(preds), 1)
+
+def action(x):
+    global past_days
+    past_days.append(x)
+    past_days = past_days[-n_steps:]
+    if len(past_days) == n_steps:
+        result = predict(np.array(past_days).reshape(-1, n_steps, 1))[0, 0, 0]
+        yield result
+
+def end():
+    sess.close()
+```
+
+Note that we'll additionally need to bundle the `tf_sp500_lstm` TensorFlow session
+checkpoints with our model in order for it to execute in FastScore; to do this,
+save the checkpoint as a model attachment.
