@@ -324,7 +324,7 @@ plot_predict_date(split_date, sp500['Adjusted Normalized Close'], steps_forward 
 We've achieved a MSE of 0.00028 on our test data, which is pretty good
 given that the model was only trained on pre-crisis data.
 
-## FastScore Deployment
+## Preparing the Model for Deployment
 
 Deploying our trained model in FastScore is straightforward. A FastScore Python
 model script must define an `action` method, and may additionally define `begin`
@@ -406,7 +406,7 @@ def action(x):
     past_days = past_days[-n_steps:]
     if len(past_days) == n_steps:
         result = predict(np.array(past_days).reshape(-1, n_steps, 1))[0, 0, 0]
-        yield result
+        yield np.asscalar(result)
 ```
 
 Because the TensorFlow model uses 30 days' worth of prices to make predictions,
@@ -414,15 +414,20 @@ we need to keep track of the last 30 inputs received. (Recall that the 30 days i
 determined by the `n_steps` variable). Tracking the previous inputs is handled by
 `past_days`, which was initialized in the `begin` method to an empty
 list. As written, the model will only produce output when it has accumulated enough
-inputs to make a prediction.
+inputs to make a prediction. The result is cast to a standard Python `float` (
+from NumPy's `float32`) to ensure compatibility with data serialization (e.g.,
+JSON).
 
-The inputs and outputs of this model will be doubles, so let's add smart comments
-to the top of the model code to indicate this. In total, our FastScore-ready
-model is:
+The inputs and outputs of this model will be Avro doubles, so let's add smart comments
+to the top of the model code to indicate this. We'll also be manually controlling the
+version of TensorFlow we install, so we'll use the `fastscore.module-attached` smart
+comment to indicate that the engine should not attempt to install TensorFlow automatically.
+In total, our FastScore-ready model is:
 
 ```python
 # fastscore.schema.0: double
 # fastscore.schema.1: double
+# fastscore.module-attached: tensorflow
 
 import tensorflow as tf
 import numpy as np
@@ -469,7 +474,7 @@ def action(x):
     past_days = past_days[-n_steps:]
     if len(past_days) == n_steps:
         result = predict(np.array(past_days).reshape(-1, n_steps, 1))[0, 0, 0]
-        yield result
+        yield np.asscalar(result)
 
 def end():
     sess.close()
@@ -477,4 +482,104 @@ def end():
 
 Note that we'll additionally need to bundle the `tf_sp500_lstm` TensorFlow session
 checkpoints with our model in order for it to execute in FastScore; to do this,
-save the checkpoint as a model attachment.
+save the checkpoint as a model attachment:
+```bash
+tar czvf attachment.tar.gz tf_sp500_lstm*
+```
+
+## Deploying the Model in FastScore
+
+Finally, let's deploy our FastScore-ready model into the FastScore engine. First,
+we'll need to create a custom engine image with the specific environment we used
+to create this model. Create a text file called `requirements.txt`, and include
+the following:
+
+**requirements.txt**
+```
+numpy==1.13.3
+pandas==0.20.2
+tensorflow==1.4.0
+```
+Adjust the specific versions of the libraries to match the versions in
+your working environment. (Use `pip freeze | grep <library-name>` to find out
+what version of a library you have installed.)
+
+Next, let's build a custom Docker container image from the base engine image:
+
+**Dockerfile**
+```
+FROM fastscore/engine:1.6.1
+ADD ./requirements.txt .
+RUN pip3 install --isolated -r requirements.txt
+```
+
+We're starting with the 1.6.1 FastScore engine image, and then installing the
+the libraries listed in `requirements.txt`.
+
+To build the container image, just run
+```
+docker build -t localrepo/engine:tensorflow .
+```
+from within the same directory as the Dockerfile and `requirements.txt` file.
+
+All that's needed to add a custom TensorFlow-ready engine to your fleet is
+to run the engine container and update your FastScore fleet's configuration to
+include the new engine. If you're starting from scratch, we have prepared a Docker-Compose
+file together with some shell scripts to build a full FastScore fleet with the
+custom container image. [Download the files here.](TODO TODO TODO)
+
+To add our model to Model Manage, you may directly upload the files using the
+Dashboard, or run the following commands with the CLI:
+```
+fastscore schema add double double.avsc
+fastscore model add -type:python3 tf_sp500_lstm tf_sp500_lstm.py
+fastscore attachment upload tf_sp500_lstm attachment.tar.gz
+fastscore stream add rest rest.json
+```
+where `double.avsc` is the Avro schema file
+
+**double.avsc**
+```json
+{"type": "double"}
+```
+
+and `rest.json` is the stream descriptor:
+
+**rest.json**
+```json
+{
+  "Transport": "REST",
+  "Encoding": "json"
+}
+```
+
+Note that we have to add the `-type:python3` option when adding our model to
+Model Manage (otherwise, the engine will assume it is a Python 2 model).
+
+Next, deploy the model with the following commands:
+```
+fastscore model load tf_sp500_lstm
+fastscore stream attach rest 1
+fastscore stream attach rest 0
+```
+
+The numbers in the `stream attach` command indicate the slot number to use for that
+stream: 0 is the default input stream, and 1 is the default output stream. Models
+with multiple data sources or multiple outputs may take advantage of multiple stream
+slots, but as designed our model only takes in data from a single source and produces
+a single output stream.
+
+Now the model is exposed on the engine's REST endpoint, and can be used for scoring.
+Use the `fastscore model input` command to deliver inputs to the model, and
+`fastscore model output` to retrieve outputs (for asynchronous REST scoring).
+In this case, the model is configured to use asynchoronous REST because it needs
+to receive 30 inputs before it can start producing output.
+
+[Download scripts here to demonstrate how to produce scores with this model.](TODO TODO TODO)
+
+Happy scoring!
+
+## Further Reading
+
+* [C. Olah: Understanding LSTMs](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+* [A. Geron: Hands-On Machine Learning with Scikit-Learn and TensorFlow](https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1491962291)
