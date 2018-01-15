@@ -20,7 +20,7 @@ All of the files needed to run this example are included [at the bottom of this 
 * SciKit Learn (`sklearn`)
 * Kafka (`kafka`, if you're using the included Python Kafka client)
 
-Each of these libraries can be installed using `pip`. 
+Each of these libraries can be installed using `pip`.
 
 ## A Brief Review of Gradient Boosting Regressors
 
@@ -51,7 +51,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import Imputer, StandardScaler
 from sklearn.pipeline import Pipeline
 
-# define transformer to scale numeric variables 
+# define transformer to scale numeric variables
 # and one-hot encode categorical ones
 class FeatureTransformer(BaseEstimator, TransformerMixin):
     def __init__(self, transforms = [("impute", Imputer()), ("scale", StandardScaler())]):
@@ -89,38 +89,38 @@ This is a utility class for imputing raw input records. A typical input record w
 
 ``` json
 {
-  "engineLocation": "front", 
-  "numDoors": "four", 
-  "height": 54.3, 
-  "stroke": 3.4, 
-  "peakRPM": 5500, 
-  "horsepower": 102, 
-  "bore": 3.19, 
-  "fuelType": "gas", 
-  "cityMPG": 24, 
-  "make": "audi", 
-  "highwayMPG": 30, 
-  "driveWheels": "fwd", 
-  "width": 66.2, 
-  "curbWeight": 2337, 
-  "fuelSystem": "mpfi", 
-  "price": 13950, 
-  "wheelBase": 99.8, 
-  "numCylinders": "four", 
-  "bodyStyle": "sedan", 
-  "engineSize": 109, 
-  "aspiration": "std", 
-  "length": 176.6, 
-  "compressionRatio": 10.0, 
+  "engineLocation": "front",
+  "numDoors": "four",
+  "height": 54.3,
+  "stroke": 3.4,
+  "peakRPM": 5500,
+  "horsepower": 102,
+  "bore": 3.19,
+  "fuelType": "gas",
+  "cityMPG": 24,
+  "make": "audi",
+  "highwayMPG": 30,
+  "driveWheels": "fwd",
+  "width": 66.2,
+  "curbWeight": 2337,
+  "fuelSystem": "mpfi",
+  "price": 13950,
+  "wheelBase": 99.8,
+  "numCylinders": "four",
+  "bodyStyle": "sedan",
+  "engineSize": 109,
+  "aspiration": "std",
+  "length": 176.6,
+  "compressionRatio": 10.0,
   "engineType": "ohc"
 }
 ```
 
 Many of the features of this record (such as the manufacturer or body style of the car) are categorical, and the numerical variables have not been normalized. Gradient boosting models work best when all of the input features have been normalized to have zero mean and unit variance.
 
-The `FeatureTransformer` class performs these imputations using two functions. First, `fit` trains the `FeatureTransformer` using the training data. This determines the mean and standard deviation of the training data and rescales the numerical inputs accordingly, as well as converts the categorical entries into collections of dummy variables with one-hot encoding. Fitting the FeatureTransformer is done as part of model training, as discussed below. 
+The `FeatureTransformer` class performs these imputations using two functions. First, `fit` trains the `FeatureTransformer` using the training data. This determines the mean and standard deviation of the training data and rescales the numerical inputs accordingly, as well as converts the categorical entries into collections of dummy variables with one-hot encoding. Fitting the FeatureTransformer is done as part of model training, as discussed below.
 
-The `transform` function is used during model scoring to perform streaming imputations of input records. The imputing is done using the information about the mean, variance, and categorical variables determined from the `fit` function. 
+The `transform` function is used during model scoring to perform streaming imputations of input records. The imputing is done using the information about the mean, variance, and categorical variables determined from the `fit` function.
 
 ### Training the Model
 
@@ -137,14 +137,15 @@ from sklearn.metrics import mean_squared_error, make_scorer
 from FeatureTransformer import FeatureTransformer
 ```
 
-`cPickle` will be used to store our fitted `FeatureTransformer`, and we'll use `numpy` and `pandas` to do some manipulations of the input data. Finally, the `sklearn` libraries are what we'll use to actually train the model. 
+`cPickle` will be used to store our fitted `FeatureTransformer`, and we'll use `numpy` and `pandas` to do some manipulations of the input data. Finally, the `sklearn` libraries are what we'll use to actually train the model.
 
 Building and training the model is fairly standard:
 
 ``` python
 # read in training data
 in_data = pd.read_json("train_data.json", orient = "records")
-X = in_data.drop("risk", 1)\ny = np.array(in_data["risk"])
+X = in_data.drop("risk", 1)
+y = np.array(in_data["risk"])
 
 # create feature transformation and training pipeline
 preprocess = FeatureTransformer()
@@ -159,7 +160,7 @@ pipe = Pipeline([("preprocess", preprocess), ("gbm", gbm)])
                       scoring = make_scorer(mean_squared_error),
                       verbose = 100)
 gbm_cv.fit(X, y)
-                      
+
 # pickle model
 with open("gbmFit.pkl", "wb") as pickle_file:
     cPickle.dump(gbm_cv.best_estimator_, pickle_file)
@@ -183,7 +184,7 @@ from FeatureTransformer import FeatureTransformer
 # load our trained model
 with open('gbmFit.pkl', 'rb') as pickle_file:
   gbmFit = cPickle.load(pickle_file)
-  
+
 # each input record is delivered as a string
 def score(record):
   datum = json.loads(record)
@@ -195,7 +196,7 @@ In fact, as we'll see below, this model can be adapted essentially without modif
 
 ## Loading the Model in FastScore
 
-Loading our GBR model to FastScore can be broken into two steps: preparing the model code and creating the input and output streams. 
+Loading our GBR model to FastScore can be broken into two steps: preparing the model code and creating the input and output streams.
 
 ### Preparing the model for FastScore
 
@@ -231,7 +232,7 @@ Let's briefly review what changes were made between this script (which is ready 
 
 * The input and output schemas have been specified in smart comments at the beginning of the model.
 * The `score` method has been renamed to `action`, and all JSON deserialization and serialization of the input and output records is taken care of automatically by FastScore.
-* The logic to load our pickled `gbmFit` object and any other initialization code is now put in a well-defined `begin` method, to be executed when the job starts. 
+* The logic to load our pickled `gbmFit` object and any other initialization code is now put in a well-defined `begin` method, to be executed when the job starts.
 * Finally, because our custom class is contained in the attachment, we have to load it using Python's `imp` module (as opposed to `from FeatureTransformer import FeatureTransformer`).
 
 ### Input and Output Schemas
@@ -281,7 +282,7 @@ The output schema is much simpler---the output of the model will just be a doubl
 
 ### Input and Output Stream Descriptors
 
-One of the key features of FastScore is that it enforces strong type contracts on model inputs and outputs: a model's inputs are guaranteed to match the specified input format, as are its outputs. The input and output streams are described using stream descriptors. In this example, we'll be using Kafka to both send and receive scores. 
+One of the key features of FastScore is that it enforces strong type contracts on model inputs and outputs: a model's inputs are guaranteed to match the specified input format, as are its outputs. The input and output streams are described using stream descriptors. In this example, we'll be using Kafka to both send and receive scores.
 
 For the output stream, the stream descriptor is simple:
 [block:code]
@@ -297,7 +298,7 @@ For the output stream, the stream descriptor is simple:
 [/block]
 This stream descriptor specifies that scores will be delivered on the "output" Kafka topic using the Kafka bootstrap server located at `127.0.0.01:9092`, and that the scores delivered will be of AVRO type `double`, as specified in the output schema (`gbm_output.avsc`)
 
-The input stream descriptor includes the more complicated schema, encapsulating the various features of the automobile input records. We specify this schema by reference, so that both the model and the stream descriptor point to the same schema. This way, if there are any changes to the schema, the model and stream descriptor will both use the new schema. 
+The input stream descriptor includes the more complicated schema, encapsulating the various features of the automobile input records. We specify this schema by reference, so that both the model and the stream descriptor point to the same schema. This way, if there are any changes to the schema, the model and stream descriptor will both use the new schema.
 
 ``` json
 {
@@ -334,9 +335,9 @@ fastscore connect https://dashboard-host:8000
 fastscore config set config.yml
 ```
 
-where `dashboard-host` is the IP address of the Dashboard container (if you're running the Dashboard container in `host` networking mode on your local machine as in the Getting Started Guide, this will just be `localhost`). 
+where `dashboard-host` is the IP address of the Dashboard container (if you're running the Dashboard container in `host` networking mode on your local machine as in the Getting Started Guide, this will just be `localhost`).
 
-After configuration, you should see that all of the containers are healthy, e.g., in the CLI, 
+After configuration, you should see that all of the containers are healthy, e.g., in the CLI,
 
 ``` bash
 fastscore fleet
@@ -381,11 +382,11 @@ If you'll be re-using this container later, you can save these changes (so that 
 docker commit [name of engine container] [name for new engine image]
 ```
 
-(After committing the new image, you'll have to update your docker-compose file to use the new image you created). 
+(After committing the new image, you'll have to update your docker-compose file to use the new image you created).
 
 ### Creating the Attachment
 
-In this section, it is assumed that you have created the model file `score_auto_gbm.py` as well as the input and output stream descriptors `gbm-in.json` and `gbm-out.json`, and  the pickled FeatureTransformer `gbmFit.pkl` and FeatureTransformer module `FeatureTransformer.py`. 
+In this section, it is assumed that you have created the model file `score_auto_gbm.py` as well as the input and output stream descriptors `gbm-in.json` and `gbm-out.json`, and  the pickled FeatureTransformer `gbmFit.pkl` and FeatureTransformer module `FeatureTransformer.py`.
 
 Once you've created these files, package these along with the FeatureTransformer class and pickled object into a .zip or .tar.gz archive. This archive should contain:
 
@@ -414,7 +415,7 @@ fastscore model add GBM score_auto_gbm.py
 fastscore attachment upload GBM gbm.tar.gz
 ```
 
-Steps for setting configuration through the Dashboard are covered in the [Getting Started Guide](https://opendatagroup.github.io/Guides/Getting%20Started%20with%20FastScore%20v1-6-1.html#section-using-the-fastscore-dashboard). 
+Steps for setting configuration through the Dashboard are covered in the [Getting Started Guide](https://opendatagroup.github.io/Guides/Getting%20Started%20with%20FastScore%20v1-6-1.html#section-using-the-fastscore-dashboard).
 
 After adding the model, attachment, and streams to FastScore, you can inspect them from the FastScore Dashboard:
 
@@ -424,7 +425,7 @@ After adding the model, attachment, and streams to FastScore, you can inspect th
 
 ## Delivering Scores using Kafka
 
-The final step is to run the model, and deliver input records and output scores with Kafka. Kafka producers and consumers can be implemented in many languages. In the example code attached to this tutorial, we include a simple Scala Kafka client (`kafkaesq`), which streams the contents of a file line-by-line over a specified input topic, and then prints any responses received on a specified output topic. However, FastScore is compatible with any implementation of Kafka producer/consumer. 
+The final step is to run the model, and deliver input records and output scores with Kafka. Kafka producers and consumers can be implemented in many languages. In the example code attached to this tutorial, we include a simple Scala Kafka client (`kafkaesq`), which streams the contents of a file line-by-line over a specified input topic, and then prints any responses received on a specified output topic. However, FastScore is compatible with any implementation of Kafka producer/consumer.
 
 After FastScore is configured, we're ready to start scoring. Start the job from the CLI with
 
@@ -438,7 +439,7 @@ If you're using the included Kafka client script, score a file with
 python kafkaesq --input-file /path/to/input/file.json input output
 ```
 
-And that's it! Once you're done, stop the job with `fastscore job stop`. 
+And that's it! Once you're done, stop the job with `fastscore job stop`.
 
 ## Source code for this Example
 
