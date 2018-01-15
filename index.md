@@ -24,6 +24,11 @@ FastScore has open-source SDKs in several languages:
 
 ### [Examples and Tutorials](Examples and Tutorials/)
 
+The following are examples and tutorials of using FastScore:
+
+* [Gradient Boosting Regressor](Examples and Tutorials/Gradient Boosting Regressor.md)
+* [Tensorflow LSTM](Examples and Tutorials/Tensorflow LSTM/)
+
 ## Other Projects
 
 ### Hadrian and Titus (PFA)
