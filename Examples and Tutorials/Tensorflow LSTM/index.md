@@ -151,6 +151,14 @@ For example, if the time series consists of values `[1, 2, 3, 4, 5]`, and we are
 training a model to predict the next item in the series from the previous 3 items,
 our model should map the input `[2, 3, 4]` to the output `[3, 4, 5]`.
 
+Since we're only interested in predicting the adjusted CPI-normalized closing
+price, let's rebind our training and test data variables:
+
+```python
+training_data = sp500[:split_date]['Adjusted Normalized Close']
+test_data = sp500[split_date:]['Adjusted Normalized Close']
+```
+
 We'll need to generate batches of such training inputs from our time series data,
 so let's define a function to do so:
 
