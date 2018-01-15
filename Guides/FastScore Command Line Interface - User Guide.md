@@ -16,11 +16,32 @@ The general syntax of the CLI command is:
 fastscore <command> <subcommand> ...
 ```
 
+## Command index
+
+* [fastscore help](#help)
+* [fastscore connect](#connect)
+* [fastscore login](#login)
+* [fastscore config set/show](#config)
+* [fastscore fleet](#fleet)
+* [fastscore use](#use)
+* [fastscore model add/show/list/remove](#model-mgmt)
+* [fastscore attachment upload/download/list/remove](#attachment)
+* [fastscore stream add/show/list/remove](#stream-mgmt)
+* [fastscore schema add/show/list/remove](#schema-mgmt)
+* [fastscore sensor add/show/list/remove](#sensor-mgmt)
+
 ## Getting help
+<a name="help"></a>
 
-Use `fastscore help` to get the list of commands. `fastscore help options`
-produces a list of supported options.
+```
+fastscore help
+fastscore help <command>
+fastscore help options
+```
 
+The `help` command prints a list of available commands or a syntax synposis
+for a specific command. The `help options` command produces a list of supported
+options.
 
 ## Command options
 
@@ -54,6 +75,7 @@ $ fastscore fleet -v -json
 ```
 
 ## Connecting to FastScore
+<a name="connect"></a>
 
 ```
 fastscore connect <location> [ -nowait ]
@@ -77,6 +99,7 @@ Connected to FastScore proxy at https://localhost:8000
 ```
 
 ## User authentication
+<a name="login"></a>
 
 ```
 fastscore login <username>
@@ -93,6 +116,7 @@ Password: ***
 ```
 
 ## Configuring FastScore
+<a name="config"></a>
 
 ```
 fastscore config set <config-file>
@@ -122,6 +146,7 @@ topic: notify
 ```
 
 ## Listing services
+<a name="fleet"></a>
 
 ```
 fastscore fleet [ -wait ]
@@ -147,6 +172,7 @@ model-manage-1  model-manage  ok        1.6.1      Thu Nov  9 16:01:58 UTC 2017
 ```
 
 ## Choosing an instance
+<a name="use"></a>
 
 ```
 fastscore use <instance-name>
@@ -167,6 +193,7 @@ Subsequent commands to target 'engine-1'
 ```
 
 ## Managing models
+<a name="model-mgmt"></a>
 
 ```
 fastscore model add <model-name> [ <source-file> ] [ -type:<model-type> ]
@@ -212,13 +239,13 @@ gets the model type. For example, if the source code starts with 'def action('
 the command assumes that the model type is Python.
 
 The `model show` prints the model source code to the standard output. The `-e`
-(edit) option allows you to conveniently modify the model. The edit option
-spawns an editor and updates the model when the editor closes. The editor name
-is taken from the EDITOR environment variable. By default, the editor name is
-'vi'.
+(edit) option provides for a convenient modification of the model. The edit
+option spawns an editor and updates the model when the editor closes. The editor
+name is taken from the EDITOR environment variable. By default, the editor name
+is 'vi'.
 
 The `model list` command shows the list of models known to FastScore. The `model
-remove` remove the corresponding model.
+remove` command removes the corresponding model.
 
 Example:
 
@@ -239,6 +266,7 @@ Model 'cube' removed
 ```
 
 ## Model attachments
+<a name="attachment"></a>
 
 ```
 fastscore attachment upload <model-name> <file-to-upload>
@@ -277,16 +305,119 @@ Attachment removed
 ```
 
 ## Managing streams
+<a name="stream-mgmt"></a>
 
-TODO
+```
+fastscore stream add <stream-name> [ <descriptor-file> ]
+fastscore stream show <stream-name> [ -e ]
+fastscore stream list
+fastscore stream remove <stream-name>
+```
+
+The `stream add` command adds a stream descriptor to FastScore. The syntax of
+the stream descriptor is explained here (TODO: add a link to stream descriptor
+syntax). If the `<descriptor-file>` is omitted, the command reads the descriptor
+from the standard input.
+
+The `stream show` prints the stream descriptor to the standard output. The `-e`
+(edit) option allows editing the descriptor in-place. The edit option
+spawns an editor and updates the stream descritor when the editor closes. The
+editor name is taken from the EDITOR environment variable. By default, the
+editor name is 'vi'.
+
+The `stream list` command shows the list of streams known to FastScore. The `stream remove`
+command removes the corresponding stream.
+
+Example:
+
+```
+$ fastscore stream add input-1 <<EOF
+{
+  "Transport": ...
+  ...
+}
+EOF
+$ fastscore stream list
+input-1
+$ fastcore stream remove input-1 -v
+Stream removed
+```
 
 ## Managing schemas
+<a name="schema-mgmt"></a>
 
-TODO
+```
+fastscore schema add <schema-name> [ <schema-file> ]
+fastscore schema show <schema-name> [ -e ]
+fastscore schema list
+fastscore schema remove <schema-name>
+```
+
+The `schema add` command adds an Avro schema to FastScore. If the
+`<schema-file>` is omitted, the command reads the standard input.
+
+The `schema show` prints the schema to the standard output. The `-e` (edit)
+option allows editing the schema in-place. The edit option
+spawns an editor and updates the schema after the editor closes. The editor name
+is taken from the EDITOR environment variable. By default, the
+editor name is 'vi'.
+
+The `schema list` command shows the list of schemas known to FastScore. The `schema remove`
+command removes the corresponding schema.
+
+Example:
+
+```
+$ fastscore schema add sch-1 <<EOF
+["null","double"]
+EOF
+$ fastscore schema list -v
+Name   Type
+-----  ------
+sch-1  Avro
+$ fastcore schema remove sch-1 -v
+Schema removed
+```
 
 ## Managing sensors
+<a name="sensor-mgmt"></a>
 
-TODO
+```
+fastscore sensor add <sensor-name> [ <sensor-file> ]
+fastscore sensor show <sensor-name> [ -e ]
+fastscore sensor list
+fastscore sensor remove <sensor-name>
+```
+
+The `sensor add` command adds a sensor descriptor to FastScore. If the
+`<sensor-file>` is omitted, the command reads the standard input. The syntax of
+a sensor descriptor is described here (TODO: add a link to the document
+describing the syntax).
+
+The `sensor show` prints the sensor descriptor to the standard output. The `-e`
+(edit) option allows editing the sensor descriptor. The edit option spawns an
+editor and updates the descriptor after the editor closes. The editor name
+is taken from the EDITOR environment variable. By default, the
+editor name is 'vi'.
+
+The `sensor list` command shows the list of sensor descriptors known to
+FastScore. The `sensor remove` command removes the corresponding sensor
+descriptor.
+
+Note that the above commands operate on sensor descriptors, not active sensors.
+See `sensor install/uninstall/inspect` commands for more.
+
+Example:
+
+```
+$ fastscore sensor add watchdog-1 <<EOF
+{ ... }
+EOF
+$ fastscore sensor list
+watchdog
+$ fastcore sensor remove watchdog-1
+Sensor removed
+```
 
 ## Customizing engines
 
