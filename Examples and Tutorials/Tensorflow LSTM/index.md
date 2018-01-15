@@ -1,7 +1,8 @@
 # TensorFlow LSTM
 
 In this tutorial, we'll create an LSTM neural network using time series data (
-historical S&P 500 closing prices), and then deploy this model in FastScore.
+historical S&P 500 closing prices), and then deploy this model in FastScore. The
+model will be written in Python (3) and use the TensorFlow library.
 [An excellent introduction to LSTM networks can be found on Christopher Olah's blog.](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
 
 ## Contents
