@@ -4,11 +4,19 @@ In this tutorial, we'll create an LSTM neural network using time series data (
 historical S&P 500 closing prices), and then deploy this model in FastScore.
 [An excellent introduction to LSTM networks can be found on Christopher Olah's blog.](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
 
+## Contents
+
+1. [The Dataset](#the-dataset)
+2. [Generating Training Data](#generating-training-data)
+3. [Implementing the Model in TensorFlow](#implementing-the-model-in-tensorflow)
+4. [Preparing the Model for Deployment](#preparing-the-model-for-deployment)
+5. [Deploying the Model in FastScore](#deploying-the-model-in-fastscore)
+
 ## The Dataset
 
 The model we're building will predict the closing price of the S&P 500, based
 on previous days' closing prices. So, the primary dataset will be a collection
-of daily S&P closing prices ([download it here](TODO TODO TODO)). Let's take a
+of daily S&P closing prices ([download it here](https://s3-us-west-1.amazonaws.com/fastscore-examples/tf_lstm_data.tar.gz)). Let's take a
 look at this dataset.
 
 First, import the necessary libraries:
@@ -40,7 +48,7 @@ plt.plot(sp500.index, sp500['Close'])
 There's a small problem with this dataset: the price is expressed in dollars,
 and the value of the dollar has changed over time. A reasonable proxy for the dollar
 value is the consumer price index---let's rescale our S&P 500 closing prices by
-this data. [The CPI dataset can be downloaded here.](TODO TODO TODO)
+this data. [The CPI dataset can be downloaded here.](https://s3-us-west-1.amazonaws.com/fastscore-examples/tf_lstm_data.tar.gz)
 
 ```python
 cpi = pd.read_csv('CPIAUCSL.csv')
@@ -526,7 +534,7 @@ All that's needed to add a custom TensorFlow-ready engine to your fleet is
 to run the engine container and update your FastScore fleet's configuration to
 include the new engine. If you're starting from scratch, we have prepared a Docker-Compose
 file together with some shell scripts to build a full FastScore fleet with the
-custom container image. [Download the files here.](TODO TODO TODO)
+custom container image. [Download the files here.](https://s3-us-west-1.amazonaws.com/fastscore-examples/tf_lstm_fastscore.tar.gz)
 
 To add our model to Model Manage, you may directly upload the files using the
 Dashboard, or run the following commands with the CLI:
@@ -575,7 +583,7 @@ Use the `fastscore model input` command to deliver inputs to the model, and
 In this case, the model is configured to use asynchoronous REST because it needs
 to receive 30 inputs before it can start producing output.
 
-[Download scripts here to demonstrate how to produce scores with this model.](TODO TODO TODO)
+[Download scripts here to demonstrate how to produce scores with this model.](https://s3-us-west-1.amazonaws.com/fastscore-examples/tf_lstm_fastscore.tar.gz)
 
 Happy scoring!
 
