@@ -22,12 +22,13 @@ FastScore has open-source SDKs in several languages:
 - R SDK
 - Scala SDK
 
-### [Examples and Tutorials](Examples and Tutorials/)
+### Examples and Tutorials
 
 The following are examples and tutorials of using FastScore:
 
-* [Gradient Boosting Regressor](Examples and Tutorials/Gradient Boosting Regressor.md)
+* [Gradient Boosting Regressor](Examples and Tutorials/Gradient Boosting Regressor/)
 * [Tensorflow LSTM](Examples and Tutorials/Tensorflow LSTM/)
+* [A Simple Microservice with the FastScore SDK](Examples and Tutorials/A Simple Microservice/)
 
 ## Other Projects
 
