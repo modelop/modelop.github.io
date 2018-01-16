@@ -25,8 +25,11 @@ fastscore <command> <subcommand> ...
 * [fastscore fleet](#fleet)
 * [fastscore use](#use)
 * [fastscore model add/show/list/remove](#model-mgmt)
+* [fastscore model load/unload/verify/inspect](#model-load)
+* [fastscore model scale](#model-scale)
 * [fastscore attachment upload/download/list/remove](#attachment)
 * [fastscore stream add/show/list/remove](#stream-mgmt)
+* [fastscore stream attach/detach/verify/inspect](#stream-attach)
 * [fastscore schema add/show/list/remove](#schema-mgmt)
 * [fastscore sensor add/show/list/remove](#sensor-mgmt)
 
@@ -419,6 +422,257 @@ $ fastcore sensor remove watchdog-1
 Sensor removed
 ```
 
+## Attaching/detaching streams
+<a name="stream-attach"></a>
+
+```
+fastscore stream attach <stream-name> <slot>
+fastscore stream detach <slot>
+fastscore stream verify <stream-name> <slot>
+fatsscore stream inspect
+```
+
+The `stream attach` opens the stream and attaches it to the `<slot>`. Typically,
+the command retrieves the stream descriptor from Model Manage using
+`<stream-name>`. Alternatively, the `<stream-name>` may contain a literal
+stream descriptor. See [Url-like stream descriptors](#literal-streams) for
+details.
+
+The `stream detach` command closes and detaches the stream. It is not possible
+to detach the stream when the model is running. However, it is possible to
+attach a different stream to the same slot using the `stream attach` command
+while data is being processed.
+
+The `stream verify` command performs all the same steps as `stream attach`
+without actually attaching the stream to the `<slot>`. It prints the internal
+representation of the stream descriptor with all default values substituted.
+
+Example:
+
+```
+$ fastscore stream add s1
+{"Transport":"REST","Schema":null}
+^D
+$ fastscore stream verify s1 0
+{
+  "batching": {
+    "nagle_time": 500,
+    "watermark": 1000
+  },
+  "linger_time": 3000,
+  "loop": false,
+  "transport": {
+    "type": "rest",
+    "mode": "simple"
+  },
+  "encoding": null
+}
+The stream descriptor contains no errors
+```
+
+The `stream inspect` command shows the list of streams attached to slots at the current engine.
+
+Example:
+
+```
+$ fastscore stream inspect
+  Slot  Name           Transport    EOF
+------  -------------  -----------  -----
+     0  inline-526507  REST         False
+     1  inline-809896  REST         False
+```
+
+## Sampling streams
+<a name="stream-sample"></a>
+
+```
+fastscore stream sample <stream-name> [ <count> ]
+```
+
+XXX
+
+## Loading/unloading models
+<a name="model-load"></a>
+
+```
+fastscore model load <model-name> [ -schema:<schema-name>:<schema-data> ... ]
+fastscore model unload
+fastscore model verify <model-name>
+fastscore mode inspect
+```
+
+The `model load` command performs all preparatory steps and gets ready to start
+data processing. The target engine can be selected using the `use` command. The
+preparatory steps include verification of the model syntax, checking if the
+model follows the FastScore model conventions, e.g. if the action() method is
+defined, analysing the model smart comments (TODO: link to the description of
+the model smart comments), fetching attachments from Model Manage and
+unpacking them. The model smart comments indicate which stream slots must be
+occupied for the model to run. If an unexpected slot has a stream attached the
+`model load` command will fail. If all requied streams are attached, the loaded
+model will start the data processing. See also `engine pause` command.
+
+Note that the `model load` command can be called repeatedly, even if the data
+processing is underway. The command will attempt to replace the model without
+stopping the flow of data. The replacement model may be implemented in a
+different language.
+
+The `model unload` command removes the active model from the engine. The
+operation is only allowed if the engine is in the INIT state. When data is being
+processed it is not possible to unload the model. See also `engine reset`
+command.
+
+The `model verify` command performs all preparatory steps without actually
+loading the model. The verbose command output shows how the model smart comments
+were understood.
+
+It is possible to provide schemas required by the model as command line options.
+This may be needed if the FastScore deployment does not have a Model Manage
+instance. The `<schema-data>` can be either a file name or a literal schema. For
+example, `-schema:input:\"double\"`.
+
+Example:
+
+```
+$ fastscore model add cube
+# fastscore.schema.0: in1
+def action(x):
+  yield x*x*x
+^D
+$ fastscore model verify cube -v
+Error: schema 'in1' not found
+$ fastscore model verify cube -v -schema:in1:\"int\"
+Name    Type      SLOC
+------  ------  ------
+cube    python       3
+
+  Slot  Schema    Action    Recordsets          Slot  Schema    Recordsets
+------  --------  --------  ------------  --  ------  --------  ------------
+     0  "int"     action    No                     1  -         No
+
+The model contains no errors
+```
+
+The `model inspect` prints information about the currently loaded model. Its
+output is similar to the output of the `model verify` command.
+
+Example:
+
+```
+$ fastscore model add sqrt
+action <- function(x) emit(x*x)
+^D
+$ fastscore model load sqrt
+$ fastscore model inspect
+Name    Type      SLOC  Snapshots
+------  ------  ------  -----------
+sqrt    r            1  none
+
+  Slot  Schema    Action    Recordsets          Slot  Schema    Recordsets
+------  --------  --------  ------------  --  ------  --------  ------------
+     0  -         action    No                     1  -         No
+
+No jets started
+```
+
+## Scaling models
+<a name="model-scale"></a>
+
+```
+fastscore model scale <jet-count>
+```
+
+The `model scale` command changes the number of model instances -- jets --
+running concurrently. The number of jets can be changed while the model is
+running or during the initialization phase.
+
+Example:
+
+```
+$ fastscore model add sqrt
+action <- function(x) emit(x*x)
+^D
+$ fastscore model scale 4
+$ fastscore run sqrt rest: rest:
+$ fastscore model inspect
+Name    Type      SLOC  Snapshots
+------  ------  ------  -----------
+sqrt    r            1  none
+
+  Slot  Schema    Action    Recordsets          Slot  Schema    Recordsets
+------  --------  --------  ------------  --  ------  --------  ------------
+     0  -         action    No                     1  -         No
+
+  Jet #    Pid    Sandbox
+-------  -----  ---------
+      1    122   43661788
+      2    128  104818564
+      3    134   43441871
+      4    140  108589417
+```
+
+## Model input/output using REST
+<a name="model-rest"></a>
+
+```
+fastscore model input [ <slot> ]
+fastscore model output [ <slot> ] [ -nowait ] [ -c ]
+fastscore model interact
+```
+
+The `model input` command reads its standard input and sends the data to the
+REST stream attached to `<slot>` (or slot 0 if `<slot>` is omitted). Each line
+is interpreted as a separate data record.
+
+The `model output` reads data from the REST stream attached to `<slot>` (or slot
+1 if `<slot>` is omitted). By default, the command waits for the record to
+become available and retrieves exactly one record. The `-nowait` option limits
+the waiting time to 0.5s. The `-c` option asks the command to continuously read
+data from the stream.
+
+Example:
+
+```
+$ fastscore model add sqrt
+action <- function(x) emit(x*x)
+^D
+$ fastscore run sqrt rest: rest:
+$ fastscore model input
+2
+3
+5
+^D
+$ fastscore model output -c
+4
+9
+25
+```
+
+The `model interact` command combines the effects of `model input` and `model output`
+commands. It allows the user to both send inputs to the REST stream and observe
+the outputs. The `model interact` also shows records rejected either by encoding
+or the schema.
+
+Example:
+
+```
+$ fastscore model add sqrt
+action <- function(x) emit(x*x)
+^D
+$ fastscore run sqrt rest: rest:
+$ fastscore model interact
+> 7
+49
+> 11
+121
+> 100
+10000
+> ^D
+```
+
+Note that these commands do not close input/output streams. They may run
+multiple times.
+
 ## Customizing engines
 
 TODO
@@ -444,12 +698,6 @@ TODO
 ## Inspecting data pipelines
 
 model inspect
-
-TODO
-
-## Scaling models
-
-model scale
 
 TODO
 
@@ -479,4 +727,53 @@ TODO
 
 TODO
 
+## <a name="literal-streams"></a>Url-like stream descriptors
+
+A literal stream is a shortened representation of a stream descriptor. It can be
+used instead of the stream name for commands, such as `stream attach`. The
+commands look for a ':' character to distinguish a stream name from a literal
+stream descriptor. The table below contains examples of literal stream
+descriptors.
+
+Example | Description
+--------|------------
+inline:1,2,3 | An inline stream 3 records
+inline-chunked:%06%02%04%06 | An inline stream with Avro-encoded [1,2,3] array
+rest: | A REST stream (simple mode)
+rest-chunked: | A REST stream (chunked mode)
+kafka:kafka-1.company.com:9092/mytopic.json | A Kafka stream
+file:/vol/data/data1.dat | A (local) file stream
+tcp:1.2.3.4:5678 | A TCP stream
+udp::9099 | A UDP stream (input only)
+https://dev.company.com:1234/data1.json | An HTTP stream
+exec:/root/myscript.sh | An exec stream
+discard: | A discard stream
+
+Use `stream verify` command to see how the literal stream descriptor is
+understood by the engine.
+
+Example:
+
+```
+$ fastscore stream verify inline:1,2,3 0
+{
+  "encoding": "json",
+  "linger_time": 3000,
+  "transport": {
+    "data": [
+      "1",
+      "2",
+      "3"
+    ],
+    "type": "inline"
+  },
+  "batching": {
+    "nagle_time": 500,
+    "watermark": 1000
+  },
+  "loop": false,
+  "schema": "undefined"
+}
+The stream descriptor contains no errors
+```
 
