@@ -254,7 +254,7 @@ Extension | Model type
 .m | Matlab using Octave
 
 If the commands reads the model source from the standard input it still tries to
-gets the model type. For example, if the source code starts with 'def action('
+gets the model type. For example, if the source code starts with `def action(`
 the command assumes that the model type is Python.
 
 The `model show` prints the model source code to the standard output. The `-e`
@@ -757,6 +757,9 @@ $ fastscore run sqrt rest: rest:
 $ fastscore model interact
 > 7
 49
+> foobar
+>
+REJECTED-By-Encoding:0: foobar
 > 11
 121
 > 100
@@ -903,7 +906,7 @@ fastscore stream attach <stream-1> 1
 
 Models with a single input and single output stream are widespread. The command
 allows building such pipelines quickly, especially if `<stream-0>` and
-`<stream-1>` are literal streams.
+`<stream-1>` are [literal streams](#literal-streams).
 
 Example:
 
@@ -929,12 +932,12 @@ fastscore snapshot remove <model-name> <snapshot-id>
 ```
 
 The engine automatically makes snapshots of the model state at the end of the
-run, if instructed by corresponding model annotation. The `snapshot list` prits
+run, if instructed by corresponding model annotation. The `snapshot list` prints
 a list of snapshots taken for the `<model-name>`. `-since:DATETIME`,
 `-until:DATETIME`, and `-count:NNN` options limit the range of snapshots listed.
 `DATETIME` must follow ISO 8601 format, e.g. 2018-01-17 or 2018-01-17T08:30:00Z.
-The `snapshot show` prints information about a specific snapshot. The `snapshot
-remove` command delete the model state snapshot.
+The `snapshot show` command prints information about a specific snapshot. The
+`snapshot remove` command delete the model state snapshot.
 
 Example:
 
@@ -968,7 +971,7 @@ Snapshot '8qxtf4yw' removed
 fastscore snapshot restore <model-name> [ <snapshot-id> ]
 ```
 
-The `snapshot restore` commands restore the state of the model. The command must
+The `snapshot restore` command restores the state of the model. The command must
 be run durining initialization, before or after loading the model. If
 `<snapshot-id>` is omitted, the command restores the latest snapshot taken.
 
@@ -1075,7 +1078,7 @@ fastscore debug stream [ <slot> ]
 
 The `debug` commands enable generation of a debug messages that describe
 internal operations of the engine. These commands are not related to debugging
-of the model source code. The commands are for advanced user only.
+of the model source code. The commands are for advanced users only.
 
 Example:
 
@@ -1177,13 +1180,13 @@ cube                        1,825 rps    1,935 rps
 cube                        1,845 rps    1,944 rps
 ```
 
-## <a name="literal-streams"></a>Url-like stream descriptors
+## <a name="literal-streams"></a>URL-like stream descriptors
 
-A literal stream is a shortened representation of a stream descriptor. It can be
-used instead of the stream name for commands, such as `stream attach`. The
-commands look for a ':' character to distinguish a stream name from a literal
-stream descriptor. The table below contains examples of literal stream
-descriptors.
+An URL-like or literal stream descriptor is a shortened representation of a
+stream descriptor. It can be used instead of the stream name for commands, such
+as `stream attach`. The commands look for a ':' character to distinguish a
+stream name from a literal stream descriptor. The table below contains examples
+of literal stream descriptors.
 
 Example | Description
 --------|------------
