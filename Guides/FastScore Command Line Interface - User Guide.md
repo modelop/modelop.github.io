@@ -141,8 +141,8 @@ fastscore config show
 
 The first command sets the configuration of the FastScore deployment. The second -
 prints the current configuration. The `<config-file>` is the name of the
-configuration file. The configuration file uses YAML format. (TODO: a link to
-the document that describes the FastScore configuration)
+configuration file. The configuration file uses YAML format. Its syntax is
+described [here](../Product Documentation/Configuration.md).
 
 Example:
 
@@ -334,9 +334,9 @@ fastscore stream remove <stream-name>
 ```
 
 The `stream add` command adds a stream descriptor to FastScore. The syntax of
-the stream descriptor is explained here (TODO: add a link to stream descriptor
-syntax). If the `<descriptor-file>` is omitted, the command reads the descriptor
-from the standard input.
+the stream descriptor is explained [here](../Product Documentation/Stream Descriptors.md).
+If the `<descriptor-file>` is omitted, the command reads the descriptor from the
+standard input.
 
 The `stream show` prints the stream descriptor to the standard output. The `-e`
 (edit) option allows editing the descriptor in-place. The edit option
@@ -454,8 +454,7 @@ fastscore sensor remove <sensor-name>
 
 The `sensor add` command adds a sensor descriptor to FastScore. If the
 `<sensor-file>` is omitted, the command reads the standard input. The syntax of
-a sensor descriptor is described here (TODO: add a link to the document
-describing the syntax).
+a sensor descriptor is described [here](../Product Documentation/Sensors.md).
 
 The `sensor show` prints the sensor descriptor to the standard output. The `-e`
 (edit) option allows editing the sensor descriptor. The edit option spawns an
@@ -599,12 +598,12 @@ The `model load` command performs all preparatory steps and gets ready to start
 data processing. The target engine can be selected using the `use` command. The
 preparatory steps include verification of the model syntax, checking if the
 model follows the FastScore model conventions, e.g. if the action() method is
-defined, analysing the model smart comments (TODO: link to the description of
-the model smart comments), fetching attachments from Model Manage and
-unpacking them. The model smart comments indicate which stream slots must be
-occupied for the model to run. If an unexpected slot has a stream attached the
-`model load` command will fail. If all requied streams are attached, the loaded
-model will start the data processing. See also `engine pause` command.
+defined, analysing the model [smart comments](../Product Documentation/Model
+Annotations.md), fetching attachments from Model Manage and unpacking them. The
+model smart comments indicate which stream slots must be occupied for the model
+to run. If an unexpected slot has a stream attached the `model load` command
+will fail. If all requied streams are attached, the loaded model will start the
+data processing. See also `engine pause` command.
 
 Note that the `model load` command can be called repeatedly, even if the data
 processing is underway. The command will attempt to replace the model without
@@ -932,7 +931,7 @@ fastscore snapshot remove <model-name> <snapshot-id>
 ```
 
 The engine automatically makes snapshots of the model state at the end of the
-run, if instructed by corresponding model annotation. The `snapshot list` prints
+run, if instructed by the corresponding model annotation. The `snapshot list` prints
 a list of snapshots taken for the `<model-name>`. `-since:DATETIME`,
 `-until:DATETIME`, and `-count:NNN` options limit the range of snapshots listed.
 `DATETIME` must follow ISO 8601 format, e.g. 2018-01-17 or 2018-01-17T08:30:00Z.
@@ -1000,11 +999,11 @@ fastscore policy show -type:<model-type>
 ```
 
 The `policy set` updates the engine library import policy for a specific
-`<model-type>`. See more about import policies (TODO: add a link). If
-`<policy-file>` is omitted, the command reads the policy from its standard
-input. With `-preinstall` option the command installs all libraries mentioned in
-the policy shortening the model loading time. The policy can be preinstalled no
-more than once.
+`<model-type>`. See [more](../Product Documentation/Import Policies.md) about
+import policies. If `<policy-file>` is omitted, the command reads the policy
+from its standard input. With `-preinstall` option the command installs all
+libraries mentioned in the policy shortening the model loading time. The policy
+can be preinstalled no more than once.
 
 The `policy show` retrieves the active import policy from the engine.
 
