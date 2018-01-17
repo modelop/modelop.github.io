@@ -4,31 +4,41 @@ Welcome to Open Data Group's documentation!
 
 ## FastScore
 
-### Documentation
+### Getting Started
 
-- [Guides](Guides/)
-- [Product Documentation](Product Documentation/)
+- [FastScore Getting Started Guide](/Getting Started/Getting Started with FastScore)
+- [Quick Setup Instructions - OVA](/Getting Started/FastStart with FastScore/)
+- [FastScore Specifications](/Getting Started/FastScore Specifications/)
+- [Release Notes](/Getting Started/Release Notes/)
+- [FastScore Architecture](/Getting Started/FastScore Architecture/)
 
-### API Reference
+### Knowledge Center
 
-The basic method of interaction with FastScore is through each service's RESTful
-API. [A complete API reference is available here.](API/)
+- [Tutorials](/Knowledge Center/Tutorials/)
+- [Interactive FastScore](/Knowledge Center/Interactive FastScore/)
 
-### SDK Documentation
+### Glossary
 
-FastScore has open-source SDKs in several languages:
+- [FastScore Glossary](/FastScore Glossary/)
 
-- [Python SDK](SDK/python/)
-- R SDK
-- Scala SDK
+### Product Manuals
 
-### Examples and Tutorials
+- [Model Deploy](/Product Manuals/Model Deploy/)
+- [Stream Descriptors](/Product Manuals/Stream Descriptors/)
+- [Schema Reference](/Product Manuals/Schema Reference/)
+- [Sensors](/Product Manuals/Sensors/)
+- [Import Policies](/Product Manuals/Import Policies/)
+- [LDAP Authentication](/Product Manuals/LDAP Authentication/)
+- [State Sharing and Snapshotting](/Product Manuals/State Sharing and Snapshotting/)
+- [Multiple Input and Output Streams](/Product Manuals/Multiple Input and Output Streams/)
+- [Record Sets and Control Records](/Product Manuals/Record Sets and Control Records/)
+- [Java Model Runner](/Product Manuals/Java Model Runner/)
 
-The following are examples and tutorials of using FastScore:
+### Reference
 
-* [Gradient Boosting Regressor](Examples and Tutorials/Gradient Boosting Regressor/)
-* [Tensorflow LSTM](Examples and Tutorials/Tensorflow LSTM/)
-* [A Simple Microservice with the FastScore SDK](Examples and Tutorials/A Simple Microservice/)
+- [FastScore SDKs](/Reference/FastScore SDKs/)
+- [FastScore API](/Reference/FastScore API/)
+- [FastScore CLI](/Reference/FastScore CLI/)
 
 ## Other Projects
 
