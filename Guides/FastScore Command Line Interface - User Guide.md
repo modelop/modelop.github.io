@@ -30,8 +30,21 @@ fastscore <command> <subcommand> ...
 * [fastscore attachment upload/download/list/remove](#attachment)
 * [fastscore stream add/show/list/remove](#stream-mgmt)
 * [fastscore stream attach/detach/verify/inspect](#stream-attach)
+* [fastscore stream sample](#stream-sample)
 * [fastscore schema add/show/list/remove](#schema-mgmt)
+* [fastscore schema verify](#schema-verify)
 * [fastscore sensor add/show/list/remove](#sensor-mgmt)
+* [fastscore sensor install/uninstall/inspect/points](#sensor-install)
+* [fastscore engine reset/inspect/pause/unpause](#engine-state)
+* [fastscore snapshot list/show/remove](#snapshot-mgmt)
+* [fastscore snapshot restore](#snapshot-restore)
+* [fastscore policy set/show](#policy)
+* [fastscore stats](#stats)
+* [fastscore debug](#debug)
+* [fastscore profile](#profile)
+* [fastscore pneumo](#pneumo)
+* [fastscore monitor](#monitor)
+* [fastscore run](#run-simple)
 
 ## Getting help
 <a name="help"></a>
@@ -105,11 +118,11 @@ Connected to FastScore proxy at https://localhost:8000
 <a name="login"></a>
 
 ```
-fastscore login <username>
+fastscore login <username> [ <password> ]
 ```
 
-The command authenticates the user to secure FastScore deployments. The command
-prompts the user for the password.
+The command authenticates the user to secure FastScore deployments. If
+`<password>` is omitted, the command prompts the user for the password.
 
 Example:
 
@@ -178,14 +191,15 @@ model-manage-1  model-manage  ok        1.6.1      Thu Nov  9 16:01:58 UTC 2017
 <a name="use"></a>
 
 ```
-fastscore use <instance-name>
+fastscore use [ <instance-name> ]
 ```
 
 The command selects `<instance-name>` as a target of subsequent commands. In
 addition, it makes `<instance-name>` the preferred instance of a specific
 service. For example, `fastscore use engine-1` makes `engine-1` the target of
 sensor management commands. Any command that require an instance of an `engine`
-service will now use the `engine-1` instance.
+service will now use the `engine-1` instance. If `<instance-name>` is omitted
+the command prints the current target instance name.
 
 Example:
 
@@ -193,6 +207,8 @@ Example:
 $ fastscore use engine-1 -v
 'engine-1' set as a preferred instance of 'engine'
 Subsequent commands to target 'engine-1'
+$ fastscore use
+engine-1
 ```
 
 ## Managing models
@@ -382,6 +398,15 @@ $ fastcore schema remove sch-1 -v
 Schema removed
 ```
 
+## Verifying schemas
+<a name="schema-verify"></a>
+
+```
+fastscore schema verify <schema-name> [ <data-file> ]
+```
+
+TODO
+
 ## Managing sensors
 <a name="sensor-mgmt"></a>
 
@@ -486,10 +511,44 @@ $ fastscore stream inspect
 <a name="stream-sample"></a>
 
 ```
-fastscore stream sample <stream-name> [ <count> ]
+fastscore stream sample <stream-name> [ -count:NNN ]
 ```
 
-XXX
+The `stream sample` reads a few data records from the stream. This happens in
+the context of the engine. Otherwise, stream sampling is unrelated to the data
+pipeline. If `-count:NNN` option is omitted, the commands attempts to read 10
+records max.
+
+```
+$ fastscore stream sample inline:2,3,5,7,11 -count:3
+   1: 2
+   2: 3
+   3: 5
+```
+
+```
+# Assume that /tmp/rnd1.dat file exists
+$ fastscore stream add rnd
+{
+  "Encoding": null,
+  "Envelope": {
+    "Type": "fixed",
+    "Size": 8
+  },
+  "Transport": {
+    "Path": "/tmp/rnd1.dat",
+    "Type": "file"
+  },
+  "Schema": null
+}
+^D
+$ fastscore stream sample rnd -count:5
+   1: b9 7e b5 4b af 01 6d 65                          .~.K..me........
+   2: 6c 8d db 99 03 42 95 81                          l....B..........
+   3: 93 a9 2f 1b 9e 77 3b eb                          ../..w;.........
+   4: 60 28 58 8c a8 12 fc 2b                          `(X....+........
+   5: a5 14 c7 64 56 97 aa 79                          ...dV..y........
+```
 
 ## Loading/unloading models
 <a name="model-load"></a>
@@ -670,60 +729,215 @@ $ fastscore model interact
 > ^D
 ```
 
-Note that these commands do not close input/output streams. They may run
+Note that these commands do not close input/output streams. They may be run
 multiple times.
 
-## Customizing engines
+## Active sensor operations
+<a name="sensor-install"></a>
 
-TODO
+```
+fastscore sensor install <sensor-name>
+fastscore sensor uninstall <tap-id>
+fastscore sensor inspect [ <tap-id> ]
+fastscore sensor points
+```
 
-## Verifying models and streams
+The `sensor install` command adds the sensor to the current service instance.
+See `use` command. Upon success, the command prints `<tap-id>` of installed
+sensor. Other active sensor operations take `<tap-id>` as an argument.
 
-model verify
+The `sensor install` prints information about all active sensors for the current
+service instance or a particular active sensor if `<tap-id>` is present.
 
-TODO
+The `sensor uninstall` command removes the active sensor identified by
+`<tap-id>`.
+
+The `sensor points` command outputs the list of tapping points provided by the
+current instance. A sensor descriptor includes a tapping point as a value of the
+"Tap" element.
+
+Example:
+
+```
+$ fastscore sensor install sensor1
+15
+$ fastscore sensor inspect 15 -v
+Sensor id 15 is attached to 'manifold.debug' at 'engine-1'.
+$ fastscore sensor uninstall 15 -v
+Sensor uninstalled
+```
+
+```
+$ fastscore sensor points
+manifold.0.debug
+jet.71581093.output.records.size
+jet.71581093.output.records.count
+jet.71581093.input.records.size
+jet.71581093.input.records.count
+...
+manifold.deadlock
+manifold.debug
+sys.test.tagged.bytes
+sys.test.tagged.float
+sys.test.tagged.int
+sys.test.bytes
+sys.test.float
+sys.test.int
+sys.memory
+sys.cpu.utilization
+```
+
+## Managing engine state
+<a name="engine-state"></a>
+
+```
+fastscore engine reset
+fastscore engine inspect
+fastscore engine pause
+fastscore engine unpause
+```
+
+A FastScore engine has one of the following seven states:
+
+State | Description
+------|------------
+INIT | Initialization - data pipleline is incomplete
+RUNNING | Data is being processed
+PIGGING | Pigging is in effect
+FINISHING | All inputs at EOF - processing continues
+FINISHED | Both inputs and outputs at EOF
+PAUSED | Data processing is paused
+ERROR | Unrecoverable error encountered - see logs
+
+The `engine reset` command puts the engine into the INIT state regardless of its
+current state. The commands unload the model and detaches all streams. Use
+`engine reset` to start using an engine again after it reached the FIHISHED
+state.
+
+The `engine inspect` prints the current state of the engine.
+
+Example:
+
+```
+$ fastscore engine inspect -v
+The current engine state is RUNNING.
+
+The engine is reading data from input streams, passing them to model instances,
+collecting outputs from the model, and writing them to output streams.
+$ fastscore engine reset
+$ fastscore engine inspect
+INIT
+```
+
+The `engine pause` puts the engine into the PAUSED state. It is not possible to
+pause an engine which is currently in FINISHING, FINISHED, or ERROR state. If
+the pause is requested during initialization, the engine becomes paused
+when it is about to enter the RUNNING state. Use `engine unpause` to continue
+data processing.
+
+Example:
+
+```
+$ fastscore engine inspect
+INIT
+$ fastscore engine pause
+$ fastscore engine inspect
+INIT
+$ fastscore run cube rest: rest:
+$ fastscore engine inspect
+PAUSED
+$ fastscore engine unpause
+$ fastscore engine inspect
+RUNNING
+```
 
 ## Running simple models
+<a name="run-simple"></a>
 
-run
-
-TODO
-
-## Constructing data pipelines
-
-model load/unload
+```
+fastscore run <model-name> <stream-0> <stream-1>
+```
 
 TODO
 
-## Inspecting data pipelines
+## Managing state snapshots
+<a name="snapshot-mgmt"></a>
 
-model inspect
-
-TODO
-
-## Using REST for model input/output
-
-model input/output/interact
-
-## Model state snapshots 
+```
+fastscore snapshot list <model-name>
+fatsscore snapshot show <model-name> <snapshot-id>
+fatsscore snapshot remove <model-name> <snapshot-id>
+```
 
 TODO
 
-## Pneumo access
+## Restoring state snapshots
+<a name="snapshot-restore"></a>
+
+```
+fastscore snapshot restore <model-name> [ <snapshot-id> ]
+```
+
+TODO
+
+## Managing model environments
+<a name="policy"></a>
+
+```
+fastscore policy set [ <policy-file> ]
+fastscore policy show
+```
+
+TODO
+
+## Collecting statistics
+<a name="stats"></a>
+
+```
+fastscore stats memory
+fastscore stats cpu-utilization
+fastscore stats jets
+fastscore stats streams
+```
 
 TODO
 
 ## Troubleshooting data pipelines
+<a name="debug"></a>
+
+```
+fastscore debug manifold
+fastscore debug stream [ <slot> ]
+```
 
 TODO
 
-## Monitoring FastScore operation
+## Profiling internal operations
+<a name="profile"></a>
+
+```
+fastscore profile stream <slot>
+```
+
+TODO
+
+## Pneumo access
+<a name="pneumo"></a>
+
+```
+fastscore pneumo [ history ]
+```
+
+TODO
+
+## Monitoring engine operations
+<a name="monitor"></a>
+
+```
+fastscore monitor
+```
 
 -m option
-
-TODO
-
-## Profiling engines
 
 TODO
 
