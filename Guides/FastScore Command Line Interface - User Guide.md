@@ -405,7 +405,42 @@ Schema removed
 fastscore schema verify <schema-name> [ <data-file> ]
 ```
 
-TODO
+The `schema verify` command check that the named schema is a well-formed. If
+`<data-file>` is present the command in addition checks data in the file for
+conformance against the schema. The data file contains JSON-encoded records
+separated by newlines.
+
+Example:
+
+```
+$ fastscore schema add s1
+"foobar"
+^D
+$ fastscore schema verify s1
+Error: Type "foobar" is undefined
+$ fastscore schema add s2
+"int"
+^D
+$ fastscore schema verify s2 -v
+Schema OK
+$ cat <<EOF>>data1
+2
+"fastscore"
+[]
+3
+EOF
+$ fastscore schema verify s2 data1
+OK   2
+
+FAIL "fastscore"
+     Int expected, not "fastscore"
+
+FAIL []
+     Int expected, not []
+
+OK   3
+
+```
 
 ## Managing sensors
 <a name="sensor-mgmt"></a>
@@ -858,18 +893,73 @@ RUNNING
 fastscore run <model-name> <stream-0> <stream-1>
 ```
 
-TODO
+The `run` is a convience command mostly equivalent to the following sequence of commands:
+
+```
+fastscore model load <model-name>
+fastscore stream attach <stream-0> 0
+fastscore stream attach <stream-1> 1
+```
+
+Models with a single input and single output stream are widespread. The command
+allows building such pipelines quickly, especially if `<stream-0>` and
+`<stream-1>` are literal streams.
+
+Example:
+
+```
+$ fastscore model add cube
+action <- function(x) emit(x*x*x)
+^D
+$ fastscore run cube rest: rest:
+$ fastscore model interact
+> 2
+8
+> 10
+1000
+```
 
 ## Managing state snapshots
 <a name="snapshot-mgmt"></a>
 
 ```
-fastscore snapshot list <model-name>
-fatsscore snapshot show <model-name> <snapshot-id>
-fatsscore snapshot remove <model-name> <snapshot-id>
+fastscore snapshot list <model-name> [ -since:DATETIME ] [ -until:DATETIME ] [ -count:NNN ]
+fastscore snapshot show <model-name> <snapshot-id>
+fastscore snapshot remove <model-name> <snapshot-id>
 ```
 
-TODO
+The engine automatically makes snapshots of the model state at the end of the
+run, if instructed by corresponding model annotation. The `snapshot list` prits
+a list of snapshots taken for the `<model-name>`. `-since:DATETIME`,
+`-until:DATETIME`, and `-count:NNN` options limit the range of snapshots listed.
+`DATETIME` must follow ISO 8601 format, e.g. 2018-01-17 or 2018-01-17T08:30:00Z.
+The `snapshot show` prints information about a specific snapshot. The `snapshot
+remove` command delete the model state snapshot.
+
+Example:
+
+```
+$ fastscore model add sqrt
+# fastscore.snapshots: eof
+action <- function(x) emit(x*x)
+^D
+$ fastscore run sqrt inline:2,3,5 discard:
+$ fastscore engine inspect
+FINISHED
+$ fastscore snapshot list sqrt
+8qxtf4yw
+$ fastscore snapshot list sqrt -v
+Id        Model    Date/Time             Type      Size
+--------  -------  --------------------  ------  ------
+8qxtf4yw  sqrt     2018-01-17T10:29:15Z  ETS1       355
+$ fastscore snapshot show sqrt 8qxtf4yw
+id:         8qxtf4yw
+created-on: 2018-01-17T10:29:15Z
+stype:      ETS1
+size:       355
+$ fastscore snapshot remove sqrt 8qxtf4yw -v
+Snapshot '8qxtf4yw' removed
+```
 
 ## Restoring state snapshots
 <a name="snapshot-restore"></a>
@@ -878,17 +968,52 @@ TODO
 fastscore snapshot restore <model-name> [ <snapshot-id> ]
 ```
 
-TODO
+The `snapshot restore` commands restore the state of the model. The command must
+be run durining initialization, before or after loading the model. If
+`<snapshot-id>` is omitted, the command restores the latest snapshot taken.
+
+```
+$ fastscore model add sqrt
+# fastscore.snapshots: eof
+action <- function(x) emit(x*x)
+^D
+$ fastscore run sqrt inline:2,3,5 discard:
+$ fastscore snapshot list sqrt -v
+Id        Model    Date/Time             Type      Size
+--------  -------  --------------------  ------  ------
+8qxtf4yw  sqrt     2018-01-17T10:29:15Z  ETS1       355
+$ fastscore engine reset
+$ fastscore snapshot restore sqrt 8qxtf4yw -v
+Model state restored
+$ fastscore run sqrt ...
+```
 
 ## Managing model environments
 <a name="policy"></a>
 
 ```
-fastscore policy set [ <policy-file> ]
-fastscore policy show
+fastscore policy set [ <policy-file> ] -type:<model-type> [ -preinstall ]
+fastscore policy show -type:<model-type>
 ```
 
-TODO
+The `policy set` updates the engine library import policy for a specific
+`<model-type>`. See more about import policies (TODO: add a link). If
+`<policy-file>` is omitted, the command reads the policy from its standard
+input. With `-preinstall` option the command installs all libraries mentioned in
+the policy shortening the model loading time. The policy can be preinstalled no
+more than once.
+
+The `policy show` retrieves the active import policy from the engine.
+
+Example:
+
+```
+$ fastscore policy set -type:python
+scikit-learn: install
+^D
+$ fastcore policy show -type:python
+scikit-learn: install
+```
 
 ## Collecting statistics
 <a name="stats"></a>
@@ -900,7 +1025,45 @@ fastscore stats jets
 fastscore stats streams
 ```
 
-TODO
+The `stats` commands continuously report various statistics. The `stats memory`
+and `stats cpu-utilization` commands show the current memory footprint and CPU
+utilization of the engine. `stats jets` shows the records per second throughput
+of all runnings jets. `stats streams` reports the throughput at each stream
+slot.
+
+Example (assuming the engine is running):
+
+```
+$ fastscore use engine-1
+$ fastscore stats memory
+engine-1: 2163.5mb
+engine-1: 2163.5mb
+engine-1: 2161.5mb
+...
+$ fastscore stats cpu-utilization
+engine-1: kernel: 152.1 user: 69.0
+engine-1: kernel: 152.7 user: 69.2
+engine-1: kernel: 153.0 user: 69.5
+...
+$ fastscore model scale 3
+$ fastscore stats jets
+engine-1: 1000.0 rps/--- 1000.0 rps/1744.8 rps 1000.0 rps/1859.4 rps
+engine-1: 1745.2 rps/1696.0 rps 1886.8 rps/1911.0 rps 1924.9 rps/1821.0 rps
+engine-1: 1766.8 rps/1739.2 rps 1928.6 rps/1910.0 rps 1869.2 rps/---
+engine-1: ---/--- ---/--- ---/---
+engine-1: 1823.2 rps/1832.0 rps 1838.2 rps/1972.0 rps 1910.2 rps/1954.0 rps
+engine-1: 1556.4 rps/1626.4 rps 1492.5 rps/1251.0 rps 1448.2 rps/1321.0 rps
+...
+$ fastscore stats streams
+engine-1: 0:25.0 rps | 1:1.0 rps
+engine-1: 0:6000.0 rps | 1:5675.0 rps
+engine-1: 0:6000.0 rps | 1:5711.0 rps
+engine-1: 0:6000.0 rps | 1:5574.0 rps
+...
+```
+
+The `stats` commands rely on sensor to collect statistics. `---` indicate that
+data is not available at the moment.
 
 ## Troubleshooting data pipelines
 <a name="debug"></a>
@@ -910,7 +1073,41 @@ fastscore debug manifold
 fastscore debug stream [ <slot> ]
 ```
 
-TODO
+The `debug` commands enable generation of a debug messages that describe
+internal operations of the engine. These commands are not related to debugging
+of the model source code. The commands are for advanced user only.
+
+Example:
+
+```
+# In a separate window run: fastscore run cube inline:1,2,3 discard
+$ fastscore debug manifold
+14:40:22.491: model loaded
+14:40:22.528: schema match: ok
+14:40:22.536: stream open: ok
+14:40:22.568: schema match: ok
+14:40:22.575: stream open: ok
+14:40:22.576: requesting data from slot 0
+14:40:22.576: starting initial jet 1
+14:40:22.882: state changes to RUNNING
+14:40:22.885: jet <0.1474.0> is ready
+14:40:22.885: 3 record(s) received from slot 0
+14:40:22.885: dispatched to jet <0.1474.0>
+14:40:22.885: more data requested from slot 0
+14:40:22.885: stream at slot 0 reaches EOF
+14:40:22.886: pending state change: FINISHING
+14:40:22.892: writing output 1 record(s) to slot 1
+14:40:22.893: write confirmed for slot 1
+14:40:22.893: writing output 1 record(s) to slot 1
+14:40:22.893: write confirmed for slot 1
+14:40:22.893: writing output 1 record(s) to slot 1
+14:40:22.893: write confirmed for slot 1
+14:40:22.893: jet <0.1474.0> is ready
+14:40:22.893: state changes to FINISHING
+14:40:22.893: sending EOF to jet <0.1474.0>
+14:40:22.894: jet <0.1474.0> finished
+14:40:22.894: state changes to FINISHED
+```
 
 ## Profiling internal operations
 <a name="profile"></a>
@@ -919,7 +1116,21 @@ TODO
 fastscore profile stream <slot>
 ```
 
-TODO
+The `profile stream` command measures time spent by the stream on certain
+operations, such as schema validation. The profiling may be useful when making
+decision about the best data format for your streams.
+
+Example (assuming the engine is running):
+
+```
+$ fastscore profile stream 0
+Operation                  Time, s    Count
+-----------------------  ---------  -------
+Validate output records      0.316    15229
+Validate input records       0.024      600
+Wrap envelope                0.002       15
+Unwrap envelope              0.023     1200
+```
 
 ## Pneumo access
 <a name="pneumo"></a>
@@ -928,18 +1139,43 @@ TODO
 fastscore pneumo [ history ]
 ```
 
-TODO
+The `pneumo` commands provide an access to Pneumo -- the internal message bus of
+FastScore. `pneumo history` prints a few most recent Pneumo messages (60 max).
+The `pneumo` command continuously prints Pneumo messages as they appear on the
+bus.
 
 ## Monitoring engine operations
 <a name="monitor"></a>
 
 ```
 fastscore monitor
+(or -m option)
 ```
 
--m option
+The `monitor` command shows a live text-based UI that shows information about
+the state of the engine, loaded model, attached streams, and running jets. It is
+possible to add the `-m` option to any CLI command to request the monitor
+display after the command completes.
 
-TODO
+Example (assuming the engine is running):
+
+```
+$ fastscore monitor
+==================================================
+Engine: engine-1 [RUNNING]
+Model:  cube (r)
+
+Stream
+--------------------------------------------------
+input          I:0          4,649 rps     0.0 mbps
+output         O:1          5,496 rps     0.0 mbps
+
+Jet                             Input       Output
+--------------------------------------------------
+cube                        1,833 rps    1,885 rps
+cube                        1,825 rps    1,935 rps
+cube                        1,845 rps    1,944 rps
+```
 
 ## <a name="literal-streams"></a>Url-like stream descriptors
 
