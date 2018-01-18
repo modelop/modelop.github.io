@@ -27,7 +27,6 @@ Welcome to Open Data Group's documentation!
 - [Record Sets and Control Records](/Product Manuals/Record Sets and Control Records/)
 - [Java Model Runner](/Product Manuals/Java Model Runner/)
 - [Fastscore Configuration](/Product Manuals/Configuration/)
-- [Model Annotations](/Product Manuals/Model Annotations/)
 
 ### Reference
 
