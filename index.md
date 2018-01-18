@@ -26,6 +26,8 @@ Welcome to Open Data Group's documentation!
 - [Multiple Input and Output Streams](/Product Manuals/Multiple Input and Output Streams/)
 - [Record Sets and Control Records](/Product Manuals/Record Sets and Control Records/)
 - [Java Model Runner](/Product Manuals/Java Model Runner/)
+- [Fastscore Configuration](/Product Manuals/Configuration/)
+- [Model Annotations](/Product Manuals/Model Annotations/)
 
 ### Reference
 
