@@ -142,7 +142,7 @@ fastscore config show
 The first command sets the configuration of the FastScore deployment. The second -
 prints the current configuration. The `<config-file>` is the name of the
 configuration file. The configuration file uses YAML format. Its syntax is
-described [here](../Product Documentation/Configuration.md).
+described [here](../../Product Manuals/Configuration/).
 
 Example:
 
@@ -334,7 +334,7 @@ fastscore stream remove <stream-name>
 ```
 
 The `stream add` command adds a stream descriptor to FastScore. The syntax of
-the stream descriptor is explained [here](../Product Documentation/Stream Descriptors.md).
+the stream descriptor is explained [here](../../Product Manuals/Stream Descriptors/).
 If the `<descriptor-file>` is omitted, the command reads the descriptor from the
 standard input.
 
@@ -454,7 +454,7 @@ fastscore sensor remove <sensor-name>
 
 The `sensor add` command adds a sensor descriptor to FastScore. If the
 `<sensor-file>` is omitted, the command reads the standard input. The syntax of
-a sensor descriptor is described [here](../Product Documentation/Sensors.md).
+a sensor descriptor is described [here](../../Product Manuals/Sensors/).
 
 The `sensor show` prints the sensor descriptor to the standard output. The `-e`
 (edit) option allows editing the sensor descriptor. The edit option spawns an
@@ -598,8 +598,7 @@ The `model load` command performs all preparatory steps and gets ready to start
 data processing. The target engine can be selected using the `use` command. The
 preparatory steps include verification of the model syntax, checking if the
 model follows the FastScore model conventions, e.g. if the action() method is
-defined, analysing the model [smart comments](../Product Documentation/Model
-Annotations.md), fetching attachments from Model Manage and unpacking them. The
+defined, analysing the model [smart comments](../../Product Manuals/Model Annotations/), fetching attachments from Model Manage and unpacking them. The
 model smart comments indicate which stream slots must be occupied for the model
 to run. If an unexpected slot has a stream attached the `model load` command
 will fail. If all requied streams are attached, the loaded model will start the
@@ -999,7 +998,7 @@ fastscore policy show -type:<model-type>
 ```
 
 The `policy set` updates the engine library import policy for a specific
-`<model-type>`. See [more](../Product Documentation/Import Policies.md) about
+`<model-type>`. See [more](../../Product Manuals/Import Policies/) about
 import policies. If `<policy-file>` is omitted, the command reads the policy
 from its standard input. With `-preinstall` option the command installs all
 libraries mentioned in the policy shortening the model loading time. The policy
