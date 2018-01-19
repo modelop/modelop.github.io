@@ -1,7 +1,6 @@
 ---
 title: The FastScore CLI User Guide
-description: The guide describes all commands available through the FastScore
-CLI with their respective options.
+description: The guide describes all commands available through the FastScore CLI with their respective options.
 css: buttondown.css
 ---
 
@@ -1227,4 +1226,3 @@ $ fastscore stream verify inline:1,2,3 0
 }
 The stream descriptor contains no errors
 ```
-
