@@ -14,6 +14,10 @@ Welcome to Open Data Group's documentation!
 
 - [Tutorials](/Knowledge Center/Tutorials/)
 
+### Glossary
+
+- [FastScore Glossary](/Glossary/)
+
 ### Product Manuals
 
 - [Model Deploy](/Product Manuals/Model Deploy/)
