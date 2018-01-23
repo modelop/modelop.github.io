@@ -24,7 +24,7 @@ back to actual S&P 500 prices. This analytic workflow is depicted below:
 <p align="center"><i>Analytic Workflow</i></p>
 
 The daily S&P 500 closing prices since June 1, 2007, as well as the corresponding
-CPI data, [can be obtained here](TODO TODO TODO).
+CPI data, [can be obtained here](https://s3-us-west-1.amazonaws.com/fastscore-examples/tf_composer_files.tar.gz).
 
 ## Contents
 
@@ -356,13 +356,13 @@ functionality.
 
 If you're not interested in manually creating and deploying Composer, feel free
 to skip ahead to the next section---you can
-[download an automation script to perform all configuration here](# TODO TODO TODO).
+[download an automation script to perform all configuration here](https://s3-us-west-1.amazonaws.com/fastscore-examples/tf_composer_files.tar.gz).
 
 It's easy to deploy FastScore Composer using Docker Compose or Docker Swarm. For
 this example, we'll use Swarm. Docker Swarm uses the same YAML definition files
 as Docker Compose, so you can re-use the example Docker Compose file from the
 [Getting Started Guide](../../Getting Started/Getting Started with FastScore/) or
-download [all the files needed for this step here](# TODO TODO TODO).
+download [all the files needed for this step here](https://s3-us-west-1.amazonaws.com/fastscore-examples/tf_composer_files.tar.gz).
 
 Composer consists of three microservices: Designer (a web GUI), Composer (the
 core component), and Conductor (for interactions with the container orchestration
@@ -479,7 +479,7 @@ relative to your browser:
 ![Designer configuration](images/designer-config.png)
 
 For example, if you can access Designer at `https://localhost:8012`, and you are
-using [the supplied Docker Compose file](# TODO TODO TODO), the proxy prefix is
+using [the supplied Docker Compose file](https://s3-us-west-1.amazonaws.com/fastscore-examples/tf_composer_files.tar.gz), the proxy prefix is
 `https://localhost:8000/api/1/service`.
 
 If you have not entered a valid proxy prefix, or Designer is otherwise unable to
