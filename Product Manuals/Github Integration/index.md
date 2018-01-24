@@ -27,7 +27,7 @@ Only HTTPS URLs to repos are supported for now. With Vault integration SSH URLs 
 
 ### Repo directories structure
 
-FastScore store its assets in the following directories:
+All kinds of FastScore assets are stored in the following directories:
 ```
 attachments
 models
@@ -36,9 +36,10 @@ sensors
 streams
 ```
 
-Each asset stored as a separate file with file name being an asset name and file extension being an asset type.
-No assets of same kind could share the same name.
-Attachments are stored in subdirs named same as the model name they are belong.
+* Each asset stored as a separate file.
+* File name is an asset name and file extension is an asset type.
+* No assets of same kind could share the same name.
+* Attachments are grouped into subdirs named after model they are belong.
 
 Example:
 ```
