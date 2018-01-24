@@ -492,7 +492,7 @@ assets for this project.
 ![Designer assets](images/designer-models.png)
 
 If you mouse over an asset's name, an edit icon will appear. This displays the
-asset's source code, and, in for models, lets you set other execution options
+asset's source code, and, for models, lets you set other execution options
 (such as the model environment).
 
 ![Designer model editing](images/designer-edit-model.png)
