@@ -32,6 +32,7 @@ Welcome to Open Data Group's documentation!
 - [Java Model Runner](/Product Manuals/Java Model Runner/)
 - [Fastscore Configuration](/Product Manuals/Configuration/)
 - [Model Annotations](/Product Manuals/Model Annotations/)
+- [Github Integration](/Product Manuals/Github Integration/)
 
 ### Reference
 
