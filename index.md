@@ -9,6 +9,7 @@ Welcome to Open Data Group's documentation!
 - [FastScore Getting Started Guide](/Getting Started/Getting Started with FastScore)
 - [Quick Setup Instructions - OVA](/Getting Started/FastStart with FastScore/)
 - [Release Notes](/Getting Started/Release Notes/)
+- [FastScore Specifications](/Getting Started/FastScore Specs/)
 
 ### Knowledge Center
 
@@ -32,7 +33,6 @@ Welcome to Open Data Group's documentation!
 - [Java Model Runner](/Product Manuals/Java Model Runner/)
 - [Fastscore Configuration](/Product Manuals/Configuration/)
 - [Model Annotations](/Product Manuals/Model Annotations/)
-- [Github Integration](/Product Manuals/Github Integration/)
 
 ### Reference
 
