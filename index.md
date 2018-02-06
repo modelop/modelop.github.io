@@ -10,6 +10,7 @@ Welcome to Open Data Group's documentation!
 - [Quick Setup Instructions - OVA](/Getting Started/FastStart with FastScore/)
 - [Release Notes](/Getting Started/Release Notes/)
 - [FastScore Specifications](/Getting Started/FastScore Specs/)
+- [FastScore Architecture](Getting Started/FastScore IA/)
 
 ### Knowledge Center
 
