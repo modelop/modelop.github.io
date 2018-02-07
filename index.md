@@ -10,10 +10,12 @@ Welcome to Open Data Group's documentation!
 - [Quick Setup Instructions - OVA](/Getting Started/FastStart with FastScore/)
 - [Release Notes](/Getting Started/Release Notes/)
 - [FastScore Specifications](/Getting Started/FastScore Specs/)
+- [FastScore Architecture](Getting Started/FastScore IA/)
 
 ### Knowledge Center
 
 - [Tutorials](/Knowledge Center/Tutorials/)
+- [FastScore Interactive Scenarios](/Knowledge Center/Katacoda/)
 
 ### Glossary
 
@@ -31,6 +33,7 @@ Welcome to Open Data Group's documentation!
 - [Multiple Input and Output Streams](/Product Manuals/Multiple Input and Output Streams/)
 - [Record Sets and Control Records](/Product Manuals/Record Sets and Control Records/)
 - [Java Model Runner](/Product Manuals/Java Model Runner/)
+- [Matlab (Octave) Model Runner](/Product Manuals/MATLAB Model Runner/)
 - [Fastscore Configuration](/Product Manuals/Configuration/)
 - [Model Annotations](/Product Manuals/Model Annotations/)
 
