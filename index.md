@@ -15,6 +15,7 @@ Welcome to Open Data Group's documentation!
 ### Knowledge Center
 
 - [Tutorials](/Knowledge Center/Tutorials/)
+- [FastScore Interactive Scenarios](/Knowledge Center/Katacoda/)
 
 ### Glossary
 

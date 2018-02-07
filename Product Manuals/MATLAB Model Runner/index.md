@@ -7,7 +7,7 @@ A few rules to conform when creating Matlab model to run in FastScore:
 * All statements should reside within a function body inside .m file (with same name as your function)
 * FastScore model name should match the name of model file (without .m extension)
 * If you need to perform one time initialization (such as loading data into global variables to be used throughout the model execution), you need to prepare a separate begin.m file and add it to your model as part of compressed attachment; for example, this is how you would make data loaded from attached CSV file available to the model:
-``` octave
+``` 
 function f = begin()
     global Data
     Data = csvread("data.csv");
@@ -28,10 +28,10 @@ Octave runner only supports JSON encoding for input/output streams.
 Malab / Octave code is optimized to work with matrix data. As such, it will be often required to pass a matrix as model input. The following simple example shows how to implement Eigen vector calculation with FastScore leveraging Octave runner.
 
 * Create eigen.m file with the following code:
-``` octave
+```
 function EV = eigen(A)
-  % Calculate eigen values
-  EV = eig(A)
+    % Calculate eigen values
+    EV = eig(A)
 ```
 
 * Load model into FastScore and make sure it is listed as Octave:
