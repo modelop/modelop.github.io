@@ -2,4 +2,4 @@
 
 - [Python SDK](python/)
 - R SDK
-- Scala SDK
+- [Scala SDK](scala/com/opendatagroup/fastscore)

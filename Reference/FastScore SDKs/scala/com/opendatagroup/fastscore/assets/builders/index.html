@@ -1,0 +1,770 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+          <title></title>
+          <meta name="description" content="" />
+          <meta name="keywords" content="" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../../lib/index.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery.panzoom.min.js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery.mousewheel.min.js"></script>
+      <script type="text/javascript" src="../../../../../lib/index.js"></script>
+      <script type="text/javascript" src="../../../../../index.js"></script>
+      <script type="text/javascript" src="../../../../../lib/scheduler.js"></script>
+      <script type="text/javascript" src="../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+        /* this variable can be used by the JS to determine the path to the root document */
+        var toRoot = '../../../../../';
+      </script>
+    
+        </head>
+        <body>
+      <div id="search">
+        <span id="doc-title"><span id="doc-version"></span></span>
+        <span class="close-results"><span class="left">&lt;</span> Back</span>
+        <div id="textfilter">
+          <span class="input">
+            <input autocapitalize="none" placeholder="Search" id="index-input" type="text" accesskey="/" />
+            <i class="clear material-icons"></i>
+            <i id="search-icon" class="material-icons"></i>
+          </span>
+        </div>
+    </div>
+      <div id="search-results">
+        <div id="search-progress">
+          <div id="progress-fill"></div>
+        </div>
+        <div id="results-content">
+          <div id="entity-results"></div>
+          <div id="member-results"></div>
+        </div>
+      </div>
+      <div id="content-scroll-container" style="-webkit-overflow-scrolling: touch;">
+        <div id="content-container" style="-webkit-overflow-scrolling: touch;">
+          <div id="subpackage-spacer">
+            <div id="packages">
+              <h1>Packages</h1>
+              <ul>
+                <li name="_root_.root" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="_root_"></a><a id="root:_root_"></a>
+      <span class="permalink">
+      <a href="index.html#_root_" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../../../index.html"><span class="name">root</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="_root_.com" visbl="pub" class="indented1 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="com"></a><a id="com:com"></a>
+      <span class="permalink">
+      <a href="index.html#com" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../../index.html"><span class="name">com</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="com.opendatagroup" visbl="pub" class="indented2 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="opendatagroup"></a><a id="opendatagroup:opendatagroup"></a>
+      <span class="permalink">
+      <a href="../com/index.html#opendatagroup" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../index.html"><span class="name">opendatagroup</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../index.html" class="extype" name="com">com</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore" visbl="pub" class="indented3 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fastscore"></a><a id="fastscore:fastscore"></a>
+      <span class="permalink">
+      <a href="../../com/opendatagroup/index.html#fastscore" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="An example interaction with FastScore" href="../../index.html"><span class="name">fastscore</span></a>
+      </span>
+      
+      <p class="shortcomment cmt">An example interaction with FastScore</p><div class="fullcomment"><div class="comment cmt"><p>An example interaction with FastScore</p><pre>scala&gt; <span class="kw">import</span> com.opendatagroup.fastscore.fleet._
+scala&gt; <span class="kw">implicit</span> <span class="kw">val</span> proxy = <span class="kw">new</span> Proxy(<span class="lit">"https://localhost:8000"</span>)
+scala&gt; <span class="kw">val</span> connect = <span class="kw">new</span> Connect()
+scala&gt; <span class="kw">import</span> com.opendatagroup.fastscore.assets._
+scala&gt; <span class="kw">val</span> model = Model.fromFile(<span class="lit">"./preprocessor.R"</span>)
+scala&gt; <span class="kw">val</span> modelmanage = connect.lookup(<span class="lit">"model-manage"</span>) <span class="kw">match</span> { <span class="kw">case</span> l: <span class="std">List</span>[ModelManage] <span class="kw">if</span> l.length == <span class="num">1</span> <span class="kw">=&gt;</span> l(<span class="num">0</span>) }
+scala&gt; modelmanage.models.put(<span class="lit">"preprocessor"</span>, model)</pre></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../index.html" class="extype" name="com.opendatagroup">opendatagroup</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.assets" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="assets"></a><a id="assets:assets"></a>
+      <span class="permalink">
+      <a href="../../../com/opendatagroup/fastscore/index.html#assets" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../index.html"><span class="name">assets</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="com.opendatagroup.fastscore">fastscore</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.assets.builders" visbl="pub" class="indented5 current" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="builders"></a><a id="builders:builders"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/index.html#builders" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">builders</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.assets">assets</a></dd></dl></div>
+    </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorActivateBuilder.html" title="Sensor Activate parameter builder"></a>
+                        <a href="SensorActivateBuilder.html" title="Sensor Activate parameter builder">SensorActivateBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorAggregateBuilder.html" title="Sensor Aggregate parameter builder"></a>
+                        <a href="SensorAggregateBuilder.html" title="Sensor Aggregate parameter builder">SensorAggregateBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorBuilder.html" title="SensorBuilder"></a>
+                        <a href="SensorBuilder.html" title="SensorBuilder">SensorBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorFilterBuilder.html" title="Sensor Filter parameter builder"></a>
+                        <a href="SensorFilterBuilder.html" title="Sensor Filter parameter builder">SensorFilterBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorReportBuilder.html" title="Sensor Report parameter builder"></a>
+                        <a href="SensorReportBuilder.html" title="Sensor Report parameter builder">SensorReportBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorSinkBuilder.html" title="Sensor Sink parameter builder"></a>
+                        <a href="SensorSinkBuilder.html" title="Sensor Sink parameter builder">SensorSinkBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorTapBuilder.html" title="Sensor Tap parameter builder"></a>
+                        <a href="SensorTapBuilder.html" title="Sensor Tap parameter builder">SensorTapBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamBatchingBuilder.html" title="Stream Batching builder"></a>
+                        <a href="StreamBatchingBuilder.html" title="Stream Batching builder">StreamBatchingBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamBuilder.html" title="Stream Builder"></a>
+                        <a href="StreamBuilder.html" title="Stream Builder">StreamBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="trait" href="StreamEnvelopeBuilder.html" title="Stream Envelope builder parent trait"></a>
+                        <a href="StreamEnvelopeBuilder.html" title="Stream Envelope builder parent trait">StreamEnvelopeBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamEnvelopeDelimitedBuilder.html" title="Stream Envelope delimited builer"></a>
+                        <a href="StreamEnvelopeDelimitedBuilder.html" title="Stream Envelope delimited builer">StreamEnvelopeDelimitedBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamEnvelopeFixedBuilder.html" title="Stream Envelope Fixed builder"></a>
+                        <a href="StreamEnvelopeFixedBuilder.html" title="Stream Envelope Fixed builder">StreamEnvelopeFixedBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamEnvelopeOcfBlockBuilder.html" title="Stream Envelope Ocf Block builder"></a>
+                        <a href="StreamEnvelopeOcfBlockBuilder.html" title="Stream Envelope Ocf Block builder">StreamEnvelopeOcfBlockBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamSchemaRefBuilder.html" title="Stream Schema Ref builder"></a>
+                        <a href="StreamSchemaRefBuilder.html" title="Stream Schema Ref builder">StreamSchemaRefBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="trait" href="StreamTransportBuilder.html" title="Stream Transport Builder parent trait"></a>
+                        <a href="StreamTransportBuilder.html" title="Stream Transport Builder parent trait">StreamTransportBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportDiscardBuilder.html" title="Stream Transport discard builder"></a>
+                        <a href="StreamTransportDiscardBuilder.html" title="Stream Transport discard builder">StreamTransportDiscardBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportExecBuilder.html" title="Stream Transport Exec builder"></a>
+                        <a href="StreamTransportExecBuilder.html" title="Stream Transport Exec builder">StreamTransportExecBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportFileBuilder.html" title="Stream Transport File builder"></a>
+                        <a href="StreamTransportFileBuilder.html" title="Stream Transport File builder">StreamTransportFileBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportHTTPBuilder.html" title="Stream Transport HTTP Builder"></a>
+                        <a href="StreamTransportHTTPBuilder.html" title="Stream Transport HTTP Builder">StreamTransportHTTPBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportInlineBuilder.html" title="Stream Transport Inline builder"></a>
+                        <a href="StreamTransportInlineBuilder.html" title="Stream Transport Inline builder">StreamTransportInlineBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportKafkaBuilder.html" title="Stream Transport Kafka builder"></a>
+                        <a href="StreamTransportKafkaBuilder.html" title="Stream Transport Kafka builder">StreamTransportKafkaBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportODBCBuilder.html" title="Stream Transport ODBC builder"></a>
+                        <a href="StreamTransportODBCBuilder.html" title="Stream Transport ODBC builder">StreamTransportODBCBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportRESTBuilder.html" title="Stream Transport REST builder"></a>
+                        <a href="StreamTransportRESTBuilder.html" title="Stream Transport REST builder">StreamTransportRESTBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportTCPBuilder.html" title="Stream Transport TCP builder"></a>
+                        <a href="StreamTransportTCPBuilder.html" title="Stream Transport TCP builder">StreamTransportTCPBuilder</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportUDPBuilder.html" title="Stream Transport UDP builder"></a>
+                        <a href="StreamTransportUDPBuilder.html" title="Stream Transport UDP builder">StreamTransportUDPBuilder</a>
+                      </li><li name="com.opendatagroup.fastscore.assets.serializers" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="serializers"></a><a id="serializers:serializers"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/index.html#serializers" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../serializers/index.html"><span class="name">serializers</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.assets">assets</a></dd></dl></div>
+    </li>
+              </ul>
+            </div>
+          </div>
+          <div id="content">
+            <body class="package value">
+      <div id="definition">
+        <div class="big-circle package">p</div>
+        <p id="owner"><a href="../../../../index.html" class="extype" name="com">com</a>.<a href="../../../index.html" class="extype" name="com.opendatagroup">opendatagroup</a>.<a href="../../index.html" class="extype" name="com.opendatagroup.fastscore">fastscore</a>.<a href="../index.html" class="extype" name="com.opendatagroup.fastscore.assets">assets</a></p>
+        <h1>builders<span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span></h1>
+        
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">builders</span>
+      </span>
+      </h4>
+
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="com.opendatagroup.fastscore.assets.builders.SensorActivateBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SensorActivateBuilderextendsAnyRef"></a><a id="SensorActivateBuilder:SensorActivateBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#SensorActivateBuilderextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Sensor Activate parameter builder" href="SensorActivateBuilder.html"><span class="name">SensorActivateBuilder</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Sensor Activate parameter builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.SensorAggregateBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SensorAggregateBuilderextendsAnyRef"></a><a id="SensorAggregateBuilder:SensorAggregateBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#SensorAggregateBuilderextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Sensor Aggregate parameter builder" href="SensorAggregateBuilder.html"><span class="name">SensorAggregateBuilder</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Sensor Aggregate parameter builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.SensorBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SensorBuilderextendsAnyRef"></a><a id="SensorBuilder:SensorBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#SensorBuilderextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="SensorBuilder" href="SensorBuilder.html"><span class="name">SensorBuilder</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">SensorBuilder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.SensorFilterBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SensorFilterBuilderextendsAnyRef"></a><a id="SensorFilterBuilder:SensorFilterBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#SensorFilterBuilderextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Sensor Filter parameter builder" href="SensorFilterBuilder.html"><span class="name">SensorFilterBuilder</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Sensor Filter parameter builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.SensorReportBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SensorReportBuilderextendsAnyRef"></a><a id="SensorReportBuilder:SensorReportBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#SensorReportBuilderextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Sensor Report parameter builder" href="SensorReportBuilder.html"><span class="name">SensorReportBuilder</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Sensor Report parameter builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.SensorSinkBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SensorSinkBuilderextendsAnyRef"></a><a id="SensorSinkBuilder:SensorSinkBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#SensorSinkBuilderextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Sensor Sink parameter builder" href="SensorSinkBuilder.html"><span class="name">SensorSinkBuilder</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Sensor Sink parameter builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.SensorTapBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SensorTapBuilderextendsAnyRef"></a><a id="SensorTapBuilder:SensorTapBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#SensorTapBuilderextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Sensor Tap parameter builder" href="SensorTapBuilder.html"><span class="name">SensorTapBuilder</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Sensor Tap parameter builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamBatchingBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamBatchingBuilderextendsAnyRef"></a><a id="StreamBatchingBuilder:StreamBatchingBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamBatchingBuilderextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Batching builder" href="StreamBatchingBuilder.html"><span class="name">StreamBatchingBuilder</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Batching builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamBuilderextendsAnyRef"></a><a id="StreamBuilder:StreamBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamBuilderextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Builder" href="StreamBuilder.html"><span class="name">StreamBuilder</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamEnvelopeBuilder" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="StreamEnvelopeBuilderextendsAnyRef"></a><a id="StreamEnvelopeBuilder:StreamEnvelopeBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamEnvelopeBuilderextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">sealed </span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Envelope builder parent trait" href="StreamEnvelopeBuilder.html"><span class="name">StreamEnvelopeBuilder</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Envelope builder parent trait</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamEnvelopeDelimitedBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamEnvelopeDelimitedBuilderextendsStreamEnvelopeBuilder"></a><a id="StreamEnvelopeDelimitedBuilder:StreamEnvelopeDelimitedBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamEnvelopeDelimitedBuilderextendsStreamEnvelopeBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Envelope delimited builer" href="StreamEnvelopeDelimitedBuilder.html"><span class="name">StreamEnvelopeDelimitedBuilder</span></a><span class="result"> extends <a href="StreamEnvelopeBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamEnvelopeBuilder">StreamEnvelopeBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Envelope delimited builer
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamEnvelopeFixedBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamEnvelopeFixedBuilderextendsStreamEnvelopeBuilder"></a><a id="StreamEnvelopeFixedBuilder:StreamEnvelopeFixedBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamEnvelopeFixedBuilderextendsStreamEnvelopeBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Envelope Fixed builder" href="StreamEnvelopeFixedBuilder.html"><span class="name">StreamEnvelopeFixedBuilder</span></a><span class="result"> extends <a href="StreamEnvelopeBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamEnvelopeBuilder">StreamEnvelopeBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Envelope Fixed builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamEnvelopeOcfBlockBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamEnvelopeOcfBlockBuilderextendsStreamEnvelopeBuilder"></a><a id="StreamEnvelopeOcfBlockBuilder:StreamEnvelopeOcfBlockBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamEnvelopeOcfBlockBuilderextendsStreamEnvelopeBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Envelope Ocf Block builder" href="StreamEnvelopeOcfBlockBuilder.html"><span class="name">StreamEnvelopeOcfBlockBuilder</span></a><span class="result"> extends <a href="StreamEnvelopeBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamEnvelopeBuilder">StreamEnvelopeBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Envelope Ocf Block builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamSchemaRefBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamSchemaRefBuilderextendsAnyRef"></a><a id="StreamSchemaRefBuilder:StreamSchemaRefBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamSchemaRefBuilderextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Schema Ref builder" href="StreamSchemaRefBuilder.html"><span class="name">StreamSchemaRefBuilder</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Schema Ref builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamTransportBuilder" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="StreamTransportBuilderextendsAnyRef"></a><a id="StreamTransportBuilder:StreamTransportBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamTransportBuilderextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">sealed </span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Transport Builder parent trait" href="StreamTransportBuilder.html"><span class="name">StreamTransportBuilder</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Transport Builder parent trait</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamTransportDiscardBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamTransportDiscardBuilderextendsStreamTransportBuilder"></a><a id="StreamTransportDiscardBuilder:StreamTransportDiscardBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamTransportDiscardBuilderextendsStreamTransportBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Transport discard builder" href="StreamTransportDiscardBuilder.html"><span class="name">StreamTransportDiscardBuilder</span></a><span class="result"> extends <a href="StreamTransportBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamTransportBuilder">StreamTransportBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Transport discard builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamTransportExecBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamTransportExecBuilderextendsStreamTransportBuilder"></a><a id="StreamTransportExecBuilder:StreamTransportExecBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamTransportExecBuilderextendsStreamTransportBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Transport Exec builder" href="StreamTransportExecBuilder.html"><span class="name">StreamTransportExecBuilder</span></a><span class="result"> extends <a href="StreamTransportBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamTransportBuilder">StreamTransportBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Transport Exec builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamTransportFileBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamTransportFileBuilderextendsStreamTransportBuilder"></a><a id="StreamTransportFileBuilder:StreamTransportFileBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamTransportFileBuilderextendsStreamTransportBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Transport File builder" href="StreamTransportFileBuilder.html"><span class="name">StreamTransportFileBuilder</span></a><span class="result"> extends <a href="StreamTransportBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamTransportBuilder">StreamTransportBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Transport File builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamTransportHTTPBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamTransportHTTPBuilderextendsStreamTransportBuilder"></a><a id="StreamTransportHTTPBuilder:StreamTransportHTTPBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamTransportHTTPBuilderextendsStreamTransportBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Transport HTTP Builder" href="StreamTransportHTTPBuilder.html"><span class="name">StreamTransportHTTPBuilder</span></a><span class="result"> extends <a href="StreamTransportBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamTransportBuilder">StreamTransportBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Transport HTTP Builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamTransportInlineBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="StreamTransportInlineBuilderextendsStreamTransportBuilder"></a><a id="StreamTransportInlineBuilder:StreamTransportInlineBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamTransportInlineBuilderextendsStreamTransportBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Transport Inline builder" href="StreamTransportInlineBuilder.html"><span class="name">StreamTransportInlineBuilder</span></a><span class="result"> extends <a href="StreamTransportBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamTransportBuilder">StreamTransportBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Transport Inline builder</p><div class="fullcomment"><div class="comment cmt"><p>Stream Transport Inline builder</p><p>Only one of data or dataBinary may be defined
+</p></div></div>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamTransportKafkaBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamTransportKafkaBuilderextendsStreamTransportBuilder"></a><a id="StreamTransportKafkaBuilder:StreamTransportKafkaBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamTransportKafkaBuilderextendsStreamTransportBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Transport Kafka builder" href="StreamTransportKafkaBuilder.html"><span class="name">StreamTransportKafkaBuilder</span></a><span class="result"> extends <a href="StreamTransportBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamTransportBuilder">StreamTransportBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Transport Kafka builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamTransportODBCBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamTransportODBCBuilderextendsStreamTransportBuilder"></a><a id="StreamTransportODBCBuilder:StreamTransportODBCBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamTransportODBCBuilderextendsStreamTransportBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Transport ODBC builder" href="StreamTransportODBCBuilder.html"><span class="name">StreamTransportODBCBuilder</span></a><span class="result"> extends <a href="StreamTransportBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamTransportBuilder">StreamTransportBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Transport ODBC builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamTransportRESTBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamTransportRESTBuilderextendsStreamTransportBuilder"></a><a id="StreamTransportRESTBuilder:StreamTransportRESTBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamTransportRESTBuilderextendsStreamTransportBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Transport REST builder" href="StreamTransportRESTBuilder.html"><span class="name">StreamTransportRESTBuilder</span></a><span class="result"> extends <a href="StreamTransportBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamTransportBuilder">StreamTransportBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Transport REST builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamTransportTCPBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamTransportTCPBuilderextendsStreamTransportBuilder"></a><a id="StreamTransportTCPBuilder:StreamTransportTCPBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamTransportTCPBuilderextendsStreamTransportBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Transport TCP builder" href="StreamTransportTCPBuilder.html"><span class="name">StreamTransportTCPBuilder</span></a><span class="result"> extends <a href="StreamTransportBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamTransportBuilder">StreamTransportBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Transport TCP builder
+</p>
+    </li><li name="com.opendatagroup.fastscore.assets.builders.StreamTransportUDPBuilder" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="StreamTransportUDPBuilderextendsStreamTransportBuilder"></a><a id="StreamTransportUDPBuilder:StreamTransportUDPBuilder"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/assets/builders/index.html#StreamTransportUDPBuilderextendsStreamTransportBuilder" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="Stream Transport UDP builder" href="StreamTransportUDPBuilder.html"><span class="name">StreamTransportUDPBuilder</span></a><span class="result"> extends <a href="StreamTransportBuilder.html" class="extype" name="com.opendatagroup.fastscore.assets.builders.StreamTransportBuilder">StreamTransportBuilder</a></span>
+      </span>
+      
+      <p class="shortcomment cmt">Stream Transport UDP builder
+</p>
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+    </body>
+          </div>
+        </div>
+      </div>
+    </body>
+      </html>

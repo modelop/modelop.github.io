@@ -1,0 +1,1143 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+          <title></title>
+          <meta name="description" content="" />
+          <meta name="keywords" content="" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../../lib/index.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery.panzoom.min.js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery.mousewheel.min.js"></script>
+      <script type="text/javascript" src="../../../../../lib/index.js"></script>
+      <script type="text/javascript" src="../../../../../index.js"></script>
+      <script type="text/javascript" src="../../../../../lib/scheduler.js"></script>
+      <script type="text/javascript" src="../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+        /* this variable can be used by the JS to determine the path to the root document */
+        var toRoot = '../../../../../';
+      </script>
+    
+        </head>
+        <body>
+      <div id="search">
+        <span id="doc-title"><span id="doc-version"></span></span>
+        <span class="close-results"><span class="left">&lt;</span> Back</span>
+        <div id="textfilter">
+          <span class="input">
+            <input autocapitalize="none" placeholder="Search" id="index-input" type="text" accesskey="/" />
+            <i class="clear material-icons"></i>
+            <i id="search-icon" class="material-icons"></i>
+          </span>
+        </div>
+    </div>
+      <div id="search-results">
+        <div id="search-progress">
+          <div id="progress-fill"></div>
+        </div>
+        <div id="results-content">
+          <div id="entity-results"></div>
+          <div id="member-results"></div>
+        </div>
+      </div>
+      <div id="content-scroll-container" style="-webkit-overflow-scrolling: touch;">
+        <div id="content-container" style="-webkit-overflow-scrolling: touch;">
+          <div id="subpackage-spacer">
+            <div id="packages">
+              <h1>Packages</h1>
+              <ul>
+                <li name="_root_.root" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="_root_"></a><a id="root:_root_"></a>
+      <span class="permalink">
+      <a href="index.html#_root_" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../../../index.html"><span class="name">root</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="_root_.com" visbl="pub" class="indented1 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="com"></a><a id="com:com"></a>
+      <span class="permalink">
+      <a href="index.html#com" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../../index.html"><span class="name">com</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="com.opendatagroup" visbl="pub" class="indented2 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="opendatagroup"></a><a id="opendatagroup:opendatagroup"></a>
+      <span class="permalink">
+      <a href="../com/index.html#opendatagroup" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../index.html"><span class="name">opendatagroup</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../index.html" class="extype" name="com">com</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore" visbl="pub" class="indented3 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fastscore"></a><a id="fastscore:fastscore"></a>
+      <span class="permalink">
+      <a href="../../com/opendatagroup/index.html#fastscore" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="An example interaction with FastScore" href="../../index.html"><span class="name">fastscore</span></a>
+      </span>
+      
+      <p class="shortcomment cmt">An example interaction with FastScore</p><div class="fullcomment"><div class="comment cmt"><p>An example interaction with FastScore</p><pre>scala&gt; <span class="kw">import</span> com.opendatagroup.fastscore.fleet._
+scala&gt; <span class="kw">implicit</span> <span class="kw">val</span> proxy = <span class="kw">new</span> Proxy(<span class="lit">"https://localhost:8000"</span>)
+scala&gt; <span class="kw">val</span> connect = <span class="kw">new</span> Connect()
+scala&gt; <span class="kw">import</span> com.opendatagroup.fastscore.assets._
+scala&gt; <span class="kw">val</span> model = Model.fromFile(<span class="lit">"./preprocessor.R"</span>)
+scala&gt; <span class="kw">val</span> modelmanage = connect.lookup(<span class="lit">"model-manage"</span>) <span class="kw">match</span> { <span class="kw">case</span> l: <span class="std">List</span>[ModelManage] <span class="kw">if</span> l.length == <span class="num">1</span> <span class="kw">=&gt;</span> l(<span class="num">0</span>) }
+scala&gt; modelmanage.models.put(<span class="lit">"preprocessor"</span>, model)</pre></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../index.html" class="extype" name="com.opendatagroup">opendatagroup</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="swagger"></a><a id="swagger:swagger"></a>
+      <span class="permalink">
+      <a href="../../../com/opendatagroup/fastscore/index.html#swagger" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../index.html"><span class="name">swagger</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="com.opendatagroup.fastscore">fastscore</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="api1"></a><a id="api1:api1"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#api1" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="index.html"><span class="name">api1</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="ConnectApi.html" title=""></a>
+                        <a href="ConnectApi.html" title="">ConnectApi</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="" title=""></a>
+                        <a href="" title="">EngineApi</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="LoginApi.html" title=""></a>
+                        <a href="LoginApi.html" title="">LoginApi</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="ModelManageApi.html" title=""></a>
+                        <a href="ModelManageApi.html" title="">ModelManageApi</a>
+                      </li>
+              </ul>
+            </div>
+          </div>
+          <div id="content">
+            <body class="class type">
+      <div id="definition">
+        <div class="big-circle class">c</div>
+        <p id="owner"><a href="../../../../index.html" class="extype" name="com">com</a>.<a href="../../../index.html" class="extype" name="com.opendatagroup">opendatagroup</a>.<a href="../../index.html" class="extype" name="com.opendatagroup.fastscore">fastscore</a>.<a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a>.<a href="index.html" class="extype" name="com.opendatagroup.fastscore.swagger.api1">api1</a></p>
+        <h1>EngineApi<span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span></h1>
+        <h3><span class="morelinks"></span></h3>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">EngineApi</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4>
+
+      
+          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <span class="toggle">
+            Linear Supertypes
+          </span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div class="toggle"></div>
+        <div id="memberfilter">
+          <i class="material-icons arrow"></i>
+          <span class="input">
+            <input id="mbrsel-input" placeholder="Filter all members" type="text" accesskey="/" />
+          </span>
+          <i class="clear material-icons"></i>
+        </div>
+        <div id="filterby">
+          <div id="order">
+            <span class="filtertype">Ordering</span>
+            <ol>
+              
+              <li class="alpha in"><span>Alphabetic</span></li>
+              <li class="inherit out"><span>By Inheritance</span></li>
+            </ol>
+          </div>
+          <div class="ancestors">
+                  <span class="filtertype">Inherited<br />
+                  </span>
+                  <ol id="linearization">
+                    <li class="in" name="com.opendatagroup.fastscore.swagger.api1.EngineApi"><span>EngineApi</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  </ol>
+                </div><div class="ancestors">
+              <span class="filtertype"></span>
+              <ol>
+                <li class="hideall out"><span>Hide All</span></li>
+                <li class="showall in"><span>Show All</span></li>
+              </ol>
+            </div>
+          <div id="visbl">
+              <span class="filtertype">Visibility</span>
+              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+            </div>
+        </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(defBasePath:String,defApiInvoker:com.opendatagroup.fastscore.swagger.invoker1.ApiInvoker):com.opendatagroup.fastscore.swagger.api1.EngineApi"></a><a id="&lt;init&gt;:EngineApi"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#&lt;init&gt;(defBasePath:String,defApiInvoker:com.opendatagroup.fastscore.swagger.invoker1.ApiInvoker):com.opendatagroup.fastscore.swagger.api1.EngineApi" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">EngineApi</span><span class="params">(<span name="defBasePath">defBasePath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;https://localhost/api/1/service&quot;</span></span>, <span name="defApiInvoker">defApiInvoker: <a href="../invoker1/ApiInvoker.html" class="extype" name="com.opendatagroup.fastscore.swagger.invoker1.ApiInvoker">ApiInvoker</a> = <span class="symbol"><span class="name"><a href="../../../../index.html">ApiInvoker</a></span></span></span>)</span>
+      </span>
+      
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        <div class="values members">
+              <h3>Value Members</h3>
+              <ol>
+                <li name="scala.AnyRef#!=" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a><a id="!=(Any):Boolean"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#!=(x$1:Any):Boolean" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html###():Int" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a><a id="==(Any):Boolean"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#==(x$1:Any):Boolean" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#activeSensorAttach" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="activeSensorAttach(instance:String,desc:Any):Option[com.opendatagroup.fastscore.swagger.models1.InlineResponse2001]"></a><a id="activeSensorAttach(String,Any):Option[InlineResponse2001]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#activeSensorAttach(instance:String,desc:Any):Option[com.opendatagroup.fastscore.swagger.models1.InlineResponse2001]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">activeSensorAttach</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="desc">desc: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<a href="../models1/InlineResponse2001.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.InlineResponse2001">InlineResponse2001</a>]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">desc</dt><dd class="cmt"><p>sensor descriptor</p></dd><dt>returns</dt><dd class="cmt"><p>InlineResponse2001</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#activeSensorAvailable" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="activeSensorAvailable(instance:String):Option[List[String]]"></a><a id="activeSensorAvailable(String):Option[List[String]]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#activeSensorAvailable(instance:String):Option[List[String]]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">activeSensorAvailable</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt>returns</dt><dd class="cmt"><p>List[String]</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#activeSensorDescribe" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="activeSensorDescribe(instance:String,tapId:Integer):Option[com.opendatagroup.fastscore.swagger.models1.InlineResponse2002]"></a><a id="activeSensorDescribe(String,Integer):Option[InlineResponse2002]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#activeSensorDescribe(instance:String,tapId:Integer):Option[com.opendatagroup.fastscore.swagger.models1.InlineResponse2002]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">activeSensorDescribe</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="tapId">tapId: <span class="extype" name="java.lang.Integer">Integer</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<a href="../models1/InlineResponse2002.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.InlineResponse2002">InlineResponse2002</a>]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">tapId</dt><dd class="cmt"><p>The identifier of the sensor connection</p></dd><dt>returns</dt><dd class="cmt"><p>InlineResponse2002</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#activeSensorDetach" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="activeSensorDetach(instance:String,tapId:Integer):Any"></a><a id="activeSensorDetach(String,Integer):Any"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#activeSensorDetach(instance:String,tapId:Integer):Any" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">activeSensorDetach</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="tapId">tapId: <span class="extype" name="java.lang.Integer">Integer</span></span>)</span><span class="result">: <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">tapId</dt><dd class="cmt"><p>The identifier of the sensor connection</p></dd><dt>returns</dt><dd class="cmt"><p>void</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#activeSensorList" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="activeSensorList(instance:String):Option[List[com.opendatagroup.fastscore.swagger.models1.InlineResponse200]]"></a><a id="activeSensorList(String):Option[List[InlineResponse200]]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#activeSensorList(instance:String):Option[List[com.opendatagroup.fastscore.swagger.models1.InlineResponse200]]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">activeSensorList</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<a href="../models1/InlineResponse200.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.InlineResponse200">InlineResponse200</a>]]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt>returns</dt><dd class="cmt"><p>List[InlineResponse200]</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#addHeader" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="addHeader(key:String,value:String):scala.collection.mutable.HashMap[String,String]"></a><a id="addHeader(String,String):HashMap[String,String]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#addHeader(key:String,value:String):scala.collection.mutable.HashMap[String,String]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">addHeader</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="value">value: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.collection.mutable.HashMap">HashMap</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#apiInvoker" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="apiInvoker:com.opendatagroup.fastscore.swagger.invoker1.ApiInvoker"></a><a id="apiInvoker:ApiInvoker"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#apiInvoker:com.opendatagroup.fastscore.swagger.invoker1.ApiInvoker" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">apiInvoker</span><span class="result">: <a href="../invoker1/ApiInvoker.html" class="extype" name="com.opendatagroup.fastscore.swagger.invoker1.ApiInvoker">ApiInvoker</a></span>
+      </span>
+      
+      
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#asInstanceOf[T0]:T0" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#basePath" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="basePath:String"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#basePath:String" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">basePath</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      
+      
+    </li><li name="scala.AnyRef#clone" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a><a id="clone():AnyRef"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#clone():Object" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java/lang/index.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@native</span><span class="args">()</span>
+              
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#defBasePath" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="defBasePath:String"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#defBasePath:String" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">defBasePath</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      
+      
+    </li><li name="scala.AnyRef#eq" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a><a id="eq(AnyRef):Boolean"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#eq(x$1:AnyRef):Boolean" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a><a id="equals(Any):Boolean"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#equals(x$1:Any):Boolean" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#finalize():Unit" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java/lang/index.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#getClass():Class[_]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd><dt>Annotations</dt><dd>
+                <span class="name">@native</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#hashCode():Int" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd><dt>Annotations</dt><dd>
+                <span class="name">@native</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#healthGet" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="healthGet(instance:String):Option[com.opendatagroup.fastscore.swagger.models1.HealthInfo]"></a><a id="healthGet(String):Option[HealthInfo]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#healthGet(instance:String):Option[com.opendatagroup.fastscore.swagger.models1.HealthInfo]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">healthGet</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<a href="../models1/HealthInfo.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.HealthInfo">HealthInfo</a>]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt>returns</dt><dd class="cmt"><p>HealthInfo</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#inputStreamSet" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="inputStreamSet(instance:String,stream:Any):Any"></a><a id="inputStreamSet(String,Any):Any"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#inputStreamSet(instance:String,stream:Any):Any" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">inputStreamSet</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="stream">stream: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">stream</dt><dd class="cmt"><p>The input stream descriptor</p></dd><dt>returns</dt><dd class="cmt"><p>void</p></dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#isInstanceOf[T0]:Boolean" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#jobDelete" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="jobDelete(instance:String):Any"></a><a id="jobDelete(String):Any"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#jobDelete(instance:String):Any" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">jobDelete</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt>returns</dt><dd class="cmt"><p>void</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#jobIoInput" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="jobIoInput(instance:String,data:String,slot:String):Any"></a><a id="jobIoInput(String,String,String):Any"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#jobIoInput(instance:String,data:String,slot:String):Any" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">jobIoInput</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="data">data: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="slot">slot: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">data</dt><dd class="cmt"><p>Input data</p></dd><dt class="param">slot</dt><dd class="cmt"><p>The stream slot</p></dd><dt>returns</dt><dd class="cmt"><p>void</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#jobIoInput0" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="jobIoInput0(instance:String):Any"></a><a id="jobIoInput0(String):Any"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#jobIoInput0(instance:String):Any" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">jobIoInput0</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt>returns</dt><dd class="cmt"><p>void</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#jobIoOutput" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="jobIoOutput(instance:String,slot:String):Option[String]"></a><a id="jobIoOutput(String,String):Option[String]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#jobIoOutput(instance:String,slot:String):Option[String]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">jobIoOutput</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="slot">slot: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">slot</dt><dd class="cmt"><p>The stream slot</p></dd><dt>returns</dt><dd class="cmt"><p>String</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#jobIoOutput1" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="jobIoOutput1(instance:String):Any"></a><a id="jobIoOutput1(String):Any"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#jobIoOutput1(instance:String):Any" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">jobIoOutput1</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt>returns</dt><dd class="cmt"><p>void</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#jobSampleCpu" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="jobSampleCpu(instance:String,duration:Option[Integer]):Option[com.opendatagroup.fastscore.swagger.models1.CpuUsageInfo]"></a><a id="jobSampleCpu(String,Option[Integer]):Option[CpuUsageInfo]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#jobSampleCpu(instance:String,duration:Option[Integer]):Option[com.opendatagroup.fastscore.swagger.models1.CpuUsageInfo]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">jobSampleCpu</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="duration">duration: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>] = <span class="symbol">None</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<a href="../models1/CpuUsageInfo.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.CpuUsageInfo">CpuUsageInfo</a>]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">duration</dt><dd class="cmt"><p>The number of seconds to sample CPU usage for (optional)</p></dd><dt>returns</dt><dd class="cmt"><p>CpuUsageInfo</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#jobScale" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="jobScale(instance:String,n:Integer):Any"></a><a id="jobScale(String,Integer):Any"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#jobScale(instance:String,n:Integer):Any" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">jobScale</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="n">n: <span class="extype" name="java.lang.Integer">Integer</span></span>)</span><span class="result">: <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">n</dt><dd class="cmt"><p>The number of jets to scale model to</p></dd><dt>returns</dt><dd class="cmt"><p>void</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#jobStateRestore" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="jobStateRestore(instance:String,state:String):Any"></a><a id="jobStateRestore(String,String):Any"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#jobStateRestore(instance:String,state:String):Any" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">jobStateRestore</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="state">state: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">state</dt><dd class="cmt"><p>The model state blob</p></dd><dt>returns</dt><dd class="cmt"><p>void</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#jobStatus" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="jobStatus(instance:String,fields:Option[String]):Option[com.opendatagroup.fastscore.swagger.models1.ManifoldInfo]"></a><a id="jobStatus(String,Option[String]):Option[ManifoldInfo]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#jobStatus(instance:String,fields:Option[String]):Option[com.opendatagroup.fastscore.swagger.models1.ManifoldInfo]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">jobStatus</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="fields">fields: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<a href="../models1/ManifoldInfo.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.ManifoldInfo">ManifoldInfo</a>]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">fields</dt><dd class="cmt"><p>A comma-separated list of field names (slots, jets, snapshots, state) (optional)</p></dd><dt>returns</dt><dd class="cmt"><p>ManifoldInfo</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#modelLoad" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="modelLoad(instance:String,data:String,dryRun:Option[Boolean],_contentType:Option[String],contentDisposition:Option[String]):Option[com.opendatagroup.fastscore.swagger.models1.VerifyInfo]"></a><a id="modelLoad(String,String,Option[Boolean],Option[String],Option[String]):Option[VerifyInfo]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#modelLoad(instance:String,data:String,dryRun:Option[Boolean],_contentType:Option[String],contentDisposition:Option[String]):Option[com.opendatagroup.fastscore.swagger.models1.VerifyInfo]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">modelLoad</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="data">data: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="dryRun">dryRun: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Boolean">Boolean</span>] = <span class="symbol">None</span></span>, <span name="_contentType">_contentType: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>, <span name="contentDisposition">contentDisposition: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<a href="../models1/VerifyInfo.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.VerifyInfo">VerifyInfo</a>]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">data</dt><dd class="cmt"><p>model+attachments</p></dd><dt class="param">dryRun</dt><dd class="cmt"><p>verificaton only (optional)</p></dd><dt class="param">_contentType</dt><dd class="cmt"><p>model MIME type (optional)</p></dd><dt class="param">contentDisposition</dt><dd class="cmt"><p>pass model name (optional)</p></dd><dt>returns</dt><dd class="cmt"><p>VerifyInfo</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#modelUnload" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="modelUnload(instance:String):Any"></a><a id="modelUnload(String):Any"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#modelUnload(instance:String):Any" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">modelUnload</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt>returns</dt><dd class="cmt"><p>void</p></dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a><a id="ne(AnyRef):Boolean"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#ne(x$1:AnyRef):Boolean" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#notify():Unit" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@native</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#notifyAll():Unit" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@native</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#outputStreamSet" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="outputStreamSet(instance:String,stream:String):Any"></a><a id="outputStreamSet(String,String):Any"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#outputStreamSet(instance:String,stream:String):Any" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">outputStreamSet</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="stream">stream: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">stream</dt><dd class="cmt"><p>The output stream descriptor</p></dd><dt>returns</dt><dd class="cmt"><p>void</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#policyGet" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="policyGet(instance:String,accept:Option[String]):Option[String]"></a><a id="policyGet(String,Option[String]):Option[String]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#policyGet(instance:String,accept:Option[String]):Option[String]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">policyGet</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="accept">accept: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">accept</dt><dd class="cmt"><p>Force Accept header value (optional)</p></dd><dt>returns</dt><dd class="cmt"><p>String</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#policyPut" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="policyPut(instance:String,policy:String,_contentType:Option[String]):Any"></a><a id="policyPut(String,String,Option[String]):Any"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#policyPut(instance:String,policy:String,_contentType:Option[String]):Any" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">policyPut</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="policy">policy: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="_contentType">_contentType: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="result">: <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">policy</dt><dd class="cmt"><p>The policy content</p></dd><dt class="param">_contentType</dt><dd class="cmt"><p>model MIME type (optional)</p></dd><dt>returns</dt><dd class="cmt"><p>void</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#scoopDebugOutput" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="scoopDebugOutput(instance:String):Option[List[String]]"></a><a id="scoopDebugOutput(String):Option[List[String]]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#scoopDebugOutput(instance:String):Option[List[String]]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">scoopDebugOutput</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt>returns</dt><dd class="cmt"><p>List[String]</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#streamAttach" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="streamAttach(instance:String,slot:String,stream:String):Any"></a><a id="streamAttach(String,String,String):Any"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#streamAttach(instance:String,slot:String,stream:String):Any" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">streamAttach</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="slot">slot: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="stream">stream: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">slot</dt><dd class="cmt"><p>The stream slot</p></dd><dt class="param">stream</dt><dd class="cmt"><p>The input/output stream descriptor</p></dd><dt>returns</dt><dd class="cmt"><p>void</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#streamRate" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="streamRate(instance:String,stream:String):Option[List[com.opendatagroup.fastscore.swagger.models1.InlineResponse2003]]"></a><a id="streamRate(String,String):Option[List[InlineResponse2003]]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#streamRate(instance:String,stream:String):Option[List[com.opendatagroup.fastscore.swagger.models1.InlineResponse2003]]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">streamRate</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="stream">stream: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<a href="../models1/InlineResponse2003.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.InlineResponse2003">InlineResponse2003</a>]]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">stream</dt><dd class="cmt"><p>The stream descriptor to measure data rate</p></dd><dt>returns</dt><dd class="cmt"><p>List[InlineResponse2003]</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#streamSample" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="streamSample(instance:String,desc:String,n:Option[Integer]):Option[List[String]]"></a><a id="streamSample(String,String,Option[Integer]):Option[List[String]]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#streamSample(instance:String,desc:String,n:Option[Integer]):Option[List[String]]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">streamSample</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="desc">desc: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="n">n: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>] = <span class="symbol">None</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">desc</dt><dd class="cmt"><p>The stream descriptor to get sample data from</p></dd><dt class="param">n</dt><dd class="cmt"><p>The number of data items to read from the stream (optional)</p></dd><dt>returns</dt><dd class="cmt"><p>List[String]</p></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi#swaggerGet" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="swaggerGet(instance:String,accept:Option[String]):Option[Any]"></a><a id="swaggerGet(String,Option[String]):Option[Any]"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#swaggerGet(instance:String,accept:Option[String]):Option[Any]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">swaggerGet</span><span class="params">(<span name="instance">instance: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="accept">accept: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Any">Any</span>]</span>
+      </span>
+      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">instance</dt><dd class="cmt"><p>instance name</p></dd><dt class="param">accept</dt><dd class="cmt"><p>Force Accept header value (optional)</p></dd><dt>returns</dt><dd class="cmt"><p>Any</p></dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a><a id="synchronized[T0](⇒T0):T0"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#synchronized[T0](x$1:=&gt;T0):T0" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#toString" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#toString():String" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#wait():Unit" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a><a id="wait(Long,Int):Unit"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#wait(x$1:Long,x$2:Int):Unit" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a><a id="wait(Long):Unit"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/EngineApi.html#wait(x$1:Long):Unit" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@native</span><span class="args">()</span>
+              
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li>
+              </ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+    </body>
+          </div>
+        </div>
+      </div>
+    </body>
+      </html>
