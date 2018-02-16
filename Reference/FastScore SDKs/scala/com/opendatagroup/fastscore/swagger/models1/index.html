@@ -1,0 +1,631 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+          <title></title>
+          <meta name="description" content="" />
+          <meta name="keywords" content="" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../../lib/index.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery.panzoom.min.js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery.mousewheel.min.js"></script>
+      <script type="text/javascript" src="../../../../../lib/index.js"></script>
+      <script type="text/javascript" src="../../../../../index.js"></script>
+      <script type="text/javascript" src="../../../../../lib/scheduler.js"></script>
+      <script type="text/javascript" src="../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+        /* this variable can be used by the JS to determine the path to the root document */
+        var toRoot = '../../../../../';
+      </script>
+    
+        </head>
+        <body>
+      <div id="search">
+        <span id="doc-title"><span id="doc-version"></span></span>
+        <span class="close-results"><span class="left">&lt;</span> Back</span>
+        <div id="textfilter">
+          <span class="input">
+            <input autocapitalize="none" placeholder="Search" id="index-input" type="text" accesskey="/" />
+            <i class="clear material-icons"></i>
+            <i id="search-icon" class="material-icons"></i>
+          </span>
+        </div>
+    </div>
+      <div id="search-results">
+        <div id="search-progress">
+          <div id="progress-fill"></div>
+        </div>
+        <div id="results-content">
+          <div id="entity-results"></div>
+          <div id="member-results"></div>
+        </div>
+      </div>
+      <div id="content-scroll-container" style="-webkit-overflow-scrolling: touch;">
+        <div id="content-container" style="-webkit-overflow-scrolling: touch;">
+          <div id="subpackage-spacer">
+            <div id="packages">
+              <h1>Packages</h1>
+              <ul>
+                <li name="_root_.root" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="_root_"></a><a id="root:_root_"></a>
+      <span class="permalink">
+      <a href="index.html#_root_" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../../../index.html"><span class="name">root</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="_root_.com" visbl="pub" class="indented1 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="com"></a><a id="com:com"></a>
+      <span class="permalink">
+      <a href="index.html#com" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../../index.html"><span class="name">com</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="com.opendatagroup" visbl="pub" class="indented2 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="opendatagroup"></a><a id="opendatagroup:opendatagroup"></a>
+      <span class="permalink">
+      <a href="../com/index.html#opendatagroup" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../index.html"><span class="name">opendatagroup</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../index.html" class="extype" name="com">com</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore" visbl="pub" class="indented3 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fastscore"></a><a id="fastscore:fastscore"></a>
+      <span class="permalink">
+      <a href="../../com/opendatagroup/index.html#fastscore" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="An example interaction with FastScore" href="../../index.html"><span class="name">fastscore</span></a>
+      </span>
+      
+      <p class="shortcomment cmt">An example interaction with FastScore</p><div class="fullcomment"><div class="comment cmt"><p>An example interaction with FastScore</p><pre>scala&gt; <span class="kw">import</span> com.opendatagroup.fastscore.fleet._
+scala&gt; <span class="kw">implicit</span> <span class="kw">val</span> proxy = <span class="kw">new</span> Proxy(<span class="lit">"https://localhost:8000"</span>)
+scala&gt; <span class="kw">val</span> connect = <span class="kw">new</span> Connect()
+scala&gt; <span class="kw">import</span> com.opendatagroup.fastscore.assets._
+scala&gt; <span class="kw">val</span> model = Model.fromFile(<span class="lit">"./preprocessor.R"</span>)
+scala&gt; <span class="kw">val</span> modelmanage = connect.lookup(<span class="lit">"model-manage"</span>) <span class="kw">match</span> { <span class="kw">case</span> l: <span class="std">List</span>[ModelManage] <span class="kw">if</span> l.length == <span class="num">1</span> <span class="kw">=&gt;</span> l(<span class="num">0</span>) }
+scala&gt; modelmanage.models.put(<span class="lit">"preprocessor"</span>, model)</pre></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../index.html" class="extype" name="com.opendatagroup">opendatagroup</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="swagger"></a><a id="swagger:swagger"></a>
+      <span class="permalink">
+      <a href="../../../com/opendatagroup/fastscore/index.html#swagger" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../index.html"><span class="name">swagger</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="com.opendatagroup.fastscore">fastscore</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="api1"></a><a id="api1:api1"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#api1" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../api1/index.html"><span class="name">api1</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api2" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="api2"></a><a id="api2:api2"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#api2" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../api2/index.html"><span class="name">api2</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.invoker1" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="invoker1"></a><a id="invoker1:invoker1"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#invoker1" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../invoker1/index.html"><span class="name">invoker1</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.invoker2" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="invoker2"></a><a id="invoker2:invoker2"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#invoker2" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../invoker2/index.html"><span class="name">invoker2</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.models1" visbl="pub" class="indented5 current" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="models1"></a><a id="models1:models1"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#models1" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">models1</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="CpuUsageInfo.html" title=""></a>
+                        <a href="CpuUsageInfo.html" title="">CpuUsageInfo</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="CpuUsageInfoJets.html" title=""></a>
+                        <a href="CpuUsageInfoJets.html" title="">CpuUsageInfoJets</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="CpuUsageInfoOpTimes.html" title=""></a>
+                        <a href="CpuUsageInfoOpTimes.html" title="">CpuUsageInfoOpTimes</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="HealthInfo.html" title=""></a>
+                        <a href="HealthInfo.html" title="">HealthInfo</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="InlineResponse200.html" title=""></a>
+                        <a href="InlineResponse200.html" title="">InlineResponse200</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="InlineResponse2001.html" title=""></a>
+                        <a href="InlineResponse2001.html" title="">InlineResponse2001</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="InlineResponse2002.html" title=""></a>
+                        <a href="InlineResponse2002.html" title="">InlineResponse2002</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="InlineResponse2003.html" title=""></a>
+                        <a href="InlineResponse2003.html" title="">InlineResponse2003</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="InstanceInfo.html" title=""></a>
+                        <a href="InstanceInfo.html" title="">InstanceInfo</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="ManifoldInfo.html" title=""></a>
+                        <a href="ManifoldInfo.html" title="">ManifoldInfo</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="ManifoldInfoJets.html" title=""></a>
+                        <a href="ManifoldInfoJets.html" title="">ManifoldInfoJets</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="ManifoldInfoModel.html" title=""></a>
+                        <a href="ManifoldInfoModel.html" title="">ManifoldInfoModel</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="ManifoldInfoSlots.html" title=""></a>
+                        <a href="ManifoldInfoSlots.html" title="">ManifoldInfoSlots</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="ManifoldInfoStream.html" title=""></a>
+                        <a href="ManifoldInfoStream.html" title="">ManifoldInfoStream</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="VerifyInfo.html" title=""></a>
+                        <a href="VerifyInfo.html" title="">VerifyInfo</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="VerifyInfoSlots.html" title=""></a>
+                        <a href="VerifyInfoSlots.html" title="">VerifyInfoSlots</a>
+                      </li><li name="com.opendatagroup.fastscore.swagger.models2" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="models2"></a><a id="models2:models2"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#models2" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../models2/index.html"><span class="name">models2</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li>
+              </ul>
+            </div>
+          </div>
+          <div id="content">
+            <body class="package value">
+      <div id="definition">
+        <div class="big-circle package">p</div>
+        <p id="owner"><a href="../../../../index.html" class="extype" name="com">com</a>.<a href="../../../index.html" class="extype" name="com.opendatagroup">opendatagroup</a>.<a href="../../index.html" class="extype" name="com.opendatagroup.fastscore">fastscore</a>.<a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></p>
+        <h1>models1<span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span></h1>
+        
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">models1</span>
+      </span>
+      </h4>
+
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="com.opendatagroup.fastscore.swagger.models1.CpuUsageInfo" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="CpuUsageInfoextendsProductwithSerializable"></a><a id="CpuUsageInfo:CpuUsageInfo"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#CpuUsageInfoextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="CpuUsageInfo.html"><span class="name">CpuUsageInfo</span></a><span class="params">(<span name="duration">duration: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>, <span name="inputBytes">inputBytes: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>]</span>, <span name="inputRecords">inputRecords: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>]</span>, <span name="outputBytes">outputBytes: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>]</span>, <span name="outputRecords">outputRecords: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>]</span>, <span name="userTime">userTime: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>, <span name="kernelTime">kernelTime: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>, <span name="opTimes">opTimes: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<a href="CpuUsageInfoOpTimes.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.CpuUsageInfoOpTimes">CpuUsageInfoOpTimes</a>]]</span>, <span name="jets">jets: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<a href="CpuUsageInfoJets.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.CpuUsageInfoJets">CpuUsageInfoJets</a>]]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.CpuUsageInfoJets" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="CpuUsageInfoJetsextendsProductwithSerializable"></a><a id="CpuUsageInfoJets:CpuUsageInfoJets"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#CpuUsageInfoJetsextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="CpuUsageInfoJets.html"><span class="name">CpuUsageInfoJets</span></a><span class="params">(<span name="inputRecords">inputRecords: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>]</span>, <span name="outputRecords">outputRecords: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>]</span>, <span name="userTime">userTime: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>, <span name="kernelTime">kernelTime: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>, <span name="modelTime">modelTime: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.CpuUsageInfoOpTimes" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="CpuUsageInfoOpTimesextendsProductwithSerializable"></a><a id="CpuUsageInfoOpTimes:CpuUsageInfoOpTimes"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#CpuUsageInfoOpTimesextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="CpuUsageInfoOpTimes.html"><span class="name">CpuUsageInfoOpTimes</span></a><span class="params">(<span name="unwrapEnvelope">unwrapEnvelope: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>, <span name="unwrapEnvelopeN">unwrapEnvelopeN: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>, <span name="wrapEnvelope">wrapEnvelope: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>, <span name="wrapEnvelopeN">wrapEnvelopeN: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>, <span name="decodeInputRecord">decodeInputRecord: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>, <span name="decodeInputRecordN">decodeInputRecordN: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>, <span name="typeCheckInput">typeCheckInput: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>, <span name="typeCheckInputN">typeCheckInputN: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Number">Number</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.HealthInfo" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="HealthInfoextendsProductwithSerializable"></a><a id="HealthInfo:HealthInfo"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#HealthInfoextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="HealthInfo.html"><span class="name">HealthInfo</span></a><span class="params">(<span name="id">id: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="release">release: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="builtOn">builtOn: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.InlineResponse200" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="InlineResponse200extendsProductwithSerializable"></a><a id="InlineResponse200:InlineResponse200"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#InlineResponse200extendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="InlineResponse200.html"><span class="name">InlineResponse200</span></a><span class="params">(<span name="id">id: <span class="extype" name="java.lang.Integer">Integer</span></span>, <span name="tap">tap: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="active">active: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.InlineResponse2001" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="InlineResponse2001extendsProductwithSerializable"></a><a id="InlineResponse2001:InlineResponse2001"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#InlineResponse2001extendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="InlineResponse2001.html"><span class="name">InlineResponse2001</span></a><span class="params">(<span name="id">id: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.InlineResponse2002" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="InlineResponse2002extendsProductwithSerializable"></a><a id="InlineResponse2002:InlineResponse2002"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#InlineResponse2002extendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="InlineResponse2002.html"><span class="name">InlineResponse2002</span></a><span class="params">(<span name="id">id: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>]</span>, <span name="tap">tap: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="permanent">permanent: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Boolean">Boolean</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.InlineResponse2003" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="InlineResponse2003extendsProductwithSerializable"></a><a id="InlineResponse2003:InlineResponse2003"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#InlineResponse2003extendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="InlineResponse2003.html"><span class="name">InlineResponse2003</span></a><span class="params">(<span name="rps">rps: <span class="extype" name="java.lang.Number">Number</span></span>, <span name="mbps">mbps: <span class="extype" name="java.lang.Number">Number</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.InstanceInfo" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="InstanceInfoextendsProductwithSerializable"></a><a id="InstanceInfo:InstanceInfo"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#InstanceInfoextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="InstanceInfo.html"><span class="name">InstanceInfo</span></a><span class="params">(<span name="id">id: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="name">name: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="api">api: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="host">host: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="port">port: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>]</span>, <span name="release">release: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="builtOn">builtOn: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="health">health: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.ManifoldInfo" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ManifoldInfoextendsProductwithSerializable"></a><a id="ManifoldInfo:ManifoldInfo"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#ManifoldInfoextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="ManifoldInfo.html"><span class="name">ManifoldInfo</span></a><span class="params">(<span name="model">model: <span class="extype" name="scala.Option">Option</span>[<a href="ManifoldInfoModel.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.ManifoldInfoModel">ManifoldInfoModel</a>]</span>, <span name="slots">slots: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<a href="ManifoldInfoSlots.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.ManifoldInfoSlots">ManifoldInfoSlots</a>]]</span>, <span name="jets">jets: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<a href="ManifoldInfoJets.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.ManifoldInfoJets">ManifoldInfoJets</a>]]</span>, <span name="snapshots">snapshots: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="state">state: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.ManifoldInfoJets" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ManifoldInfoJetsextendsProductwithSerializable"></a><a id="ManifoldInfoJets:ManifoldInfoJets"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#ManifoldInfoJetsextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="ManifoldInfoJets.html"><span class="name">ManifoldInfoJets</span></a><span class="params">(<span name="pid">pid: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>]</span>, <span name="sandbox">sandbox: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="busy">busy: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Boolean">Boolean</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.ManifoldInfoModel" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ManifoldInfoModelextendsProductwithSerializable"></a><a id="ManifoldInfoModel:ManifoldInfoModel"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#ManifoldInfoModelextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="ManifoldInfoModel.html"><span class="name">ManifoldInfoModel</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="_type">_type: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="source">source: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="attachments">attachments: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.ManifoldInfoSlots" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ManifoldInfoSlotsextendsProductwithSerializable"></a><a id="ManifoldInfoSlots:ManifoldInfoSlots"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#ManifoldInfoSlotsextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="ManifoldInfoSlots.html"><span class="name">ManifoldInfoSlots</span></a><span class="params">(<span name="slot">slot: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>]</span>, <span name="schema">schema: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Any">Any</span>]</span>, <span name="recordsets">recordsets: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Boolean">Boolean</span>]</span>, <span name="action">action: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Boolean">Boolean</span>]</span>, <span name="stream">stream: <span class="extype" name="scala.Option">Option</span>[<a href="ManifoldInfoStream.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.ManifoldInfoStream">ManifoldInfoStream</a>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.ManifoldInfoStream" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ManifoldInfoStreamextendsProductwithSerializable"></a><a id="ManifoldInfoStream:ManifoldInfoStream"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#ManifoldInfoStreamextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="ManifoldInfoStream.html"><span class="name">ManifoldInfoStream</span></a><span class="params">(<span name="descriptor">descriptor: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Any">Any</span>]</span>, <span name="eof">eof: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Boolean">Boolean</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.VerifyInfo" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="VerifyInfoextendsProductwithSerializable"></a><a id="VerifyInfo:VerifyInfo"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#VerifyInfoextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="VerifyInfo.html"><span class="name">VerifyInfo</span></a><span class="params">(<span name="slots">slots: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<a href="VerifyInfoSlots.html" class="extype" name="com.opendatagroup.fastscore.swagger.models1.VerifyInfoSlots">VerifyInfoSlots</a>]]</span>, <span name="installLibs">installLibs: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>, <span name="warnLibs">warnLibs: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>, <span name="attachLibs">attachLibs: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>, <span name="snapshots">snapshots: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.models1.VerifyInfoSlots" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="VerifyInfoSlotsextendsProductwithSerializable"></a><a id="VerifyInfoSlots:VerifyInfoSlots"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/models1/index.html#VerifyInfoSlotsextendsProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="VerifyInfoSlots.html"><span class="name">VerifyInfoSlots</span></a><span class="params">(<span name="slot">slot: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.Integer">Integer</span>]</span>, <span name="schema">schema: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="recordsets">recordsets: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Boolean">Boolean</span>]</span>, <span name="action">action: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+    </body>
+          </div>
+        </div>
+      </div>
+    </body>
+      </html>
