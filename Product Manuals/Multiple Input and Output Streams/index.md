@@ -10,7 +10,7 @@ The Engine has multiple slots to attached streams where the even slot numbers
 starting at 0 are for inputs and the odd slot numbers starting with 1 are for
 outputs.
 
-![Stream slots diagram](multi1.webp)
+![Stream slots diagram](multi1.png)
 
 This is particularly useful when the output of the models provides data for
 multiple purposes or the model requires data from multiple data sources to run.
