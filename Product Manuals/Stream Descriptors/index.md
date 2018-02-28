@@ -17,109 +17,56 @@ excerpt: "Documentation for stream descriptors"
         - [UDP](#section-udp)
         - [TCP](#section-tcp)
         - [Executable](#section-executable)
-        - [Debug](#section-debug)
-        - [Console and Discard](#section-console-and-discard)
+        - [Inline](#section-inline)
+        - [Discard](#section-discard)
 3. [Examples](#examples)
 
 
 ## <a name="overview"></a>Overview
 
-A stream descriptor is a JSON document that contains all of the information about a stream. In general, an input stream reads messages from an underlying transport, optionally verifies, and feeds them to models. The output stream acts similarly, but in the reverse order. Stream descriptors are required for the engine to read input and produce output, and can additionally be used to enforce input and output typing using AVRO schema.
+A stream descriptor is a JSON document that contains all of the information
+about a stream. In general, an input stream reads records from an underlying
+transport, optionally verifies, and feeds them to models. The output stream acts
+similarly, but in the reverse order. Stream descriptors are required for the
+engine to read input and produce output, and can additionally be used to enforce
+input and output typing using Avro schema.
 
-By convention, all field names of a stream descriptor start with a capital letter and do not use punctuation. Many fields of a stream descriptor have default values that depend on values of other fields. If a field is omitted, it is set to a default value. Sometimes, you may need to explicitly set field to `null` to avoid this behavior. For example, if omitted, an `EndMarker` is set to "`$end-of-stream`" for certain streams. To disable the 'soft' end-of-file behavior based on the `EndMarker` you need to set this field to `null`.
+By convention, all field names of a stream descriptor start with a capital
+letter and do not use punctuation. Many fields of a stream descriptor have
+default values that depend on values of other fields. If a field is omitted, it
+is set to a default value. Sometimes, you may need to explicitly set field to
+`null` to avoid this behavior. For example, if omitted, a `LingerTime` is set to
+`3000` (milliseconds). To disable lingering when the output stream closes you
+need to set this property to `null`.
 
-Some fields accept shortcut values. For instance, you may set the `Transport` field to `"discard"` string instead of the equivalent yet more verbose '`{"Type": "discard"}`' object.
+Some fields accept shortcut values. For instance, you may set the `Transport`
+field to `"discard"` string instead of the equivalent yet more verbose
+`{"Type": "discard"}` object.
 
 ## <a name="field-descriptions"></a>Field Descriptions
 
-A template for a stream descriptor is below. Note that the type of transport used will determine which fields in the `Transport` section are needed. Additionally, the top-level fields `Loop`, `EndMarker`, `SkipTo`, and `SkipToRecord` have default values depending on the choice of transport. 
+A basic template for a stream descriptor is below. Note that the type of
+transport used will determine which fields in the `Transport` section are
+needed.
 
 ``` json
 {
-  "Version": "1.2",
-  "Description": "My Sample stream descriptor",
+  "Description": "A stream descriptor template",
+
   "Transport": {
-    "Type": "REST" | "HTTP" | "kafka" | "file" | "TCP" | "UDP" | "exec" | "debug" | "console" | "discard",
-    "Url" : "http://www.mywebsite.com", // HTTP only
-    "BootstrapServers": ["127.0.0.1:9181", "192.168.1.5:9003"], // Kafka only
-    "Topic": "My Kafka Topic", // Kafka only
-    "Partition" : 1, // Kafka only, defaults to 0
-    "MaxWaitTime": 50000, // Kafka only, defaults to 8388607
-    "Principal" : "kafka/kafka@REALM", // Kafka Authenciated only
-    "Keytab": "/fastscore.keytab", // Kafka Authenciated only
-    "Path": "/path/to/file.ext", // file only
-    "Host": "127.0.0.1", // TCP only
-    "Port": 8182, // TCP and UDP only
-    "BindTo": "127.0.0.1", // UDP only, defaults to 0.0.0.0
-    "Data" : [ "abc", "def", "ghi"], // debug only
-    "DataBinary": ["AQIDBQ=="], // debug only, use one of Data or DataBinary
+    "Type": "REST" | "HTTP" | "kafka" | "file" | "TCP" | "UDP" | "exec" | "inline" | "discard",
+    ...
   },
-  "Loop": false,
-  "EndMarker": "$end-of-stream", 
-  "SkipTo": null, 
-  "SkipToRecord": "latest",
-  "Envelope": "deliminated",
-  "Encoding": null | "json" | "avro-binary",
-  "Schema": { ... } // AVRO schema for stream
+  "Encoding": null | "json" | "avro-binary" | ...,
+  "Envelope": null | "delimited" | ...,
+  "Schema": { ... },
+  ...
 }
 ```
 
-Once you have constructed your stream descriptor, you may validate it against the following AVRO schema. (Some modification of this schema may be required dependent on the choice of default values.)
-``` json
-{
-  "type": "record",
-  "fields": [
-    {"name": "Version", "type": "string"},
-    {"name": "Description", "type":"string", "default": ""},
-    {"name": "Transport", "type": 
-        [
-        {"type": "record", "fields": [
-          {"name":"Type", "type":"string"}]}, // REST
-        {"type": "record", "fields": [
-          {"name": "Type", "type": "string"}, // HTTP
-          {"name": "Url", "type": "string"}]},
-        {"type": "record", "fields": [
-          {"name": "Type", "type": "string"}, // Kafka
-          {"name": "BootstrapServers", "type":{"type": "array", "items":"string"} },
-          {"name": "Topic", "type": "string"},
-          {"name": "Partition", "type": "int", "default": 0},
-          {"name": "MaxWaitTime", "type": "int", "default": 8388607}]},
-        {"type": "record", "fields": [
-          {"name": "Type", "type": "string"}, // File
-          {"name": "Path", "type": "string"}]},
-        {"type": "record", "fields": [
-          {"name": "Type", "type": "string"}, // TCP
-          {"name": "Host", "type": "string"}, 
-          {"name": "Port", "type": "int"}]},
-        {"type": "record", "fields": [
-          {"name": "Type", "type": "string"}, // UDP
-          {"name": "BindTo", "type": "string", "default": "0.0.0.0"},
-          {"name": "Port", "type": "int"}]},
-        {"type": "record", "fields": [
-          {"name": "Type", "type": "string"}, // debug
-          {"name": "Data", "type": ["string", {"type": "array", "items":  "string"}]}, // only one of Data or DataBinary is required
-          {"name": "DataBinary", "type": "string"}]},
-        {"type": "record", "fields": [{"name":"Type", "type": "string"}]},
-        "string" // discard or console
-        ]},
-    {"name": "Loop", "type":"boolean", "default": false}, // default depends on transport
-    {"name": "EndMarker", "type": ["null", "string"], "default":"$end-of-stream"}, // default depends on transport
-    {"name": "SkipTo", "type": ["null", "int"], "default": null},
-    {"name": "SkipToRecord", "type": ["null", "int", "string"], "default":"latest"}, // default depends on transport
-    {"name": "Envelope", "type": 
-     ["string",
-      {"type": "record", "fields": [ // deliminated
-        {"name": "Type", "type": "string"}, 
-        {"name": "Seperator", "type": "string", "default":"\\n"}]},
-      {"type": "record", "fields": [ // ocf-block
-        {"name": "Type", "type": "string"},
-        {"name": "SyncMarker", "type": "string"}]}
-     ]},
-    {"name": "Encoding", "type": ["null", "string"]},
-    {"name": "Schema", "type": ["string", "object"]}
-    ]
-}
-```
+The best way to verify a newly-constructed stream descriptor is to use the
+`fastscore stream verify` command described [here](../../Reference/FastScore CLI/).
+
 
 ### <a name="section-common-fields">Common Fields
 
@@ -128,16 +75,16 @@ The following table describes the common fields used in stream descriptors. Fiel
 | Field | Type | Description | Default Value | Example |
 | --- | --- | --- | --- | --- |
 | *Version* | `string` | The version of the stream descriptor. | "1.2" | "1.2" |
-| *Description* | `string` | A description for this stream (optional). | (empty) | "An input file stream." |
+| *Description* | `string` | A description for this stream (optional). | | "An input file stream." |
 | Transport | `string` or `object` | Specifies the details of the Transport for this stream (see below). |  |
 | *Loop* | `boolean` | Set to `true` to read the stream in a loop. | `true` for filestreams `false` otherwise | `true` |
-| *EndMarker* | `string` | An end-of-stream marker to indicate that the last message in the stream has been received. | `null` for AVRO binary streams, `$end-of-stream` for all others | "LastMessage" |
-| *SkipTo* | `int` or `null` | Skip to the byte offset when starting to read the stream. | `null` | 5 |
-| *SkipToRecord* | `int`, `string`, or `null` | Skip to record by number or keyword. | `"latest"` for Kafka streams `null` otherwise | "latest" |
-| Envelope | `"deliminated"` or `"ocf-block"` or `object` | Specifies the framing of the messages in the stream (see below). | "deliminated" or `null` | "deliminated" |
-| Encoding | `null`, "avro-binary", or "json" | Specifies the encoding of the messages in the stream. |  |  |
-| *Schema* | `null`, `string`, or `object` | AVRO schema for records in this stream. | `null` | "int" |
-
+| *SkipTo* | `int` | Skip to the byte offset when starting to read the stream. | | 5 |
+| *SkipToRecord* | `int` or `string` | Skip to record by number or keyword. | `"latest"` for non-looping Kafka streams, `null` otherwise | "earliest" |
+| *Envelope* | `string` or `object` | Specifies the framing of the messages in the stream (see below). | `"delimited"` (HTTP, file, and TPC) or `null` | "delimited" |
+| Encoding | `string` or `null` | Specifies the encoding of the messages in the stream (see below). |  | `"ocf-block"` |
+| *Schema* | `string` or `object` | Avro schema for records in this stream. | | "int" |
+| *Batching* | `string` or `object` | The batching parameters of the stream (see below). | `"normal"` | `"explicit"` |
+| *LingerTime* | `int` | When an output stream close wait this number of milliseconds for remaining records to be written. | `3000` | `1000` |
 
 > The `Schema` field can now specify schemas by reference (as well as explicitly define them). A schema reference takes the following form:
 > ```
@@ -212,11 +159,12 @@ The executable transport allows for flexibility on the input or output streams t
 | Field | Type | Description | Default | Example |
 | --- | --- | --- | --- | --- |
 | Run | `string` | The path to the executable. | (none) | "/bin/ls" |
-
+| Args | array of `string` | The arguments to pass to the executable. | [] | ["-a"] |
     
-#### <a name="section-debug">Debug
 
-The debug transport type allows the user to embed a batch of records to be scored directly into the input stream descriptor. As the name implies, it is intended primarily for model and stream debugging. 
+#### <a name="section-inline">Inline
+
+The inline transport type allows the user to embed a batch of records to be scored directly into the input stream descriptor. As the name implies, it is intended primarily for model and stream inlineging. 
 
 | Field | Type | Description | Default | Example |
 | --- | --- | --- | --- | --- |
@@ -248,15 +196,14 @@ The REST transport allows inputs to be delivered to the engine with the `/1/job/
 }
 ```
 
-### Debug Stream Examples
+### Inline Stream Examples
 
-This is an example of a debug stream, where the messages are all inline, and separated by newlines.
+This is an example of a inline stream, where the messages are all inline, and separated by newlines.
 ``` json
 {
-  "Version": "1.2",
   "Description": "read an inline sequence of 3 messages separated by newlines",
   "Transport": {
-    "Type": "debug",
+    "Type": "inline",
     "Data": "aaa\\nbbb\\nccc"
   },
   "Envelope": "delimited",
@@ -265,13 +212,12 @@ This is an example of a debug stream, where the messages are all inline, and sep
 }
 ```
 
-This is an example of a debug stream using a list of binary inputs. 
+This is an example of a inline stream using a list of binary inputs. 
 ``` json
 {
-  "Version": "1.2",
   "Description": "read an inline sequence of 3 binary messages",
   "Transport": {
-    "Type": "debug",
+    "Type": "inline",
     "DataBinary": ["uKs/srYgWfY=",
                    "kiqGJppq2Z4=",
                    "VBPsuSTfUiM="]
@@ -288,7 +234,6 @@ The following is an example of an HTTP stream.
 
 ```json
 {
-  "Version": "1.2",
   "Description": "read a sequence of opaque (unicode) strings separated by newlines over HTTP transport",
   "Transport": {
     "Type": "HTTP",
@@ -309,7 +254,6 @@ The following example is a stream descriptor for a Kafka input stream.
 
 ``` json
 {
-  "Version": "1.2",
   "Description": "read a sequence of opaque (unicode) strings over Kafka transport",
   "Transport": {
     "Type": "kafka",
@@ -323,11 +267,10 @@ The following example is a stream descriptor for a Kafka input stream.
 }
 ```
 
-This example writes a sequence of AVRO-binary typed data to a Kafka stream.
+This example writes a sequence of Avro-binary typed data to a Kafka stream.
 
 ``` json
 {
-  "Version": "1.2",
   "Description": "write a sequence of binary-encoded Avro documents to Kafka",
   "Transport": {
     "Type": "kafka",
@@ -346,7 +289,6 @@ This example writes a sequence of AVRO-binary typed data to a Kafka stream.
 This is an example of a file stream input, expecting each line of the file to contain an integer. An analogous stream descriptor can be used for a file output stream. Note that `/root/data/input.jsons` refers to the path to `input.jsons` inside of the engine container, *not* on the host machine. 
 ``` json
 {
-  "Version": "1.2",
   "Loop": false,
   "Transport": {
     "Type": "file",
@@ -363,7 +305,6 @@ This is an example of a file stream input, expecting each line of the file to co
 Here's an example TCP stream descriptor. 
 ``` json
 {
-  "Version": "1.2",
   "Description": "read a sequence of untyped json separated by newlines over TCP transport",
   "Transport": {
     "Type": "TCP",
@@ -382,7 +323,6 @@ The following stream descriptor describes a UDP input stream.
 
 ``` json
 {
-  "Version": "1.2",
   "Description": "read a sequence of untyped json documents over UDP transport",
   "Transport": {
     "Type": "UDP",
