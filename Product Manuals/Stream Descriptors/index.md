@@ -13,6 +13,7 @@ excerpt: "Documentation for stream descriptors"
         - [REST](#section-rest)
         - [HTTP](#section-http)
         - [Kafka](#section-kafka)
+        - [S3] (#section-s3)
         - [File](#section-file)
         - [UDP](#section-udp)
         - [TCP](#section-tcp)
@@ -175,6 +176,41 @@ Kafka stream transports have several fields, detailed in the table below.
 | *Principal* | `string` | An authenticated user in a secure cluster | (none) | "kafka/kafka@REALM" |
 | *Keytab* | `string` | A file containing pairs of Kerberos principals and encrypted keys | (none) | "/fastscore.keytab" |
 
+#### <a name="section-s3">S3
+
+| Field	| Type | Default	| Description |
+| ----- | ---- | -------  | ----------- |
+| Region | string | "us-east-1" | An AWS region.
+| Bucket | string | | Required. An object key (at least 3 characters, 63 max). The bucket must exist and have appropriate permissions set. |
+| ObjectKey | string | | Required. An object key (1024 characters max). |
+| IntegrityChecks | boolean | false | Use Content-MD5 header to ensure the content integrity. |
+| AccessKeyID | string | | An AWS access key ID, e.g. "AKIAIOSFODNN7EXAMPLE" |
+| SecretAccessKey | string | | An AWS secret access key, e.g. "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" |
+
+The following S3 features are not currently supported but may be added in the future:
+* Storage classes
+* Access permissions
+* Server-side encryption
+* Single part object upload
+
+S3 output transport cannot handle small chunks of data (<5MB) except for the
+last chunk before the stream is closed. Note that publicly-accessible S3
+resources can be read using an HTTP transport.
+
+An example of an S3 transport specification:
+``` json
+{
+  ...
+  "Transport": {
+    "Type": "S3",
+    "Bucket": "mydatasets2017",
+    "ObjectKey": "census-data-08-2017",
+    "AccessKeyID": "AKIAIOSFODNN7EXAMPLE",
+    "SecretAccessKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+  },
+  ...
+}
+```
     
 #### <a name="section-file">File
 
