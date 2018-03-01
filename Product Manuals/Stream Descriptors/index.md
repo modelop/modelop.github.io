@@ -15,8 +15,9 @@ excerpt: "Documentation for stream descriptors"
         - [Kafka](#section-kafka)
         - [S3] (#section-s3)
         - [File](#section-file)
-        - [UDP](#section-udp)
+        - [ODBC] (#section-odbc)
         - [TCP](#section-tcp)
+        - [UDP](#section-udp)
         - [Executable](#section-executable)
         - [Inline](#section-inline)
         - [Discard](#section-discard)
@@ -55,7 +56,7 @@ needed.
   "Description": "A stream descriptor template",
 
   "Transport": {
-    "Type": "REST" | "HTTP" | "kafka" | "file" | "TCP" | "UDP" | "exec" | "inline" | "discard",
+    "Type": "REST" | "HTTP" | "kafka" | "S3" | "file" | "ODBC" | "TCP" | "UDP" | "exec" | "inline" | "discard",
     ...
   },
   "Encoding": null | "json" | "avro-binary" | ...,
@@ -99,16 +100,25 @@ This section documents the various fields present in the `Transport` descriptors
 
 #### <a name="section-rest">REST
 
-The REST stream transport does not include any additional transport fields.
+The REST stream transport operates in either 'simple' (default) or 'chunked'
+mode. In simple mode each REST request retrieves or write a single data record.
+In chunked mode the REST stream handles chunks of data containing multiple or
+partial records.
 
+| Field | Type | Description | Default | Example |
+| --- | --- | --- | --- | --- |
+| Mode | `string` | The mode of the REST stream. | `"simple"` | `"chunked"` |
+
+The "REST" shortcut is supported. Setting the "Transport" to "REST" assumes the
+simple mode.
+    
 #### <a name="section-http">HTTP
 
 HTTP streams contain only one field---the URL to the data source.
 
 | Field | Type | Description | Default | Example |
 | --- | --- | --- | --- | --- |
-| Url | `string` | The URL of the data. | (none) | "http://www.path.to/file.extension" |
-
+| Url | `string` | The URL of the data. | | "http://www.path.to/file.extension" |
     
 #### <a name="section-kafka">Kafka
 
@@ -116,12 +126,12 @@ Kafka stream transports have several fields, detailed in the table below.
 
 | Field | Type | Description | Default | Example |
 | --- | --- | --- | --- | --- |
-| BootstrapServers | array of `string` | A list of the Kafka bootstrap servers. | (none) | ["192.168.1.5:9002", "127.0.0.1:9003"] |
-| Topic | `string` | The Kafka topic. | (none) | "MyKafkaTopic" |
+| BootstrapServers | array of `string` | A list of the Kafka bootstrap servers. | | ["192.168.1.5:9002", "127.0.0.1:9003"] |
+| Topic | `string` | The Kafka topic. | | "MyKafkaTopic" |
 | *Partition* | `int` | The Kafka partition. | 0 | 5 |
 | *MaxWaitTime* | `int` | The maximum time to wait before declaring that the end of the stream has been reached. | 8388607 (approx. 25 days) | 500 |
-| *Principal* | `string` | An authenticated user in a secure cluster | (none) | "kafka/kafka@REALM" |
-| *Keytab* | `string` | A file containing pairs of Kerberos principals and encrypted keys | (none) | "/fastscore.keytab" |
+| *Principal* | `string` | An authenticated user in a secure cluster | | "kafka/kafka@REALM" |
+| *Keytab* | `string` | A file containing pairs of Kerberos principals and encrypted keys | | "/fastscore.keytab" |
 
 #### <a name="section-s3">S3
 
@@ -165,9 +175,31 @@ File streams only have one parameter: the path to the file. Note that the path t
 
 | Field | Type | Description | Default | Example |
 | --- | --- | --- | --- | --- |
-| Path | `string` | The path to the file. | (none) | "/path/to/file" |
-    
-    
+| Path | `string` | The path to the file. |  | "/path/to/file" |
+        
+#### <a name="section-odbc">ODBC
+
+An ODBC stream reads data from RDBMS. The key parameter of the ODBC transport
+is the connection string. Currently, FastScore supports MSSQL and PostgreSQL
+databases.
+
+| Field | Type | Description | Default | Example |
+| --- | --- | --- | --- | --- |
+| ConnectionString | `string` | The string describing the data source. |  | "Driver=FreeTDS;Server=myhost;Port=1433;Database=mydb;Uid=myuid;Pwd=abc123"` |
+| SelectQuery | `string` | An SQL query to run to retrieve data (input only). | | `"select * from mydata;"` |
+| InsertIntoTable | `string` | The name of the table to append data to (output only). | | `"mydata"` |
+| OutputFields | array of `string` | Field names for output data. | (all fields in the output table) | `["x","y","z","score"]` |
+| Timeout | `integer` | The query timeout in milliseconds. | | 10000 |
+
+#### <a name="section-tcp">TCP
+
+TCP transports require both a host and a port, and both are mandatory.
+
+| Field | Type | Description | Default | Example |
+| --- | --- | --- | --- | --- |
+| Host | `string` | The IP address of the host machine. |  | "127.0.0.1" |
+| Port | `int` | The port of the host machine. |  | 8765 |
+ 
 #### <a name="section-udp">UDP
 
 UDP Transports can be described using two fields.
@@ -175,44 +207,29 @@ UDP Transports can be described using two fields.
 | Field | Type | Description | Default | Example |
 | --- | --- | --- | --- | --- |
 | *BindTo* | `string` | The IP address to bind to. | "0.0.0.0" | "127.0.0.1" |
-| Port | `int` | The port to listen to. | (none) | 8000 |
-
-    
-#### <a name="section-tcp">TCP
-
-TCP transports require both a host and a port, and both are mandatory.
-
-| Field | Type | Description | Default | Example |
-| --- | --- | --- | --- | --- |
-| Host | `string` | The IP address of the host machine. | (none) | "127.0.0.1" |
-| Port | `int` | The port of the host machine. | (none) | 8765 |
-    
-    
+| Port | `int` | The port to listen to. |  | 8000 |
+   
 #### <a name="section-executable">Executable
 
 The executable transport allows for flexibility on the input or output streams to be truly customized by an external command.
 
 | Field | Type | Description | Default | Example |
 | --- | --- | --- | --- | --- |
-| Run | `string` | The path to the executable. | (none) | "/bin/ls" |
+| Run | `string` | The path to the executable. |  | "/bin/ls" |
 | Args | array of `string` | The arguments to pass to the executable. | [] | ["-a"] |
-    
 
 #### <a name="section-inline">Inline
 
-The inline transport type allows the user to embed a batch of records to be scored directly into the input stream descriptor. As the name implies, it is intended primarily for model and stream inlineging. 
+The inline transport type allows the user to embed a batch of records to be scored directly into the input stream descriptor. Inline streams are intended primarily for model and stream debugging. 
 
 | Field | Type | Description | Default | Example |
 | --- | --- | --- | --- | --- |
-| *Data* | a `string` or array of `string` | A single record, or an array of JSON records to be scored. | (none) | ["\\"json string\\""] |
-| *DataBinary* | a `string` or array of `string` | Either a base64-encoded binary datum or an array\nof base64-encoded messages. | (none) | "AQIDBQ==" |
-
+| *Data* | a `string` or array of `string` | A single record, or an array of JSON records to be scored. |  | ["\\"json string\\""] |
+| *DataBinary* | a `string` or array of `string` | Either a base64-encoded binary datum or an array of base64-encoded messages. |  | "AQIDBQ==" |
     
-#### <a name="section-console-and-discard">Console and Discard
+#### <a name="section-discard">Discard
 
-The console and discard transports have no fields. The discard transport simply discards all content---as such, it only makes sense for output streams where one does not care about the output of the engine. 
-
-Console streams are somewhat more subtle: in this case, the output is relayed back to the FastScore CLI. In order for this to work, however, the CLI must be in "interactive" mode (i.e., started with the `fastscore` command), and FastScore must be configured to use Pneumo, a library that enables asynchronous notifications over Kafka. 
+The discard transports have no fields. The discard transport simply discards all content---as such, it only makes sense for output streams where one does not care about the output of the engine. 
 
 ## <a name="examples">Examples
 
@@ -220,7 +237,7 @@ This section contains examples of stream descriptors for various combinations of
 
 ### REST Stream Examples
 
-The REST transport allows inputs to be delivered to the engine with the `/1/job/input/` POST command. If the output stream is also set to REST, the `/1/job/output` GET command can be used to retrieve the resulting scores. 
+The REST transport allows inputs to be delivered to the engine with the `/1/job/input/<slot>` POST command. If the output stream is also set to REST, the `/1/job/output/<slot>` GET command can be used to retrieve the resulting scores. 
 ``` json
 {
   "Transport": {
@@ -234,10 +251,10 @@ The REST transport allows inputs to be delivered to the engine with the `/1/job/
 
 ### Inline Stream Examples
 
-This is an example of a inline stream, where the messages are all inline, and separated by newlines.
+This is an example of a inline stream, where the messages are all embedded, and separated by newlines.
 ``` json
 {
-  "Description": "read an inline sequence of 3 messages separated by newlines",
+  "Description": "read an embedded sequence of 3 messages separated by newlines",
   "Transport": {
     "Type": "inline",
     "Data": "aaa\\nbbb\\nccc"
@@ -251,7 +268,7 @@ This is an example of a inline stream, where the messages are all inline, and se
 This is an example of a inline stream using a list of binary inputs. 
 ``` json
 {
-  "Description": "read an inline sequence of 3 binary messages",
+  "Description": "read an embedded sequence of 3 binary messages",
   "Transport": {
     "Type": "inline",
     "DataBinary": ["uKs/srYgWfY=",
@@ -270,7 +287,7 @@ The following is an example of an HTTP stream.
 
 ```json
 {
-  "Description": "read a sequence of opaque (unicode) strings separated by newlines over HTTP transport",
+  "Description": "read a sequence of unicode strings separated by newlines over HTTP transport",
   "Transport": {
     "Type": "HTTP",
     "Url": "https://s3-us-west-1.amazonaws.com/fastscore-sample-data/prime.test.stream"
@@ -279,7 +296,7 @@ The following is an example of an HTTP stream.
     "Type": "delimited",
     "Separator": "\\r\\n"
   },
-  "Encoding": null,
+  "Encoding": "utf-8",
   "Schema": null
 }
 ```
@@ -290,7 +307,7 @@ The following example is a stream descriptor for a Kafka input stream.
 
 ``` json
 {
-  "Description": "read a sequence of opaque (unicode) strings over Kafka transport",
+  "Description": "read a sequence of opaque (binary) strings over Kafka transport",
   "Transport": {
     "Type": "kafka",
     "BootstrapServers": ["127.0.0.1:9092"],
@@ -370,3 +387,38 @@ The following stream descriptor describes a UDP input stream.
   "Schema": null
 }
 ```
+
+### ODBC Examples
+
+The following stream descriptor reads data from a MSSQL server.
+
+```json
+{
+  ...
+  "Transport": {
+    "Type": "ODBC",
+    "ConnectionString": "Driver=FreeTDS;Server=myhost;Port=1433;Database=mydb;Uid=myuid;Pwd=abc123",
+    "SelectQuery": "select id, name from client_address"
+  },
+  ...
+}
+```
+
+### S3 Examples
+
+The stream descriptor below reads/writes the data kept on AWS S3.
+
+```json
+{
+  ...
+  "Transport": {
+    "Type": "S3",
+    "Bucket": "mydatasets2017",
+    "ObjectKey": "census-data-08-2017",
+    "AccessKeyID": "AKIAIOSFODNN7EXAMPLE",
+    "SecretAccessKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+  },
+  ...
+}
+```
+
