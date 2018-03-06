@@ -10,7 +10,7 @@ Get started with FastScore quickly by importing the FastScore Virtual Appliance 
 * Gradient Boosting Machine example
 Models, streams, schemas, and data are provided. 
 
-Watch our instructional video [here](http://docs.opendatagroup.com/docs/product-videos#faststart-with-fastscore-instructional-video) for more help on getting started!
+Watch our instructional video [here](https://www.opendatagroup.com/faststart-with-fastscore-instructional-video) for more help on getting started!
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ Navigate to the "File" menu and select "Import Appliance"
 
 ## 3. Review Default Settings
 
-* Rename your Virtual System: Defaults to "FastScore Demo 1.6.1"
+* Rename your Virtual System: Defaults to "FastScore Demo 1.7"
 * Modify CPU / RAM: We don't recommend going below the default of 3072 MB
 
 When you are finished modifying your settings, click Import.
@@ -40,7 +40,7 @@ When you are finished modifying your settings, click Import.
 
 ## 4. Power On the FastScore Machine
 
-1. Click the FastScore Demo 1.6.1 machine in the list of virtual machines
+1. Click the FastScore Demo 1.7 machine in the list of virtual machines
 2. Click Start from the toolbar - the boot process might take a few minutes and the console screen will be blank (or show Ubuntu start-up animation) during that time
 
 ![OVA Image](images/OVA3.png)
