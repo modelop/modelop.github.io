@@ -10,7 +10,7 @@ Get started with FastScore quickly by importing the FastScore Virtual Appliance 
 * Gradient Boosting Machine example
 Models, streams, schemas, and data are provided. 
 
-Watch our instructional video [here](http://docs.opendatagroup.com/docs/product-videos#faststart-with-fastscore-instructional-video) for more help on getting started!
+Watch our instructional video [here](https://www.opendatagroup.com/faststart-with-fastscore-instructional-video) for more help on getting started!
 
 ## Prerequisites
 

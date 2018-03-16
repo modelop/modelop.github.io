@@ -32,6 +32,7 @@ Welcome to Open Data Group's documentation!
 - [State Sharing and Snapshotting](/Product Manuals/State Sharing and Snapshotting/)
 - [Multiple Input and Output Streams](/Product Manuals/Multiple Input and Output Streams/)
 - [Record Sets and Control Records](/Product Manuals/Record Sets and Control Records/)
+- [GitHub Integration](/Product Manuals/Github Integration/)
 - [Java Model Runner](/Product Manuals/Java Model Runner/)
 - [Matlab (Octave) Model Runner](/Product Manuals/MATLAB Model Runner/)
 - [Fastscore Configuration](/Product Manuals/Configuration/)
