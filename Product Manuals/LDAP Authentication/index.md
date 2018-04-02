@@ -87,8 +87,6 @@ services:
  vault:
     image: vault:latest
     network_mode: "host"
-    tty: true
-    stdin_open: true
     command: server
     cap_add:
       - IPC_LOCK

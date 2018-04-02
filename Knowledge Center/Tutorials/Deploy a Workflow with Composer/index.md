@@ -416,8 +416,6 @@ proxy:
   image: fastscore/frontman:dev
   ports:
     - "8000:8000"
-  stdin_open: true
-  tty: true
   environment:
     CONNECT_PREFIX: https://connect:8001
   networks:
