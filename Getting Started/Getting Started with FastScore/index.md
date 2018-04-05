@@ -106,8 +106,6 @@ services:
     network_mode: "bridge"
     ports:
       - "8000:8000"
-    stdin_open: true
-    tty: true
     environment:
       CONNECT_PREFIX: https://172.17.0.1:8001
 
@@ -116,16 +114,12 @@ services:
     network_mode: "bridge"
     ports:
       - "8001:8001"
-    stdin_open: true
-    tty: true
 
   engine-1:
     image: fastscore/engine:1.7
     network_mode: "bridge"
     ports:
       - "8003:8003"
-    stdin_open: true
-    tty: true
     environment:
       CONNECT_PREFIX: https://172.17.0.1:8001
 
@@ -134,8 +128,6 @@ services:
     network_mode: "bridge"
     ports:
       - "8004:8003"
-    stdin_open: true
-    tty: true
     environment:
       CONNECT_PREFIX: https://172.17.0.1:8001
 
@@ -150,8 +142,6 @@ services:
     network_mode: "bridge"
     ports:
       - "8002:8002"
-    stdin_open: true
-    tty: true
     depends_on:
       - connect
       - database
@@ -567,8 +557,6 @@ For filestreams, it is easiest to manage container input and output by linking a
   engine-1:
     image: fastscore/engine:1.7
     network_mode: "host"
-    stdin_open: true
-    tty: true
     environment:
       CONNECT_PREFIX: https://127.0.0.1:8001
     volumes:                           # new volume section
