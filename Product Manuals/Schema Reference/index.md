@@ -8,7 +8,7 @@ excerpt: ""
 
 FastScore enforces strict typing of engine inputs and outputs at two levels: stream input/output, and model input/output. Types are declared using [AVRO schema](https://avro.apache.org/docs/1.8.1/). 
 
-To support this functionality, FastScore's Model Manage maintains a database of named AVRO schemas. Python and R models must then reference their input and output schemas using smart comments. (PrettyPFA and PFA models instead explicitly include their AVRO types as part of the model format.) [Stream descriptors](https://opendatagroup.github.io/Product%20Documentation/Stream%20Descriptors.html) may either reference a named schema from Model Manage, or they may explicitly declare schemas.
+To support this functionality, FastScore's Model Manage maintains a database of named AVRO schemas. Python and R models must then reference their input and output schemas using smart comments. (PrettyPFA and PFA models instead explicitly include their AVRO types as part of the model format.) [Stream descriptors](https://opendatagroup.github.io/Product%20Manuals/Stream%20Descriptors/) may either reference a named schema from Model Manage, or they may explicitly declare schemas.
 
 In either case, FastScore performs the following type checks:
 
@@ -66,13 +66,13 @@ and score this record to produce
 {"name":"Bob", "product":"6.0"}
 ```
 
-[Once FastScore is running](https://opendatagroup.github.io/Guides/Getting%20Started%20with%20FastScore%20v1-6-1.html), we can add the model and associated schemas to model manage with the following commands:
+[Once FastScore is running](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20FastScore/), we can add the model and associated schemas to model manage with the following commands:
 ```
 fastscore schema add named-array named-array.avsc
 fastscore schema add named-double named-double.avsc
 fastscore model add my_model model.py
 ```
-Assuming that additionally, we have [configured the input and output stream descriptors](https://opendatagroup.github.io/Product%20Documentation/Stream%20Descriptors.html) to use our schemas, we can then run the job with
+Assuming that additionally, we have [configured the input and output stream descriptors](https://opendatagroup.github.io/Product%20Manuals/Stream%20Descriptors/) to use our schemas, we can then run the job with
 ```
 fastscore job run my_model <input stream name> <output stream name>
 ```
