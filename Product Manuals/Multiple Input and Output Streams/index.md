@@ -10,7 +10,7 @@ The Engine has multiple slots to attached streams where the even slot numbers
 starting at 0 are for inputs and the odd slot numbers starting with 1 are for
 outputs.
 
-![Stream slots diagram](multi1.png)
+![Stream slots diagram](multi2.png)
 
 This is particularly useful when the output of the models provides data for
 multiple purposes or the model requires data from multiple data sources to run.
@@ -70,6 +70,6 @@ expects. The following model uses three input (0, 2, and 4) and two output slots
 # fastscore.schema.1: schema-2
 # fastscore.slot.3: in-use
 ```
-See [Model Annotations](../Model Annotations.md) for more information about the
+See [Model Annotations](https://opendatagroup.github.io/Product%20Manuals/Model%20Annotations/) for more information about the
 new-style model annotations.
 
