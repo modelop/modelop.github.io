@@ -2,6 +2,14 @@
 
 Welcome to Open Data Group's documentation!
 
+<!-- Search Bar -->
+<!--<form action="/search.html" method="get">-->
+<!--    <label for="search_box">Search</label>-->
+<!--    <input type="text" id="search_box" name="query">-->
+<!--    <input type="submit" value="search">-->
+<!--</form>-->
+
+
 ## FastScore
 
 ### Getting Started
@@ -51,3 +59,4 @@ Welcome to Open Data Group's documentation!
 The Portable Format for Analytics (PFA) is a specification for scoring engines.
 Hadrian is Open Data Group's complete implementation of a PFA scoring engine for
 the Java Virtual Machine. [Read more about Hadrian here.](Hadrian)
+
