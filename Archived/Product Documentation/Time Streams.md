@@ -28,17 +28,18 @@ An example of a time stream descriptor:
     "Period: 2.0
   },
   "Schema": {
-    "type": "long",
+    "Type": "long",
     "logicalType": "timestamp-millis"
   }
 }
+```
 
 The above stream delivers timestamps to the model every 2s.
 
 A Transport element of the a stream supports the following properties:
 
 Property | Type | Required | Default | Description
----------|----------|---------|------------
+---------|------|----------|---------|------------
 Type | string | Yes | | Set to "time" or "Time"
 TimeZero | string or null | No | null | The beginning of simulated time (iso8601)
 Delay | number | No | 0.0 | Wait this number of seconds before sending the first timestamp
