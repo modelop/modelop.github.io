@@ -138,11 +138,11 @@ Kafka stream transports have several fields, detailed in the table below.
 | Field	| Type | Default	| Description |
 | ----- | ---- | -------  | ----------- |
 | Region | string | "us-east-1" | An AWS region.
-| Bucket | string | | Required. An object key (at least 3 characters, 63 max). The bucket must exist and have appropriate permissions set. |
-| ObjectKey | string | | Required. An object key (1024 characters max). |
+| Bucket | string | | An object key (at least 3 characters, 63 max). The bucket must exist and have appropriate permissions set. |
+| ObjectKey | string | | An object key (1024 characters max). |
 | IntegrityChecks | boolean | false | Use Content-MD5 header to ensure the content integrity. |
-| AccessKeyID | string | | An AWS access key ID, e.g. "AKIAIOSFODNN7EXAMPLE" |
-| SecretAccessKey | string | | An AWS secret access key, e.g. "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" |
+| *AccessKeyID* | string | | An AWS access key ID, e.g. "AKIAIOSFODNN7EXAMPLE" |
+| *SecretAccessKey* | string | | An AWS secret access key, e.g. "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" |
 
 The following S3 features are not currently supported but may be added in the future:
 * Storage classes
@@ -160,8 +160,8 @@ An example of an S3 transport specification:
   ...
   "Transport": {
     "Type": "S3",
-    "Bucket": "mydatasets2017",
-    "ObjectKey": "census-data-08-2017",
+    "Bucket": "mydatasets2018",
+    "ObjectKey": "census-data-08-2018",
     "AccessKeyID": "AKIAIOSFODNN7EXAMPLE",
     "SecretAccessKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
   },
