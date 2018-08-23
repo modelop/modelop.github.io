@@ -42,6 +42,7 @@ Welcome to Open Data Group's documentation!
 - [Record Sets and Control Records](/Product Manuals/Record Sets and Control Records/)
 - [GitHub Integration](/Product Manuals/Github Integration/)
 - [Java Model Runner](/Product Manuals/Java Model Runner/)
+- [C/C++ Model Runner](/Product Manuals/C Model Runner/)
 - [Matlab (Octave) Model Runner](/Product Manuals/MATLAB Model Runner/)
 - [Fastscore Configuration](/Product Manuals/Configuration/)
 - [Model Annotations](/Product Manuals/Model Annotations/)
