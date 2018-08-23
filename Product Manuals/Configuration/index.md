@@ -104,7 +104,7 @@ Kafka stream:
   }
 }
 ```
-Note: Authenticated Kafka streams requires that the krb5.conf be copied into the engine container.
+Note: Authenticated Kafka streams requires that the krb5.conf be copied into the engine container at /etc/.
 
 S3 stream:
 ```json
