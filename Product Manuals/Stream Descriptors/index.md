@@ -434,7 +434,7 @@ not boundary-preserving (e.g. file) | boundary-preserving (e.g. msgpack) | null
 not boundary-preserving | "csv" | "delimited-csv"
 not boundary-preserving | any (not csv) | "delimited"
 
-## <a name="record-encoding>Record encoding
+## <a name="record-encoding">Record encoding
 
 A stream must understand the record encoding to optionally validate the data and
 prepare it for consumption by the model. The record encoding is controlled by
@@ -475,7 +475,7 @@ For example:
 }
 ```
 
-## <a name="record-schema>Record schema
+## <a name="record-schema">Record schema
 
 The "Schema" element contains an Avro schema of the stream records. All valid
 Avro schemas are allowed. In addition schema references are suppported. If the
@@ -492,7 +492,7 @@ from the corresponding slot of the loaded model. This is the default value for
 the "Schema" element. Set "Schema" to null to suppress schemas and make a
 stream untyped.
 
-## <a name="record-batching>Record batching
+## <a name="record-batching">Record batching
 
 The purpose of record batching is two-fold. It improves performance by
 minimizing roundtrips between the manifold and model runners. It also serves as

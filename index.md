@@ -32,7 +32,8 @@ Welcome to Open Data Group's documentation!
 ### Product Manuals
 
 - [Fastscore Configuration](/Product Manuals/Configuration/)
-- [Model Annotations](/Product Manuals/Model Annotations/)- [Schema Reference](/Product Manuals/Schema Reference/)
+- [Model Annotations](/Product Manuals/Model Annotations/)
+- [Schema Reference](/Product Manuals/Schema Reference/)
 - [Sensors](/Product Manuals/Sensors/)
 - [Import Policies](/Product Manuals/Import Policies/)
 - [Model Deploy](/Product Manuals/Model Deploy/)
@@ -45,7 +46,7 @@ Welcome to Open Data Group's documentation!
 
 - [C/C++ Model Runner](/Product Manuals/C Model Runner/)
 - [Matlab (Octave) Model Runner](/Product Manuals/MATLAB Model Runner/)
-- [Java Model Runner](/Product Manuals/Java Model Runner/)
+- [Java/Scala Model Runner](/Product Manuals/Java Model Runner/)
 
 #### Streams Descriptors
 
