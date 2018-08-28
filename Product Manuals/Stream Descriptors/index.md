@@ -337,7 +337,7 @@ contains a header and a series of large batches of records. Each batch of
 records contains a 16-byte "sync marker" that ensures that the reader is not out
 of sync with the stream.
 
-![OCF envelope](ocf1.png)
+![OCF envelope](images/ocf1.png)
 
 The OCF header contains an Avro schema, the "sync marker" value, and the
 compression codec. We allow a stream that starts at the beginning of any record
