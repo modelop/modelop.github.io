@@ -1,15 +1,19 @@
 ---
-title: "Release Notes for FastScore v1.7"
+title: "Release Notes for FastScore v1.8"
 excerpt: ""
 ---
 ## Highlights
-Version 1.7 of FastScore introduces the beta version of FastScore Composer and Designer that enables faster analytic workflow creation and validation. This release also includes GitHub integration for the Model Manage backing store.
+Version 1.8 of FastScore includes Docker Secret support for GitHub Integration, MySQL backend, and S3 Streams. This release also includes support for Scala models and enhancements to the C/C++ model runner.
 
-## 1.7
+## 1.8
 
-* FastScore Composer and Designer BETA 
-* FastScore Compare BETA
-* GitHub Integration
-* Scala FastScore SDK
-* Import Policy Enhancements
+* Enhanced CSV Encoding Support
+* GitHub Integration - Secrets Support
+* Enhanced Avro OCF Format Support
+* Relaxed Avro Schema Matching
+* S3 Transport Enhancements
+* Scala Model Runner
+* Enhanced C/C++ Model Support - Multiple Stream Capability
+* Docker Secret Support for MySQL Backend and S3 Streams
+* Msgpack Encoding
 * General improvements to performance and stability

@@ -15,10 +15,9 @@ Welcome to Open Data Group's documentation!
 ### Getting Started
 
 - [FastScore Getting Started Guide](/Getting Started/Getting Started with FastScore)
-- [Quick Setup Instructions - OVA](/Getting Started/FastStart with FastScore/)
-- [Release Notes](/Getting Started/Release Notes/)
 - [FastScore Specifications](/Getting Started/FastScore Specs/)
 - [FastScore Architecture](Getting Started/FastScore IA/)
+- [1.8 Release Notes](/Getting Started/Release Notes/)
 
 ### Knowledge Center
 
@@ -50,8 +49,8 @@ Welcome to Open Data Group's documentation!
 
 #### Streams Descriptors
 
-- [Multiple Input and Output Streams](/Product Manuals/Multiple Input and Output Streams/)
 - [Stream Descriptors](/Product Manuals/Stream Descriptors/)
+- [Multiple Input and Output Streams](/Product Manuals/Multiple Input and Output Streams/)
 - [CSV Support](/Product Manuals/CSV Support/)
 
 ### Reference

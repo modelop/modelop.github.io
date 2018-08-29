@@ -13,5 +13,7 @@ excerpt: ""
 | Jet | A Unix process that runs a model. |
 | Job | A complete configuration of one or more interrelated FastScore engines that each contain a model, schemas, an import policy, and input/output stream(s). |
 | Manifold | A component of an engine that manages the data flow between streams and the model. |
+| Runner | FastScore Engine will use different model-specific runners to executed depending on the language of the model deployed. |
 | Sensor | A configurable function that captures specific meta data about the execution process of a model in production. |
 | Stream | A file that contains all information necessary to transport data from one place to another. Could be from a data source to the engine or from the engine to an application. There is at least one input stream and one output stream. |
+

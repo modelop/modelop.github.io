@@ -1,10 +1,10 @@
 ---
-title: "Getting Started with FastScore v1.7"
-description: "This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.7 of FastScore.\n\nIf you need support or have questions, please email us:  [support@opendatagroup.com](mailto:support@opendatagroup.com)"
+title: "Getting Started with FastScore v1.8"
+description: "This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.8 of FastScore.\n\nIf you need support or have questions, please email us:  [support@opendatagroup.com](mailto:support@opendatagroup.com)"
 ---
 
-# Getting Started with FastScore v1.7
-This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.7 of FastScore.
+# Getting Started with FastScore v1.8
+This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.8 of FastScore.
 
 If you need support or have questions, please email us: support@opendatagroup.com
 
@@ -93,7 +93,7 @@ Add the database to Model Manage in the usual way for Docker volumes:
 
 1. If using docker-compose, put the volume in the `docker-compose.yml` file(see example file below)
 2. If running manually, with the `-v` flag when using `docker run`, e.g.,
-    ```docker run -it -d --net=host --rm -v db:/var/lib/mysql fastscore/model-manage-mysql:1.7 ``` (see more below)
+    ```docker run -it -d --net=host --rm -v db:/var/lib/mysql fastscore/model-manage-mysql:1.8 ``` (see more below)
 
 #### Example Docker Compose File
 Below is an example Docker Compose file that will start a full suite of FastScore services with two engines:
@@ -102,7 +102,7 @@ Below is an example Docker Compose file that will start a full suite of FastScor
 version: '2'
 services:
   dashboard:
-    image: fastscore/dashboard:1.7
+    image: fastscore/dashboard:1.8
     network_mode: "bridge"
     ports:
       - "8000:8000"
@@ -110,13 +110,13 @@ services:
       CONNECT_PREFIX: https://172.17.0.1:8001
 
   connect:
-    image: fastscore/connect:1.7
+    image: fastscore/connect:1.8
     network_mode: "bridge"
     ports:
       - "8001:8001"
 
   engine-1:
-    image: fastscore/engine:1.7
+    image: fastscore/engine:1.8
     network_mode: "bridge"
     ports:
       - "8003:8003"
@@ -124,7 +124,7 @@ services:
       CONNECT_PREFIX: https://172.17.0.1:8001
 
   engine-2:
-    image: fastscore/engine:1.7
+    image: fastscore/engine:1.8
     network_mode: "bridge"
     ports:
       - "8004:8003"
@@ -132,13 +132,13 @@ services:
       CONNECT_PREFIX: https://172.17.0.1:8001
 
   database:
-    image: fastscore/model-manage-mysql:1.7
+    image: fastscore/model-manage-mysql:1.8
     network_mode: "bridge"
     ports:
       - "3306:3306"
 
   model-manage:
-    image: fastscore/model-manage:1.7
+    image: fastscore/model-manage:1.8
     network_mode: "bridge"
     ports:
       - "8002:8002"
@@ -174,12 +174,12 @@ Check that all the Docker containers are running with the ```docker ps``` comman
 
 ``` bash
 CONTAINER ID        IMAGE                                COMMAND                  CREATED             STATUS              PORTS                    NAMES
-51acfc33eb4e        fastscore/model-manage:1.7           "/bin/sh -c 'bin/mode"   15 seconds ago      Up 14 seconds       0.0.0.0:8002->8002/tcp   demos_model-manage_1
-4d20a9c3c4c9        fastscore/connect:1.7                "/bin/sh -c 'bin/conn"   16 seconds ago      Up 14 seconds       0.0.0.0:8001->8001/tcp   demos_connect_1
-432327548cef        fastscore/dashboard:1.7              "npm run start-fds"      16 seconds ago      Up 14 seconds       0.0.0.0:8000->8000/tcp   demos_dashboard_1
-14e547577004        fastscore/model-manage-mysql:1.7     "/bin/sh -c '/sbin/my"   16 seconds ago      Up 14 seconds       0.0.0.0:3306->3306/tcp   demos_database_1
-bf7e50c22e0a        fastscore/engine:1.7                 "/bin/sh -c 'java -ja"   16 seconds ago      Up 14 seconds       0.0.0.0:8004->8003/tcp   demos_engine-2_1
-4585ac4cf93b        fastscore/engine:1.7                 "/bin/sh -c 'java -ja"   16 seconds ago      Up 14 seconds       0.0.0.0:8003->8003/tcp   demos_engine-1_1
+51acfc33eb4e        fastscore/model-manage:1.8           "/bin/sh -c 'bin/mode"   15 seconds ago      Up 14 seconds       0.0.0.0:8002->8002/tcp   demos_model-manage_1
+4d20a9c3c4c9        fastscore/connect:1.8                "/bin/sh -c 'bin/conn"   16 seconds ago      Up 14 seconds       0.0.0.0:8001->8001/tcp   demos_connect_1
+432327548cef        fastscore/dashboard:1.8              "npm run start-fds"      16 seconds ago      Up 14 seconds       0.0.0.0:8000->8000/tcp   demos_dashboard_1
+14e547577004        fastscore/model-manage-mysql:1.8     "/bin/sh -c '/sbin/my"   16 seconds ago      Up 14 seconds       0.0.0.0:3306->3306/tcp   demos_database_1
+bf7e50c22e0a        fastscore/engine:1.8                 "/bin/sh -c 'java -ja"   16 seconds ago      Up 14 seconds       0.0.0.0:8004->8003/tcp   demos_engine-2_1
+4585ac4cf93b        fastscore/engine:1.8                 "/bin/sh -c 'java -ja"   16 seconds ago      Up 14 seconds       0.0.0.0:8003->8003/tcp   demos_engine-1_1
 ```
 
 
@@ -189,19 +189,19 @@ Sometimes, whether for testing purposes or to satisfy your own hardy can-do spir
 To do it manually, the FastScore microservices can be installed by pulling the images from DockerHub:
 
 ``` bash
-$ docker pull fastscore/model-manage:1.7
-$ docker pull fastscore/connect:1.7
-$ docker pull fastscore/engine:1.7
-$ docker pull fastscore/model-manage-mysql:1.7
-$ docker pull fastscore/dashboard:1.7
+$ docker pull fastscore/model-manage:1.8
+$ docker pull fastscore/connect:1.8
+$ docker pull fastscore/engine:1.8
+$ docker pull fastscore/model-manage-mysql:1.8
+$ docker pull fastscore/dashboard:1.8
 ```
 
 ``` bash
-docker run -it -d --net=host --rm fastscore/connect:1.7
-docker run -it -d --net=host --rm -e "CONNECT_PREFIX=https://127.0.0.1:8001" fastscore/dashboard:1.7
-docker run -it -d --net=host --rm -e "CONNECT_PREFIX=https://127.0.0.1:8001" fastscore/engine:1.7
-docker run -it -d --net=host --rm -e "CONNECT_PREFIX=https://127.0.0.1:8001" fastscore/model-manage:1.7
-docker run -it -d --net=host --rm -v db:/var/lib/mysql fastscore/model-manage-mysql:1.7
+docker run -it -d --net=host --rm fastscore/connect:1.8
+docker run -it -d --net=host --rm -e "CONNECT_PREFIX=https://127.0.0.1:8001" fastscore/dashboard:1.8
+docker run -it -d --net=host --rm -e "CONNECT_PREFIX=https://127.0.0.1:8001" fastscore/engine:1.8
+docker run -it -d --net=host --rm -e "CONNECT_PREFIX=https://127.0.0.1:8001" fastscore/model-manage:1.8
+docker run -it -d --net=host --rm -v db:/var/lib/mysql fastscore/model-manage-mysql:1.8
 ```
 
 It is additionally useful to install the FastScore Command-Line Interface (CLI).
@@ -211,20 +211,16 @@ It is additionally useful to install the FastScore Command-Line Interface (CLI).
 The FastScore CLI can be downloaded and installed using the following commands:
 
 ``` bash
-wget https://s3-us-west-1.amazonaws.com/fastscore-cli/fastscore-cli-1.7.tar.gz
-tar xzf fastscore-cli-1.7.tar.gz
-cd fastscore-cli-1.7
-sudo python setup.py install
+pip install fastscore-cli
 ```
 
 This will install the required dependencies. The FastScore CLI is a Python tool, so it doesn't need to be compiled, and the setup script should automatically add the CLI to `$PATH`.
 
 
-> `python-setuptools` and `python-dev` (i.e. header files) are required to properly install the FastScore CLI. These may or may not be already present on your system. If not, you will need to install them.
+> `python-pip`, `python-setuptools` and `python-dev` (i.e. header files) are required to properly install the FastScore CLI. These may or may not be already present on your system. If not, you will need to install them.
 > For example:
 > ``` bash
-> $ sudo apt-get install python-setuptools
-> $ sudo apt-get install python-dev
+> $ sudo apt-get install python-pip python-dev python-setuptools
 > ```
 
 
@@ -232,7 +228,7 @@ Once you've installed the FastScore CLI, check that it works by executing the fo
 
 ``` bash
 $ fastscore help
-FastScore CLI v1.7
+FastScore CLI v1.8.0
 Usage: fastscore <command> [<subcommand> ...]
 Available commands:
   help             Explain commands and options
@@ -350,7 +346,7 @@ FastScore is a streaming analytic engine: its core functionality is to read in r
 
 ### <a name="section-creating-and-loading-assets-into-fastscore-model-manage"></a>Creating and Loading Assets into FastScore Model Manage
 
-Version 1.7 of FastScore supports models in Python, R, Java, MATLAB, [PFA](http://dmg.org/pfa/), [PrettyPFA](https://github.com/opendatagroup/hadrian/wiki/PrettyPFA-Reference) and C formats. Some setup steps differ slightly between Python/R models and PFA, Java, MATLAB, or C models. As a model interchange format, PFA can provide some benefits in performance, scalability, and security relative to R and Python. PrettyPFA is a human-readable equivalent to PFA. However, as the majority of users will be more familiar with R and Python, we focus on these two languages in this section.
+Version 1.8 of FastScore supports models in Python, R, Java, MATLAB, [PFA](http://dmg.org/pfa/), [PrettyPFA](https://github.com/opendatagroup/hadrian/wiki/PrettyPFA-Reference) and C formats. Some setup steps differ slightly between Python/R models and PFA, Java, MATLAB, or C models. As a model interchange format, PFA can provide some benefits in performance, scalability, and security relative to R and Python. PrettyPFA is a human-readable equivalent to PFA. However, as the majority of users will be more familiar with R and Python, we focus on these two languages in this section.
 
 #### Loading Assets
 The FastScore CLI allows a user to load models directly from the command line. The list of models currently loaded in FastScore can be viewed using the model list command:
@@ -555,7 +551,7 @@ For filestreams, it is easiest to manage container input and output by linking a
 [...]
 
   engine-1:
-    image: fastscore/engine:1.7
+    image: fastscore/engine:1.8
     network_mode: "host"
     environment:
       CONNECT_PREFIX: https://127.0.0.1:8001
