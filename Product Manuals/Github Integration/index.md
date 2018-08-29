@@ -1,33 +1,55 @@
 ## Github Integration
 
-FastScore can use Github repo as a storage backend.
-In this case all assets are stored as plain files in single repo with a mandated directory structure.
-Every change to asset (via CLI or API) immediately pushed to Github repo.
-And vice versa - external changes to repo (via git client or Github web interface) are propagated to Model Manage.
+FastScore can use a Github repository as a storage backend for all the model assets. 
+
+All assets are stored as plain text files in a single repository with a mandated directory structure detailed below.
+Every change to an asset (via CLI or API) is immediately pushed to Github repository. The integration is bi-directional with external changes to the repository (via git client or Github web interface) propagated to Model Manage.
 
 ### Configuration
 
-To use repo as a storage your `db` section in `config.yaml` should look like this:
+Setup the configuration to the repository in the `db` section of the `config.yaml` as shown below:
 ```yaml
 db:
   type: git
   url: https://github.com/org/repo.git
   branch: master
-  username: joe
-  password: secret
+  username: secret://git_user
+  password: secret://git_pass
 ```
 
-* `type: git` tells FastScore to use Github as storage backend.
-* `url` should point to your existing Github repo.
+* `type: git` tells FastScore to use Github as the storage backend.
+* `url` points to the existing Github repository.
 * `branch` tells which git branch to use.
-* `username` is the name of your Github user with read/write access to repo.
-* `password` Github user password in a plain text.
+* `username` is the Docker Secret storing the user name of a Github user with read/write access to repository.
+* `password` is the Docker Secret storing the user password.
 
-Only HTTPS URLs to repos are supported for now. With Vault integration SSH URLs will be supported and plaintext passwords in config will be gone.
 
-### Repo directories structure
+### Docker Secrets for Credentials
 
-All kinds of FastScore assets are stored in the following directories:
+It is best practice to obscure passwords using Docker Secrets. These secrets are defined by adding the following section to end of the docker-compose.yml file: 
+
+```
+secrets:
+  git_user:
+    external: true
+  git_pass:
+    external: true
+```
+
+In addition, the secret must be injected by running the ['docker secret create'](https://docs.docker.com/engine/reference/commandline/secret_create/) command. This can be automated or handled within UCP.
+
+For example: 
+
+```
+echo joe | docker secret create git_user -
+echo password | docker secret create git_pass -
+```
+
+Note: Only HTTPS URLs to respositories are currently supported. 
+
+### Repository directories structure
+
+All FastScore assets must be stored in the directory structure shown below:
 ```
 attachments
 models
@@ -36,10 +58,11 @@ sensors
 streams
 ```
 
-* Each asset stored as a separate file.
-* File name is an asset name and file extension is an asset type.
-* No assets of same kind could share the same name.
-* Attachments are grouped into subdirs named after model they are belong.
+The integration between the system follows these rules: 
+* Each asset must be stored as a separate file.
+* File name is the asset name and file extension is an asset type.
+* No assets of same kind can share the same name.
+* Attachments are grouped into subdirectories named after model they belong to.
 
 Example:
 ```
@@ -55,11 +78,11 @@ streams\
   out.json
 ```
 
-Here, attachments in `attachments/model1` dir are belong to model `model1.py`.
+Here, attachments in `attachments/model1` directory belong to model `model1.py`.
 
 ### Github webhooks
-To make FastScore aware of external changes to repo you can use Github webhooks.
-To set up a webhook on GitHub, head over to the **Settings** page of your repo, and click on **Webhooks & services**. After that, click on **Add webhook**. Paste publicly accessible URL of your FastScore proxy instance into Payload URL:
+To make FastScore aware of external changes to the repository you will need to set up a Github webhook.
+To set up a webhook on GitHub, head over to the **Settings** page of your repository, and click on **Webhooks & Services**. After that, click on **Add Webhook**. Paste the publicly accessible URL of your FastScore proxy instance into Payload URL:
 ```
 https://<FASTSCORE_PROXY>/api/1/service/model-manage-1/1/git
 ```
