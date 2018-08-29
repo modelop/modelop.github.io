@@ -45,7 +45,7 @@ Welcome to Open Data Group's documentation!
 
 - [C/C++ Model Runner](/Product Manuals/C Model Runner/)
 - [Matlab (Octave) Model Runner](/Product Manuals/MATLAB Model Runner/)
-- [Java/Scala Model Runner](/Product Manuals/Java Model Runner/)
+- [Java Model Runner](/Product Manuals/Java Model Runner/)
 
 #### Streams Descriptors
 

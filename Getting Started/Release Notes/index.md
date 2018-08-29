@@ -12,7 +12,6 @@ Version 1.8 of FastScore includes Docker Secret support for GitHub Integration, 
 * Enhanced Avro OCF Format Support
 * Relaxed Avro Schema Matching
 * S3 Transport Enhancements
-* Scala Model Runner
 * Enhanced C/C++ Model Support - Multiple Stream Capability
 * Docker Secret Support for MySQL Backend and S3 Streams
 * Msgpack Encoding
