@@ -16,6 +16,7 @@ excerpt: "Documentation for stream descriptors"
         - [S3](#section-s3)
         - [File](#section-file)
         - [ODBC](#section-odbc)
+        - [HDFS](#section-hdfs)
         - [TCP](#section-tcp)
         - [UDP](#section-udp)
         - [Executable](#section-executable)
@@ -202,6 +203,47 @@ databases.
 | InsertIntoTable | `string` | The name of the table to append data to (output only). | | `"mydata"` |
 | OutputFields | array of `string` | Field names for output data. | (all fields in the output table) | `["x","y","z","score"]` |
 | Timeout | `integer` | The query timeout in milliseconds. | | 10000 |
+
+#### <a name="section-odbc">HDFS
+
+An HDFS streams reads/writes a Hadoop Distributed File System
+([HDFS](http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html)).
+The HDFS stream establishes A TCP connection to an HDFS 'namenode', retrieves the
+file metadata, downloads the data in large blocks from HDFS 'datanodes'.
+
+| Field | Type | Description | Default | Example |
+| --- | --- | --- | --- | --- |
+| NameNode | `string` | The host name or IP address of HDFS namenode. May include a port separated by a colon. By default, the port is 9000. | | "hdfs1.mycompany.com:9900 |
+| Authentication | object or `null` | See below | `null` | |
+| Path | `string` | An absolute path to the file. | | "/path/to/file" |
+
+If "Authentication" is missing is `null`, the HDFS must allow insecure access.
+Currently, the only supported authentication mechanism to access a secure HDFS
+is 'KERBEROS'. To authenticate using Kerberos set the "Authentication" as
+follows:
+``` json
+{
+  ...
+  "Transport": {
+    "Type": "HDFS",
+    "Authentication": {
+      "Type": "Kerberos",
+      "Realm": "MYCOMPANY.COM",
+      "KDCHost": "1.2.3.4:8888",
+      "Principal": "root",
+      "Password": "*****",
+      "Timeout": 5000
+    },
+    ...
+  },
+  ...
+}
+```
+
+"KDCHost", "Realm", "Principal", and "Password" properties are mandatory. The
+port may be omitted from the "KDCHost" string. The default Kerberos port is 88.
+The timeout is measured in milliseconds. If omitted, the timeout is set to 3000
+(3s).
 
 #### <a name="section-tcp">TCP
 
