@@ -243,7 +243,7 @@ follows:
 "KDCHost", "Realm", "Principal", and "Password" properties are mandatory. The
 port may be omitted from the "KDCHost" string. The default Kerberos port is 88.
 The timeout is measured in milliseconds. If omitted, the timeout is set to 3000
-(3s).
+(3s). Set the timeout to `null` to disable it.
 
 #### <a name="section-tcp">TCP
 
