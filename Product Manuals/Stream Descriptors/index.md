@@ -127,11 +127,16 @@ simple mode.
     
 #### <a name="section-http">HTTP
 
-HTTP streams contain only one field---the URL to the data source.
+
+HTTP streams typically contain only one field---the URL to the data source. It
+is possible to make the stream "chunked" with each chunk representing a record.
+A chunked stream must use a corresponding
+["Transfer-Encoding"](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Transfer-Encoding) header.
 
 | Field | Type | Description | Default | Example |
 | --- | --- | --- | --- | --- |
-| Url | `string` | The URL of the data. | | "http://www.path.to/file.extension" |
+| Url | `string` | The URL of the data. | | "http://www.mydomain.com/path.to/file.extension" |
+| Chunked | boolean | Use Transfer-Encoding: chunked | false | |
     
 #### <a name="section-kafka">Kafka
 
