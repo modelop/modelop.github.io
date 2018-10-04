@@ -1,1 +1,3 @@
 name: Open Data Group Docs and Reference Center
+plugins:
+  - jekyll-seo-tag
