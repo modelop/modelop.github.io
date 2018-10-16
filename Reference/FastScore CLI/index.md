@@ -4,7 +4,7 @@ description: The guide describes all commands available through the FastScore CL
 css: buttondown.css
 ---
 
-# FastScore CLI v1.6.1 User Guide
+# FastScore CLI v1.7 User Guide
 
 This guide describes the complete set of commands and options supported by the
 FastScore CLI.
@@ -83,7 +83,7 @@ $ fastscore fleet -v -json
     "host": "engine",
     "api": "engine",
     "health": "ok",
-    "release": "1.6.1",
+    "release": "1.7",
     "id": "426e83fb-7012-4906-9c0e-a58a7a380635"
   },
   ...
@@ -180,10 +180,10 @@ $ fastscore fleet -wait -v
 Waiting...done
 Name            API           Health    Release    Built On
 --------------  ------------  --------  ---------  ----------------------------
-CLI             UI            ok        1.6.1      Wed Nov 15 15:01:32 UTC 2017
-connect         connect       ok        1.6.1      Thu Nov  9 16:01:18 UTC 2017
-engine-1        engine        ok        1.6.1      Sun Nov 12 11:51:46 UTC 2017
-model-manage-1  model-manage  ok        1.6.1      Thu Nov  9 16:01:58 UTC 2017
+CLI             UI            ok        1.7        Wed Mar 7 15:01:32 UTC 2018
+connect         connect       ok        1.7        Wed Mar 7 16:01:18 UTC 2018
+engine-1        engine        ok        1.7        Wed Mar 7 11:51:46 UTC 2018
+model-manage-1  model-manage  ok        1.7        Wed Mar 7 16:01:58 UTC 2018
 ```
 
 ## Choosing an instance

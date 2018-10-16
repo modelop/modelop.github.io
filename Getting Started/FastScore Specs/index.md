@@ -9,42 +9,43 @@
 | H2O | ✓ |  | CPU utilization (data deserialization) | ✓ |
 | Matlab | ✓ |  | Sensors | ✓ |
 | C | ✓ |  | Default sensors installed | ✓ |
-|  |  |  | Dashboard sensor support | ✓ |
-| **Certified Deployment Options** |  |  |  |  |
-| Linux | ✓ |  | **Workflow, Concurrency, Scaling, etc** |  |
-| AWS | ✓ |  | Single model complex analytic workflows | ✓ |
-| On-premise | ✓ |  | Multi-model complex analytic workflows | ✓ |
-| Private Cloud | ✓ |  | Single machine scaling | ✓ |
-| Public Cloud | ✓ |  | Infrastructure Scaling (multi-server, cloud, etc) | ✓ |
-| Azure | ✓ |  | Intra-engine concurrecy | ✓ |
-| Google Cloud | ✓ |  | Multi-engine concurrency | ✓ |
-| MacOS | ✓ |  | Model state persistence checkpointing | ✓ |
-|  |  |  | Model state staring | ✓ |
-| **Data Source Types** |  |  | Multiple input/output streams | ✓ |
-| REST | ✓ |  |  |  |
-| Kafka | ✓ |  | **Third Party Orchestrators** | ✓ |
-| File | ✓ |  | Mesos/Marathon/DCOS | ✓ |
-| ODBC | ✓ |  | Swarm | ✓ |
-| HTTP | ✓ |  | Kubernetes | ✓ |
-| Experimental (TCP/UDP/Exec) | ✓ |  |  |  |
-| Kafka (Authenticated) | ✓ |  | **Model Management and AnalyticOps** |  |
-| S3 (Authenticated) | ✓ |  | Store/Edit/Select Models | ✓ |
-|  |  |  | Store/Edit/Select Streams | ✓ |
-| **Schema Definition Formats** |  |  | Store/Edit/Select Schemas | ✓ |
-| Avro Schema | ✓ |  |  |  |
-| Avro Schema Extensions (Restrictions) | ✓ |  | **Machine Learning Integration** |  |
-|  |  |  | R [ R ] | ✓ |
-| **Data Encoding Formats** |  |  | scikit-learn [ Python ] | ✓ |
-| Raw | ✓ |  | ml.lib [POJO ] | ✓ |
-| JSON | ✓ |  | H2O [POJO] | ✓ |
-| Avro-binary | ✓ |  | Tensorflow [ Python, R ] | ✓ |
-| UTF-8 | ✓ |  |  |  |
-| SOAP/RPC | ✓ |  | **Integration and Management Interfaces** |  |
-|  |  |  | RESTful API | ✓ |
-| **Environment Management** |  |  | GUI Dashboard | ✓ |
-| Import Policy | ✓ |  | CLI | ✓ |
-|  |  |  | Model deploy Jupyter | ✓ |
-| **FastScore SDK** |  |  |  |  |
-| Python 2 | ✓ |  | **Authentication and Access Control** |  |
-| Python 3 | ✓ |  | LDAP Authentication | ✓ |
-| Scala/Java | ✓ |  | Dashboard LDAP Authentication | ✓ |
+| Scala | ✓ |  | Dashboard sensor support | ✓ |
+|  |  |  |  |  |
+| **Certified Deployment Options** |  |  | **Workflow, Concurrency, Scaling, etc** |  |
+| Linux | ✓ |  | Single model complex analytic workflows | ✓ |
+| AWS | ✓ |  | Multi-model complex analytic workflows | ✓ |
+| On-premise | ✓ |  | Single machine scaling | ✓ |
+| Private Cloud | ✓ |  | Infrastructure Scaling (multi-server, cloud, etc) | ✓ |
+| Public Cloud | ✓ |  | Intra-engine concurrecy | ✓ |
+| Azure | ✓ |  | Multi-engine concurrency | ✓ |
+| Google Cloud | ✓ |  | Model state persistence checkpointing | ✓ |
+| MacOS | ✓ |  | Model state staring | ✓ |
+|  |  |  | Multiple input/output streams | ✓ |
+| **Data Source Types** |  |  |  |  |
+| REST | ✓ |  | **Third Party Orchestrators** | ✓ |
+| Kafka | ✓ |  | Mesos/Marathon/DCOS | ✓ |
+| File | ✓ |  | Swarm | ✓ |
+| ODBC | ✓ |  | Kubernetes | ✓ |
+| HTTP | ✓ |  |  |  |
+| Experimental (TCP/UDP/Exec) | ✓ |  | **Model Management and AnalyticOps** |  |
+| Kafka (Authenticated) | ✓ |  | Store/Edit/Select Models | ✓ |
+| S3 (Authenticated) | ✓ |  | Store/Edit/Select Streams | ✓ |
+|  |  |  | Store/Edit/Select Schemas | ✓ |
+| **Schema Definition Formats** |  |  |  |  |
+| Avro Schema | ✓ |  | **Machine Learning Integration** |  |
+| Avro Schema Extensions (Restrictions) | ✓ |  | R [ R ] | ✓ |
+|  |  |  | scikit-learn [ Python ] | ✓ |
+| **Data Encoding Formats** |  |  | ml.lib [POJO ] | ✓ |
+| Raw | ✓ |  | H2O [POJO] | ✓ |
+| JSON | ✓ |  | Tensorflow [ Python, R ] | ✓ |
+| Avro-binary | ✓ |  |  |  |
+| UTF-8 | ✓ |  | **Integration and Management Interfaces** |  |
+| SOAP/RPC | ✓ |  | RESTful API | ✓ |
+|  |  |  | GUI Dashboard | ✓ |
+| **Environment Management** |  |  | CLI | ✓ |
+| Import Policy | ✓ |  | Model deploy Jupyter | ✓ |
+|  |  |  |  |  |
+| **FastScore SDK** |  |  | **Authentication and Access Control** |  |
+| Python 2 | ✓ |  | LDAP Authentication | ✓ |
+| Python 3 | ✓ |  | Dashboard LDAP Authentication | ✓ |
+| Scala/Java | ✓ |  |  |

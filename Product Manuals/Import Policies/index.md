@@ -44,4 +44,4 @@ A model runner's import policy manifest is loaded from the `import.policy` file 
 
 In FastScore 1.4, the import policy for a model runner is fixed as soon as a model is loaded into the engine, so any changes to import policies must be made _before_ running a model. To copy a new manifest into the container, use the [`docker cp`](https://docs.docker.com/engine/reference/commandline/cp/) command or an equivalent.
 
-Adding import policies to an engine through the command `fastscore policy set my-policy.yml` is now available with v1.6. See [FastScore Command Line Interface](https://opendatagroup.github.io/Product%20Documentation/FastScore%20Command%20Line%20Interface.html) for more information on subcommands.
+Adding import policies to an engine through the command `fastscore policy set my-policy.yml` is now available with v1.6. See [FastScore Command Line Interface](https://opendatagroup.github.io/Reference/FastScore%20CLI/) for more information on subcommands.

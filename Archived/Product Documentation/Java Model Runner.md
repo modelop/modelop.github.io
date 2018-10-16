@@ -14,14 +14,14 @@ This page describes how to load and run models in each of these cases.
 
 ## Generic Java models
 
-A generic Java model can execute arbitrary Java code. In order to run this model in FastScore, it must implement a particular model interface: the `IJavaModel` interface. This interface includes `begin`, `action`, and `end` methods, analogous to Python and R models. 
+A generic Java model can execute arbitrary Java code. In order to run this model in FastScore, it must implement a particular model interface: the `FastScoreModel` interface. This interface includes `begin`, `action`, and `end` methods, analogous to Python and R models. Note that only the `action` method is required, therefore the rest of the methods will need to be overridden.
 
 ``` java
-import fastscore.IJavaModel;
+import fastscore.FastScoreModel;
 
-public class MyModel implements IJavaModel 
+public class MyModel implements FastScoreModel 
 {
-  
+  @Override
   public void begin()
   {
   ...
@@ -32,6 +32,7 @@ public class MyModel implements IJavaModel
   ...
   }
   
+  @Override
   public void end()
   {
   ...
@@ -76,7 +77,7 @@ A Spark model must follow the same conformance guidelines as a generic Java mode
 Here is an example Spark model that assumes that the `LogisticRegressionModel` was previously created and saved under the `scalaLogisticRegressionWithBFGSModel` folder and then uploaded to FastScore as an attachment.
 
 ``` java
-import fastscore.IJavaModel;
+import fastscore.FastScoreModel;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.apache.spark.sql.SparkSession;
@@ -86,7 +87,7 @@ import org.apache.spark.mllib.classification.LogisticRegressionModel;
 import org.apache.spark.mllib.linalg.Vector;
 import org.apache.spark.mllib.linalg.Vectors;
 
-public class MLLibLRModel implements IJavaModel {
+public class MLLibLRModel implements FastScoreModel {
      
     LogisticRegressionModel _lrModel;
 
@@ -94,6 +95,7 @@ public class MLLibLRModel implements IJavaModel {
         System.out.println("MLLib Linear Regression model");
     }
     
+    @Override
     public void begin() {
         SparkConf conf = new SparkConf();
         conf.setAppName("ML Lib LR Model");
@@ -119,10 +121,6 @@ public class MLLibLRModel implements IJavaModel {
             return e.toString();
         }
     
-    }
-     
-    public void end() {
-         
     }
 }
 ```
