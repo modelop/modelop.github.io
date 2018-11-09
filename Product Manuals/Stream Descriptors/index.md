@@ -227,7 +227,7 @@ databases.
 | OutputFields | array of `string` | Field names for output data. | (all fields in the output table) | `["x","y","z","score"]` |
 | Timeout | `integer` | The query timeout in milliseconds. | | 10000 |
 
-#### <a name="section-odbc">HDFS
+#### <a name="section-hdfs">HDFS
 
 An HDFS streams reads/writes a Hadoop Distributed File System
 ([HDFS](http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html)).
