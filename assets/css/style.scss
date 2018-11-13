@@ -199,15 +199,17 @@ body
 .readmore
 {
     padding: 4px 8px;
-    display: inline-block;
-    background: #ed1c24;
-    float: right;
+    display: block;
+    text-align: center;
+    background: #fff;
+    float: center;
+    text-transform: uppercase;
 }
 
 .readmore a {
 
     font-weight: 900;
-    color: #fff;
+    color: #ed1c24;
 }
 
 .readmore a:hover {
@@ -220,4 +222,82 @@ body
 
 h2.posttitle {
     border: 0px;
+}
+
+h2.posttitle a {
+    color: #707574;
+}
+
+h2.posttitle a:hover {
+    text-decoration: none;
+}
+
+.mainbar {
+    float: left;
+    width: 75%;
+}
+
+.sidebar {
+    float: left;
+    width: 25%;
+}
+
+.bars:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.postsep {
+    width: 60%;
+    float: center;
+    margin: auto;
+    border-top: 1px solid #dee5e8;
+}
+
+.pagination {
+    border-top: 1px solid #dee5e8;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.previous {
+    padding: 4px 8px;
+    display: inline-block;
+    background: #ed1c24;
+    font-weight: 900;
+    float: left;
+}
+
+.next {
+    padding: 4px 8px;
+    display: inline-block;
+    background: #ed1c24;
+    font-weight: 900;
+    float: right;
+}
+
+
+.previous {
+    font-weight: 900;
+    color: #fff;
+}
+
+.next {
+    font-weight: 900;
+    color: #fff;
+}
+
+.previous:hover {
+    text-decoration: none;
+}
+.next:hover {
+    text-decoration: none;
+}
+
+.sidebarposts {
+}
+
+.techblogtitle{
+    text-align: center;
 }
