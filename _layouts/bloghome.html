@@ -1,0 +1,23 @@
+{% include head.html %}
+    <div class="blogimg">
+        <h1 class="bannertitle"> Data Science & Tech Blog </h1>
+    </div>
+        <!-- Markdown content -->
+        <div class="container-lg px-3 my-5 markdown-body">
+
+            <!-- <h1 class="techblogtitle">Recent posts</h1> -->
+
+        <div class="bars">
+            <div class="mainbar">
+
+              {{ content }}
+          </div>
+          <div class="sidebar">
+              {% include sidebar.html %}
+          </div>
+
+        </div>
+    </div>
+        <!-- end markdown content -->
+
+{% include foot.html %}

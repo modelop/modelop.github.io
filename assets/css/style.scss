@@ -54,6 +54,37 @@ body
     border-bottom: 2px solid #dee5e8;
 }
 
+.blogimg
+{
+    display: block;
+    box-sizing: border-box;
+    min-height: 200px;
+    width: 100%;
+    line-height: 1.8;
+    padding: 60px 0px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 1);
+    background-image: url("/assets/images/tech_blog_banner.png");
+    border-bottom: 2px solid #dee5e8;
+}
+
+.bannertitle
+{
+    color: #fff;
+    max-width: 1430px;
+    margin-left: 209px;
+    margin-right: auto;
+    font-size: 60px;
+    line-height: 80px;
+    font-weight: 600;
+    font-family: Helvetica,Sans-serif;
+    text-decoration: none;
+}
+
+.blogimg a:hover {
+    text-decoration: none;
+}
+
 .menu
 {
     display: inline-block;
@@ -184,4 +215,120 @@ body
     font-style: italic;
     max-width: 1012px;
     padding: 16px 16px;
+}
+
+.author
+{
+    font-weight: bold;
+}
+
+.date
+{
+    font-style: italic;
+}
+
+.readmore
+{
+    padding: 4px 8px;
+    display: block;
+    text-align: center;
+    background: #fff;
+    float: center;
+    text-transform: uppercase;
+}
+
+.readmore a {
+
+    font-weight: 900;
+    color: #ed1c24;
+}
+
+.readmore a:hover {
+    text-decoration: none;
+}
+
+.blogfooter {
+    display: block;
+}
+
+h2.posttitle {
+    border: 0px;
+}
+
+h2.posttitle a {
+    color: #707574;
+}
+
+h2.posttitle a:hover {
+    text-decoration: none;
+}
+
+.mainbar {
+    float: left;
+    width: 75%;
+}
+
+.sidebar {
+    float: left;
+    width: 25%;
+}
+
+.bars:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.postsep {
+    width: 60%;
+    float: center;
+    margin: auto;
+    border-top: 1px solid #dee5e8;
+}
+
+.pagination {
+    border-top: 1px solid #dee5e8;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.previous {
+    padding: 4px 8px;
+    display: inline-block;
+    background: #ed1c24;
+    font-weight: 900;
+    float: left;
+}
+
+.next {
+    padding: 4px 8px;
+    display: inline-block;
+    background: #ed1c24;
+    font-weight: 900;
+    float: right;
+}
+
+
+.previous {
+    font-weight: 900;
+    color: #fff;
+}
+
+.next {
+    font-weight: 900;
+    color: #fff;
+}
+
+.previous:hover {
+    text-decoration: none;
+}
+.next:hover {
+    text-decoration: none;
+}
+
+.sidebarposts {
+}
+
+.techblogtitle{
+    text-align: center;
 }
