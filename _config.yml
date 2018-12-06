@@ -1,5 +1,5 @@
 name: Open Data Group
-url: "https://opendatagroup.github.io/"
+url: "https://opendatagroup.github.io"
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
