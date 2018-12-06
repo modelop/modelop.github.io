@@ -328,7 +328,7 @@ FastScore's Dashboard provides a convenient user interface for reviewing engine 
 
 First, if you are not running FastScore on your local machine (for example, if you have FastScore running on a cloud service platform), you will need to allow incoming and outgoing traffic on port 8000 (used by the FastScore Dashboard). You will also need to have configured FastScore as described in the previous section.
 
-To access the Dashboard, take your browser to the FastScore host machine at port 8000. If all goes well , you will be greeted by this screen:
+To access the Dashboard, take your browser to the FastScore host machine at port 8000 using the HTTPS protocol (it won't work with HTTP). If all goes well , you will be greeted by this screen:
 
 ![Home Screen](images/HomeScreen.png)
 *On the left-hand side of the Dashboard are four sections: engine-1, engine-2, model-manage-1, Connect. These correspond to the Engine microservices, the Model Manage microservice, and the Connect microservice. The green dots on the engines and model manage indicate that they are currently running correctly. If you have configured additional engine containers, they will also appear on the side.*

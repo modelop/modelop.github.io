@@ -127,7 +127,6 @@ simple mode.
     
 #### <a name="section-http">HTTP
 
-
 HTTP streams typically contain only one field---the URL to the data source. It
 is possible to make the stream "chunked" with each chunk representing a record.
 A chunked stream must use a corresponding
@@ -136,7 +135,7 @@ A chunked stream must use a corresponding
 | Field | Type | Description | Default | Example |
 | --- | --- | --- | --- | --- |
 | Url | `string` | The URL of the data. | | "http://www.mydomain.com/path.to/file.extension" |
-| Chunked | boolean | Use Transfer-Encoding: chunked | false | |
+| Chunked | `boolean` | Use Transfer-Encoding: chunked | false | |
     
 #### <a name="section-kafka">Kafka
 
@@ -146,10 +145,29 @@ Kafka stream transports have several fields, detailed in the table below.
 | --- | --- | --- | --- | --- |
 | BootstrapServers | array of `string` | A list of the Kafka bootstrap servers. | | ["192.168.1.5:9002", "127.0.0.1:9003"] |
 | Topic | `string` | The Kafka topic. | | "MyKafkaTopic" |
+| *Group* | `string` | A consumer group. | | "fastscore-1" |
+| *CommitOffset* | `boolean` | Commit offsets immediately after reading. | true | false |
 | *Partition* | `int` | The Kafka partition. | 0 | 5 |
 | *MaxWaitTime* | `int` | The maximum time to wait before declaring that the end of the stream has been reached. | 8388607 (approx. 25 days) | 500 |
 | *Principal* | `string` | An authenticated user in a secure cluster | | "kafka/kafka@REALM" |
 | *Keytab* | `string` | A file containing pairs of Kerberos principals and encrypted keys | | "/fastscore.keytab" |
+
+Setting a Group property enables consumer group-based tracking of reading
+offsets. It means that the SkipToRecord property is disregarded. Note that if
+the group is new and there is no reading commit offset associated with it, the
+SkipToRecord value remains in effect.
+
+By default, the reading offset is committed immediately after reading a batch or
+records. Seting CommitOffset to false disable this behaviour. Typically, the
+model then uses a special stream of type 'kafka-offset' to commit offsets. See
+below.
+
+#### <a name="section-kafka-offset"
+
+It is a special purpose stream transport used in conjunction with a Kafka stream
+those CommitOffset property is set to false. The stream uses same fields as a
+Kafka stream except that the Group is mandatory and CommitOffset must be set to
+true (or omitted).
 
 #### <a name="section-s3">S3
 
@@ -209,7 +227,7 @@ databases.
 | OutputFields | array of `string` | Field names for output data. | (all fields in the output table) | `["x","y","z","score"]` |
 | Timeout | `integer` | The query timeout in milliseconds. | | 10000 |
 
-#### <a name="section-odbc">HDFS
+#### <a name="section-hdfs">HDFS
 
 An HDFS streams reads/writes a Hadoop Distributed File System
 ([HDFS](http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html)).
