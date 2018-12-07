@@ -71,9 +71,11 @@ body
 .bannertitle
 {
     color: #fff;
-    max-width: 1430px;
-    margin-left: 209px;
+    max-width: 1012px;
     margin-right: auto;
+    margin-left: auto;
+    padding-right: 16px !important;
+    padding-left: 16px !important;
     font-size: 60px;
     line-height: 80px;
     font-weight: 600;
