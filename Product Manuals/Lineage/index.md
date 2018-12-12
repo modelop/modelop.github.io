@@ -51,6 +51,21 @@ Here's an example of what a well-formed event might look like:
 
 Events arrive at Lineage via Pneumo, the FastScore internal communication system.  As such, they can be viewed via the CLI `pneumo` command.
 
+## Running Lineage
+
+Lineage run inside a docker container called 'fastscore/lineage'
+
+Lineage typically listens on port 8008.
+
+Lineage is configured via a set of ENV variables:
+
+CONNECT_PREFIX=https://connect:8001
+ARANGO_DB=http://arangodb:8529
+DATABASE_NAME=fastscore_db
+GRAPH_NAME=fastscore_metadata
+
+Currently, Lineage requires an instance of ArangoDB as its storage backend.  'fastscore/lineagedb' can be used.  Support for MySQL is coming soon.
+
 ## Retrieval APIs
 
 ### lineage/1/element_types
@@ -251,30 +266,3 @@ Returns details concerning a specific tag
 ```
 
 Note that a tag can be associated with 0 or more elements as well as 0 or more events.  In the example above, the 'model-type:Python3' key/value pair is associated only with elements, but a brief description of each (including their ids) is included.
-
-
-
-
-## Starting Model Deploy
-
-Start Model Deploy with the following command:
-```
-docker run -it --rm -p 8888:8888 fastscore/model-deploy:latest
-```
-If other services in the FastScore fleet are also running on the same host, it may be advantageous to start Model Deploy with the `--net="host"` option, so that these services are accessible from `localhost`. 
-
-Model Deploy may also be started with any of the additional configuration options available to the Jupyter base Docker image, [see the documentation for more details](https://github.com/jupyter/docker-stacks/tree/master/datascience-notebook). 
-
-Once the container is created, it will be accessible from port 8888 (by default) on the host machine, using the token generated during the startup process. 
-
-## Model Deploy functionality
-
-Model Deploy provides a number of features to make it easy to migrate a model into FastScore:
-
-* Python and R supply a `Model` class that can be used for validation and testing of a model locally, before deploying to a FastScore engine.
-* The `Model.from_string` (Python) and `Model_from_string` (R) functions provide shortcuts for creating a Model object from a string of code. In Python notebooks, the `%%py2model`, `%%py3model`, `%%pfamodel`, and `%%ppfamodel` cell magic commands will automatically convert the contents of a cell into a Python or (P)PFA model object, respectively.
-* The `Engine` class allows for direct interaction with a FastScore Engine, including scoring data using a running Engine
-* `Model` objects may be deployed directly to a FastScore Engine from within the Jupyter notebook, as well as to Model Manage.
-* A utility `codec` library is included to make it easy to serialize R and Python objects to JSON and other formats based on an Avro schema.
-
-Example notebooks demonstrating this functionality are included with the Model Deploy container.
