@@ -59,10 +59,10 @@ Lineage typically listens on port 8008.
 
 Lineage is configured via a set of ENV variables:
 
-CONNECT_PREFIX=https://connect:8001
-ARANGO_DB=http://arangodb:8529
-DATABASE_NAME=fastscore_db
-GRAPH_NAME=fastscore_metadata
+* CONNECT_PREFIX=https://connect:8001
+* ARANGO_DB=http://arangodb:8529
+* DATABASE_NAME=fastscore_db
+* GRAPH_NAME=fastscore_metadata
 
 Currently, Lineage requires an instance of ArangoDB as its storage backend.  'fastscore/lineagedb' can be used.  Support for MySQL is coming soon.
 
