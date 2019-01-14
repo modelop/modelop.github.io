@@ -116,3 +116,47 @@ S3 stream:
   }
 }
 ```
+
+# Configuration Persistence
+
+Upon startup, the Connect service checks for a `FASTSCORE_CONFIG` environment variable.  If present, it uses the contents of this variable to set FastScore's initial configuration.
+
+FASTSCORE_CONFIG can be set right in a docker-compose file:
+```
+...
+  connect: 
+    image: local/connect
+    ports: 
+        - "8001:8001"
+    stdin_open: true
+    environment: 
+       FASTSCORE_CONFIG: |
+        fastscore: 
+          fleet: 
+            - api: model-manage
+              host: model-manage
+              port: 8002
+            - api: engine
+              host: engine-1
+              port: 8003
+            - api: engine
+              host: engine-2
+              port: 8003
+
+          db: 
+            type: mysql
+            host: database
+            port: 3306
+            username: root
+            password: root
+
+          pneumo: 
+            type: kafka
+            bootstrap: 
+              - kafka:9092
+            topic: notify
+    tty: true
+    networks: 
+      - fsnet
+...
+```
