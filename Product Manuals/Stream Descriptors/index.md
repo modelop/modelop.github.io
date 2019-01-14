@@ -221,7 +221,7 @@ databases.
 
 | Field | Type | Description | Default | Example |
 | --- | --- | --- | --- | --- |
-| ConnectionString | `string` | The string describing the data source. |  | "Driver=FreeTDS;Server=myhost;Port=1433;Database=mydb;Uid=myuid;Pwd=abc123"` |
+| ConnectionString | `string` | The string describing the data source. |  | `"Driver=FreeTDS;Server=myhost;Port=1433;Database=mydb;Uid=myuid;Pwd=abc123"` |
 | SelectQuery | `string` | An SQL query to run to retrieve data (input only). | | `"select * from mydata;"` |
 | InsertIntoTable | `string` | The name of the table to append data to (output only). | | `"mydata"` |
 | OutputFields | array of `string` | Field names for output data. | (all fields in the output table) | `["x","y","z","score"]` |
