@@ -40,9 +40,9 @@ Welcome to Open Data Group's documentation!
 - [State Sharing and Snapshotting](/Product Manuals/State Sharing and Snapshotting/)
 - [Record Sets and Control Records](/Product Manuals/Record Sets and Control Records/)
 - [GitHub Integration](/Product Manuals/Github Integration/)
+- [Lineage](/Product Manuals/Lineage/)
 - [FastScore Composer](/Product Manuals/FastScore Composer/)
 - [Standalone Baked Engines](/Product Manuals/Standalone Baked Engines/)
-
 
 #### Model Runners
 
