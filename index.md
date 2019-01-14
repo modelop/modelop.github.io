@@ -41,6 +41,8 @@ Welcome to Open Data Group's documentation!
 - [Record Sets and Control Records](/Product Manuals/Record Sets and Control Records/)
 - [GitHub Integration](/Product Manuals/Github Integration/)
 - [Lineage](/Product Manuals/Lineage/)
+- [FastScore Composer](/Product Manuals/FastScore Composer/)
+- [Standalone Baked Engines](/Product Manuals/Standalone Baked Engines/)
 
 #### Model Runners
 
