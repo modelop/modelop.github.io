@@ -48,7 +48,7 @@ Although an H2O model can be structured as a generic Java model, FastScore also 
 2. To load the model in FastScore, ensure that the model name exactly matches the exported POJO class name, and explicitly specify the model type as "`h2o`":
 
 ```
-fastscore model add gbm_pojo_test gbm_pojo_test.java -type:h2o
+fastscore model add gbm_pojo_test gbm_pojo_test.java -type:h2o-java
 ```
 
 When running H2O models, FastScore will output the original input record appended with an additional "Result" field that represents an array of prediction results. For example, in H2O's GBM airlines sample model, the input and output will be:
