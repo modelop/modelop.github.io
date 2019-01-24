@@ -1,17 +1,25 @@
+---
+layout: post
+title: "An Introduction to Bayesian Modeling in PyStan"
+categories: [data science]
+tags: [bayesian, modeling]
+author: Steve Avsec
+mathjax: true
+---
 
-# Bayesian Statistical Modeling using PyStan
-## The Basics
-In many machine learning modeling techniques, the goal is to find model parameters which produce the least error in predicting outcomes given a particular set of data on which the model can be trained. In Bayesian modeling, the underlying philosophy changes slightly, and the goal becomes to find model parameters which are most likely to explain the observed data. The reason "Bayesian" is attached to this underlying thought is that one can ask the mathematical question "Given the data, which parameters are most likely to explain the outcome?" This translates directly to a conditional probability $P(\theta| X)$ where $\theta$ are the model parameters and $X$ is the given data. Using Bayes' theorem, this probability becomes:
+In many machine learning modeling techniques, the goal is to find model parameters which produce the least error in predicting outcomes given a particular set of data on which the model can be trained. In Bayesian modeling, the underlying philosophy changes slightly, and the goal becomes to find model parameters which are most likely to explain the observed data. The reason "Bayesian" is attached to this underlying thought is that one can ask the mathematical question "Given the data, which parameters are most likely to explain the outcome?"
+
+This translates directly to a conditional probability $P(\theta| X)$ where $\theta$ are the model parameters and $X$ is the given data. Using Bayes' theorem, this probability becomes:
 $$
 P(\theta|X) = \frac{P(X|\theta)P(\theta)}{P(X)},
 $$
-or more succinctly, 
+or more succinctly,
 $$
 P(\theta|X) \propto P(X|\theta)P(\theta).
 $$
-The distribution $P(\theta)$ is called a _prior_ distribution (since this is an assumption made about the model parameters independent of the data), and the conditional distribution $P(\theta|X)$ is called a _posterior_ distribution. The goal in Bayesian modelling is to accurately describe the posterior distribution. There are a number of techniques for doing this. In Bayesian variational inference, the posterior is assumed to come from a parameterized family of distributions. For example, one can assume that the posterior is some multivariate normal distribution with a location vector and positive definite matricial scale. Then these parameters can be optimized against the data to find the distribution from that parameterized family which is most likely to explain the data. Bayesian variational inference has the advantage that it can be turned into a numerical optimization problem, which are a very well-studied area of computational mathematics, and thus there are a wide number of available techniques and software packages which can be leveraged. Bayesian variational inference scales quite well if we are dealing with a very large data set. On the other hand, it is entirely possible that a posterior distribution is not well-approximated by the parameterized family the data scientist had in mind. Worse yet, maybe the posterior distribution is hard to estimate by any parameterized family of probability distributions! 
+The distribution $P(\theta)$ is called a _prior_ distribution (since this is an assumption made about the model parameters independent of the data), and the conditional distribution $P(\theta|X)$ is called a _posterior_ distribution. The goal in Bayesian modelling is to accurately describe the posterior distribution. There are a number of techniques for doing this. In Bayesian variational inference, the posterior is assumed to come from a parameterized family of distributions. For example, one can assume that the posterior is some multivariate normal distribution with a location vector and positive definite matricial scale. Then these parameters can be optimized against the data to find the distribution from that parameterized family which is most likely to explain the data. Bayesian variational inference has the advantage that it can be turned into a numerical optimization problem, which are a very well-studied area of computational mathematics, and thus there are a wide number of available techniques and software packages which can be leveraged. Bayesian variational inference scales quite well if we are dealing with a very large data set. On the other hand, it is entirely possible that a posterior distribution is not well-approximated by the parameterized family the data scientist had in mind. Worse yet, maybe the posterior distribution is hard to estimate by any parameterized family of probability distributions!
 
-Thankfully, there is an alternative in Markov Chain-Monte Carlo (MCMC) methods. For a striking (but mathematically elaborate) introduction to these methods, see [this survey](https://www.ams.org/journals/bull/2009-46-02/S0273-0979-08-01238-X/S0273-0979-08-01238-X.pdf). For some, MCMCs might elicit thoughts of Gibbs sampling, which was one of the first computationally tractable MCMC methods and is quite successful for certain problems. However, Gibbs sampling suffers from some well-known drawbacks such slow convergence and restrictive choice of priors (based on conjugacy). The method we are using here is based on the Hamiltonian Monte Carlo method, which borrows an elegant idea from Hamiltonian mechanics to produce a method which converges quickly even in high dimensions. For the mathematically inclined, a wonderful [survey](https://arxiv.org/pdf/1701.02434.pdf) is available. The implementation used here is the so-called NUTS (No U-Turns Sampler) as implemented by the [Stan](https://mc-stan.org/) probabilistic programming language. Stan is named for [Stanislaw Ulam](https://en.wikipedia.org/wiki/Stanislaw_Ulam), who was an early pioneer of MCMC methods. PyStan is a Python API wrapped around the Stan language intended to make integration with Python easier. 
+Thankfully, there is an alternative in Markov Chain-Monte Carlo (MCMC) methods. For a striking (but mathematically elaborate) introduction to these methods, see [this survey](https://www.ams.org/journals/bull/2009-46-02/S0273-0979-08-01238-X/S0273-0979-08-01238-X.pdf). For some, MCMCs might elicit thoughts of Gibbs sampling, which was one of the first computationally tractable MCMC methods and is quite successful for certain problems. However, Gibbs sampling suffers from some well-known drawbacks such slow convergence and restrictive choice of priors (based on conjugacy). The method we are using here is based on the Hamiltonian Monte Carlo method, which borrows an elegant idea from Hamiltonian mechanics to produce a method which converges quickly even in high dimensions. For the mathematically inclined, a wonderful [survey](https://arxiv.org/pdf/1701.02434.pdf) is available. The implementation used here is the so-called NUTS (No U-Turns Sampler) as implemented by the [Stan](https://mc-stan.org/) probabilistic programming language. Stan is named for [Stanislaw Ulam](https://en.wikipedia.org/wiki/Stanislaw_Ulam), who was an early pioneer of MCMC methods. PyStan is a Python API wrapped around the Stan language intended to make integration with Python easier.
 
 For those who might be interested in using these techniques, Stan and PyStan is not the _only_ implementation. [PyMC3](https://docs.pymc.io/) is also an excellent choice and is entirely written in Python (using Theano as a backend). We will also use [Arviz](https://arviz-devs.github.io/arviz/) which is a suite of vizualization tools which supports both PyMC3 and PyStan.
 
@@ -74,7 +82,7 @@ This data set is quite rich, but for expository purposes, we will limit ourselve
 'sub_grade': A grade assigned to the loan internally by Lending Club
 'annual_inc': The lendee's annual income
 'dti': The lendee's debt-to-income ratio
-'loan_status': The final status, either "Paid" or "Charged Off", of the loan 
+'loan_status': The final status, either "Paid" or "Charged Off", of the loan
 
 
 ```python
@@ -241,7 +249,7 @@ df.loc[:,features].hist(alpha=0.5, bins=20, figsize=(15,8)); plt.legend(loc='bes
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_18_3.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_18_3.png)
 
 
 ### Normalization
@@ -282,11 +290,11 @@ df.loc[:,trans_features].hist(alpha=0.5, bins=20, figsize=(15,8)); plt.legend(lo
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_22_3.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_22_3.png)
 
 
 ### EDA Continued
-Finally, we plot out joint distributions between each pair of features. The hope is that each of these will look roughly like 2-D normal distributions. In this case, again, there are exceptions, but at a coarse level, they are roughly normal. The exception is sub grade versus interest rate which are quite closely correlated. 
+Finally, we plot out joint distributions between each pair of features. The hope is that each of these will look roughly like 2-D normal distributions. In this case, again, there are exceptions, but at a coarse level, they are roughly normal. The exception is sub grade versus interest rate which are quite closely correlated.
 
 
 ```python
@@ -295,83 +303,83 @@ for pair in itertools.permutations(trans_features, 2):
 ```
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_0.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_0.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_1.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_1.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_2.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_2.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_3.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_3.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_4.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_4.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_5.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_5.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_6.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_6.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_7.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_7.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_8.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_8.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_9.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_9.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_10.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_10.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_11.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_11.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_12.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_12.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_13.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_13.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_14.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_14.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_15.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_15.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_16.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_16.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_17.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_17.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_18.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_18.png)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_24_19.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_24_19.png)
 
 
 ### Class Imbalance and Correction
@@ -430,10 +438,10 @@ train_down.loc[:, trans_features] = (train_down.loc[:, trans_features] - means)/
 test.loc[:, trans_features] = (test.loc[:, trans_features] - means)/standard_dev
 ```
 
-    /home/ubuntu/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py:537: SettingWithCopyWarning: 
+    /home/ubuntu/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py:537: SettingWithCopyWarning:
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
-    
+
     See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
       self.obj[item] = s
 
@@ -459,7 +467,7 @@ data {
 parameters {
     real alpha;           // intercept
     vector[K] theta;      // coefficients on Q_ast
-} 
+}
 model {
     y ~ bernoulli_logit(Q * theta + alpha);  // likelihood
 }
@@ -483,7 +491,7 @@ sm = stan.StanModel(model_code=stan_model, model_name='LR')
 
 ```python
 #Here we compute the QR decomposition as well as the inverse of the R matrix which provides a map from Q-space
-#to the natural basis. 
+#to the natural basis.
 q, r = np.linalg.qr(train_down.loc[:, trans_features], mode='reduced')
 
 q = q*np.sqrt(len(train_down))
@@ -496,11 +504,11 @@ r_inverse = np.linalg.inv(r)
 ```python
 #The sampling methods in PyStan require the data to be input as a Python dictionary whose keys match
 #the data block of the Stan code.
-data = dict(Q = q, 
-            R = r, 
-            R_inverse = r_inverse, 
-            N = len(train_down), 
-            K = train_down.shape[1]-1, 
+data = dict(Q = q,
+            R = r,
+            R_inverse = r_inverse,
+            N = len(train_down),
+            K = train_down.shape[1]-1,
             y = train_down.loan_status.values)
 
 
@@ -520,14 +528,14 @@ fit = sm.sampling(data=data, chains=4, iter=3000, warmup=1000)
 ```python
 #Here are some basic statistics about the samples drawn from the posterior. Pay attention
 #in particular to the Rhat value. If the Rhat values deviate too far from 1.0, the sampler
-#did not converge well. 
+#did not converge well.
 print(fit)
 ```
 
     Inference for Stan model: LR_8f7046ff5d4a7dfea44581b4821f6599.
-    4 chains, each with iter=3000; warmup=1000; thin=1; 
+    4 chains, each with iter=3000; warmup=1000; thin=1;
     post-warmup draws per chain=2000, total post-warmup draws=8000.
-    
+
                mean se_mean     sd   2.5%    25%    50%    75%  97.5%  n_eff   Rhat
     alpha    5.6e-3  1.1e-4   0.01  -0.01-1.3e-3 5.5e-3   0.01   0.02   8000    1.0
     theta[0]  -0.67  1.2e-4   0.01  -0.69  -0.68  -0.67  -0.66  -0.65   8000    1.0
@@ -541,10 +549,10 @@ print(fit)
     beta[3]   -0.22  3.4e-4   0.03  -0.28  -0.24  -0.22   -0.2  -0.16   8000    1.0
     beta[4]   -0.09  1.1e-4   0.01  -0.11   -0.1  -0.09  -0.08  -0.07   8000    1.0
     lp__     -2.9e4    0.03   1.78 -2.9e4 -2.9e4 -2.9e4 -2.9e4 -2.9e4   3674    1.0
-    
+
     Samples were drawn using NUTS at Wed Jan 23 08:50:46 2019.
     For each parameter, n_eff is a crude measure of effective sample size,
-    and Rhat is the potential scale reduction factor on split chains (at 
+    and Rhat is the potential scale reduction factor on split chains (at
     convergence, Rhat=1).
 
 
@@ -569,7 +577,7 @@ az.plot_energy(inf_data)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_40_1.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_40_1.png)
 
 
 ### The Posteriors
@@ -580,7 +588,7 @@ Below are plots of the posterior distributions for each feature. Recall that the
 az.plot_density(inf_data)
 ```
 
-    /home/ubuntu/anaconda3/lib/python3.6/site-packages/matplotlib/figure.py:2144: UserWarning: This figure was using constrained_layout==True, but that is incompatible with subplots_adjust and or tight_layout: setting constrained_layout==False. 
+    /home/ubuntu/anaconda3/lib/python3.6/site-packages/matplotlib/figure.py:2144: UserWarning: This figure was using constrained_layout==True, but that is incompatible with subplots_adjust and or tight_layout: setting constrained_layout==False.
       warnings.warn("This figure was using constrained_layout==True, "
 
 
@@ -603,11 +611,11 @@ az.plot_density(inf_data)
 
 
 
-![png](PyStan_Log_regression_files/PyStan_Log_regression_42_2.png)
+![png](/assets/posts/images/2019-1-24/PyStan_Log_regression_42_2.png)
 
 
 ### Prediction
-Prediction using this method takes a format which may seem peculiar at first, but what is really happening is a kind of approximate Monte Carlo integration over the posterior distribution. This can be elegantly and easily done inside of Stan's generated quantities block, but we have chosen to utilize numpy, again, for memory efficiency purposes. 
+Prediction using this method takes a format which may seem peculiar at first, but what is really happening is a kind of approximate Monte Carlo integration over the posterior distribution. This can be elegantly and easily done inside of Stan's generated quantities block, but we have chosen to utilize numpy, again, for memory efficiency purposes.
 
 
 ```python
@@ -628,12 +636,12 @@ outcomes = np.dot(beta, np.transpose(test.iloc[:,:5].values))
 
 
 ```python
-#Add the alpha offset, apply the expit function (which is inverse to logit), and then assign 
+#Add the alpha offset, apply the expit function (which is inverse to logit), and then assign
 #a Bernoulli r.v. whose probability p is the output of the expit.
 for j in range(outcomes.shape[1]):
     outcomes[:,j] = scipy.special.expit(outcomes[:,j] + samples['alpha'])
     outcomes[:,j] = bernoulli.rvs(p=outcomes[:,j], size=8000, random_state=SEED)
-    
+
 ```
 
 
@@ -660,14 +668,14 @@ outcomes = np.floor(outcomes/4000.)
 
 
 ```python
-#Outcomes contains the predicted loan outcome whereas test.loan_status.values contains the actual 
+#Outcomes contains the predicted loan outcome whereas test.loan_status.values contains the actual
 #outcome of the loan. We shall assess how our logistic regression has performed.
 unique, counts = np.unique(outcomes - test.loan_status.values, return_counts=True)
 ```
 
 
 ```python
-#A -1 corresponds to a false positive (predicted default but the loan was actually paid) whereas a 1 
+#A -1 corresponds to a false positive (predicted default but the loan was actually paid) whereas a 1
 #corresponds to a false negative (predicted to be paid but the loan actually defaulted).
 prediction_counts = dict(zip(unique, counts))
 prediction_counts
@@ -722,4 +730,4 @@ test.loan_status.value_counts()
 
 
 ### Concluding Remarks
-We could have fit a similar model using any logistic regression implementation, but with a Bayesian model, we are able to give some confidence score to our prediction in addition to its outcome. In following articles, we shall display a number of powerful extensions to this model which are most readily available only in a Bayesian framework and are naturally implemented using Hamiltonian MC and NUTS. In particular, we shall display hierarchical modeling as well as show how to handle missingness in a Bayesian framework and how to handle ordinal features. We shall also explore various model selection techniques only available in the Bayesian modeling world. 
+We could have fit a similar model using any logistic regression implementation, but with a Bayesian model, we are able to give some confidence score to our prediction in addition to its outcome. In following articles, we shall display a number of powerful extensions to this model which are most readily available only in a Bayesian framework and are naturally implemented using Hamiltonian MC and NUTS. In particular, we shall display hierarchical modeling as well as show how to handle missingness in a Bayesian framework and how to handle ordinal features. We shall also explore various model selection techniques only available in the Bayesian modeling world.
