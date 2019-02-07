@@ -45,10 +45,10 @@ public class MyModel implements IJavaModel
 Although an H2O model can be structured as a generic Java model, FastScore also provides a convenience feature to allow direct import of H2O models. In order to use this feature, take the following steps:
 
 1. Save your model as POJO (following the [POJO quick start instructions from H2O](https://h2o-release.s3.amazonaws.com/h2o/rel-turing/1/docs-website/h2o-docs/pojo-quick-start.html)). Without further modifications, this exported POJO can be used as the model code in FastScore.
-2. To load the model in FastScore, ensure that the model name exactly matches the exported POJO class name, and explicitly specify the model type as "`h2o`":
+2. To load the model in FastScore, ensure that the model name exactly matches the exported POJO class name, and explicitly specify the model type as "`h2o-java`":
 
 ```
-fastscore model add gbm_pojo_test gbm_pojo_test.java -type:h2o
+fastscore model add gbm_pojo_test gbm_pojo_test.java -type:h2o-java
 ```
 
 When running H2O models, FastScore will output the original input record appended with an additional "Result" field that represents an array of prediction results. For example, in H2O's GBM airlines sample model, the input and output will be:
