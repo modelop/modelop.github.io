@@ -1,10 +1,10 @@
 ---
-title: "Getting Started with FastScore v1.8"
-description: "This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.8 of FastScore.\n\nIf you need support or have questions, please email us:  [support@opendatagroup.com](mailto:support@opendatagroup.com)"
+title: "Getting Started with FastScore v1.9"
+description: "This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.9 of FastScore.\n\nIf you need support or have questions, please email us:  [support@opendatagroup.com](mailto:support@opendatagroup.com)"
 ---
 
-# Getting Started with FastScore v1.8
-This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.8 of FastScore.
+# Getting Started with FastScore v1.9
+This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.9 of FastScore.
 
 If you need support or have questions, please email us: support@opendatagroup.com
 
@@ -12,14 +12,11 @@ If you need support or have questions, please email us: support@opendatagroup.co
 
 1. [Installing FastScore](#installing-fastscore)
     1. [Prerequisites](#section-prerequisites)
-    2. [Start FastScore Microservices Suite with Docker Compose (Recommended)](#section-start-fastscore-microservices-suite-with-docker-compose-recommended-)
-    3. [Start FastScore Microservices Suite (Manually)](#section-start-fastscore-microservices-suite-manually-)
-    4. [Installing the FastScore CLI](#installing-the-fastscore-cli)
+    2. [Installing the FastScore CLI](#installing-the-fastscore-cli)
+    3. [Start FastScore Microservices Suite with Docker Swarm (Recommended)](#section-start-fastscore-microservices-suite-with-docker-swarm-recommended-)
 2. [Configuring and Starting FastScore](#configuring-and-starting-fastscore)
-    1. [FastScore Configuration Files](#section-fastscore-configuration-files)
-    2. [Connecting to and Configuring FastScore with the FastScore CLI](#section-connecting-to-and-configuring-fastscore-with-the-fastscore-cli)
-    3. [Using the FastScore Dashboard](#section-using-the-fastscore-dashboard)
-3. [Working with Models and Streams](#working-with-models-and-streams)
+3. [Using the FastScore Dashboard](#section-using-the-fastscore-dashboard)
+4. [Working with Models and Streams](#working-with-models-and-streams)
     1. [Creating and Loading Models](#section-creating-and-loading-assets-into-fastscore-model-manage)
     2. [Models in Python and R](#section-models-in-python-and-r)
     3. [Input and Output Schema](#section-input-and-output-schema)
@@ -59,155 +56,16 @@ It's also useful (recommended but not mandatory) to have Docker Compose installe
 > This IP address should be used as the FastScore host machine IP address.
 
 
-
 Once Docker has been installed, there are only a few steps needed to get FastScore running.
 
-1. Start the FastScore services, either manually, or via Docker Compose (recommended).
-2. Write a FastScore configuration file.
-3. Configure FastScore using the FastScore CLI and configuration file.  
-4. Connect to the FastScore Dashboard with your browser.
+1. Configure FastScore using the FastScore CLI and configuration file. 
+2. Start the FastScore services, either manually, or via Docker Compose (recommended).
+3. Connect to the FastScore Dashboard with your browser.
+4. Write a FastScore configuration file.
 
 Let's go through each step carefully.
 
-### <a name="section-start-fastscore-microservices-suite-with-docker-compose-recommended-"></a>Start FastScore Microservices Suite with Docker Compose (Recommended)
-
-Docker-Compose is a utility that streamlines the configuration and simultaneous execution of multiple Docker containers. A Docker Compose file is a YAML file defining [services](https://docs.docker.com/compose/compose-file/#service-configuration-reference), [networks](https://docs.docker.com/compose/compose-file/#network-configuration-reference) and [volumes](https://docs.docker.com/compose/compose-file/#volume-configuration-reference). The default path for a Compose file is `./docker-compose.yml`, but custom filenames are supported with the `-f <filename>` flag. The interested reader is directed to [Docker's documentation for more information on Compose files](https://docs.docker.com/compose/compose-file/).
-
-
-#### Starting and Stopping the FastScore Database
-FastScore's Model Manage can use a Docker volume container as a database to store information about current models and data streams. This database can exist independently of the other FastScore microservices, which is a desirable behavior for data persistence. Start the database with the command  
-
-``` bash
-docker volume create --name=db
-```
-
-and stop it with
-
-``` bash
-docker volume rm db
-```
-
-(You may name the database whatever you wish---we use the convention `db` in this document). Note that the database should generally be running before starting any FastScore services which use the database.
-
-Add the database to Model Manage in the usual way for Docker volumes:
-
-1. If using docker-compose, put the volume in the `docker-compose.yml` file(see example file below)
-2. If running manually, with the `-v` flag when using `docker run`, e.g.,
-    ```docker run -it -d --net=host --rm -v db:/var/lib/mysql fastscore/model-manage-mysql:1.8 ``` (see more below)
-
-#### Example Docker Compose File
-Below is an example Docker Compose file that will start a full suite of FastScore services with two engines:
-
-``` yaml
-version: '2'
-services:
-  dashboard:
-    image: fastscore/dashboard:1.8
-    network_mode: "bridge"
-    ports:
-      - "8000:8000"
-    environment:
-      CONNECT_PREFIX: https://172.17.0.1:8001
-
-  connect:
-    image: fastscore/connect:1.8
-    network_mode: "bridge"
-    ports:
-      - "8001:8001"
-
-  engine-1:
-    image: fastscore/engine:1.8
-    network_mode: "bridge"
-    ports:
-      - "8003:8003"
-    environment:
-      CONNECT_PREFIX: https://172.17.0.1:8001
-
-  engine-2:
-    image: fastscore/engine:1.8
-    network_mode: "bridge"
-    ports:
-      - "8004:8003"
-    environment:
-      CONNECT_PREFIX: https://172.17.0.1:8001
-
-  database:
-    image: fastscore/model-manage-mysql:1.8
-    network_mode: "bridge"
-    ports:
-      - "3306:3306"
-
-  model-manage:
-    image: fastscore/model-manage:1.8
-    network_mode: "bridge"
-    ports:
-      - "8002:8002"
-    depends_on:
-      - connect
-      - database
-    environment:
-      CONNECT_PREFIX: https://172.17.0.1:8001
-
-volumes:
-  db:
-    external: true
-```
-
-Docker Compose files can be used to initialize or halt all of the FastScore microservices components with a single command.
-
-For example, to start microservices using docker-compose:
-
-``` bash
-docker-compose up -d
-```
-
-Similarly, all of the specified microservices can be stopped with the command
-
-``` bash
-docker-compose down -v
-```
-
-(Here, the `-v` flag instructs `docker-compose` to remove any lingering volumes created by the compose file. This does *not* include external Docker volumes, such as those created by `docker volume create`).
-
-
-Check that all the Docker containers are running with the ```docker ps``` command. The output should look something like this:
-
-``` bash
-CONTAINER ID        IMAGE                                COMMAND                  CREATED             STATUS              PORTS                    NAMES
-51acfc33eb4e        fastscore/model-manage:1.8           "/bin/sh -c 'bin/mode"   15 seconds ago      Up 14 seconds       0.0.0.0:8002->8002/tcp   demos_model-manage_1
-4d20a9c3c4c9        fastscore/connect:1.8                "/bin/sh -c 'bin/conn"   16 seconds ago      Up 14 seconds       0.0.0.0:8001->8001/tcp   demos_connect_1
-432327548cef        fastscore/dashboard:1.8              "npm run start-fds"      16 seconds ago      Up 14 seconds       0.0.0.0:8000->8000/tcp   demos_dashboard_1
-14e547577004        fastscore/model-manage-mysql:1.8     "/bin/sh -c '/sbin/my"   16 seconds ago      Up 14 seconds       0.0.0.0:3306->3306/tcp   demos_database_1
-bf7e50c22e0a        fastscore/engine:1.8                 "/bin/sh -c 'java -ja"   16 seconds ago      Up 14 seconds       0.0.0.0:8004->8003/tcp   demos_engine-2_1
-4585ac4cf93b        fastscore/engine:1.8                 "/bin/sh -c 'java -ja"   16 seconds ago      Up 14 seconds       0.0.0.0:8003->8003/tcp   demos_engine-1_1
-```
-
-
-### <a name="#section-start-fastscore-microservices-suite-manually-"></a>Start FastScore Microservices Suite (Manually)
-Sometimes, whether for testing purposes or to satisfy your own hardy can-do spirit, you may want to start FastScore manually. The process is somewhat more complicated than using Docker Compose because each service must be managed individually.
-
-To do it manually, the FastScore microservices can be installed by pulling the images from DockerHub:
-
-``` bash
-$ docker pull fastscore/model-manage:1.8
-$ docker pull fastscore/connect:1.8
-$ docker pull fastscore/engine:1.8
-$ docker pull fastscore/model-manage-mysql:1.8
-$ docker pull fastscore/dashboard:1.8
-```
-
-``` bash
-docker run -it -d --net=host --rm fastscore/connect:1.8
-docker run -it -d --net=host --rm -e "CONNECT_PREFIX=https://127.0.0.1:8001" fastscore/dashboard:1.8
-docker run -it -d --net=host --rm -e "CONNECT_PREFIX=https://127.0.0.1:8001" fastscore/engine:1.8
-docker run -it -d --net=host --rm -e "CONNECT_PREFIX=https://127.0.0.1:8001" fastscore/model-manage:1.8
-docker run -it -d --net=host --rm -v db:/var/lib/mysql fastscore/model-manage-mysql:1.8
-```
-
-It is additionally useful to install the FastScore Command-Line Interface (CLI).
-
-
-### <a name="#installing-the-fastscore-cli"></a>Installing the FastScore Command-Line Interface (CLI)
+### <a name="installing-the-fastscore-cli"></a>Installing the FastScore Command-Line Interface (CLI)
 The FastScore CLI can be downloaded and installed using the following commands:
 
 ``` bash
@@ -228,12 +86,12 @@ Once you've installed the FastScore CLI, check that it works by executing the fo
 
 ``` bash
 $ fastscore help
-FastScore CLI v1.8.0
+FastScore CLI v1.9.1
 Usage: fastscore <command> [<subcommand> ...]
 Available commands:
   help             Explain commands and options
   connect          Establish a FastScore connection
-  login            Login to FastScore
+  login            Authenticate a FastScore connection
   config           Configure the FastScore fleet
   fleet            Examine status of the FastScore fleet
   use              Select the target instance
@@ -256,9 +114,59 @@ Run 'fastscore help <command>' to get more details on <command> usage
 
 This displays a list of all of the FastScore CLI commands.
 
+
+### <a name="section-start-fastscore-microservices-suite-with-docker-swarm-recommended-"></a>Start FastScore Microservices Suite with Docker Swarm (Recommended)
+
+We will be referencing files from the Getting-Started github repository found [here](https://github.com/opendatagroup/Getting-Started).
+This set up will use Docker Swarm to bring up the FastScore containers.
+
+Items in the repo:
+
+* README.md - descriptions of the files and instructions to deploy using FastScore
+* Makefile - automated setup and tear down of FastScore
+* docker-compose.yaml - contains a basic collection of FastScore containers to deploy models
+* config.yaml - configures the FastScore fleet
+* setup.sh - referenced in the Makefile to set up FastScore
+* load.sh - referenced in the Makefile to load in play models, attachments, schemas, and streams
+* library/ - contains models, attachments, schemas, and streams
+* data/ - contains sample data
+
+From the directory with the Makefile, to quickly start FastScore: 
+```
+make deploy
+```
+
+To quickly tear down FastScore:
+```
+make stop
+```
+
+First, let's look at the containers described in the docker-compose.yaml file that are now up and running.
+
+View all Docker containers that are running with the ```docker ps``` command. The output should look something like this:
+
+```bash
+CONTAINER ID        IMAGE                              COMMAND                  CREATED             STATUS              PORTS                                    NAMES
+14bfaee9100e        fastscore/model-manage-mysql:1.9   "sh -c 'cd /var/lib/…"   About an hour ago   Up About an hour                                             fs-vanilla_database.1.vb7bticmnpauo3hz6bor4r8qx
+ada9681679e8        fastscore/engine:1.9               "/fastscore/startup.…"   About an hour ago   Up About an hour                                             fs-vanilla_engine-2.1.ubonr83uuaqw2en4yk3lsc9w0
+880b6882742d        fastscore/engine:1.9               "/fastscore/startup.…"   About an hour ago   Up About an hour                                             fs-vanilla_engine-1.1.or1ocif21hfoej8xxfo5qykbm
+cb67e0090cf2        fastscore/connect:1.9              "bin/connect"            About an hour ago   Up About an hour                                             fs-vanilla_connect.1.wxswv0g8hojps2f2c0i5lc96l
+318eedda837a        fastscore/dashboard:1.9            "npm --no-update-not…"   About an hour ago   Up About an hour                                             fs-vanilla_dashboard.1.v7ia7we8qrwpyeawkk7jzg3se
+b89be509f74d        fastscore/kafka:1.9                "/entry.sh"              About an hour ago   Up About an hour    2181/tcp, 2888/tcp, 3888/tcp, 9092/tcp   fs-vanilla_kafka.1.w1tc6grz7iil56x2b8pcdbjal
+84b4f75fccda        fastscore/model-manage:1.9         "bin/model_manage"       About an hour ago   Up About an hour                                             fs-vanilla_model-manage.1.o750isigzx7v17kwddn17nmzl
+```
+
 ## <a name="configuring-and-starting-fastscore"></a>Configuring and Starting FastScore
 
-### <a name="section-fastscore-configuration-files"></a>FastScore Configuration Files
+Next, let's take a look at the setup.sh file that is referenced in the Makefile.
+
+``` bash
+fastscore connect https://localhost:8000
+fastscore config set config.yaml
+fastscore fleet -wait
+```
+
+FastScore will ask you to connect to the host it is running on and the port of the dashboard. In this example we are using localhost and the dashboard is listening on port 8000.
 
 FastScore's microservices architecture requires each microservice component to communicate with other components. These communications are managed by the Connect microservice. In order for Connect to connect, it has to be given information about the other microservices components in a configuration file. A sample configuration file is shown below:
 
@@ -266,54 +174,37 @@ FastScore's microservices architecture requires each microservice component to c
 fastscore:
   fleet:
     - api: model-manage
-      host: 172.17.0.1
+      host: model-manage
       port: 8002
     - api: engine
-      host: 172.17.0.1
+      host: engine-1
       port: 8003
     - api: engine
-      host: 172.17.0.1
-      port: 8004
+      host: engine-2
+      port: 8003
 
   db:
     type: mysql
-    host: 172.17.0.1
+    host: database
     port: 3306
     username: root
     password: root
 
   pneumo:
-    type: kafka
-    bootstrap:
-      - 172.17.0.1:9092
-    topic: notify
+    type: REST
+    #type: kafka
+    #bootstrap:
+    #  - kafka:9092
+    #topic: notify
 ```
 
-Configuration files are written in YAML. The configuration file above specifies the host machines and ports for the Model Manage container, the MySQL database container used by Model Manage, and two Engine containers, all hosted on the same machine. Additionally, Pneumo, an asynchronous notification library used by FastScore, is configured to communicate via Kafka.
+Configuration files are written in YAML. The configuration file above specifies the host machines and ports for the Model Manage container, the MySQL database container used by Model Manage, and two Engine containers, all hosted on the same machine. Additionally, Pneumo, an asynchronous notification library used by FastScore, is configured to communicate via Kafka or REST.
 
-> The example file above is designed for use on a Linux machine; you will need to modify it for use in other settings (e.g. MacOS). And, as discussed above, you must create the db volume with ```docker volume create db``` (or remove the volume link from `database`)
-
-### <a name="section-connecting-to-and-configuring-fastscore-with-the-fastscore-cli"></a>Connecting to and Configuring FastScore with the FastScore CLI
-Once the FastScore suite of services is running, we have to configure Connect using the file we created earlier.
-
-Connect the FastScore CLI to the dashboard using the following command:
-
-``` bash
-$ fastscore connect https://localhost:8000
-```
-
-Then, use the `config set` command to set the configuration file for Connect:
-
-``` bash
-$ fastscore config set config.yaml
-```
-
-`config.yml` is the configuration file described [earlier in this document](#section-fastscore-configuration-files).
 
 We can then check the status of our containers using the `fleet` command:
 
 ``` bash
-$ fastscore fleet
+$ fastscore fleet -wait
 Name            API           Health
 --------------  ------------  --------
 engine-1        engine        ok
@@ -321,6 +212,7 @@ engine-2        engine        ok
 model-manage-1  model-manage  ok
 ```
 
+Finally, the load.sh file will load in some models, attachments, schemas, and streams into FastScore so you can start deploying! We are loading these into the MySql backing of Model Manage for this example. Alternatively, you can connect [Model Manage to your own github repository](https://opendatagroup.github.io/Product%20Manuals/Github%20Integration/) that already has models, attachments, streams, and schemas in it!
 Now we're ready to start scoring.
 
 ## <a name="section-using-the-fastscore-dashboard"></a>Using the FastScore Dashboard
@@ -346,7 +238,7 @@ FastScore is a streaming analytic engine: its core functionality is to read in r
 
 ### <a name="section-creating-and-loading-assets-into-fastscore-model-manage"></a>Creating and Loading Assets into FastScore Model Manage
 
-Version 1.8 of FastScore supports models in Python, R, Java, MATLAB, [PFA](http://dmg.org/pfa/), [PrettyPFA](https://github.com/opendatagroup/hadrian/wiki/PrettyPFA-Reference) and C formats. Some setup steps differ slightly between Python/R models and PFA, Java, MATLAB, or C models. As a model interchange format, PFA can provide some benefits in performance, scalability, and security relative to R and Python. PrettyPFA is a human-readable equivalent to PFA. However, as the majority of users will be more familiar with R and Python, we focus on these two languages in this section.
+Version 1.9 of FastScore supports models in Python, R, Java, MATLAB, [PFA](http://dmg.org/pfa/), [PrettyPFA](https://github.com/opendatagroup/hadrian/wiki/PrettyPFA-Reference) and C formats. Some setup steps differ slightly between Python/R models and PFA, Java, MATLAB, or C models. As a model interchange format, PFA can provide some benefits in performance, scalability, and security relative to R and Python. PrettyPFA is a human-readable equivalent to PFA. However, as the majority of users will be more familiar with R and Python, we focus on these two languages in this section.
 
 #### Loading Assets
 The FastScore CLI allows a user to load models directly from the command line. The list of models currently loaded in FastScore can be viewed using the model list command:
@@ -442,7 +334,7 @@ action <- function(datum) {
 
 ### <a name="section-input-and-output-schema"></a>Input and Output Schema
 
-FastScore enforces strong typing on both the inputs and outputs of its models using [AVRO schema](http://avro.apache.org/docs/1.8.1/spec.html). For R and Python models, this typing is enforced by specifying schema names in a smart comment at the top of the model file:
+FastScore enforces strong typing on both the inputs and outputs of its models using [AVRO schema](http://avro.apache.org/docs/current/). For R and Python models, this typing is enforced by specifying schema names in a smart comment at the top of the model file:
 
 ``` python
 # fastscore.input: array-double
@@ -551,7 +443,7 @@ For filestreams, it is easiest to manage container input and output by linking a
 [...]
 
   engine-1:
-    image: fastscore/engine:1.8
+    image: fastscore/engine:1.9
     network_mode: "host"
     environment:
       CONNECT_PREFIX: https://127.0.0.1:8001
