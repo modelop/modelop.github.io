@@ -16,8 +16,7 @@ Welcome to Open Data Group's documentation!
 
 - [FastScore Getting Started Guide](/Getting Started/Getting Started with FastScore)
 - [FastScore Specifications](/Getting Started/FastScore Specs/)
-- [FastScore Architecture](Getting Started/FastScore IA/)
-- [1.8 Release Notes](/Getting Started/Release Notes/)
+- [1.9 Release Notes](/Getting Started/Release Notes/)
 
 ### Knowledge Center
 
@@ -28,18 +27,25 @@ Welcome to Open Data Group's documentation!
 
 - [FastScore Glossary](/Glossary/)
 
-### Product Manuals
+### FastScore Fleet Manuals
+
+- [FastScore Engine](/Product Manuals/Engine/)
+- [FastScore Lineage](/Product Manuals/Lineage/)
+- [FastScore Composer](/Product Manuals/FastScore Composer/)
+- [FastScore Access](/Product Manuals/Access/)
+- [FastScore Deploy](/Product Manuals/Model Deploy/)
+
+#### Configurations and Settings
 
 - [Fastscore Configuration](/Product Manuals/Configuration/)
 - [Model Annotations](/Product Manuals/Model Annotations/)
 - [Schema Reference](/Product Manuals/Schema Reference/)
 - [Sensors](/Product Manuals/Sensors/)
 - [Import Policies](/Product Manuals/Import Policies/)
-- [Model Deploy](/Product Manuals/Model Deploy/)
-- [LDAP Authentication](/Product Manuals/LDAP Authentication/)
 - [State Sharing and Snapshotting](/Product Manuals/State Sharing and Snapshotting/)
 - [Record Sets and Control Records](/Product Manuals/Record Sets and Control Records/)
 - [GitHub Integration](/Product Manuals/Github Integration/)
+- [Standalone Baked Engines](/Product Manuals/Standalone Baked Engines/)
 
 #### Model Runners
 

@@ -74,6 +74,36 @@ It is possible to configure credentials in FastScore via Docker Secrets.  To do 
 * [Grant access](https://docs.docker.com/compose/compose-file/#secrets) to the secret to the relevant microservice.
 * Reference the secret with "secret://..." syntax inside the YAML config file.
 
+### Three options for secret:// syntax
+
+#### Relative path
+
+```
+secret://secret1
+```
+
+FastScore will look for `secret1` in the default /run/secrets directory
+
+#### Relative path OVERRIDE
+
+set the env variable `SECRET_PATH_ROOT` to /some/other/directory
+
+```
+secret://secret2
+```
+
+FastScore will expect to find /some/other/directory/secret2
+
+#### Absolute path
+
+```
+secret:///absolute/path/to/secret3
+```
+
+FastScore will look in /absolute/path/to for `secret3`
+
+Note the three '/', instead of the usual two.
+
 #### In config.yaml
 Where 'foo' is the name of the Docker Secret that contains the username, and 'bar' is the name of the Docker Secret that contains the password:
 
@@ -115,4 +145,48 @@ S3 stream:
     "SecretAccessKey": "secret://bar"
   }
 }
+```
+
+# Configuration Persistence
+
+Upon startup, the Connect service checks for a `FASTSCORE_CONFIG` environment variable.  If present, it uses the contents of this variable to set FastScore's initial configuration.
+
+FASTSCORE_CONFIG can be set right in a docker-compose file:
+```
+...
+  connect: 
+    image: local/connect
+    ports: 
+        - "8001:8001"
+    stdin_open: true
+    environment: 
+       FASTSCORE_CONFIG: |
+        fastscore: 
+          fleet: 
+            - api: model-manage
+              host: model-manage
+              port: 8002
+            - api: engine
+              host: engine-1
+              port: 8003
+            - api: engine
+              host: engine-2
+              port: 8003
+
+          db: 
+            type: mysql
+            host: database
+            port: 3306
+            username: root
+            password: root
+
+          pneumo: 
+            type: kafka
+            bootstrap: 
+              - kafka:9092
+            topic: notify
+    tty: true
+    networks: 
+      - fsnet
+...
 ```

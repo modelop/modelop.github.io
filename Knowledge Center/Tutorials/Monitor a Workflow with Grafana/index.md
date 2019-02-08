@@ -136,7 +136,7 @@ def action(datum):
 		yield (1, make_record('{}.{}.record.rejected.by.encoding.count'.format(model, slotno), datum['data']))
 ```
 
-### CPU/Memory Usage
+### CPU Memory Usage
 
 CPU/Memory utilization is reported by the `sys.cpu.utilization` and `sys.memory` respectively. To consume these reports, simply extract the `data` field:
 
