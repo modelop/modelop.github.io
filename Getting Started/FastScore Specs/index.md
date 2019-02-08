@@ -48,4 +48,5 @@
 | **FastScore SDK** |  |  | **Authentication and Access Control** |  |
 | Python 2 | ✓ |  | LDAP Authentication | ✓ |
 | Python 3 | ✓ |  | Dashboard LDAP Authentication | ✓ |
-| Scala/Java | ✓ |  |  |
+| Scala/Java | ✓ |  | OAuth2/OIDC | ✓ |
+| Go | ✓ |  |  |
