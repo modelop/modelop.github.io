@@ -52,7 +52,7 @@ Although an H2O model can be structured as a generic Java model, FastScore also 
 fastscore model add gbm_pojo_test gbm_pojo_test.java -type:h2o
 ```
 
-When running H2O models, FastScore will output the original input record appended with an additional "Result" field that represents an array of prediction results. For example, in H2O's GBM airlines sample model, the input and output will be:
+When running H2O models, FastScore will output the original input record appended with an additional "Label", "P_0", and "P_1" fields appended that represent the predicted label and the class probabilities, respectively. For example, in H2O's GBM airlines sample model, the input and output will be:
 
 Input JSON record:
 
@@ -63,7 +63,7 @@ Input JSON record:
 Output JSON record:
 
 ```
-{"CRSDepTime":"1030","Origin":"SAN","Month":"06","DayOfWeek":"7","Dest":"ORD","Year":"2017","UniqueCarrier":"PS","DayofMonth":"04","Result":["YES"]}
+{"CRSDepTime":"1030","Origin":"SAN","P_0":0.2497675372178083,"Month":"06","DayOfWeek":"7","Dest":"ORD","P_1":0.7502324627821917,"Year":"2017","UniqueCarrier":"PS","Label":"YES","DayofMonth":"04"}
 ````
 
 Note that the original order of the fields may not be preserved in the output record.
@@ -139,4 +139,4 @@ If the Java model requires one or more JAR files, supply them together with any 
 
 ## Stream Encoding
 
-In v1.5, the Java runner only supports JSON encoding for input/output streams.
+The Java runner only supports JSON and CSV encodings for input/output streams.
