@@ -8,8 +8,6 @@ title: "FastScore Baker"
 
 In some production deployments, it will be necessary to deploy pre-configured engine containers with all models, streams, and schemas "baked in" to the image instead of loaded via the REST API. Consider a model deployed in engines that are managed by an orchestrator such as Kubernetes. The orchestrater may provide functionality for automatic replication, scaling, and recreation of failed containers. However, the orchestrator doesn't know anything specifically about the configuration of FastScore, so when it creates a "copy" of the FastScore Engine container, currently that Engine container will start up with no model deployed. A service backed by a baked Engine (described below) will not have this deficiency, and may be safely replicated, or moved about without concern regardless of additional FastScore services. 
 
-This page details how this should work. There is a basic example available here: https://github.com/opendatagroup/fastscore-baker with this functionality implemented via a Python script. This is a hacky solution and ideally engine baking should be incorporated into the base engine image instead.
-
 ## Example
 
 Here's an example of a Dockerfile that a user may create for a baked engine:
