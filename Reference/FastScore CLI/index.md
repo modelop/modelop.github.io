@@ -35,6 +35,7 @@ fastscore <command> <subcommand> ...
 * [fastscore sensor add/show/list/remove](#sensor-mgmt)
 * [fastscore sensor install/uninstall/inspect/points](#sensor-install)
 * [fastscore engine reset/inspect/pause/unpause](#engine-state)
+* [fastscore run](#run-simple)
 * [fastscore snapshot list/show/remove](#snapshot-mgmt)
 * [fastscore snapshot restore](#snapshot-restore)
 * [fastscore policy set/show](#policy)
@@ -43,7 +44,7 @@ fastscore <command> <subcommand> ...
 * [fastscore profile](#profile)
 * [fastscore pneumo](#pneumo)
 * [fastscore monitor](#monitor)
-* [fastscore run](#run-simple)
+* [URL-like stream descriptors] (#literal-streams)
 
 ## Getting help
 <a name="help"></a>
