@@ -8,7 +8,7 @@ To better handle different model types (such as batch models), FastScore models 
 
 ## Models with Record Sets
 
-To configure an R or Python model to use record sets in its inputs or outputs, just add the `# fastscore.recordsets: input` or `# fastscore.recordsets: output` smart comments to the model, respectively. (To use record sets in both the input and output streams, use the `# fastscore.recordsets: both` smart comment.) No changes to the model's input or output schema are required to use record sets.
+To configure an R or Python model to use record sets in its inputs or outputs, just add the `# fastscore.recordsets.<slot_no>: true` or `# fastscore.recordsets.<slot_no>: yes` smart comments to the model. No changes to the model's input or output schema are required to use record sets.
 
 ### Output Conventions
 
@@ -31,7 +31,7 @@ There is some ambiguity involved when encoding a record set to an Avro type. To 
 
 The following model uses record sets as inputs, and returns a single record as output. 
 ``` python
-# fastscore.recordsets: input
+# fastscore.recordsets.0: true
 # fastscore.input: two_doubles
 # fastscore.output: summary_record
 def action(record_set):
@@ -58,7 +58,8 @@ and the output schema is
 
 The next model uses record sets for both inputs and outputs. 
 ``` python
-# fastscore.recordsets: both
+# fastscore.recordsets.0: true
+# fastscore.recordsets.1: true
 # fastscore.input: named_doubles
 # fastscore.output: named_doubles_with_sum
 
