@@ -2,7 +2,7 @@
 title: "FastScore Baker"
 ---
 
-# Baker
+# FastScore Baker
 
 ## Overview and Use Case
 
