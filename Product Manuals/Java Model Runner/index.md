@@ -141,4 +141,4 @@ If the Java model requires one or more JAR files, supply them together with any 
 
 ## Stream Encoding
 
-In v1.5, the Java runner only supports JSON encoding for input/output streams.
+Currently, the Java runner only supports JSON and CSV encoding for input/output streams.
