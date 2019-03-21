@@ -180,13 +180,13 @@ There are two principle considerations for whether it is appropriate to remove s
 
 To understand how and when this may be the case, consider a verb like 'believe'. 'Believe' with a variety of collocates - all of which are stop words - and all of which change its meaning and thereby also the statistical profile of 'believe'.  This is similar to but not the same thing as word sense, since 'believe' possesses roughly the same meaning in each case.  Instead what changes is the meaning of the event.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The crowd believed the prophet.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The crowd believed the man.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The crowd believed in the prophet.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The crowd believed in the man.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The crowd believed that the prophet was lying.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The crowd believed that the man was lying.
 
-With stop words removed, each of these examples become the same sequence, namely _crowd believed prophet_, one of which is indicating the opposite. Retaining the stop words allows distinctions to be drawn between uses of 'believed', and prevents downstream errors as a consequence of failing to make such necessary conditions.
+With stop words removed, each of these examples become the same sequence, namely _crowd believed man_, one of which is indicating the opposite. Retaining the stop words allows distinctions to be drawn between uses of 'believed', and prevents downstream errors as a consequence of failing to make such necessary conditions.
 
 The second consideration is whether or not important information is being lost by their removal.  There are many circumstances in which this might be true.  Consider first a simple case of reference to Dwayne Johnson, also known as "The Rock".  If stop words are removed from a sentiment analysis task on movie reviews, any distinction between The Rock and his role in monster movies and references to the rock monsters from the Thor movies is lost. This is one example, but amplified over many such examples and many reviews, there is potential for substantial information loss, whereas the cost for leaving stop words in may be quite low.
 
