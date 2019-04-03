@@ -1,6 +1,5 @@
-
 ---
-title: "FastScore Compare"
+title: "Compare"
 ---
 # FastScore Compare
 
