@@ -1,6 +1,5 @@
 ---
 title: "Composer"
-excerpt: ""
 ---
 # Composer
 
@@ -9,7 +8,6 @@ excerpt: ""
 FastScore Composer is a microservice component that allows the user to create, manage, and deploy "workflows" of models: complex multi-model analytic pipelines that utilize multiple FastScore engines to execute.
 
 This document describes the workflow format specification, Composer's REST API, and the internal implementation of Composer functionality.
-
 
 
 ## Workflow Specification
