@@ -1,5 +1,5 @@
 ---
-title: "Composer"
+title: "FastScore Composer"
 ---
 # Composer
 
