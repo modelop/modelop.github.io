@@ -1,7 +1,7 @@
 ---
-title: "FastScore Engine"
+title: "Engine"
 ---
-# FastScore Engine
+# Engine
 
 The FastScore Engine lives inside a Docker container and contains the various runners for the various languages and model types that FastScore supports.
 
