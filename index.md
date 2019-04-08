@@ -31,9 +31,11 @@ Welcome to Open Data Group's documentation!
 
 - [FastScore Engine](/Product Manuals/Engine/)
 - [FastScore Lineage](/Product Manuals/Lineage/)
-- [FastScore Composer](/Product Manuals/FastScore Composer/)
+- [FastScore Composer](/Product Manuals/Composer/)
 - [FastScore Access](/Product Manuals/Access/)
 - [FastScore Deploy](/Product Manuals/Model Deploy/)
+- [FastScore Manage](/Product Manuals/Manage/)
+- [FastScore Compare](/Product Manuals/Compare/)
 
 #### Configurations and Settings
 
