@@ -27,7 +27,7 @@ Welcome to Open Data Group's documentation!
 
 - [FastScore Glossary](/Glossary/)
 
-### FastScore Fleet Manuals
+### FastScore Product Manuals
 
 - [FastScore Engine](/Product Manuals/Engine/)
 - [FastScore Lineage](/Product Manuals/Lineage/)
