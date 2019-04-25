@@ -4,6 +4,17 @@ description: The guide describes all commands available through the FastScore CL
 css: buttondown.css
 ---
 
+# FastScore Go CLI
+
+## 1.9
+
+[Linux](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/linux/fastscore)
+
+[Darwin](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/darwin/fastscore)
+
+[Windows](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/windows/fastscore.exe)
+
+
 # FastScore CLI v1.7 User Guide
 
 This guide describes the complete set of commands and options supported by the
