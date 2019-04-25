@@ -39,7 +39,7 @@ Tag	| Slot-specific | Description | Allowed values | Example
 ----|---------------|-------------|----------------|--------
 fastscore.schema.&lt;slot> | Yes (default scope: $all) | The name of the Avro schema | | # odg.schema.0: schema-1
 fastscore.recordsets.&lt;slot> | Yes (default scope: $all) | The 'recordsets' flag | true / false / yes / no | # odg.recordsets.$in: yes
-fastscore.action.&lt;slot> | Yes (default score: $in) | The name of the action function (defaults to 'action') | | # odg.action: score_report
+fastscore.action.&lt;slot> | Yes (default score: $in) | The name of the action function (defaults to 'action') | <func-name> / none | # odg.action: score_report
 fastscore.slot.&lt;slot> | Yes (default score: $all) | Set to 'unused' to disable the slot. | in-use / unused | # fastscore.slot.1: unused
 fastscore.module-attached | No | The name of the code module included as a model attachment | | # fastscore.module-attached: mylib
 fastscore.snapshots | No | Set to 'eof' to automatically take a model snapshot when the run completes. | none / eof | # fastscore.snapshots: eof
@@ -53,6 +53,10 @@ effect of any previous annotations that mentioned the &lt;slot-scope>. For
 example, `fastscore.slot.$output: unused` indicate that the model does not
 produce any outputs. The 'unused' annotation can remove the default slots (0
 and 1) from consideration.
+
+Setting `fastscore.action` to `none` disables the action callbacks. The model
+becomes purely explicit. Explicit models read from stream slots directly and may
+exit before all streams reach EOF.
 
 The annotations in the table below are deprecated and should not be used for
 new models. However, they are recognized by the Engine.
