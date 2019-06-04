@@ -413,7 +413,7 @@ Schema removed
 <a name="schema-verify"></a>
 
 ```
-fastscore schema verify <schema-name> [ <data-file> ]
+fastscore schema verify <schema-name> <data-file>
 ```
 
 The `schema verify` command check that the named schema is a well-formed. If
