@@ -1,6 +1,6 @@
 ---
 title: "Model Deploy"
-excerpt: "New in v1.5!"
+excerpt: "Deploying models from Jupyter Notebooks"
 ---
 # Model Deploy
 
@@ -16,7 +16,11 @@ If other services in the FastScore fleet are also running on the same host, it m
 
 Model Deploy may also be started with any of the additional configuration options available to the Jupyter base Docker image, [see the documentation for more details](https://github.com/jupyter/docker-stacks/tree/master/datascience-notebook). 
 
-Once the container is created, it will be accessible from port 8888 (by default) on the host machine, using the token generated during the startup process. 
+Once the container is created, it will be accessible from port 8888 (by default) on the host machine, using the token generated during the startup process.
+
+## Install to Existing Jupyter Notebook
+
+Model Deploy is also avaiable via the `fastscoredeploy` library and can be installed using `pip install fastscoredeploy` from within the Jupyter Notebook terminal.  
 
 ## Model Deploy functionality
 
@@ -29,3 +33,4 @@ Model Deploy provides a number of features to make it easy to migrate a model in
 * A utility `codec` library is included to make it easy to serialize R and Python objects to JSON and other formats based on an Avro schema.
 
 Example notebooks demonstrating this functionality are included with the Model Deploy container.
+
