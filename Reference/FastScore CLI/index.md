@@ -4,18 +4,25 @@ description: The guide describes all commands available through the FastScore CL
 css: buttondown.css
 ---
 
-# FastScore Go CLI
+# FastScore CLI
+FastScore exposes a CLI that is built using Go, allowing end users to interface with FastScore micro services via CLI. The Go CLI is the primary supported FastScore CLI. 
 
-## 1.9
+For 1.x versions of FastScore, there is also a Python CLI ([Python CLI reference](https://opendatagroup.github.io/Reference/FastScore%20CLI/PythonCLI)). However, the Python CLI will be deprecated, starting in FastScore version 2.x.
 
-[Linux](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/linux/fastscore)
+## Installation Instructions
 
-[Darwin](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/darwin/fastscore)
+**Download**: The FastScore CLI can be downloaded via the following:
 
-[Windows](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/windows/fastscore.exe)
+* [Linux](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/linux/fastscore)
+* [Darwin](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/darwin/fastscore)
+* [Windows](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/windows/fastscore.exe)
+
+**Configuration:**
+
+1.. 
 
 
-# FastScore CLI v1.7 User Guide
+# FastScore CLI User Guide
 
 This guide describes the complete set of commands and options supported by the
 FastScore CLI.
