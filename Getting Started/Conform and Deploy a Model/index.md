@@ -24,7 +24,7 @@ If you need support or have questions, please email us: support@opendatagroup.co
 ## <a name="Prerequisites"></a>Pre-requisites
 Before we walk through how to conform and deploy a model, we will need the following before we begin:
 
-1. [FastScore Environment Installed - [follow this guide](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20FastScore/)
+1. [FastScore Environment Installed](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20FastScore/)
 2. [FastScore CLI Installed](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20FastScore/#installing-the-fastscore-cli)
 3. [Example repo downloaded](https://github.com/opendatagroup/Getting-Started/tree/examples)
 
@@ -315,9 +315,7 @@ To continue learning, check out some additional examples here:
 - [TensorFlow LTSM](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Tensorflow%20LSTM/)
 
 
-
-
-
+If you need support or have questions, please email us: support@opendatagroup.com
 
 
 

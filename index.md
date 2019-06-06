@@ -17,6 +17,7 @@ Welcome to Open Data Group's documentation!
 - [FastScore Getting Started Guide](/Getting Started/Getting Started with FastScore)
 - [FastScore Specifications](/Getting Started/FastScore Specs/)
 - [1.9 Release Notes](/Getting Started/Release Notes/)
+- [How to Conform and Deploy a Model](/Getting Started/Conform and Deploy a Model/)
 
 ### Knowledge Center
 
