@@ -63,7 +63,8 @@ Welcome to Open Data Group's documentation!
 
 - [FastScore SDKs](/Reference/FastScore SDKs/)
 - [FastScore API](/Reference/FastScore API/)
-- [FastScore CLI](/Reference/FastScore CLI/)
+- [FastScore Python CLI](/Reference/FastScore CLI - Python/)
+- [FastScore Go CLI](/Reference/FastScore CLI - Go/)
 
 ## Other Projects
 
