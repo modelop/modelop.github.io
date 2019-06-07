@@ -1,17 +1,17 @@
 ---
-title: The FastScore CLI User Guide
-description: The guide describes all commands available through the FastScore CLI with their respective options.
+title: FastScore Python CLI User Guide
+description: The guide describes all commands available through the FastScore Python CLI with their respective options.
 css: buttondown.css
 ---
 
-# FastScore CLI
-FastScore exposes a CLI that is built using Go, allowing end users to interface with FastScore micro services via CLI. The Go CLI is the primary supported FastScore CLI. 
+# FastScore Python CLI
+This page provides information on the FastScore Python CLI. However, note that the FastScore Go CLI ([Go CLI reference](https://opendatagroup.github.io/Reference/FastScore%20CLI)) is the primary supported FastScore CLI. 
 
-For 1.x versions of FastScore, there is also a Python CLI ([Python CLI reference](/PythonCLI)). However, the Python CLI will be deprecated, starting in FastScore version 2.x.
+Note: the Python CLI will be deprecated, starting in FastScore version 2.x.
 
 ## Installation Instructions
 
-**Download**: The FastScore CLI can be downloaded via the following:
+**Download**: The FastScore Python CLI can be downloaded via the following:
 
 * [Linux](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/linux/fastscore)
 * [Darwin](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/darwin/fastscore)
@@ -19,7 +19,15 @@ For 1.x versions of FastScore, there is also a Python CLI ([Python CLI reference
 
 **Configuration:**
 
-1.. 
+1. For Mac (Darwin) and Linux make it executable:
+	* From a command prompt, navigate to the directory where the FastScore CLI was downloaded
+	* Run the following command: 
+	``chmod +x fastscore``
+
+2. Add FastScore to your local machine's $Path:
+	* For Macs: copy the FastScore CLI to: ``/usr/local/bin/fastscore``
+
+3. Confirm proper installation by running the following command from a command prompt: ``fastscore``
 
 
 # FastScore CLI User Guide
