@@ -8,6 +8,6 @@ FastScore supports the management and execution of all versions of R models. The
 
 ### References:
 
-- [Getting Started](../../Getting Started/Getting Started with FastScore)
-- [Specifications](../../Getting Started/FastScore Specs)
+- [Getting Started](/Getting Started/Getting Started with FastScore)
+- [Specifications](/Getting Started/FastScore Specs)
 
