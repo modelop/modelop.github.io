@@ -49,7 +49,6 @@ Welcome to Open Data Group's documentation!
 - [Model Annotations](/Product Manuals/Model Annotations/)
 - [Schema Reference](/Product Manuals/Schema Reference/)
 - [Sensors](/Product Manuals/Sensors/)
-- [Import Policies](/Product Manuals/Import Policies/)
 - [State Sharing and Snapshotting](/Product Manuals/State Sharing and Snapshotting/)
 - [Record Sets and Control Records](/Product Manuals/Record Sets and Control Records/)
 - [GitHub Integration](/Product Manuals/Github Integration/)
