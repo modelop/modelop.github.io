@@ -24,7 +24,7 @@ Welcome to Open Data Group's documentation!
 - [1.9 Release Notes](/Getting Started/Release Notes/)
 
 
-### FastScore Product Manuals
+### FastScore Microservices 
 
 - [FastScore Engine](/Product Manuals/Engine/)
 - [FastScore Lineage](/Product Manuals/Lineage/)
@@ -34,7 +34,16 @@ Welcome to Open Data Group's documentation!
 - [FastScore Manage](/Product Manuals/Manage/)
 - [FastScore Compare](/Product Manuals/Compare/)
 
-#### Configurations and Settings
+
+
+### Reference
+
+#### Interfacing with FastScore
+- [FastScore SDKs](/Reference/FastScore SDKs/)
+- [FastScore API](/Reference/FastScore API/)
+- [FastScore CLI](/Reference/FastScore CLI/)
+
+#### Configurations and Advanced Functionality
 
 - [Fastscore Configuration](/Product Manuals/Configuration/)
 - [Model Annotations](/Product Manuals/Model Annotations/)
@@ -58,13 +67,7 @@ Welcome to Open Data Group's documentation!
 - [Multiple Input and Output Streams](/Product Manuals/Multiple Input and Output Streams/)
 - [CSV Support](/Product Manuals/CSV Support/)
 
-### Reference
-
-- [FastScore SDKs](/Reference/FastScore SDKs/)
-- [FastScore API](/Reference/FastScore API/)
-- [FastScore CLI](/Reference/FastScore CLI/)
-
-## Other Projects
+### Other Projects
 
 ### Hadrian and Titus (PFA)
 

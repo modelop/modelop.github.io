@@ -13,11 +13,7 @@ If you need support or have questions, please email us: support@opendatagroup.co
 
 1. [Pre-requisites](#Prerequisites)
 2. [Intro to Streams](#intro-to-streams)
-    1. [Model Dependencies](#model-dependencies)
-    2. [Model Schema](#model-schema)
-    3. [Model Execution Script](#model-execution-script)
-    4. [Attachment](#attachments)
-3. [Deploy as REST](#Deploy-as-REST)
+3. [Example]
 4. [Test Model](#Test-Model)
 5. [Next Steps](#next-steps)
 
@@ -29,18 +25,18 @@ Before we walk through how to build and test streams, we will need the following
 2. [FastScore CLI Installed](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20FastScore/#installing-the-fastscore-cli)
 3. [Example repo downloaded](https://github.com/opendatagroup/Getting-Started/tree/examples)
 
-This guide walks through a multi-class classification model that determines the species of iris based on four features: sepal length/width, petal length/width using the XGBoost framework. It is available in the repo above. For details on how we defined this Model Deployment Package, see the [Conform and Deploy a Model Guide](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20FastScore/#installing-the-fastscore-cli)
+This guide walks through a multi-class classification model that determines the species of iris based on four features: sepal length/width, petal length/width using the XGBoost framework. It is available in the repo above. For details on how we defined this Model Deployment Package, see the [Conform and Deploy a Model Guide](TODO)
 
 To download the repo and setup the environment:
 
-`git clone https://github.com/opendatagroup/Getting-Started.git
-cd Getting-Started
-git checkout examples
-make
-`
+`git clone https://github.com/opendatagroup/Getting-Started.git`
+`cd Getting-Started`
+`git checkout examples`
+`make`
+
 
 ## <a name="intro-to-streams"></a>Intro to Streams
-Streams in FastScore define the integration to our data pipeline. Streams will read records from underlying transport, verifies with the schema, and feeds them to the model. The streams are defined via JSON document that contain connection information and control behavior. Full documentation on Streams is available [here](https://opendatagroup.github.io/Product%20Manuals/Stream%20Descriptors/). This guide will focus on examples. 
+Streams in FastScore define the integration to our data pipeline. Streams will read records from underlying transport, verifies with the schema, and feeds them to the model. The streams are defined via JSON document that contain connection information and control behavior. Full documentation on Streams is available [here](https://opendatagroup.github.io/Product%20Manuals/Stream%20Descriptors/). This guide will be walking through . 
 
 Here are the parts of the stream that we define:
 - Description - optional
@@ -64,6 +60,7 @@ Here are the parts of the stream that we define:
 ```
 
 
-
+## <a name="intro-to-streams"></a>Streams through MLC
+As a model goes through the journey to production, the data pipeline is going to change for various 
 
 
