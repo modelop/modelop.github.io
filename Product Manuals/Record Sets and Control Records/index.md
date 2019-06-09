@@ -1,14 +1,14 @@
 ---
-title: "Record Sets and Control Records"
-excerpt: "New in v1.4!"
+title: "Recordsets and Control Records"
+excerpt: "New in v1.10!"
 ---
-# Record Sets and Control Records
+# Recordsets and Control Records
 
-To better handle different model types (such as batch models), FastScore models support using **record sets**. A record set is an ordered collection of records. In R and Python, record sets are analogous to (and in fact, deserialized into) data frames.
+To better handle different model types (such as batch models), FastScore models support using **recordsets**. A record set is an ordered collection of records. In R and Python, recordsets are analogous to (and in fact, deserialized into) data frames.
 
-## Models with Record Sets
+## Models with Recordsets
 
-To configure an R or Python model to use record sets in its inputs or outputs, just add the `# fastscore.recordsets.<slot_no>: true` or `# fastscore.recordsets.<slot_no>: yes` smart comments to the model. No changes to the model's input or output schema are required to use record sets.
+To configure an R or Python model to use recordsets in its inputs or outputs, just add the `# fastscore.recordsets.<slot_no>: true` or `# fastscore.recordsets.<slot_no>: yes` smart comments to the model. No changes to the model's input or output schema are required to use recordsets.
 
 ### Output Conventions
 
@@ -29,7 +29,7 @@ There is some ambiguity involved when encoding a record set to an Avro type. To 
 
 ### Examples
 
-The following model uses record sets as inputs, and returns a single record as output. 
+The following model uses recordsets as inputs, and returns a single record as output. 
 ``` python
 # fastscore.recordsets.0: true
 # fastscore.input: two_doubles
@@ -56,7 +56,7 @@ and the output schema is
 }
 ```
 
-The next model uses record sets for both inputs and outputs. 
+The next model uses recordsets for both inputs and outputs. 
 ``` python
 # fastscore.recordsets.0: true
 # fastscore.recordsets.1: true
@@ -93,10 +93,28 @@ and the output schema is
   ]
 }
 ```
+### Additional Examples of Input/Output Recordsets
+
+The following table shows how the model code sees input recordsets and how output recordsets look like in the output stream. The table uses JSON for illustrative purposes only: as mentioned, Recordsets are encoding-agnostic.
+
+Note: Both input and output recordsets options are on, and records are separated by new lines.
+
+| # | Input Recordset | Python Model | R Model | Output Recordset |
+| --- | --- | --- | --- | --- | --- |
+| 1 | {"id": 100, "color": "red"} <br> {"id": 101, "color": "green"} <br> {"id": 102, "color": "grey"} | # color id <br> 0    red  100 <br> 1  green  101 <br> 2   grey  102 |  #  id color <br> 1 100   red <br> 2 101 green <br> 3 102  grey | {"id": 100, "color": "red"} <br> {"id": 101, "color": "green"} <br> {"id": 102, "color": "grey"} |
+| 2 | (empty) | Empty DataFrame <br> Columns: [] <br> Index: []  |data frame with 0 columns and 0 rows | (empty) |
+| 3 | 2 <br> 3 <br> 5 | 0  2 <br> 1  3 <br> 2  5 <br> dtype: int64 pandas.Series |   ---  [,1] <br> [1,]    2 <br> [2,]    3 <br> [3,]    5 | 2 <br> 3 <br> 5 |
+| 4 | [2] <br> [3] <br> [5] | matrix([[2], <br> [3], <br> [5]]) | -  [,1] <br> [1,]    2 <br> [2,]    3 <br> [3,]    5 | Python: [2] <br> [3] <br> [5] <br> R: 2 <br> 3 <br> 5 |
+| 5 | [0,0,1] <br> [0,1,0] <br> [0,0,1] | matrix([[1, 0, 0], <br> [0, 1, 0], <br> [0, 0, 1]]) |   ---   [,1] [,2] [,3] <br> [1,]    1    0    0 <br> [2,]    0    1    0 <br> [3,]    0    0    1 | [0,0,1] <br> [0,1,0] <br> [0,0,1] |
+| 6 | 137 | 0  137 <br> dtype: int64 (pandas.Series) | ---  [,1] <br> [1,]  137 | 137 |
+| 7 | [137] | matrix([[137]]) | --- [,1] <br> [1,]  137 | Python: [137] <br> R: 137 | 
+| 8 | {"a": 2} <br> {"a": 3} <br> {"a": 5} | --- a <br> 0  2 <br> 1  3 <br> 2  5 | --- a <br> 0  2 <br> 1  3 <br> 2  5 | {"a": 2} <br> {"a": 3} <br> {"a": 5} |
+| 9 | {"lone": "wolf"} | ---    lone <br> 0  wolf | ---    lone <br> 1  wolf | {"lone": "wolf"} |
+
 
 ## Streams and Control Records
 
-To use record sets, input and output streams must also be explicitly configured to do so by adding the `"Batching":"explicit"` flag. For example, a valid input stream descriptor for the second example above might be:
+When using recordsets, the input and output Streams should also be configured for recordsets by adding the `"Batching":"explicit"` flag. For example, a valid input stream descriptor for the second example above might be:
 ``` json
 {
   "Loop": false,
@@ -111,7 +129,7 @@ To use record sets, input and output streams must also be explicitly configured 
 }
 ```
 
-Additionally, to use record sets, **control records** have to be injected into the data stream to mark the boundaries of a record set. A control record is a special type of record in the data stream that does not contain input/output data, but instead requests an action to be performed on the stream. 
+Additionally, to use recordsets, **control records** have to be injected into the data stream to mark the boundaries of a record set. A control record is a special type of record in the data stream that does not contain input/output data, but instead requests an action to be performed on the stream. 
 
 There are three types of control records currently supported in FastScore:
 
