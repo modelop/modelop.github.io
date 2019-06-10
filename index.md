@@ -16,12 +16,12 @@ Welcome to Open Data Group's documentation!
 
 - [FastScore Getting Started Guide](/Getting Started/Getting Started with FastScore)
 - [FastScore Specifications](/Getting Started/FastScore Specs/)
-- [How to Conform and Deploy a Model](/Getting Started/Conform and Deploy a Model/)
 - [Tutorials](/Knowledge Center/Tutorials/)
 - [FastScore Terms Glossary](/Glossary/)
 
 ### Product Versions
 - [1.9 Release Notes](/Getting Started/Release Notes/)
+- [1.10 Release Notes](/Getting Started/Release Notes/)
 
 
 ### FastScore Microservices 
@@ -54,11 +54,13 @@ Welcome to Open Data Group's documentation!
 - [GitHub Integration](/Product Manuals/Github Integration/)
 - [Standalone Baked Engines](/Product Manuals/Standalone Baked Engines/)
 
-#### Model Runners
+#### Model On-Boarding
 
-- [C/C++ Model Runner](/Product Manuals/C Model Runner/)
-- [Matlab (Octave) Model Runner](/Product Manuals/MATLAB Model Runner/)
-- [Java Model Runner](/Product Manuals/Java Model Runner/)
+- [Conforming Python Models](/Product Manuals/Python Model Runner/)
+- [Conforming R Models](/Product Manuals/R Model Runner/)
+- [Conforming C/C++ Models](/Product Manuals/C Model Runner/)
+- [Conforming Matlab (Octave) Models](/Product Manuals/MATLAB Model Runner/)
+- [Conforming Java Models](/Product Manuals/Java Model Runner/)
 
 #### Streams Descriptors
 

@@ -1,25 +1,27 @@
 ---
-title: The FastScore CLI User Guide
-description: The guide describes all commands available through the FastScore CLI with their respective options.
+title: FastScore Python CLI User Guide
+description: The guide describes all commands available through the FastScore Python CLI with their respective options.
 css: buttondown.css
 ---
 
-# FastScore CLI
-FastScore exposes a CLI that is built using Go, allowing end users to interface with FastScore micro services via CLI. The Go CLI is the primary supported FastScore CLI. 
+# FastScore Python CLI
+This page provides information on the FastScore Python CLI. However, note that the FastScore Go CLI ([Go CLI reference](https://opendatagroup.github.io/Reference/FastScore%20CLI)) is the primary supported FastScore CLI. 
 
-For 1.x versions of FastScore, there is also a Python CLI ([Python CLI reference](/Python%20CLI)). However, the Python CLI will be deprecated, starting in FastScore version 2.x.
+Note: the Python CLI will be deprecated, starting in FastScore version 2.x.
 
 ## Installation Instructions
 
-**Download**: The FastScore CLI can be downloaded via the following:
+**Download**: The FastScore Python CLI can be downloaded via the following:
 
-* [Linux](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/linux/fastscore)
-* [Darwin](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/darwin/fastscore)
-* [Windows](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/windows/fastscore.exe)
-
-**Configuration:**
-
-1.. 
+1. Pip:
+	2. 	From a command prompt, run ``pip install fastscore-cli``
+	3. Depending on your system, you may need to start a new shell session to ensure that pip has updated the $PATH for the FastScore CLI
+2. AWS: 
+	3. Download from the following links:
+		4. [Python 2](https://fastscore-python-cli.s3.us-east-2.amazonaws.com/sdk/release/1.10/fastscore-1.10-py2-none-any.whl)
+		5. [Python 3](https://fastscore-python-cli.s3.us-east-2.amazonaws.com/sdk/release/1.10/fastscore-1.10-py3-none-any.whl)
+	6. Install the package
+7. Confirm proper installation by running the following command from a command prompt: ``fastscore help``
 
 
 # FastScore CLI User Guide
@@ -34,7 +36,7 @@ fastscore <command> <subcommand> ...
 ```
 
 ## Command index
-
+<a name="command-index"></a>
 * [fastscore help](#help)
 * [fastscore connect](#connect)
 * [fastscore login](#login)
@@ -44,12 +46,14 @@ fastscore <command> <subcommand> ...
 * [fastscore model add/show/list/remove](#model-mgmt)
 * [fastscore model load/unload/verify/inspect](#model-load)
 * [fastscore model scale](#model-scale)
+* [fastscore model input/output/interact](#model-interact)
 * [fastscore attachment upload/download/list/remove](#attachment)
 * [fastscore stream add/show/list/remove](#stream-mgmt)
 * [fastscore stream attach/detach/verify/inspect](#stream-attach)
 * [fastscore stream sample](#stream-sample)
 * [fastscore schema add/show/list/remove](#schema-mgmt)
 * [fastscore schema verify](#schema-verify)
+* [fastscore schema infer](#schema-infer)
 * [fastscore sensor add/show/list/remove](#sensor-mgmt)
 * [fastscore sensor install/uninstall/inspect/points](#sensor-install)
 * [fastscore engine reset/inspect/pause/unpause](#engine-state)
@@ -77,6 +81,8 @@ The `help` command prints a list of available commands or a syntax synposis
 for a specific command. The `help options` command produces a list of supported
 options.
 
+[Back to the top](#command-index)
+
 ## Command options
 
 Command options start with '-' character. Note that, `-wait` is a proper
@@ -96,17 +102,19 @@ Example:
 $ fastscore fleet -v -json
 [
   {
+    "id": "d02f099a-7985-4a1c-85b6-7c58db950a1c",
     "name": "engine-1",
-    "port": 8003,
-    "built_on": "Sun Nov 12 11:51:46 UTC 2017",
-    "host": "engine",
     "api": "engine",
-    "health": "ok",
-    "release": "1.7",
-    "id": "426e83fb-7012-4906-9c0e-a58a7a380635"
+    "host": "engine-1",
+    "port": 8003,
+    "release": "1.9.1+build.795.ref2641ec6",
+    "built_on": "Tue May  7 10:52:51 UTC 2019",
+    "health": "ok"
   },
   ...
 ```
+
+[Back to the top](#command-index)
 
 ## Connecting to FastScore
 <a name="connect"></a>
@@ -132,6 +140,8 @@ Waiting...............
 Connected to FastScore proxy at https://localhost:8000
 ```
 
+[Back to the top](#command-index)
+
 ## User authentication
 <a name="login"></a>
 
@@ -148,6 +158,8 @@ Example:
 $ fastscore login williamgates
 Password: ***
 ```
+
+[Back to the top](#command-index)
 
 ## Configuring FastScore
 <a name="config"></a>
@@ -179,6 +191,8 @@ fastscore:
 topic: notify
 ```
 
+[Back to the top](#command-index)
+
 ## Listing services
 <a name="fleet"></a>
 
@@ -205,6 +219,8 @@ engine-1        engine        ok        1.7        Wed Mar 7 11:51:46 UTC 2018
 model-manage-1  model-manage  ok        1.7        Wed Mar 7 16:01:58 UTC 2018
 ```
 
+[Back to the top](#command-index)
+
 ## Choosing an instance
 <a name="use"></a>
 
@@ -229,8 +245,12 @@ $ fastscore use
 engine-1
 ```
 
+[Back to the top](#command-index)
+
 ## Managing models
 <a name="model-mgmt"></a>
+
+The following commands are available for adding, listing, and removing with Models:
 
 ```
 fastscore model add <model-name> [ <source-file> ] [ -type:<model-type> ]
@@ -281,8 +301,9 @@ option spawns an editor and updates the model when the editor closes. The editor
 name is taken from the EDITOR environment variable. By default, the editor name
 is 'vi'.
 
-The `model list` command shows the list of models known to FastScore. The `model
-remove` command removes the corresponding model.
+The `model list` command shows the list of models known to FastScore. 
+
+The `model remove` command removes the corresponding model.
 
 Example:
 
@@ -301,6 +322,8 @@ def action(x):
 $ fastscore model remove cube -v
 Model 'cube' removed
 ```
+
+[Back to the top](#command-index)
 
 ## Model attachments
 <a name="attachment"></a>
@@ -341,6 +364,8 @@ $ fastscore attachment remove cube data1.zip -v
 Attachment removed
 ```
 
+[Back to the top](#command-index)
+
 ## Managing streams
 <a name="stream-mgmt"></a>
 
@@ -380,6 +405,8 @@ $ fastcore stream remove input-1 -v
 Stream removed
 ```
 
+[Back to the top](#command-index)
+
 ## Managing schemas
 <a name="schema-mgmt"></a>
 
@@ -415,6 +442,8 @@ sch-1  Avro
 $ fastcore schema remove sch-1 -v
 Schema removed
 ```
+
+[Back to the top](#command-index)
 
 ## Verifying schemas
 <a name="schema-verify"></a>
@@ -460,6 +489,48 @@ OK   3
 
 ```
 
+[Back to the top](#command-index)
+
+## Inferring schemas
+<a name="schema-infer"></a>
+
+```
+fastscore schema infer <data-file>
+```
+
+The ``schema infer`` command allows end users to automatically create a FastScore-compliant schema from a sample data file. The command accepts standard CSV and JSON input data files. 
+
+Example usage:
+
+```
+$ fastscore schema infer iris_test.csv > iris_input.avsc
+$ cat iris_input.avsc
+{
+	"fields": [
+		{
+			"name": "petal_length",
+			"type": "float
+		},
+		{
+			"name": "petal_width",
+			"type": "float
+		},
+		{
+			"name": "sepal_length",
+			"type": "float
+		},
+		{
+			"name": "sepal_width",
+			"type": "float
+		}
+	],
+	"name": "reca47ff240",
+	"type": "record"
+}
+```
+
+[Back to the top](#command-index)
+
 ## Managing sensors
 <a name="sensor-mgmt"></a>
 
@@ -498,6 +569,8 @@ watchdog
 $ fastcore sensor remove watchdog-1
 Sensor removed
 ```
+
+[Back to the top](#command-index)
 
 ## Attaching/detaching streams
 <a name="stream-attach"></a>
@@ -559,6 +632,8 @@ $ fastscore stream inspect
      1  inline-809896  REST         False
 ```
 
+[Back to the top](#command-index)
+
 ## Sampling streams
 <a name="stream-sample"></a>
 
@@ -601,6 +676,8 @@ $ fastscore stream sample rnd -count:5
    4: 60 28 58 8c a8 12 fc 2b                          `(X....+........
    5: a5 14 c7 64 56 97 aa 79                          ...dV..y........
 ```
+
+[Back to the top](#command-index)
 
 ## Loading/unloading models
 <a name="model-load"></a>
@@ -685,6 +762,8 @@ sqrt    r            1  none
 No jets started
 ```
 
+[Back to the top](#command-index)
+
 ## Scaling models
 <a name="model-scale"></a>
 
@@ -721,8 +800,10 @@ sqrt    r            1  none
       4    140  108589417
 ```
 
-## Model input/output using REST
-<a name="model-rest"></a>
+[Back to the top](#command-index)
+
+## Model Input/Output/Interact: Quick Testing in the CLI
+<a name="model-interact"></a>
 
 ```
 fastscore model input [ <slot> ]
@@ -786,6 +867,8 @@ REJECTED-By-Encoding:0: foobar
 Note that these commands do not close input/output streams. They may be run
 multiple times.
 
+[Back to the top](#command-index)
+
 ## Active sensor operations
 <a name="sensor-install"></a>
 
@@ -841,6 +924,8 @@ sys.memory
 sys.cpu.utilization
 ```
 
+[Back to the top](#command-index)
+
 ## Managing engine state
 <a name="engine-state"></a>
 
@@ -865,7 +950,7 @@ ERROR | Unrecoverable error encountered - see logs
 
 The `engine reset` command puts the engine into the INIT state regardless of its
 current state. The commands unload the model and detaches all streams. Use
-`engine reset` to start using an engine again after it reached the FIHISHED
+`engine reset` to start using an engine again after it reached the FINISHED
 state.
 
 The `engine inspect` prints the current state of the engine.
@@ -905,6 +990,8 @@ $ fastscore engine inspect
 RUNNING
 ```
 
+[Back to the top](#command-index)
+
 ## Running simple models
 <a name="run-simple"></a>
 
@@ -937,6 +1024,8 @@ $ fastscore model interact
 > 10
 1000
 ```
+
+[Back to the top](#command-index)
 
 ## Managing state snapshots
 <a name="snapshot-mgmt"></a>
@@ -980,6 +1069,8 @@ $ fastscore snapshot remove sqrt 8qxtf4yw -v
 Snapshot '8qxtf4yw' removed
 ```
 
+[Back to the top](#command-index)
+
 ## Restoring state snapshots
 <a name="snapshot-restore"></a>
 
@@ -1007,6 +1098,8 @@ Model state restored
 $ fastscore run sqrt ...
 ```
 
+[Back to the top](#command-index)
+
 ## Managing model environments
 <a name="policy"></a>
 
@@ -1033,6 +1126,8 @@ scikit-learn: install
 $ fastcore policy show -type:python
 scikit-learn: install
 ```
+
+[Back to the top](#command-index)
 
 ## Collecting statistics
 <a name="stats"></a>
@@ -1084,6 +1179,8 @@ engine-1: 0:6000.0 rps | 1:5574.0 rps
 The `stats` commands rely on sensor to collect statistics. `---` indicate that
 data is not available at the moment.
 
+[Back to the top](#command-index)
+
 ## Troubleshooting data pipelines
 <a name="debug"></a>
 
@@ -1128,6 +1225,8 @@ $ fastscore debug manifold
 14:40:22.894: state changes to FINISHED
 ```
 
+[Back to the top](#command-index)
+
 ## Profiling internal operations
 <a name="profile"></a>
 
@@ -1151,6 +1250,8 @@ Wrap envelope                0.002       15
 Unwrap envelope              0.023     1200
 ```
 
+[Back to the top](#command-index)
+
 ## Pneumo access
 <a name="pneumo"></a>
 
@@ -1162,6 +1263,8 @@ The `pneumo` commands provide an access to Pneumo -- the internal message bus of
 FastScore. `pneumo history` prints a few most recent Pneumo messages (60 max).
 The `pneumo` command continuously prints Pneumo messages as they appear on the
 bus.
+
+[Back to the top](#command-index)
 
 ## Monitoring engine operations
 <a name="monitor"></a>
@@ -1196,6 +1299,8 @@ cube                        1,825 rps    1,935 rps
 cube                        1,845 rps    1,944 rps
 ```
 
+[Back to the top](#command-index)
+
 ## <a name="literal-streams"></a>URL-like stream descriptors
 
 An URL-like or literal stream descriptor is a shortened representation of a
@@ -1224,24 +1329,25 @@ understood by the engine.
 Example:
 
 ```
-$ fastscore stream verify inline:1,2,3 0
+$ fastscore stream verify inline:1,2,3 0 -v
 {
-  "encoding": "json",
-  "linger_time": 3000,
   "transport": {
+    "type": "inline",
     "data": [
       "1",
       "2",
       "3"
-    ],
-    "type": "inline"
+    ]
   },
-  "batching": {
-    "nagle_time": 500,
-    "watermark": 1000
-  },
+  "schema": "undefined",
   "loop": false,
-  "schema": "undefined"
+  "linger_time": 3000,
+  "encoding": "json",
+  "batching": {
+    "watermark": 1000,
+    "nagle_time": 500
+  }
 }
 The stream descriptor contains no errors
 ```
+[Back to the top](#command-index)
