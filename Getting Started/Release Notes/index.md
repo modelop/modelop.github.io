@@ -1,8 +1,8 @@
 ---
-title: "Release Notes for FastScore v1.10"
+title: "Release Notes for FastScore"
 excerpt: ""
 ---
-## Highlights
+## Highlights v1.10
 Version 1.10 of FastScore includes an enhanced logging system through Kibana, and advanced approach to conforming a model, and full support for the Go CLI and SDK.
 
 ## What's New
@@ -25,3 +25,54 @@ Enhanced the core logging framework to leverage the ELK (Elasticsearch, Logstash
 ### Additional Documentation/Training
 
 Additional training curricula and documentation to enable data scientists, data engineers, and ModelOps/support engineers to be more self-sufficient in integrating models into the overall Model Lifecycle (MLC), powered by FastScore.
+
+## Release v1.9
+
+* [HDFS Native Stream](https://opendatagroup.github.io/Product%Manuals/Stream%Descriptors/#section-hdfs)
+* [Ubuntu and Alpine based Engines](https://opendatagroup.github.io/Product%Manuals/Engine)
+* [Kubernetes Support for Conductor](https://opendatagroup.github.io/Product%Manuals/FastScore%Composer)
+* General improvements to performance and stability
+
+## Release v1.8
+
+* Enhanced CSV Encoding Support
+* GitHub Integration - Secrets Support
+* Enhanced Avro OCF Format Support
+* Relaxed Avro Schema Matching
+* S3 Transport Enhancements
+* Enhanced C/C++ Model Support - Multiple Stream Capability
+* Docker Secret Support for MySQL Backend and S3 Streams
+* Msgpack Encoding
+* General improvements to performance and stability
+
+## Release v1.7
+
+* FastScore Composer and Designer BETA 
+* FastScore Compare BETA
+* GitHub Integration
+* Scala FastScore SDK
+* Import Policy Enhancements
+* General improvements to performance and stability
+
+## Release v1.6.1
+
+* REST Transport and Python3 fixes
+* Stream Sampling for inline and REST transports
+* Model Schema is used when missing from Stream Descriptor
+* Loop is set to false by default in Stream Descriptors
+* Stream profiling sensors
+* S3 Authenticated Stream Transport
+* Model Deploy - multiple I/O streams
+
+## Release v1.6
+
+* Multiple input and output streams
+* Octave and MATLAB model language support
+* R SDK
+* 8 default sensors installed
+* Executable stream type
+* LDAP configuration through the dashboard
+* Ability to download assets from the dashboard
+* Authenticated Kafka stream type
+* Additional sub-commands in the CLI
+* General improvements to performance and stability
