@@ -3,50 +3,51 @@
 
 | **Model Formats** |  |  | **Instrumentation and Logging** |  |
 | R | ✓ |  | Scoring throughput | ✓ |
-| Python | ✓ |  | Memory usage (per model) | ✓ |
-| PFA | ✓ |  | CPU utilization (scoring) | ✓ |
-| Java | ✓ |  | CPU utilization (data serialization) | ✓ |
-| H2O | ✓ |  | CPU utilization (data deserialization) | ✓ |
-| Matlab | ✓ |  | Sensors | ✓ |
-| C | ✓ |  | Default sensors installed | ✓ |
-| Scala | ✓ |  | Dashboard sensor support | ✓ |
-|  |  |  |  |  |
-| **Certified Deployment Options** |  |  | **Workflow, Concurrency, Scaling, etc** |  |
-| Linux | ✓ |  | Single model complex analytic workflows | ✓ |
-| AWS | ✓ |  | Multi-model complex analytic workflows | ✓ |
-| On-premise | ✓ |  | Single machine scaling | ✓ |
-| Private Cloud | ✓ |  | Infrastructure Scaling (multi-server, cloud, etc) | ✓ |
-| Public Cloud | ✓ |  | Intra-engine concurrecy | ✓ |
-| Azure | ✓ |  | Multi-engine concurrency | ✓ |
-| Google Cloud | ✓ |  | Model state persistence checkpointing | ✓ |
-| MacOS | ✓ |  | Model state staring | ✓ |
-|  |  |  | Multiple input/output streams | ✓ |
-| **Data Source Types** |  |  |  |  |
-| REST | ✓ |  | **Third Party Orchestrators** | ✓ |
-| Kafka | ✓ |  | Mesos/Marathon/DCOS | ✓ |
-| File | ✓ |  | Swarm | ✓ |
-| ODBC | ✓ |  | Kubernetes | ✓ |
-| HTTP | ✓ |  |  |  |
-| Experimental (TCP/UDP/Exec) | ✓ |  | **Model Management and AnalyticOps** |  |
-| Kafka (Authenticated) | ✓ |  | Store/Edit/Select Models | ✓ |
-| S3 (Authenticated) | ✓ |  | Store/Edit/Select Streams | ✓ |
-|  |  |  | Store/Edit/Select Schemas | ✓ |
-| **Schema Definition Formats** |  |  |  |  |
-| Avro Schema | ✓ |  | **Machine Learning Integration** |  |
-| Avro Schema Extensions (Restrictions) | ✓ |  | R [ R ] | ✓ |
+| Python | ✓ |  | Sensors | ✓ |
+| PFA | ✓ |  | Default sensors installed | ✓ |
+| Java | ✓ |  | Dashboard sensor support | ✓ |
+| H2O | ✓ |  |  |  |
+| Matlab | ✓ |  | **Workflow, Concurrency, Scaling, etc** |  |
+| C | ✓ |  | Single model complex analytic workflows | ✓ |
+| PMML | ✓ |  | Multi-model complex analytic workflows | ✓ |
+| Scala | ✓ |  | Single machine scaling | ✓ |
+|  |  |  | Infrastructure Scaling (multi-server, cloud, etc) | ✓ |
+| **Certified Deployment Options** |  |  | Multi-engine concurrency | ✓ |
+| Linux | ✓ |  | Model state persistence checkpointing | ✓ |
+| AWS | ✓ |  | Model state staring | ✓ |
+| On-premise | ✓ |  | Multiple input/output streams | ✓ |
+| Private Cloud | ✓ |  |  |  |
+| Public Cloud | ✓ |  | **Third Party Orchestrators** |  |
+| Azure | ✓ |  | OpenShift | ✓ |
+| Google Cloud | ✓ |  | BlueData | ✓ |
+| MacOS | ✓ |  | Mesos/Marathon/DCOS | ✓ |
+|  |  |  | Swarm | ✓ |
+| **Data Source Types** |  |  | Kubernetes | ✓ |
+| REST | ✓ |  |  |  |
+| Kafka | ✓ |  | **Model Management and AnalyticOps** |  |
+| File | ✓ |  | Store/Edit/Select Models | ✓ |
+| ODBC | ✓ |  | Store/Edit/Select Streams | ✓ |
+| HTTP | ✓ |  | Store/Edit/Select Schemas | ✓ |
+| Experimental (TCP/UDP/Exec) | ✓ |  |  |  |
+| Kafka (Authenticated) | ✓ |  | **Machine Learning Integration** |  |
+| S3 (Authenticated) | ✓ |  | R [ R ] | ✓ |
 |  |  |  | scikit-learn [ Python ] | ✓ |
-| **Data Encoding Formats** |  |  | ml.lib [POJO ] | ✓ |
-| Raw | ✓ |  | H2O [POJO] | ✓ |
-| JSON | ✓ |  | Tensorflow [ Python, R ] | ✓ |
-| Avro-binary | ✓ |  |  |  |
-| UTF-8 | ✓ |  | **Integration and Management Interfaces** |  |
-| SOAP/RPC | ✓ |  | RESTful API | ✓ |
-|  |  |  | GUI Dashboard | ✓ |
-| **Environment Management** |  |  | CLI | ✓ |
-| Import Policy | ✓ |  | Model deploy Jupyter | ✓ |
+| **Schema Definition Formats** |  |  | ml.lib [POJO ] | ✓ |
+| Avro Schema | ✓ |  | H2O [POJO] | ✓ |
+| Avro Schema Extensions (Restrictions) | ✓ |  | Tensorflow [ Python, R ] | ✓ |
 |  |  |  |  |  |
-| **FastScore SDK** |  |  | **Authentication and Access Control** |  |
-| Python 2 | ✓ |  | LDAP Authentication | ✓ |
-| Python 3 | ✓ |  | Dashboard LDAP Authentication | ✓ |
-| Scala/Java | ✓ |  | OAuth2/OIDC | ✓ |
+| **Data Encoding Formats** |  |  | **Integration and Management Interfaces** |  |
+| Raw | ✓ |  | RESTful API | ✓ |
+| JSON | ✓ |  | CLI | ✓ |
+| Avro-binary | ✓ |  | Model deploy Jupyter | ✓ |
+| UTF-8 | ✓ |  | GUI Dashboard | ✓ |
+| SOAP/RPC | ✓ |  |  |  |
+|  |  |  | **Authentication and Access Control** |  |
+| **Environment Management** |  |  | LDAP Authentication | ✓ |
+| Import Policy | ✓ |  | Dashboard LDAP Authentication | ✓ |
+|  |  |  | OAuth2/OIDC | ✓ |
+| **FastScore SDK** |  |  |  |  |
+| Python 2 | ✓ |  |  |  |
+| Python 3 | ✓ |  |  |  |
+| Scala/Java | ✓ |  |  |  |
 | Go | ✓ |  |  |
