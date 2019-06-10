@@ -28,7 +28,7 @@ Before we walk through how to conform and deploy a model, we will need the follo
 2. [FastScore CLI Installed](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20FastScore/#installing-the-fastscore-cli)
 3. [Example repo downloaded](https://github.com/opendatagroup/Getting-Started/tree/examples)
 
-This guide walks through a multi-class classification model that determines the species of iris based on four features: sepal length/width, petal length/width using the XGBoost framework. It is available in the repo above. 
+This guide walks through a multi-class classification model that returns a probability vector of the species of iris based on four features: sepal length/width, petal length/width using the XGBoost framework. It is available in the repo above. 
 
 To download the repo and setup the environment:
 
@@ -40,7 +40,7 @@ To download the repo and setup the environment:
 
 ## <a name="model-deployment-package"></a>Defining Model Deployment Package
 FastScore provides several key assets for deploying and managing a model throughout the Model Lifecycle. As a Data Scientist, we define these abstractions for a robust deployment of our model that can evolve during the productionalization process without intensive input from the Data Scientist downstream.   
-@STEPHEN please explain the example model
+
 
 
 | Asset                  | Description                                                                                                                                |
@@ -56,7 +56,7 @@ FastScore provides several key assets for deploying and managing a model through
 ## <a name="model-dependencies"></a>1. Model Dependencies
 FastScore Engine manages the deployment and running of the model within a Docker container. As part of the deployment process, we will need to build the dependenices for our model on top of the base FastScore Engine container.  This is a key piece for the Data Scientist to hand off to ModelOps to ensure the model can run downstream.  
 
-For our XGBoost example, we will need to build in the dependencies into the FastScore Engine. The `examples` branch's docker-compose file points to the pre-built image on Dockerhub, but here are the steps to manually add to follow for your model. The image is defined using the Dockerfile and requirements.txt in `Getting-Started/requirements/xgboost_iris`. To build the image in the local repo, run `docker build -t localrepo/engine:xgboost .` within the directory. We can then modify the docker-compose.yaml to have Engine 1 utilize the new Engine and redeploy with `make deploy`.
+For our XGBoost example, we will need to build in the dependencies into the FastScore Engine. The `examples` branch's docker-compose file points to the pre-built image on Dockerhub, but here are the steps to manually add to follow for your model. The image is defined using the Dockerfile and requirements.txt in `Getting-Started/requirements/xgboost_iris`. To build the image in the local repo, run `docker build -t localrepo/engine:xgboost .` within the directory. We can then modify the docker-compose.yaml to have Engine 1 utilize the new Engine and redeploy with `make`.
 
 Here are the key components that define the image: 
 
@@ -89,7 +89,7 @@ pandas==0.24.2
 Docker-compose.yaml
 ```
   engine-1:
-    image: localrepo/engine:xgboost
+    image: fastscore/engine:xgboost
     ports:
         - "8003:8003"
     volumes:
@@ -140,7 +140,7 @@ This will return the following, which we should save as `library/schemas/xgboost
 }
 ```
 
-For the output schema, our model will be our prediction as 3 floats which looks like this:
+For the output schema, our model will be our prediction as 3 floats representing the probability of the Iris being species (A,B, or C) which looks like this:
 ```
 {
 	"type": "record",
@@ -153,12 +153,17 @@ For the output schema, our model will be our prediction as 3 floats which looks 
 }
 ``` 
 
-We will save the that one as xgboost_iris_output.avsc. 
+We will save the that one as `library/schemas/xgboost_iris_output.avsc`. 
 
 And now we will add our schemas to Model Manage using the following commands:
 
 `fastscore schema add xgboost_iris_input library/schemas/xgboost_iris_input.avsc`
 `fastscore schema add xgboost_iris_output library/schemas/xgboost_iris_output.avsc`
+
+To test these schemas, we can verify them against the sample data:
+
+`fastscore schema verify <schema-name> <sample-data-file>`
+`fastscore schema verify xgboost_iris_input library/scripts/xgboost_iris_inputs.jsons`
 
 ## <a name="model-execution-script"></a>3. Model Execution Script
 Next, we're going to define the Model Execution Script, which will determine how the model predicts our output from the input data. This will be the key piece that pulls together and calls the other portions of our deployment package.
@@ -173,10 +178,9 @@ We'll need to define several pieces of the model execution script:
 3. Trained Model Artifact from Attachment - Loaded and made available for reference at the beginning of the script.
 4. Prediction Code - Activated when input data is received and writes to output.
 
+Tip: it's best practice to build a 'shell' or echo version of your model to validate the input and output data flow prior to adding in the prediction portions. This will allow us to validate and test the schemata and data flow of the model prior to introducing additional complexity of prediction. 
 
-Note: it's best practice to build a 'shell' or echo version of your model to validate the input and output data flow prior to adding in the prediction portions. This will allow us to validate and test the schemata and data flow of the model prior to introducing additional complexity of prediction. 
-
-Next, we add in the pieces for the actual prediction.
+Now, we define in the code for the actual prediction. Data coming in will be recieved from the input Stream to Slot(0). A prediction can be generated by a trained model which has been serialized as a pickle file in this example (`xgboost_explicit.pkl`). The predictions are then written to the output slot, Slot(1), and the Stream attached their. Note: this style of conformance assumes the data is received as batched records (e.g. dataframes in Pandas). 
 
 ```Python
 #fastscore.action: unused
@@ -214,13 +218,6 @@ Here are the options for moodel annotations in FastScore to control the behvaior
 | Disable Schema Checking | `# fastscore.schema.:<slot #>: in-use`  | Used during testing to disable schema checking          |
 
 For our example, the first annotation designates we will be using explict conformance rather than call-back conformance. Note: this model and guide focus on a new form of conformance for execution called 'explict conformance'. There is also the ability to utilize 'call-back conformance' which utilizes `begin` and `action` functions instead of the `slot` object as shown in [this example](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/). Both will run within the latest versions of the FastScore Engine. 
-
-Our next model annotations ties the input and output schemas to our slots. Lastly, we specify that xgboost is attached to make it available to the model at run time.
-
-In the next section of the script, we import the libraries we will need at run time. Note that these need to be made available in our Engine container in [Step 1](#model-dependencies).
-
-Now we define the input and output slot objects. These will control the scoring of the input data but XYZ - I NEED HELP
-
 
 Once we've defined this, we need to add the model execution script to FastScore with the following command:
 `fastscore model add <model-name> <source-file>`
@@ -282,7 +279,7 @@ head -10 library/scripts/xgboost_iris_inputs.jsons | fastscore model input
 fastscore model output
 ```
 
-Now we can see the output from our model!
+This model takes a minute to run, so give it a bit to run. Now we can see the output from our model!
 
 `{"A": 0.0032884993124753237, "B": 0.004323431756347418, "C": 0.992388129234314}`
 
@@ -296,8 +293,4 @@ To continue learning, check out some additional examples here:
 - [Gradient Boosting Regressor](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/)
 - [TensorFlow LTSM](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Tensorflow%20LSTM/)
 
-
 If you need support or have questions, please email us: support@opendatagroup.com
-
-
-
