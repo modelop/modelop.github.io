@@ -100,7 +100,7 @@ The following table shows how the model code sees input recordsets and how outpu
 Note: Both input and output recordsets options are on, and records are separated by new lines.
 
 | # | Input Recordset | Python Model | R Model | Output Recordset |
-| --- | --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
 | 1 | {"id": 100, "color": "red"} <br> {"id": 101, "color": "green"} <br> {"id": 102, "color": "grey"} | # color id <br> 0    red  100 <br> 1  green  101 <br> 2   grey  102 |  #  id color <br> 1 100   red <br> 2 101 green <br> 3 102  grey | {"id": 100, "color": "red"} <br> {"id": 101, "color": "green"} <br> {"id": 102, "color": "grey"} |
 | 2 | (empty) | Empty DataFrame <br> Columns: [] <br> Index: []  |data frame with 0 columns and 0 rows | (empty) |
 | 3 | 2 <br> 3 <br> 5 | 0  2 <br> 1  3 <br> 2  5 <br> dtype: int64 pandas.Series |   ---  [,1] <br> [1,]    2 <br> [2,]    3 <br> [3,]    5 | 2 <br> 3 <br> 5 |
