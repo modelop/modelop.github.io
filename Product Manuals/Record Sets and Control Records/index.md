@@ -114,7 +114,9 @@ Note: Both input and output recordsets options are on, and records are separated
 
 ## Streams and Control Records
 
-When using recordsets, the input and output Streams should also be configured for recordsets by adding the `"Batching":"explicit"` flag. For example, a valid input stream descriptor for the second example above might be:
+A input stream reads records in batches. If the recordsets flag is ON for an input slot of the model, these batches become recordsets consumed by the model. The Batching property of the stream descriptor controls when the engine decides that it has read enough records to form a new batch/recordset. Setting “Batching” to “explicit” tells the engine that it should form a recordsets only if it encounters a special end-of-recordset control records. 
+
+For example, a valid input stream descriptor for the second example above might be:
 ``` json
 {
   "Loop": false,
