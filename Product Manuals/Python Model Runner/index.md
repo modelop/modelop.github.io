@@ -8,7 +8,7 @@ FastScore supports the management and execution of both Python 2 and Python 3 mo
 
 ### References:
 
-- [Getting Started](/Getting Started/Getting Started with FastScore)
+- [Getting Started](/Getting Started/Conform and Deploy a Model/)
 - [Specifications](/Getting Started/FastScore Specs)
-- [Tutorial: Gradient Boosted Regressor](/Knowledge Center/Gradient Boosted Regressor)
+- [Tutorial: Gradient Boosted Regressor](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor)
 
