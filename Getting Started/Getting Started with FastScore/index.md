@@ -128,7 +128,9 @@ This displays a list of all of the FastScore CLI commands.
 
 ### <a name="section-start-fastscore-microservices-suite-with-docker-swarm-recommended-"></a>Start FastScore Microservices Suite with Docker Swarm (Recommended)
 
-We will be referencing files from the Getting-Started github repository found [here](https://github.com/opendatagroup/Getting-Started).
+We will be referencing files from the Getting-Started github repository found [here](https://github.com/opendatagroup/Getting-Started). Use the following command to clone the repo:
+`git clone https://github.com/opendatagroup/Getting-Started.git`
+
 This set up will use Docker Swarm to bring up the FastScore containers.
 
 Items in the repo:
