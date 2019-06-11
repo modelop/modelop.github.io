@@ -14,8 +14,8 @@ Note: the Python CLI will be deprecated, starting in FastScore version 2.x.
 **Download**: The FastScore Python CLI can be downloaded via the following:
 
 1. Pip:
-* From a command prompt, run ``pip install fastscore-cli``
-* Depending on your system, you may need to start a new shell session to ensure that pip has updated the $PATH for the FastScore CLI
+	* From a command prompt, run ``pip install fastscore-cli``
+	* Depending on your system, you may need to start a new shell session to ensure that pip has updated the $PATH for the FastScore CLI
 
 2. AWS: 
 	* Download from the following links:
