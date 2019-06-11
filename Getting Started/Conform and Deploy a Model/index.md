@@ -23,7 +23,7 @@ If you need support or have questions, please email us: support@opendatagroup.co
 5. [Next Steps](#next-steps)
 
 ## <a name="Prerequisites"></a>Pre-requisites
-Before we walk through how to conform and deploy a model, we will need the following before we begin:
+Before we walk through how to conform and deploy a model, we will need the following pre-requisites:
 
 1. [FastScore Environment Installed](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20FastScore/)
 2. [FastScore CLI Installed](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20FastScore/#installing-the-fastscore-cli)
@@ -52,15 +52,15 @@ FastScore provides several key assets for deploying and managing a model through
 | 1. Model Dependencies | Definition of the Runtime environment of the model with necessary dependencies for execution. |
 | 2. Schemas      | The definition of a Model’s type signature for inputs and outputs defined in Avro.                                              |
 |  3. Model Execution Script             | Model execution or prediction script that read input data from source, predicts, and writes output. |
-| 4. Attachments            | Binary objects, serialized model coefficients from training, that are attached to model and pulled into working directory upon deployment. |
-| 5. Streams                | Definition of the data input/ output that a model reads/ writes from/ to while executing (defined by Data Engineer in Dev).                |
+| 4. Attachments            | Binary objects, serialized model coefficients, or other artifacts from training that are required for model execution. FastScore pulls these attachments into a working directory upon deployment. |
+| 5. Streams                | Definition of the data input/output that a model reads/writes from/to while executing.                |
 
 
 
 ## <a name="model-dependencies"></a>1. Model Dependencies
-FastScore Engine manages the deployment and running of the model within a Docker container. As part of the deployment process, we will need to build the dependenices for our model on top of the base FastScore Engine container.  This is a key piece for the Data Scientist to hand off to ModelOps to ensure the model can run downstream.  
+FastScore Engine manages the deployment and running of the model within a Docker container. As part of the deployment process, we will need to build the dependenices for our model on top of the base FastScore Engine container.  This is a key piece for the Data Scientist to hand off to the Model Operations team to ensure the model can run downstream.  
 
-For our XGBoost example, we will need to build in the dependencies into the FastScore Engine. The `examples` branch's docker-compose file points to the pre-built image on Dockerhub, but here are the steps to manually add to follow for your model. The image is defined using the Dockerfile and requirements.txt in `Getting-Started/requirements/xgboost_iris`. To build the image in the local repo, run `docker build -t localrepo/engine:xgboost .` within the directory. We can then modify the docker-compose.yaml to have Engine 1 utilize the new Engine and redeploy with `make`.
+For our XGBoost example, we will need to build in the dependencies into the FastScore Engine. The `examples` branch's docker-compose file points to the pre-built image on Dockerhub, but here are the steps to manually add them for your model. The image is defined using the Dockerfile and requirements.txt in `Getting-Started/requirements/xgboost_iris`. To build the image in the local repo, run `docker build -t localrepo/engine:xgboost .` within the directory. We can then modify the docker-compose.yaml to have Engine 1 utilize the new Engine and redeploy with `make`.
 
 Here are the key components that define the image: 
 
@@ -108,7 +108,7 @@ Docker-compose.yaml
 The image is also avaiable on Dockerhub as `fastscore/engine:xgboost`.
 
 ## <a name="model-schema"></a>2. Defining Model Schema
-Next, we will define the Schemas for our input and output data. Schemata specify a “language-neutral type signature” for a model. We use these to define the handoff between the model and the data pipeline. Input/ output data will be validated against them and rejected if it does not match, giving us visibility of issues betweeen the model and the data pipeline. FastScore uses [Apache Avro](http://avro.apache.org/docs/current/) and they are defined in JSON files that are added to Model Manage. 
+Next, we will define the Schemas for our input and output data. Schemata specify a “language-neutral type signature” for a model. We use these to define the handoff between the model and the data pipeline. Input/output data will be validated against the schema and rejected if it does not match, giving us visibility of issues betweeen the model and the data pipeline. FastScore uses [Apache Avro](http://avro.apache.org/docs/current/) and they are defined in JSON files that are added to Model Manage. 
 
 With the FastScore CLI, we can infer the schema from a sample data record using the following command. 
 
@@ -184,7 +184,7 @@ We'll need to define several pieces of the model execution script:
 
 Tip: it's best practice to build a 'shell' or echo version of your model to validate the input and output data flow prior to adding in the prediction portions. This will allow us to validate and test the schemata and data flow of the model prior to introducing additional complexity of prediction. 
 
-Now, we define in the code for the actual prediction. Data coming in will be recieved from the input Stream to Slot(0). A prediction can be generated by a trained model which has been serialized as a pickle file in this example (`xgboost_explicit.pkl`). The predictions are then written to the output slot, Slot(1), and the Stream attached their. Note: this style of conformance assumes the data is received as batched records (e.g. dataframes in Pandas). 
+Now, we define in the code the actual prediction. Data coming in will be received from the input Stream to Slot(0). A prediction can be generated by a trained model which has been serialized as a pickle file in this example (`xgboost_explicit.pkl`). The predictions are then written to the output slot, Slot(1), and the Stream attached there. Note: this style of conformance assumes the data is received as batched records (e.g. dataframes in Pandas). 
 
 ```Python
 #fastscore.action: unused
@@ -221,7 +221,7 @@ Here are the options for moodel annotations in FastScore to control the behvaior
 | Module Attached         | `# fastscore.module-attached:<module-name>` | Disables the import policy checking for imported module |
 | Disable Schema Checking | `# fastscore.schema.:<slot #>: in-use`  | Used during testing to disable schema checking          |
 
-For our example, the first annotation designates we will be using explict conformance rather than call-back conformance. Note: this model and guide focus on a new form of conformance for execution called 'explict conformance'. There is also the ability to utilize 'call-back conformance' which utilizes `begin` and `action` functions instead of the `slot` object as shown in [this example](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/). Both will run within the latest versions of the FastScore Engine. 
+For our example, the first annotation designates we will not be using the 'call-back'-style conformance. Note: this model and guide focus on a new form of conformance that is released in Version 1.10. There is also the ability to use the 'call-back conformance' which utilizes `begin` and `action` functions instead of the `slot` object as shown in [this example](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/). Both will run within the latest versions of the FastScore Engine. 
 
 Once we've defined this, we need to add the model execution script to FastScore with the following command:
 `fastscore model add <model-name> <source-file>`
@@ -229,9 +229,9 @@ Once we've defined this, we need to add the model execution script to FastScore 
 
 
 ## <a name="model-execution-script"></a>4. Attachments
-Attachments consist of external files to be utilized during prediction or scoring. The contents of the attachment get extracted into the current working directory of the model execution script.  Attachments will be tracked in Model Manage and Git if we're using the integration so they should be under 20 mb. Larger artifacts can be added to the Engine via the Dockerfile. 
+Attachments consist of external files to be utilized during prediction or scoring. The contents of the attachment get extracted into the current working directory of the model execution script.  Attachments will be tracked in Model Manage and Git if we're using the integration, so they are recommended to be less than 20MB. Larger artifacts can be added to the Engine via the Dockerfile. 
 
-In our example, we reference `xgboost_explicit.pkl` which is our trainined model we will reference for predictions. FastScore will unpack the file in the working directory so the model can utilize it. To add it to FastScore, we upload it the model and add it to Model Manage with the following CLI command:
+In our example, we reference `xgboost_explicit.pkl` which is our trainined model that we will use for predictions. FastScore will unpack the file in the working directory so the model can utilize it. To add it to FastScore, we upload it the model and add it to Model Manage with the following CLI command:
 
 `fastscore attachment upload <model-name> <file-to-attach>`.  
 `fastscore attachment upload xgboost_iris-py3 library/attachments/xgboost_explicit.tar.gz`
@@ -240,7 +240,7 @@ In our example, we reference `xgboost_explicit.pkl` which is our trainined model
 ## <a name="model-execution-script"></a>5. Streams
 Streams in FastScore define the integration to our data pipeline. Streams will read records from underlying transport, verifies with the schema, and feeds them to the model. The streams are defined via JSON document that controls behavior and connection. For this example, we will be deploying and testing the model as REST. 
 
-In the next step, we will use the CLI to generate two arbirtary REST endpoints for testing the model, which is handy for testing. We can also define the REST stream as a JSON file to added and tracked in Model Manage:
+In the next step, we will use the CLI to generate two arbitrary REST endpoints for testing the model. While the arbitrary REST endpoints are not realistic for Production, they are an extremely handy approach for quick testing. We can also define the REST stream as a JSON file to be added and tracked in Model Manage:
 ``
 {
   "Transport": "REST",
@@ -296,5 +296,10 @@ At this point as a Data Scientist, we can confidently hand off the Model Deploym
 To continue learning, check out some additional examples here:
 - [Gradient Boosting Regressor](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/)
 - [TensorFlow LTSM](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Tensorflow%20LSTM/)
+
+Additionally, consult the detailed Product Reference documentation:
+- [Product Manuals] (Product%20Manuals)
+- [FastScore CLI Reference] (Reference/FastScore%20CLI)
+- [FastScore SDK Reference] (Reference/FastScore%20SDKs)
 
 If you need support or have questions, please email us: support@opendatagroup.com
