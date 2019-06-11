@@ -1,10 +1,10 @@
 ---
-title: "Getting Started with FastScore v1.9"
-description: "This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.9 of FastScore.\n\nIf you need support or have questions, please email us:  [support@opendatagroup.com](mailto:support@opendatagroup.com)"
+title: "Getting Started with FastScore v1.10"
+description: "This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.10 of FastScore.\n\nIf you need support or have questions, please email us: [support@opendatagroup.com](mailto:support@opendatagroup.com)"
 ---
 
-# Getting Started with FastScore v1.9
-This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.9 of FastScore.
+# Getting Started with FastScore v1.10
+This is a guide for installing and running FastScore. It contains instructions for first-time and novice users, as well as reference instructions for common tasks. This guide was last updated for v1.10 of FastScore.
 
 If you need support or have questions, please email us: support@opendatagroup.com
 
@@ -66,58 +66,71 @@ Once Docker has been installed, there are only a few steps needed to get FastSco
 Let's go through each step carefully.
 
 ### <a name="installing-the-fastscore-cli"></a>Installing the FastScore Command-Line Interface (CLI)
-The FastScore CLI can be downloaded and installed using the following commands:
+The FastScore CLI can be downloaded here:
+
+[Mac](https://fastscore-go-cli.s3.us-east-2.amazonaws.com/release/1.10/darwin/fastscore)
+[Linux](https://fastscore-go-cli.s3.us-east-2.amazonaws.com/release/1.10/linux/fastscore)
+[Windows](https://fastscore-go-cli.s3.us-east-2.amazonaws.com/release/1.10/windows/fastscore.exe)
+
+For Mac (Darwin) and Linux make it executable:
+`chmod +x fastscore`
+
+And finally add to $Path. For Mac users, copy to `/usr/local/bin/`.
+
+The CLI is a statically-linked binary written in Go. We also have a Python implementation of the CLI available [here](Reference/FastScore%20CLI/Python%20CLI).
+
+Once you've installed the FastScore CLI, check that it works by executing the following command in your terminal. Also see [FastScore Command Line Interface](https://opendatagroup.github.io/Reference/FastScore%20CLI/) for more information on the CLI commands.
 
 ``` bash
-pip install fastscore-cli
-```
+$ fastscore
+NAME:
+fastscore - Control FastScore from the command line.
 
-This will install the required dependencies. The FastScore CLI is a Python tool, so it doesn't need to be compiled, and the setup script should automatically add the CLI to `$PATH`.
+USAGE:
+fastscore [global options] command [command options] [arguments...]
 
+VERSION:
+v1.10
 
-> `python-pip`, `python-setuptools` and `python-dev` (i.e. header files) are required to properly install the FastScore CLI. These may or may not be already present on your system. If not, you will need to install them.
-> For example:
-> ``` bash
-> $ sudo apt-get install python-pip python-dev python-setuptools
-> ```
+COMMANDS:
+connect     Establish a FastScore Connection
+use         Select the target engine instance
+run         A shortcut for running a particular model and stream configuration
+config      Configure the FastScore fleet
+fleet       Examine status of the FastScore fleet
+model       Manage analytic models
+schema      Manage schemata
+stream      Manage streams
+sensor      Manage sensors
+engine      Manage engines
+attachment  Manage attachments
+pneumo      Print pneumo messages
+create      Create new FastScore services
+destroy     Destroy existing FastScore services
+conductor   Interact with the orchestrator
+composer    Create and manage workflows
+workflow    Create and manage workflows
+monitor     Monitor an engine
+login       Login to fastscore
+debug       Watch debugging messages
+stats       Get various statistics
+help, h     Shows a list of commands or help for one command
 
+GLOBAL OPTIONS:
+--help, -h     show help
+--version, -v  print the version
 
-Once you've installed the FastScore CLI, check that it works by executing the following command in your terminal. Also see [FastScore Command Line Interface](https://opendatagroup.github.io/Reference/FastScore%20CLI/) for more information on subcommands.
-
-``` bash
-$ fastscore help
-FastScore CLI v1.9.1
-Usage: fastscore <command> [<subcommand> ...]
-Available commands:
-  help             Explain commands and options
-  connect          Establish a FastScore connection
-  login            Authenticate a FastScore connection
-  config           Configure the FastScore fleet
-  fleet            Examine status of the FastScore fleet
-  use              Select the target instance
-  run              Run easy model setups
-  model            Manage analytic models
-  attachment       Manage model attachments
-  schema           Manage Avro schemas
-  snapshot         Manage model snapshots
-  policy           Manage import policies
-  stream           Manage streams/stream descriptors
-  engine           Manage engine state
-  sensor           Manage sensors/sensor descriptors
-  stats            Show assorted statistics
-  debug            Watch debugging messages
-  profile          Profile internal operations
-  pneumo           Access Pneumo messages
-  monitor          Monitor data processing
-Run 'fastscore help <command>' to get more details on <command> usage
+WEBSITE: http://www.opendatagroup.com
+SUPPORT: support@opendatagroup.com
 ```
 
 This displays a list of all of the FastScore CLI commands.
 
-
 ### <a name="section-start-fastscore-microservices-suite-with-docker-swarm-recommended-"></a>Start FastScore Microservices Suite with Docker Swarm (Recommended)
 
-We will be referencing files from the Getting-Started github repository found [here](https://github.com/opendatagroup/Getting-Started).
+We will be referencing files from the Getting-Started github repository found [here](https://github.com/opendatagroup/Getting-Started). Use the following command to clone the repo:
+`git clone https://github.com/opendatagroup/Getting-Started.git`
+
 This set up will use Docker Swarm to bring up the FastScore containers.
 
 Items in the repo:
@@ -148,10 +161,10 @@ View all Docker containers that are running with the ```docker ps``` command. Th
 ```bash
 CONTAINER ID        IMAGE                              COMMAND                  CREATED             STATUS              PORTS                                    NAMES
 14bfaee9100e        fastscore/model-manage-mysql:1.9   "sh -c 'cd /var/lib/…"   About an hour ago   Up About an hour                                             fs-vanilla_database.1.vb7bticmnpauo3hz6bor4r8qx
-ada9681679e8        fastscore/engine:1.9               "/fastscore/startup.…"   About an hour ago   Up About an hour                                             fs-vanilla_engine-2.1.ubonr83uuaqw2en4yk3lsc9w0
-880b6882742d        fastscore/engine:1.9               "/fastscore/startup.…"   About an hour ago   Up About an hour                                             fs-vanilla_engine-1.1.or1ocif21hfoej8xxfo5qykbm
-cb67e0090cf2        fastscore/connect:1.9              "bin/connect"            About an hour ago   Up About an hour                                             fs-vanilla_connect.1.wxswv0g8hojps2f2c0i5lc96l
-318eedda837a        fastscore/dashboard:1.9            "npm --no-update-not…"   About an hour ago   Up About an hour                                             fs-vanilla_dashboard.1.v7ia7we8qrwpyeawkk7jzg3se
+ada9681679e8        fastscore/engine:1.10               "/fastscore/startup.…"   About an hour ago   Up About an hour                                             fs-vanilla_engine-2.1.ubonr83uuaqw2en4yk3lsc9w0
+880b6882742d        fastscore/engine:1.10               "/fastscore/startup.…"   About an hour ago   Up About an hour                                             fs-vanilla_engine-1.1.or1ocif21hfoej8xxfo5qykbm
+cb67e0090cf2        fastscore/connect:1.10              "bin/connect"            About an hour ago   Up About an hour                                             fs-vanilla_connect.1.wxswv0g8hojps2f2c0i5lc96l
+318eedda837a        fastscore/dashboard:1.10            "npm --no-update-not…"   About an hour ago   Up About an hour                                             fs-vanilla_dashboard.1.v7ia7we8qrwpyeawkk7jzg3se
 b89be509f74d        fastscore/kafka:1.9                "/entry.sh"              About an hour ago   Up About an hour    2181/tcp, 2888/tcp, 3888/tcp, 9092/tcp   fs-vanilla_kafka.1.w1tc6grz7iil56x2b8pcdbjal
 84b4f75fccda        fastscore/model-manage:1.9         "bin/model_manage"       About an hour ago   Up About an hour                                             fs-vanilla_model-manage.1.o750isigzx7v17kwddn17nmzl
 ```
@@ -220,7 +233,7 @@ FastScore's Dashboard provides a convenient user interface for reviewing engine 
 
 First, if you are not running FastScore on your local machine (for example, if you have FastScore running on a cloud service platform), you will need to allow incoming and outgoing traffic on port 8000 (used by the FastScore Dashboard). You will also need to have configured FastScore as described in the previous section.
 
-To access the Dashboard, take your browser to the FastScore host machine at port 8000 using the HTTPS protocol (it won't work with HTTP). If all goes well , you will be greeted by this screen:
+To access the Dashboard, take your browser to the FastScore host machine at port 8000 using the HTTPS protocol (FastScore does not allow HTTP). If all goes well , you will be greeted by this screen:
 
 ![Home Screen](images/HomeScreen.png)
 *On the left-hand side of the Dashboard are four sections: engine-1, engine-2, model-manage-1, Connect. These correspond to the Engine microservices, the Model Manage microservice, and the Connect microservice. The green dots on the engines and model manage indicate that they are currently running correctly. If you have configured additional engine containers, they will also appear on the side.*
@@ -230,7 +243,7 @@ To access the Dashboard, take your browser to the FastScore host machine at port
 
 ## <a name="working-with-models-and-streams"></a>Working with Models and Streams
 
-FastScore is a streaming analytic engine: its core functionality is to read in records from a data stream, score them, and output that score to another data stream. As such, running any model consists of three steps:
+FastScore leverages a set of lightweight, but powerful abstractions to allow the deployment, monitoring, and management of models across frameworks, languages, platforms, and environments. These abstractions fundamentally allow models to read in records from a data stream, score them, and output that score to another data stream. As such, running any model consists of three steps:
 
 1. Loading models, streams, schemas, and sensors
 3. Setting Engine parameters
@@ -238,7 +251,7 @@ FastScore is a streaming analytic engine: its core functionality is to read in r
 
 ### <a name="section-creating-and-loading-assets-into-fastscore-model-manage"></a>Creating and Loading Assets into FastScore Model Manage
 
-Version 1.9 of FastScore supports models in Python, R, Java, MATLAB, [PFA](http://dmg.org/pfa/), [PrettyPFA](https://github.com/opendatagroup/hadrian/wiki/PrettyPFA-Reference) and C formats. Some setup steps differ slightly between Python/R models and PFA, Java, MATLAB, or C models. As a model interchange format, PFA can provide some benefits in performance, scalability, and security relative to R and Python. PrettyPFA is a human-readable equivalent to PFA. However, as the majority of users will be more familiar with R and Python, we focus on these two languages in this section.
+Version 1.10 of FastScore supports models in Python, R, Java, MATLAB, [PFA](http://dmg.org/pfa/), [PrettyPFA](https://github.com/opendatagroup/hadrian/wiki/PrettyPFA-Reference), H2O, PMML, and C formats. Some setup steps differ slightly between Python/R models and PFA, Java, MATLAB, or C models. As a model interchange format, PFA can provide some benefits in performance, scalability, and security relative to R and Python. PrettyPFA is a human-readable equivalent to PFA. However, as the majority of users will be more familiar with R and Python, we focus on these two languages in this section.
 
 #### Loading Assets
 The FastScore CLI allows a user to load models directly from the command line. The list of models currently loaded in FastScore can be viewed using the model list command:
@@ -260,7 +273,7 @@ The Dashboard provides functionality to add and manage models. To upload a model
 Additionally, models can be added, removed, inspected, and edited from the Models tab under Model Manage:
 
 ![Model Load](images/ModelLoad.png)
-*The screenshot above shows the model manager tab, and an existing "auto_gbm.py" model. Models can be removed, saved, created, uploaded, or downloaded from this view. Note that after creating or modifying a model in this view, it must still be selected for use from the Engine tab.*
+*The screenshot above shows the model manager tab, and an existing model in FastScore. Models can be removed, saved, created, uploaded, or downloaded from this view. Note that after creating or modifying a model in this view, it must still be selected for use from the Engine tab.*
 
 ### <a name="section-models-in-python-and-r"></a>Models in Python and R
 All models are added to FastScore and executed using the same CLI commands, namely:
@@ -269,7 +282,7 @@ All models are added to FastScore and executed using the same CLI commands, name
 fastscore model add <modelname> <path/to/model.extension>
 ```
 
-Note that, in order to determine whether a model is Python or R, Engine requires that it have an appropriate file extension (`.py` for Python, `.R` for R, `.pfa` for PFA, and `.ppfa` for PrettyPFA). Also, in order to score a Python/R model, there are certain constraints on the form the model must take.
+Note that, in order to determine whether a model is Python or R, Engine requires that it have an appropriate file extension (`.py` for Python, `.R` for R, `.pfa` for PFA, `.ppfa` for PrettyPFA, etc.). Also, in order to score a Python/R model, there are certain constraints on the form the model must take.
 
 FastScore includes both a Python2 and Python3 model runner. By default, `.py` files are interpreted as Python2 models---to load a Python3 model, use the file extension `.py3`, or the flag `-type:python3` option with `fastscore model add`:
 
@@ -277,10 +290,30 @@ FastScore includes both a Python2 and Python3 model runner. By default, `.py` fi
 fastscore model add -type:python3 my_py3_model path/to/model.py
 ```
 
-to add a Python3 model.
 
 #### Python Models
-Python models must declare a one-argument `action()` function. The minimal example of a Python model is the following:
+There are two ways to write models to run in FastScore for Python. 
+<b>Style 1</b>New in the 1.10 release, we now support an additional  style of conformance to make it easier for Data Scientist to get their models ready for deployment for even more classes of models. This style is geared for models that follow a classic pattern of: (a) read data in (b) perform a prediction, and (c) write the output to a consumer. This new approach uses  `slot` objects to control the scoring behavior of the model as shown in this example below.  For a full guide, refer to this How-to and example (LINK TO CONFORM DEPLOY).
+
+```python
+# fastscore.action: unused
+
+import cPickle
+import FeatureTransformer
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.pipeline import Pipeline
+
+from fastscore.io import Slot
+
+with open("gbmFit.pkl", "rb") as f:
+    gbm = cPickle.load(f)
+for df in Slot(0):
+    Slot(1).write(gbm.predict(df))
+
+```
+
+<b>Style 2:</b>
+An alternative approach that is well suited to a variety of REST-based paradigms is the existing 'call-back' style, which leverages `begin()` and `action()` functions controlling the prediction behavior. All Python models must declare a one-argument `action()` function. This function will be called everytime data is being score. The minimal example of a Python model is the following:
 
 ``` python
 # fastscore.input: input-schema
@@ -290,9 +323,11 @@ def action(datum):
     yield 0
 ```
 
-This model will produce a 0 for every input.
+This extremely simple model produces a 0 for every input.
 
-Additionally, Python models may declare `begin()` and `end()` functions, which are called at initialization and completion of the model, respectively. A slightly more sophisticated example of a Python model is the following:
+In addition, we can  declare a  `begin()` function, which is called when the model is initallly deployed into the Engine and awaiting data to score. 
+
+A slightly more sophisticated example of a Python model is the following:
 
 ``` python
 # fastscore.input: input-schema
@@ -315,7 +350,7 @@ def end():
     pass
 ```
 
-This model returns the sum of two numbers. Note that we are able to import Python's standard modules, such as the `pickle` module. Non-default packages can also be added using [Import Policies, as described here](https://opendatagroup.github.io/Product%20Manuals/Import%20Policies/). Custom classes and packages can be loaded using attachments, as described in the [Gradient Boosting Regressor tutorial](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/).
+This model returns the sum of two numbers. Note that we are able to import Python's standard modules, such as the `pickle` module. Non-default packages can also be added by using `#fastscore.module-attached: <module-nam>` once installed in the Engine via the Dockerfile. Custom classes and packages can be loaded using attachments, as described in the [Gradient Boosting Regressor tutorial](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/).
 
 #### R Models
 R models feature much of the same functionality as Python models, as well as the same constraint: the user must define an action function to perform the actual scoring. For example, the analogous model to the Python model above is
@@ -356,7 +391,7 @@ For example, a model that expects to receive records of two doubles as inputs mi
 }
 ```
 
-The model might then produce a stream of doubles  as its output:
+The model might then produce a stream of doubles as its output:
 
 ``` json
 {
@@ -371,11 +406,12 @@ Input and output schema must be uploaded separately to FastScore. To upload the 
 fastscore schema add input input.avsc
 fastscore schema add output output.avsc
 ```
+The 1.10 release also includes new funcitonality to automatically generate the schema from a sample data file using the `fastscore schema infer <data-file>`.  
 
-Attachments can also be managed from within the Dashboard, using the Model Manage view.
+Schemas can also be managed from within the Dashboard, using the Model Manage view.
 
 ### <a name="section-input-and-output-streams"></a>Input and Output Streams
-Before a model can be run, it has to have some data to run on. Input and output streams are used to supply the incoming data to the model, and to return the corresponding scores. Currently, ten types of stream transports are supported: file, Kafka, Authenticated Kafka, Executable, HTTP, TCP, UDP, ODBC, debug, and console streams. All of these types are configured using a Stream Descriptor file.
+Before a model can be run, it has to have some data to run on. Input and output streams are used to supply the incoming data to the model, and to return the corresponding scores. FastScore supports a wide variety of stream transports including: file, Kafka, Authenticated Kafka, Executable, HTTP, TCP, UDP, ODBC, debug, and console streams. All of these types are configured using a Stream Descriptor file.
 
 Stream Descriptors are small JSON files containing information about the stream. An example of a Stream Descriptor for a Kafka stream is displayed below:
 
@@ -443,7 +479,7 @@ For filestreams, it is easiest to manage container input and output by linking a
 [...]
 
   engine-1:
-    image: fastscore/engine:1.9
+    image: fastscore/engine:1.10
     network_mode: "host"
     environment:
       CONNECT_PREFIX: https://127.0.0.1:8001
@@ -474,21 +510,28 @@ A similar stream descriptor can be used for the output stream to write the outpu
 
 
 #### Streams via the Dashboard
-Analogously to models, streams can also be manipulated from the Dashboard. Selecting the "Streams" tab under Model Manage displays the following view:
+Analogously to models, streams can also be managed from the Dashboard. Selecting the "Streams" tab under Model Manage displays the following view:
 
 ![Streams](images/Streams.png)
-*On the left, existing Stream Descriptors are displayed. New Stream Descriptors can be added and existing ones edited from this view. The example above displays a simple file stream, which will load the `input_data.jsons` file located in the `/root/data directory` of the Engine Docker container.*
+*On the left, existing Stream Descriptors are displayed. New Stream Descriptors can be added and existing ones edited from this view. The example above displays a simple file stream, which will load the `schemaInputArrayDouble.jsons` file located in the `/tmp/data/` directory of the Engine Docker container.*
 
 ### <a name="section-engine-parameters"></a>Engine Parameters
 Engine parameters, such as the number of Engine instances currently running, as well as information about the model, are displayed on the Dashboard Engine tab.
 
 ### <a name="section-running-a-model-in-fastscore"></a>Running a Model in FastScore
-When using the Dashboard, models will begin scoring as soon as both the model and input/output streams are set from the Engine tab, and no further action from the user is required. Various statistics about performance and memory usage are displayed on the Engine tab.
-To run a model using the FastScore CLI, use the `fastscore job` sequence of commands:
+When using the Dashboard, models will begin scoring as soon as both the model and input/output streams are set from the Engine tab, and no further action from the user is required. Various statistics about performance and throughput are displayed on the Engine tab.
 
-  * `fastscore job run <model-name> <input-stream-name> <output-stream-name>` runs the model named `<model-name>` with the specified input and output streams.
-  * `fastscore job stop` halts the currently running model.
-  * `fastscore job status` and `fastscore job statistics` display various information about the currently running job.
+To run a model using the FastScore CLI, use the `fastscore run` sequence of commands:
+* `fastscore use engine-1` selects the Engine where we will deploy the model.
+* `fastscore engine reset` refreshes the Engine to make it ready for deployment.
+* `fastscore run <model-name> <input-stream-name> <output-stream-name>` runs the model named `<model-name>` with the specified input and output streams.
+* `fastscore run <model-name> rest: rest:` You can also use `rest:` instead of the stream name to deploy the model with a generated REST endpoint.
+* `fastscore model interact` allows you to send sample data and recieve the output back from the CLI.
+* `fastscore engine stop` halts the currently running model.
+* `fastscore engine inspect`  displays the status of the Engine. If the Engine is in the `ERROR` state, view the Docker Logs to view the error message. 
+
 Some of the statistics displayed by the `fastscore job statistics` command, such as memory usage, are also shown on the Dashboard.
 
-This concludes the FastScore Getting Started guide. Additional FastScore API documentation is available at [https://opendatagroup.github.io/Reference/FastScore%20API/](https://opendatagroup.github.io/Reference/FastScore%20API/). Happy scoring!
+This concludes the FastScore Getting Started guide. Now that you're familar with FastScore, check out our guide on [Conforming and Deploying a Model](LINK) for a detailed walkthrough to help you get your model ready for deployment in FastScore!
+
+Additional FastScore API documentation is available at [https://opendatagroup.github.io/Reference/FastScore%20API/](https://opendatagroup.github.io/Reference/FastScore%20API/). Happy scoring!

@@ -7,7 +7,9 @@ css: buttondown.css
 # FastScore CLI
 FastScore exposes a CLI that is built using Go, allowing end users to interface with FastScore micro services via CLI. The Go CLI is the primary supported FastScore CLI. 
 
-For 1.x versions of FastScore, there is also a Python CLI ( [Python CLI reference](/Python CLI/) ). However, the Python CLI will be deprecated, starting in FastScore version 2.x.
+
+For 1.x versions of FastScore, there is also a Python CLI ([Python CLI reference](/Python CLI/)). However, the Python CLI will be deprecated, starting in FastScore version 2.x.
+
 
 ## Installation Instructions
 

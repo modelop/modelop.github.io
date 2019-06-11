@@ -16,18 +16,16 @@ Welcome to Open Data Group's documentation!
 
 - [FastScore Getting Started Guide](/Getting Started/Getting Started with FastScore)
 - [FastScore Specifications](/Getting Started/FastScore Specs/)
+- [Tutorials](/Knowledge Center/Tutorials/)
+- [Conform and Deploy a Model](/Getting Started/Conform and Deploy a Model)
+- [FastScore Terms Glossary](/Glossary/)
+
+### Product Versions
 - [1.10 Release Notes](/Getting Started/Release Notes/)
 
-### Knowledge Center
 
-- [Tutorials](/Knowledge Center/Tutorials/)
-- [FastScore Interactive Scenarios](/Knowledge Center/Katacoda/)
 
-### Glossary
-
-- [FastScore Glossary](/Glossary/)
-
-### FastScore Product Manuals
+### FastScore Microservices 
 
 - [FastScore Engine](/Product Manuals/Engine/)
 - [FastScore Lineage](/Product Manuals/Lineage/)
@@ -37,13 +35,21 @@ Welcome to Open Data Group's documentation!
 - [FastScore Manage](/Product Manuals/Manage/)
 - [FastScore Compare](/Product Manuals/Compare/)
 
-#### Configurations and Settings
+
+
+### Reference
+
+#### Interfacing with FastScore
+- [FastScore SDKs](/Reference/FastScore SDKs/)
+- [FastScore API](/Reference/FastScore API/)
+- [FastScore CLI](/Reference/FastScore CLI/)
+
+#### Configurations and Advanced Functionality
 
 - [Fastscore Configuration](/Product Manuals/Configuration/)
 - [Model Annotations](/Product Manuals/Model Annotations/)
 - [Schema Reference](/Product Manuals/Schema Reference/)
 - [Sensors](/Product Manuals/Sensors/)
-- [Import Policies](/Product Manuals/Import Policies/)
 - [State Sharing and Snapshotting](/Product Manuals/State Sharing and Snapshotting/)
 - [Record Sets and Control Records](/Product Manuals/Record Sets and Control Records/)
 - [GitHub Integration](/Product Manuals/Github Integration/)
@@ -63,13 +69,7 @@ Welcome to Open Data Group's documentation!
 - [Multiple Input and Output Streams](/Product Manuals/Multiple Input and Output Streams/)
 - [CSV Support](/Product Manuals/CSV Support/)
 
-### Reference
-
-- [FastScore SDKs](/Reference/FastScore SDKs/)
-- [FastScore API](/Reference/FastScore API/)
-- [FastScore CLI](/Reference/FastScore CLI/)
-
-## Other Projects
+### Other Projects
 
 ### Hadrian and Titus (PFA)
 
