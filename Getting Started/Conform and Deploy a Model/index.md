@@ -1,11 +1,12 @@
+---
 title: "Conform and Deploy a Model"
 description: "This is a step by step guide for conforming and deploying a model in FastScore. It contains instructions for data scientists to prepare, deploy and test their model. This guide was last updated for v1.10 of FastScore.\n\nIf you need support or have questions, please email us:  [support@opendatagroup.com](mailto:support@opendatagroup.com)"
 ---
 
-# Conform and deploying a Model
+# How-to: Conform and Deploy a Model
 This is a step by step guide for conforming and deploying a model in FastScore. It contains instructions for data scientists to prepare, deploy and test their model. This guide was last updated for v1.10 of FastScore. 
 
-As we go, we will be referring to an example XGBoost model available in the `examples` branch of this repo (https://github.com/opendatagroup/Getting-Started/tree/examples).
+As we go, we will be referring to an example XGBoost model available in the `examples` branch of [this repo](https://github.com/opendatagroup/Getting-Started/tree/examples).
 
 If you need support or have questions, please email us: support@opendatagroup.com
 
@@ -32,10 +33,13 @@ This guide walks through a multi-class classification model that returns a proba
 
 To download the repo and setup the environment:
 
-`git clone https://github.com/opendatagroup/Getting-Started.git`
-`cd Getting-Started`
-`git checkout examples`
-`make`
+```bash
+git clone https://github.com/opendatagroup/Getting-Started.git
+cd Getting-Started
+git checkout examples
+make
+```
+
 	
 
 ## <a name="model-deployment-package"></a>Defining Model Deployment Package
@@ -234,7 +238,7 @@ In our example, we reference `xgboost_explicit.pkl` which is our trainined model
 
 
 ## <a name="model-execution-script"></a>5. Streams
-Streams in FastScore define the integration to our data pipeline. Streams will read records from underlying transport, verifies with the schema, and feeds them to the model. The streams are defined via JSON document that controls behavior and connection. For this example, we will be deploying and testing the model as REST. A full guide for building and deploying streams can be found [here](STREAMGUIDE). 
+Streams in FastScore define the integration to our data pipeline. Streams will read records from underlying transport, verifies with the schema, and feeds them to the model. The streams are defined via JSON document that controls behavior and connection. For this example, we will be deploying and testing the model as REST. 
 
 In the next step, we will use the CLI to generate two arbirtary REST endpoints for testing the model, which is handy for testing. We can also define the REST stream as a JSON file to added and tracked in Model Manage:
 ``
@@ -287,7 +291,7 @@ Troubleshooting Tip: If the output command returns nothing, use `fastscore engin
 
 
 ## <a name="next-steps"></a>Next Steps
-At this point as a Data Scientist, we can confidently hand off the Model Deployment Package to the Data Engineering or ModelOps team knowing it's ready for operationalization and productionalization. The next step for this model will be [Defining the Streams](#STREAMGUIDE) that integrate with our Data Pipeline. 
+At this point as a Data Scientist, we can confidently hand off the Model Deployment Package to the Data Engineering or ModelOps team knowing it's ready for operationalization and productionalization. 
 
 To continue learning, check out some additional examples here:
 - [Gradient Boosting Regressor](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/)

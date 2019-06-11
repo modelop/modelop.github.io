@@ -17,11 +17,12 @@ Welcome to Open Data Group's documentation!
 - [FastScore Getting Started Guide](/Getting Started/Getting Started with FastScore)
 - [FastScore Specifications](/Getting Started/FastScore Specs/)
 - [Tutorials](/Knowledge Center/Tutorials/)
+- [Conform and Deploy a Model](/Getting Started/Conform and Deploy a Model)
 - [FastScore Terms Glossary](/Glossary/)
 
 ### Product Versions
-- [1.9 Release Notes](/Getting Started/Release Notes/)
 - [1.10 Release Notes](/Getting Started/Release Notes/)
+
 
 
 ### FastScore Microservices 
