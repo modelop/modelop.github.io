@@ -228,7 +228,7 @@ Once we've defined this, we need to add the model execution script to FastScore 
 `fastscore model add xgboost_iris-py3 library/models/xgboost_iris.py3`
 
 
-## <a name="model-execution-script"></a>4. Attachments
+## <a name="attachments"></a>4. Attachments
 Attachments consist of external files to be utilized during prediction or scoring. The contents of the attachment get extracted into the current working directory of the model execution script.  Attachments will be tracked in Model Manage and Git if we're using the integration, so they are recommended to be less than 20MB. Larger artifacts can be added to the Engine via the Dockerfile. 
 
 In our example, we reference `xgboost_explicit.pkl` which is our trainined model that we will use for predictions. FastScore will unpack the file in the working directory so the model can utilize it. To add it to FastScore, we upload it the model and add it to Model Manage with the following CLI command:
