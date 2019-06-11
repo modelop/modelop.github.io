@@ -67,7 +67,7 @@ fastscore <command> <subcommand> ...
 * [fastscore profile](#profile)
 * [fastscore pneumo](#pneumo)
 * [fastscore monitor](#monitor)
-* [URL-like stream descriptors] (#literal-streams)
+* [URL-like stream descriptors](#literal-streams)
 
 ## Getting help
 <a name="help"></a>
