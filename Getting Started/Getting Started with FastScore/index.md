@@ -77,7 +77,7 @@ For Mac (Darwin) and Linux make it executable:
 
 And finally add to $Path. For Mac users, copy to `/usr/local/bin/`.
 
-The CLI is a statically binary written in Go. We also have a Python implementation of the CLI available [here](LINK TO PYTHON).
+The CLI is a statically-linked binary written in Go. We also have a Python implementation of the CLI available [here](Reference/FastScore%20CLI/Python%20CLI).
 
 Once you've installed the FastScore CLI, check that it works by executing the following command in your terminal. Also see [FastScore Command Line Interface](https://opendatagroup.github.io/Reference/FastScore%20CLI/) for more information on the CLI commands.
 
@@ -231,7 +231,7 @@ FastScore's Dashboard provides a convenient user interface for reviewing engine 
 
 First, if you are not running FastScore on your local machine (for example, if you have FastScore running on a cloud service platform), you will need to allow incoming and outgoing traffic on port 8000 (used by the FastScore Dashboard). You will also need to have configured FastScore as described in the previous section.
 
-To access the Dashboard, take your browser to the FastScore host machine at port 8000 using the HTTPS protocol (it won't work with HTTP). If all goes well , you will be greeted by this screen:
+To access the Dashboard, take your browser to the FastScore host machine at port 8000 using the HTTPS protocol (FastScore does not allow HTTP). If all goes well , you will be greeted by this screen:
 
 ![Home Screen](images/HomeScreen.png)
 *On the left-hand side of the Dashboard are four sections: engine-1, engine-2, model-manage-1, Connect. These correspond to the Engine microservices, the Model Manage microservice, and the Connect microservice. The green dots on the engines and model manage indicate that they are currently running correctly. If you have configured additional engine containers, they will also appear on the side.*
@@ -241,7 +241,7 @@ To access the Dashboard, take your browser to the FastScore host machine at port
 
 ## <a name="working-with-models-and-streams"></a>Working with Models and Streams
 
-FastScore is a streaming analytic engine: its core functionality is to read in records from a data stream, score them, and output that score to another data stream. As such, running any model consists of three steps:
+FastScore leverages a set of lightweight, but powerful abstractions to allow the deployment, monitoring, and management of models across frameworks, languages, platforms, and environments. These abstractions fundamentally allow models to read in records from a data stream, score them, and output that score to another data stream. As such, running any model consists of three steps:
 
 1. Loading models, streams, schemas, and sensors
 3. Setting Engine parameters
@@ -249,7 +249,7 @@ FastScore is a streaming analytic engine: its core functionality is to read in r
 
 ### <a name="section-creating-and-loading-assets-into-fastscore-model-manage"></a>Creating and Loading Assets into FastScore Model Manage
 
-Version 1.10 of FastScore supports models in Python, R, Java, MATLAB, [PFA](http://dmg.org/pfa/), [PrettyPFA](https://github.com/opendatagroup/hadrian/wiki/PrettyPFA-Reference) and C formats. Some setup steps differ slightly between Python/R models and PFA, Java, MATLAB, or C models. As a model interchange format, PFA can provide some benefits in performance, scalability, and security relative to R and Python. PrettyPFA is a human-readable equivalent to PFA. However, as the majority of users will be more familiar with R and Python, we focus on these two languages in this section.
+Version 1.10 of FastScore supports models in Python, R, Java, MATLAB, [PFA](http://dmg.org/pfa/), [PrettyPFA](https://github.com/opendatagroup/hadrian/wiki/PrettyPFA-Reference), H2O, PMML, and C formats. Some setup steps differ slightly between Python/R models and PFA, Java, MATLAB, or C models. As a model interchange format, PFA can provide some benefits in performance, scalability, and security relative to R and Python. PrettyPFA is a human-readable equivalent to PFA. However, as the majority of users will be more familiar with R and Python, we focus on these two languages in this section.
 
 #### Loading Assets
 The FastScore CLI allows a user to load models directly from the command line. The list of models currently loaded in FastScore can be viewed using the model list command:
@@ -280,7 +280,7 @@ All models are added to FastScore and executed using the same CLI commands, name
 fastscore model add <modelname> <path/to/model.extension>
 ```
 
-Note that, in order to determine whether a model is Python or R, Engine requires that it have an appropriate file extension (`.py` for Python, `.R` for R, `.pfa` for PFA, and `.ppfa` for PrettyPFA). Also, in order to score a Python/R model, there are certain constraints on the form the model must take.
+Note that, in order to determine whether a model is Python or R, Engine requires that it have an appropriate file extension (`.py` for Python, `.R` for R, `.pfa` for PFA, `.ppfa` for PrettyPFA, etc.). Also, in order to score a Python/R model, there are certain constraints on the form the model must take.
 
 FastScore includes both a Python2 and Python3 model runner. By default, `.py` files are interpreted as Python2 models---to load a Python3 model, use the file extension `.py3`, or the flag `-type:python3` option with `fastscore model add`:
 
@@ -288,10 +288,10 @@ FastScore includes both a Python2 and Python3 model runner. By default, `.py` fi
 fastscore model add -type:python3 my_py3_model path/to/model.py
 ```
 
-to add a Python3 model.
 
 #### Python Models
-There are two ways to write models to run in FastScore for Python. New in the 1.10 release, we now support a new style of conformance to make it easier for Data Scientist to get their models ready for deployment. This new approach uses  `slot` objects to control the scoring behavior of the model as shown in this example below.  For a full guide, refer to this How-to and example (LINK TO CONFORM DEPLOY).
+There are two ways to write models to run in FastScore for Python. 
+<b>Style 1</b>New in the 1.10 release, we now support an additional  style of conformance to make it easier for Data Scientist to get their models ready for deployment for even more classes of models. This style is geared for models that follow a classic pattern of: (a) read data in (b) perform a prediction, and (c) write the output to a consumer. This new approach uses  `slot` objects to control the scoring behavior of the model as shown in this example below.  For a full guide, refer to this How-to and example (LINK TO CONFORM DEPLOY).
 
 ```python
 # fastscore.action: unused
@@ -310,7 +310,8 @@ for df in Slot(0):
 
 ```
 
-Another approach utilizes a 'call-back' style with `begin()` and `action()` functions controling the prediction behavior. All Python models must declare a one-argument `action()` function. This function will be called everytime data is being score. The minimal example of a Python model is the following:
+<b>Style 2:</b>
+An alternative approach that is well suited to a variety of REST-based paradigms is the existing 'call-back' style, which leverages `begin()` and `action()` functions controlling the prediction behavior. All Python models must declare a one-argument `action()` function. This function will be called everytime data is being score. The minimal example of a Python model is the following:
 
 ``` python
 # fastscore.input: input-schema
@@ -320,9 +321,11 @@ def action(datum):
     yield 0
 ```
 
-This model will produce a 0 for every input.
+This extremely simple model produces a 0 for every input.
 
-In addition, we can  declare a  `begin()` functions, which is called when the model is initallly deployed into the Engine and awaiting data to score. A slightly more sophisticated example of a Python model is the following:
+In addition, we can  declare a  `begin()` function, which is called when the model is initallly deployed into the Engine and awaiting data to score. 
+
+A slightly more sophisticated example of a Python model is the following:
 
 ``` python
 # fastscore.input: input-schema
@@ -406,7 +409,7 @@ The 1.10 release also includes new funcitonality to automatically generate the s
 Schemas can also be managed from within the Dashboard, using the Model Manage view.
 
 ### <a name="section-input-and-output-streams"></a>Input and Output Streams
-Before a model can be run, it has to have some data to run on. Input and output streams are used to supply the incoming data to the model, and to return the corresponding scores. Currently, ten types of stream transports are supported: file, Kafka, Authenticated Kafka, Executable, HTTP, TCP, UDP, ODBC, debug, and console streams. All of these types are configured using a Stream Descriptor file.
+Before a model can be run, it has to have some data to run on. Input and output streams are used to supply the incoming data to the model, and to return the corresponding scores. FastScore supports a wide variety of stream transports including: file, Kafka, Authenticated Kafka, Executable, HTTP, TCP, UDP, ODBC, debug, and console streams. All of these types are configured using a Stream Descriptor file.
 
 Stream Descriptors are small JSON files containing information about the stream. An example of a Stream Descriptor for a Kafka stream is displayed below:
 
@@ -505,7 +508,7 @@ A similar stream descriptor can be used for the output stream to write the outpu
 
 
 #### Streams via the Dashboard
-Analogously to models, streams can also be manipulated from the Dashboard. Selecting the "Streams" tab under Model Manage displays the following view:
+Analogously to models, streams can also be managed from the Dashboard. Selecting the "Streams" tab under Model Manage displays the following view:
 
 ![Streams](images/Streams.png)
 *On the left, existing Stream Descriptors are displayed. New Stream Descriptors can be added and existing ones edited from this view. The example above displays a simple file stream, which will load the `schemaInputArrayDouble.jsons` file located in the `/tmp/data/` directory of the Engine Docker container.*
@@ -514,7 +517,7 @@ Analogously to models, streams can also be manipulated from the Dashboard. Selec
 Engine parameters, such as the number of Engine instances currently running, as well as information about the model, are displayed on the Dashboard Engine tab.
 
 ### <a name="section-running-a-model-in-fastscore"></a>Running a Model in FastScore
-When using the Dashboard, models will begin scoring as soon as both the model and input/output streams are set from the Engine tab, and no further action from the user is required. Various statistics about performance and memory usage are displayed on the Engine tab.
+When using the Dashboard, models will begin scoring as soon as both the model and input/output streams are set from the Engine tab, and no further action from the user is required. Various statistics about performance and throughput are displayed on the Engine tab.
 
 To run a model using the FastScore CLI, use the `fastscore run` sequence of commands:
 * `fastscore use engine-1` selects the Engine where we will deploy the model.
