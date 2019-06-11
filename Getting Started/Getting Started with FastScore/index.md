@@ -77,7 +77,7 @@ For Mac (Darwin) and Linux make it executable:
 
 And finally add to $Path. For Mac users, copy to `/usr/local/bin/`.
 
-The CLI is a statically-linked binary written in Go. We also have a Python implementation of the CLI available [here](Reference/FastScore%20CLI/Python%20CLI).
+The CLI is a statically-linked binary written in Go. We also have a Python implementation of the CLI available [here](https://opendatagroup.github.io/Reference/FastScore%20CLI/Python%20CLI).
 
 Once you've installed the FastScore CLI, check that it works by executing the following command in your terminal. Also see [FastScore Command Line Interface](https://opendatagroup.github.io/Reference/FastScore%20CLI/) for more information on the CLI commands.
 
@@ -532,6 +532,6 @@ To run a model using the FastScore CLI, use the `fastscore run` sequence of comm
 
 Some of the statistics displayed by the `fastscore job statistics` command, such as memory usage, are also shown on the Dashboard.
 
-This concludes the FastScore Getting Started guide. Now that you're familar with FastScore, check out our guide on [Conforming and Deploying a Model](LINK) for a detailed walkthrough to help you get your model ready for deployment in FastScore!
+This concludes the FastScore Getting Started guide. Now that you're familar with FastScore, check out our guide on [Conforming and Deploying a Model](https://opendatagroup.github.io/Getting%20Started/Conform%20and%20Deploy%20a%20Model/) for a detailed walkthrough to help you get your model ready for deployment in FastScore!
 
 Additional FastScore API documentation is available at [https://opendatagroup.github.io/Reference/FastScore%20API/](https://opendatagroup.github.io/Reference/FastScore%20API/). Happy scoring!
