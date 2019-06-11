@@ -7,19 +7,27 @@ css: buttondown.css
 # FastScore CLI
 FastScore exposes a CLI that is built using Go, allowing end users to interface with FastScore micro services via CLI. The Go CLI is the primary supported FastScore CLI. 
 
-For 1.x versions of FastScore, there is also a Python CLI ([Python CLI reference](/PythonCLI)). However, the Python CLI will be deprecated, starting in FastScore version 2.x.
+For 1.x versions of FastScore, there is also a Python CLI ( [Python CLI reference](/Python CLI/) ). However, the Python CLI will be deprecated, starting in FastScore version 2.x.
 
 ## Installation Instructions
 
-**Download**: The FastScore CLI can be downloaded via the following:
+1. Download the CLI here:
 
-* [Linux](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/linux/fastscore)
-* [Darwin](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/darwin/fastscore)
-* [Windows](https://s3.us-east-2.amazonaws.com/fastscore-go-cli/release/1.9/windows/fastscore.exe)
+    * [Darwin](https://fastscore-go-cli.s3.us-east-2.amazonaws.com/release/1.10/darwin/fastscore)
+    * [Linux](https://fastscore-go-cli.s3.us-east-2.amazonaws.com/release/1.10/linux/fastscore)
+    * [Windows](https://fastscore-go-cli.s3.us-east-2.amazonaws.com/release/1.10/windows/fastscore.exe)
 
-**Configuration:**
+2. For Mac (Darwin) and Linux make it executable:
 
-1.. 
+    ```
+    chmod +x fastscore
+    ```
+
+3. Add to $Path
+
+    For Macs: /usr/local/bin/fastscore
+
+4. Confirm proper installation with fastscore
 
 
 # FastScore CLI User Guide
@@ -27,127 +35,202 @@ For 1.x versions of FastScore, there is also a Python CLI ([Python CLI reference
 This guide describes the complete set of commands and options supported by the
 FastScore CLI.
 
-The general syntax of the CLI command is:
-
-```
-fastscore <command> <subcommand> ...
-```
-
 ## Command index
 
-* [fastscore help](#help)
 * [fastscore connect](#connect)
-* [fastscore login](#login)
-* [fastscore config set/show](#config)
-* [fastscore fleet](#fleet)
 * [fastscore use](#use)
-* [fastscore model add/show/list/remove](#model-mgmt)
-* [fastscore model load/unload/verify/inspect](#model-load)
-* [fastscore model scale](#model-scale)
-* [fastscore attachment upload/download/list/remove](#attachment)
-* [fastscore stream add/show/list/remove](#stream-mgmt)
-* [fastscore stream attach/detach/verify/inspect](#stream-attach)
-* [fastscore stream sample](#stream-sample)
-* [fastscore schema add/show/list/remove](#schema-mgmt)
-* [fastscore schema verify](#schema-verify)
-* [fastscore sensor add/show/list/remove](#sensor-mgmt)
-* [fastscore sensor install/uninstall/inspect/points](#sensor-install)
-* [fastscore engine reset/inspect/pause/unpause](#engine-state)
-* [fastscore run](#run-simple)
-* [fastscore snapshot list/show/remove](#snapshot-mgmt)
-* [fastscore snapshot restore](#snapshot-restore)
-* [fastscore policy set/show](#policy)
-* [fastscore stats](#stats)
-* [fastscore debug](#debug)
-* [fastscore profile](#profile)
+* [fastscore run](#run)
+* [fastscore config](#config)
+* [fastscore fleet](#fleet)
+* [fastscore model](#model)
+* [fastscore schema](#schema)
+* [fastscore stream](#stream)
+* [fastscore sensor](#sensor)
+* [fastscore engine](#engine)
+* [fastscore attachment](#attachment)
 * [fastscore pneumo](#pneumo)
 * [fastscore monitor](#monitor)
-* [URL-like stream descriptors] (#literal-streams)
-
-## Getting help
-<a name="help"></a>
-
-```
-fastscore help
-fastscore help <command>
-fastscore help options
-```
-
-The `help` command prints a list of available commands or a syntax synposis
-for a specific command. The `help options` command produces a list of supported
-options.
-
-## Command options
-
-Command options start with '-' character. Note that, `-wait` is a proper
-option, not `--wait`. An option can be placed anywhere on the command line.
-
-Most options are command-specific. They are explained along with the
-corresponding command. Some options are applicable to all commands:
-
-Option | Description
--------|------------
-`-v` | Be verbose
-`-json` | Represent output as JSON - handy for scripts
-
-Example:
+* [fastscore login](#login)
+* [fastscore debug](#debug)
+* [fastscore stats](#stats)
 
 ```
-$ fastscore fleet -v -json
-[
-  {
-    "name": "engine-1",
-    "port": 8003,
-    "built_on": "Sun Nov 12 11:51:46 UTC 2017",
-    "host": "engine",
-    "api": "engine",
-    "health": "ok",
-    "release": "1.7",
-    "id": "426e83fb-7012-4906-9c0e-a58a7a380635"
-  },
-  ...
+NAME:
+   fastscore - Control FastScore from the command line.
+
+USAGE:
+   fastscore [global options] command [command options] [arguments...]
+
+VERSION:
+   v1.10
+
+COMMANDS:
+     connect     Establish a FastScore Connection
+     use         Select the target engine instance
+     run         A shortcut for running a particular model and stream configuration
+     config      Configure the FastScore fleet
+     fleet       Examine status of the FastScore fleet
+     model       Manage analytic models
+     schema      Manage schemata
+     stream      Manage streams
+     sensor      Manage sensors
+     engine      Manage engines
+     attachment  Manage attachments
+     pneumo      Print pneumo messages
+     create      Create new FastScore services
+     destroy     Destroy existing FastScore services
+     conductor   Interact with the orchestrator
+     composer    Create and manage workflows
+     workflow    Create and manage workflows
+     monitor     Monitor an engine
+     login       Login to fastscore
+     debug       Watch debugging messages
+     stats       Get various statistics
+     help, h     Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --help, -h     show help
+   --version, -v  print the version
+
+WEBSITE: http://www.opendatagroup.com
+SUPPORT: support@opendatagroup.com
 ```
 
 ## Connecting to FastScore
 <a name="connect"></a>
 
 ```
-fastscore connect <location> [ -nowait ]
+fastscore connect [command options] <prefix>
+```
+
+```
+OPTIONS:
+   --verbose, -V  Be verbose
+   --nowait       Do not retry connecting.
 ```
 
 The command establishes a connection between the command line interface and the
-FastScore deployment. The `<location>` is the URL of the FastScore proxy, e.g.
-`https://1.2.3.4:8000`. The command saves the location to the file named
-`.fastscore` in the home directory. The subsequent commands use the saved
-location.
+FastScore deployment. The `<prefix>` is the URL of the FastScore proxy, e.g.
+`https://1.2.3.4:8000`. 
 
-By default, the command waits for the provided location to become available. Use
-`-nowait` option to disable the check and return immediately.
+By default, the command waits for the provided prefix to become available. Use
+`--nowait` option to disable the check and return immediately.
 
 Example:
 
 ```
-$ fastscore connect https://localhost:8000 -v
-Waiting...............
-Connected to FastScore proxy at https://localhost:8000
+$ fastscore connect https://localhost:8000 -V
+Connecting... Done.
 ```
 
-## User authentication
-<a name="login"></a>
+## Choosing an instance
+<a name="use"></a>
 
 ```
-fastscore login <username> [ <password> ]
+fastscore use <instance-name>
 ```
 
-The command authenticates the user to secure FastScore deployments. If
-`<password>` is omitted, the command prompts the user for the password.
+The command selects `<instance-name>` as a target of subsequent commands. In
+addition, it makes `<instance-name>` the preferred instance of a specific
+service. For example, `fastscore use engine-1` makes `engine-1` the target of
+sensor management commands. Any command that require an instance of an `engine`
+service will now use the `engine-1` instance. 
 
 Example:
 
 ```
-$ fastscore login williamgates
-Password: ***
+$ fastscore use engine-1
 ```
+
+## Running models
+<a name="run"></a>
+
+```
+fastscore run <model> <input stream> <output stream>
+```
+
+The `run` is a convience command mostly equivalent to the following sequence of commands:
+
+```
+fastscore model load <model-name>
+fastscore stream attach <stream-0> 0
+fastscore stream attach <stream-1> 1
+```
+
+Models with a single input and single output stream are widespread. The command
+allows building such pipelines quickly.
+
+Example:
+
+```
+$ fastscore model add cube
+action <- function(x) emit(x*x*x)
+^D
+$ fastscore run cube rest: rest:
+$ fastscore model interact
+> 2
+8
+> 10
+1000
+```
+
+### Model input/output using REST
+
+```
+fastscore model input [ <slot> ]
+fastscore model output [ <slot> ] [ -nowait ] [ -c ]
+fastscore model interact
+```
+
+The `model input` command reads its standard input and sends the data to the
+REST stream attached to `<slot>` (or slot 0 if `<slot>` is omitted). Each line
+is interpreted as a separate data record.
+
+The `model output` reads data from the REST stream attached to `<slot>` (or slot
+1 if `<slot>` is omitted). By default, the command waits for the record to
+become available and retrieves exactly one record. The `-nowait` option limits
+the waiting time to 0.5s. The `-c` option asks the command to continuously read
+data from the stream.
+
+Example:
+
+```
+$ fastscore run sqrt rest: rest:
+$ fastscore model input
+2
+3
+5
+^D
+$ fastscore model output -c
+4
+9
+25
+```
+
+The `model interact` command combines the effects of `model input` and `model output`
+commands. It allows the user to both send inputs to the REST stream and observe
+the outputs. The `model interact` also shows records rejected either by encoding
+or the schema.
+
+Example:
+
+```
+$ fastscore run sqrt rest: rest:
+$ fastscore model interact
+> 7
+49
+> foobar
+>
+INPUT REJECTED-By-Schema: AT INPUT SLOT(0): foobar
+> 11
+121
+> 100
+10000
+> ^D
+```
+
+Note that these commands do not close input/output streams. They may be run
+multiple times.
 
 ## Configuring FastScore
 <a name="config"></a>
@@ -165,25 +248,44 @@ described [here](../../Product Manuals/Configuration/).
 Example:
 
 ```
-$ fastscore config set config.yaml -v
-Configuration set
+$ fastscore config set config.yaml
 $ fastscore config show
 fastscore:
-  db: {host: database, password: root, port: 3306, type: mysql, username: root}
+  db:
+    host: database
+    password: root
+    port: 3306
+    type: mysql
+    username: root
   fleet:
-  - {api: model-manage, host: model-manage, port: 8002}
-  - {api: engine, host: engine, port: 8003}
+  - api: engine
+    host: engine-2
+    name: engine-2
+    port: 8003
+  - api: engine
+    host: engine-1
+    name: engine-1
+    port: 8003
+  - api: model-manage
+    host: model-manage
+    name: model-manage-1
+    port: 8002
   pneumo:
-    bootstrap: ['kafka:9092']
-    type: kafka
-topic: notify
+    type: REST
 ```
 
 ## Listing services
 <a name="fleet"></a>
 
 ```
-fastscore fleet [ -wait ]
+fastscore fleet [command options] 
+```
+
+```
+OPTIONS:
+   --verbose, -V  be verbose
+   --json         as json
+   --wait         Wait for all sewrvices to report healthy
 ```
 
 The command outputs the information about the currently running FastScore
@@ -195,69 +297,43 @@ healthy status.
 Example:
 
 ```
-$ fastscore fleet -wait -v
-Waiting...done
-Name            API           Health    Release    Built On
---------------  ------------  --------  ---------  ----------------------------
-CLI             UI            ok        1.7        Wed Mar 7 15:01:32 UTC 2018
-connect         connect       ok        1.7        Wed Mar 7 16:01:18 UTC 2018
-engine-1        engine        ok        1.7        Wed Mar 7 11:51:46 UTC 2018
-model-manage-1  model-manage  ok        1.7        Wed Mar 7 16:01:58 UTC 2018
-```
-
-## Choosing an instance
-<a name="use"></a>
-
-```
-fastscore use [ <instance-name> ]
-```
-
-The command selects `<instance-name>` as a target of subsequent commands. In
-addition, it makes `<instance-name>` the preferred instance of a specific
-service. For example, `fastscore use engine-1` makes `engine-1` the target of
-sensor management commands. Any command that require an instance of an `engine`
-service will now use the `engine-1` instance. If `<instance-name>` is omitted
-the command prints the current target instance name.
-
-Example:
-
-```
-$ fastscore use engine-1 -v
-'engine-1' set as a preferred instance of 'engine'
-Subsequent commands to target 'engine-1'
-$ fastscore use
-engine-1
+$ fastscore fleet -wait -V
+waiting..
+       NAME      |     API      |     HOST     | PORT | RELEASE |           BUILTON            | HEALTH
+-----------------+--------------+--------------+------+---------+------------------------------+---------
+  engine-2       | engine       | engine-2     | 8003 |     1.9 | Thu Jan 10 18:48:14 UTC 2019 | ok
+  engine-1       | engine       | engine-1     | 8003 |     1.9 | Thu Jan 10 18:48:14 UTC 2019 | ok
+  model-manage-1 | model-manage | model-manage | 8002 |     1.9 | Thu Jan 10 17:14:49 UTC 2019 | ok
 ```
 
 ## Managing models
-<a name="model-mgmt"></a>
+<a name="model"></a>
 
 ```
-fastscore model add <model-name> [ <source-file> ] [ -type:<model-type> ]
+fastscore model add <model-name> <source-file> [ --type <model-type> ]
 fastscore model show <model-name> [ -e ]
 fastscore model list
 fastscore model remove <model-name>
 ```
 
-The `model add` command introduces a model to FastScore. If the source file is
-omitted the command reads the model source from the standard input. The type of
-the model can be set using `-type:<model-type>` option:
+The `model add` command introduces a model to FastScore. The type of
+the model can be set using `--type <model-type>` option:
 
 Option | Model type
 -------|-----------
--type:python | Python 2.x
--type:python3 | Python 3.x
--type:R or -type:r | R
--type:java | Java
--type:c | C
--type:pfa-json | PFA (JSON)
--type:pfa-yaml | PFA (YAML)
--type:pfa-pretty | PFA (PrettyPFA)
--type:h2o-java | h20.ai (Java)
--type:octave | Matlab using Octave
--type:sas | SAS (experimental)
+-type python2 | Python 2.x
+-type python3 | Python 3.x
+-type R or -type:r | R
+-type java | Java
+-type c | C
+-type pfa-json | PFA (JSON)
+-type pfa-yaml | PFA (YAML)
+-type pfa-pretty | PFA (PrettyPFA)
+-type h2o-java | h20.ai (Java)
+-type octave | Matlab using Octave
+-type sas | SAS (experimental)
 
-If the `-type:` option is omitted the model type is determined by the extension
+If the `--type` option is omitted the model type is determined by the extension
 of the `<source-file>`:
 
 Extension | Model type
@@ -287,111 +363,107 @@ remove` command removes the corresponding model.
 Example:
 
 ```
-$ fastscore model add cube -type:python3 <<EOF
-def action(x):
-  return x*x*x
-EOF
+$ ~/fastscore model add cube ./cube.py3 --type python3 
 $ fastscore model list
-Name           Type
--------------  -------
-cube           Python3
+   NAME   |  TYPE   | ATTACHMENTS
+----------+---------+--------------
+  cube    | Python3 |
 $ fastscore model show cube
 def action(x):
   return x*x*x
-$ fastscore model remove cube -v
-Model 'cube' removed
+$ fastscore model remove cube
+$ fastscore model list
+  NAME | TYPE | ATTACHMENTS
+-------+------+--------------
 ```
 
-## Model attachments
-<a name="attachment"></a>
+### Loading/unloading models
 
 ```
-fastscore attachment upload <model-name> <file-to-upload>
-fastscore attachment download <model-name> <attachment-name>
-fastscore attachment list <model-name>
-fastscore attachment remove <model-name> <attachment-name>
+fastscore model load <model name> [override attachments]
+fastscore model unload [engine name]
+fastscore model verify <model-name>
+fastscore mode inspect
 ```
 
-FastScore models may have attachments - archives containing arbitrary data made
-available to the model when it runs. The `attachment upload` command adds the
-attachment to the model. The `<file-to-upload>` must have one of the following
-extensions:
+The `model load` command performs all preparatory steps and gets ready to start
+data processing. The target engine can be selected using the `use` command. The
+preparatory steps include verification of the model syntax, checking if the
+model follows the FastScore model conventions. If an unexpected slot has a stream 
+attached the `model load` command will fail. If all requied streams are attached, 
+the loaded model will start the data processing. See also `engine pause` command.
 
-Extension | Archive format
-----------|---------------
-.zip | zip
-.tgz | gzipped tar
-.tar.gz | gzipped tar
+Note that the `model load` command can be called repeatedly, even if the data
+processing is underway. The command will attempt to replace the model without
+stopping the flow of data. The replacement model may be implemented in a
+different language.
 
-Upon upload the `<file-to-upload>` becomes the name of the model attachment. The
-attachment can be downloaded using the `attachment download` command. Use
-`attachment remove` command to remove the attachment.
+The `model unload` command removes the active model from the engine. The
+operation is only allowed if the engine is in the INIT state. When data is being
+processed it is not possible to unload the model. See also `engine reset`
+command.
 
-Note that there is no hard limit on the size of the attachment.
+The `model verify` command performs all preparatory steps without actually
+loading the model. The verbose command output shows how the model smart comments
+were understood.
 
 Example:
 
 ```
-$ fastscore upload cube data1.zip
-$ fastscore attachment list cube -v
-Name       Type       Size
----------  ------  -------
-data1.zip  zip     1048904
-$ fastscore attachment remove cube data1.zip -v
-Attachment removed
+$ fastscore model verify echo -V
+Model Name     Model Type     SLOC
+----------     ----------     ----
+echo           Python3        5
+
+Slot     Schema     Action     Recordsets
+----     ------     ------     ----------
+0        string     action     false
+1        string                false
+
+The model contains no errors
 ```
 
-## Managing streams
-<a name="stream-mgmt"></a>
-
-```
-fastscore stream add <stream-name> [ <descriptor-file> ]
-fastscore stream show <stream-name> [ -e ]
-fastscore stream list
-fastscore stream remove <stream-name>
-```
-
-The `stream add` command adds a stream descriptor to FastScore. The syntax of
-the stream descriptor is explained [here](../../Product Manuals/Stream Descriptors/).
-If the `<descriptor-file>` is omitted, the command reads the descriptor from the
-standard input.
-
-The `stream show` prints the stream descriptor to the standard output. The `-e`
-(edit) option allows editing the descriptor in-place. The edit option
-spawns an editor and updates the stream descritor when the editor closes. The
-editor name is taken from the EDITOR environment variable. By default, the
-editor name is 'vi'.
-
-The `stream list` command shows the list of streams known to FastScore. The `stream remove`
-command removes the corresponding stream.
+The `model inspect` prints information about the currently loaded model. Its
+output is similar to the output of the `model verify` command.
 
 Example:
 
 ```
-$ fastscore stream add input-1 <<EOF
-{
-  "Transport": ...
-  ...
-}
-EOF
-$ fastscore stream list
-input-1
-$ fastcore stream remove input-1 -v
-Stream removed
+$ fastscore model inspect
+Model
++------+---------+-----------+-------------+
+| NAME |  TYPE   | SNAPSHOTS | ATTACHMENTS |
++------+---------+-----------+-------------+
+| echo | python3 | none      | none        |
++------+---------+-----------+-------------+
+
+Streams
++------+--------+------------+
+| SLOT | ACTION | RECORDSETS |
++------+--------+------------+
+|    0 | action | false      |
+|    1 |        | false      |
++------+--------+------------+
+
+Jets
++-------+-----+-----------+
+| JET # | PID |  SANDBOX  |
++-------+-----+-----------+
+|     1 |  45 | 100796087 |
++-------+-----+-----------+
 ```
 
 ## Managing schemas
-<a name="schema-mgmt"></a>
+<a name="schema"></a>
 
 ```
-fastscore schema add <schema-name> [ <schema-file> ]
+fastscore schema add <schema-name> <schema-file>
 fastscore schema show <schema-name> [ -e ]
 fastscore schema list
 fastscore schema remove <schema-name>
 ```
 
-The `schema add` command adds an Avro schema to FastScore. If the
-`<schema-file>` is omitted, the command reads the standard input.
+The `schema add` command adds an Avro schema to FastScore.
 
 The `schema show` prints the schema to the standard output. The `-e` (edit)
 option allows editing the schema in-place. The edit option
@@ -405,26 +477,24 @@ command removes the corresponding schema.
 Example:
 
 ```
-$ fastscore schema add sch-1 <<EOF
-["null","double"]
-EOF
-$ fastscore schema list -v
-Name   Type
------  ------
-sch-1  Avro
+$ fastscore schema add sch-1 ./sch-1.avsc
+$ fastscore schema list
+sch-1
 $ fastcore schema remove sch-1 -v
-Schema removed
 ```
 
-## Verifying schemas
-<a name="schema-verify"></a>
+### Schema Verify
+```
+fastscore schema verify <schema name> <data source>
+```
 
 ```
-fastscore schema verify <schema-name> <data-file>
+OPTIONS:
+   --verbose, -V  be verbose
 ```
 
 The `schema verify` command check that the named schema is a well-formed. If
-`<data-file>` is present the command in addition checks data in the file for
+`<data source>` is present the command in addition checks data in the file for
 conformance against the schema. The data file contains JSON-encoded records
 separated by newlines.
 
@@ -460,47 +530,38 @@ OK   3
 
 ```
 
-## Managing sensors
-<a name="sensor-mgmt"></a>
+## Managing streams
+<a name="stream"></a>
 
 ```
-fastscore sensor add <sensor-name> [ <sensor-file> ]
-fastscore sensor show <sensor-name> [ -e ]
-fastscore sensor list
-fastscore sensor remove <sensor-name>
+fastscore stream add <stream-name> <descriptor-file>
+fastscore stream show <stream-name> [ -e ]
+fastscore stream list
+fastscore stream remove <stream-name>
 ```
 
-The `sensor add` command adds a sensor descriptor to FastScore. If the
-`<sensor-file>` is omitted, the command reads the standard input. The syntax of
-a sensor descriptor is described [here](../../Product Manuals/Sensors/).
+The `stream add` command adds a stream descriptor to FastScore. The syntax of
+the stream descriptor is explained [here](../../Product Manuals/Stream Descriptors/).
 
-The `sensor show` prints the sensor descriptor to the standard output. The `-e`
-(edit) option allows editing the sensor descriptor. The edit option spawns an
-editor and updates the descriptor after the editor closes. The editor name
-is taken from the EDITOR environment variable. By default, the
+The `stream show` prints the stream descriptor to the standard output. The `-e`
+(edit) option allows editing the descriptor in-place. The edit option
+spawns an editor and updates the stream descritor when the editor closes. The
+editor name is taken from the EDITOR environment variable. By default, the
 editor name is 'vi'.
 
-The `sensor list` command shows the list of sensor descriptors known to
-FastScore. The `sensor remove` command removes the corresponding sensor
-descriptor.
-
-Note that the above commands operate on sensor descriptors, not active sensors.
-See `sensor install/uninstall/inspect` commands for more.
+The `stream list` command shows the list of streams known to FastScore. The `stream remove`
+command removes the corresponding stream.
 
 Example:
 
 ```
-$ fastscore sensor add watchdog-1 <<EOF
-{ ... }
-EOF
-$ fastscore sensor list
-watchdog
-$ fastcore sensor remove watchdog-1
-Sensor removed
+$ fastscore stream add input-1 ./input-stream.json
+$ fastscore stream list
+input-1
+$ fastcore stream remove input-1
 ```
 
-## Attaching/detaching streams
-<a name="stream-attach"></a>
+### Attaching/detaching streams
 
 ```
 fastscore stream attach <stream-name> <slot>
@@ -511,9 +572,7 @@ fatsscore stream inspect
 
 The `stream attach` opens the stream and attaches it to the `<slot>`. Typically,
 the command retrieves the stream descriptor from Model Manage using
-`<stream-name>`. Alternatively, the `<stream-name>` may contain a literal
-stream descriptor. See [Url-like stream descriptors](#literal-streams) for
-details.
+`<stream-name>`. 
 
 The `stream detach` command closes and detaches the stream. It is not possible
 to detach the stream when the model is running. However, it is possible to
@@ -527,9 +586,6 @@ representation of the stream descriptor with all default values substituted.
 Example:
 
 ```
-$ fastscore stream add s1
-{"Transport":"REST","Schema":null}
-^D
 $ fastscore stream verify s1 0
 {
   "batching": {
@@ -553,650 +609,13 @@ Example:
 
 ```
 $ fastscore stream inspect
-  Slot  Name           Transport    EOF
-------  -------------  -----------  -----
-     0  inline-526507  REST         False
-     1  inline-809896  REST         False
+  SLOT |       NAME   | TRANSPORT |  EOF
+-------+--------------+-----------+--------
+     0  inline-526507    REST       False
+     1  inline-809896    REST       False
 ```
 
-## Sampling streams
-<a name="stream-sample"></a>
-
-```
-fastscore stream sample <stream-name> [ -count:NNN ]
-```
-
-The `stream sample` reads a few data records from the stream. This happens in
-the context of the engine. Otherwise, stream sampling is unrelated to the data
-pipeline. If `-count:NNN` option is omitted, the commands attempts to read 10
-records max.
-
-```
-$ fastscore stream sample inline:2,3,5,7,11 -count:3
-   1: 2
-   2: 3
-   3: 5
-```
-
-```
-# Assume that /tmp/rnd1.dat file exists
-$ fastscore stream add rnd
-{
-  "Encoding": null,
-  "Envelope": {
-    "Type": "fixed",
-    "Size": 8
-  },
-  "Transport": {
-    "Path": "/tmp/rnd1.dat",
-    "Type": "file"
-  },
-  "Schema": null
-}
-^D
-$ fastscore stream sample rnd -count:5
-   1: b9 7e b5 4b af 01 6d 65                          .~.K..me........
-   2: 6c 8d db 99 03 42 95 81                          l....B..........
-   3: 93 a9 2f 1b 9e 77 3b eb                          ../..w;.........
-   4: 60 28 58 8c a8 12 fc 2b                          `(X....+........
-   5: a5 14 c7 64 56 97 aa 79                          ...dV..y........
-```
-
-## Loading/unloading models
-<a name="model-load"></a>
-
-```
-fastscore model load <model-name> [ -schema:<schema-name>:<schema-data> ... ]
-fastscore model unload
-fastscore model verify <model-name>
-fastscore mode inspect
-```
-
-The `model load` command performs all preparatory steps and gets ready to start
-data processing. The target engine can be selected using the `use` command. The
-preparatory steps include verification of the model syntax, checking if the
-model follows the FastScore model conventions, e.g. if the action() method is
-defined, analysing the model [smart comments](../../Product Manuals/Model Annotations/), fetching attachments from Model Manage and unpacking them. The
-model smart comments indicate which stream slots must be occupied for the model
-to run. If an unexpected slot has a stream attached the `model load` command
-will fail. If all requied streams are attached, the loaded model will start the
-data processing. See also `engine pause` command.
-
-Note that the `model load` command can be called repeatedly, even if the data
-processing is underway. The command will attempt to replace the model without
-stopping the flow of data. The replacement model may be implemented in a
-different language.
-
-The `model unload` command removes the active model from the engine. The
-operation is only allowed if the engine is in the INIT state. When data is being
-processed it is not possible to unload the model. See also `engine reset`
-command.
-
-The `model verify` command performs all preparatory steps without actually
-loading the model. The verbose command output shows how the model smart comments
-were understood.
-
-It is possible to provide schemas required by the model as command line options.
-This may be needed if the FastScore deployment does not have a Model Manage
-instance. The `<schema-data>` can be either a file name or a literal schema. For
-example, `-schema:input:\"double\"`.
-
-Example:
-
-```
-$ fastscore model add cube
-# fastscore.schema.0: in1
-def action(x):
-  yield x*x*x
-^D
-$ fastscore model verify cube -v
-Error: schema 'in1' not found
-$ fastscore model verify cube -v -schema:in1:\"int\"
-Name    Type      SLOC
-------  ------  ------
-cube    python       3
-
-  Slot  Schema    Action    Recordsets          Slot  Schema    Recordsets
-------  --------  --------  ------------  --  ------  --------  ------------
-     0  "int"     action    No                     1  -         No
-
-The model contains no errors
-```
-
-The `model inspect` prints information about the currently loaded model. Its
-output is similar to the output of the `model verify` command.
-
-Example:
-
-```
-$ fastscore model add sqrt
-action <- function(x) emit(x*x)
-^D
-$ fastscore model load sqrt
-$ fastscore model inspect
-Name    Type      SLOC  Snapshots
-------  ------  ------  -----------
-sqrt    r            1  none
-
-  Slot  Schema    Action    Recordsets          Slot  Schema    Recordsets
-------  --------  --------  ------------  --  ------  --------  ------------
-     0  -         action    No                     1  -         No
-
-No jets started
-```
-
-## Scaling models
-<a name="model-scale"></a>
-
-```
-fastscore model scale <jet-count>
-```
-
-The `model scale` command changes the number of model instances -- jets --
-running concurrently. The number of jets can be changed while the model is
-running or during the initialization phase.
-
-Example:
-
-```
-$ fastscore model add sqrt
-action <- function(x) emit(x*x)
-^D
-$ fastscore model scale 4
-$ fastscore run sqrt rest: rest:
-$ fastscore model inspect
-Name    Type      SLOC  Snapshots
-------  ------  ------  -----------
-sqrt    r            1  none
-
-  Slot  Schema    Action    Recordsets          Slot  Schema    Recordsets
-------  --------  --------  ------------  --  ------  --------  ------------
-     0  -         action    No                     1  -         No
-
-  Jet #    Pid    Sandbox
--------  -----  ---------
-      1    122   43661788
-      2    128  104818564
-      3    134   43441871
-      4    140  108589417
-```
-
-## Model input/output using REST
-<a name="model-rest"></a>
-
-```
-fastscore model input [ <slot> ]
-fastscore model output [ <slot> ] [ -nowait ] [ -c ]
-fastscore model interact
-```
-
-The `model input` command reads its standard input and sends the data to the
-REST stream attached to `<slot>` (or slot 0 if `<slot>` is omitted). Each line
-is interpreted as a separate data record.
-
-The `model output` reads data from the REST stream attached to `<slot>` (or slot
-1 if `<slot>` is omitted). By default, the command waits for the record to
-become available and retrieves exactly one record. The `-nowait` option limits
-the waiting time to 0.5s. The `-c` option asks the command to continuously read
-data from the stream.
-
-Example:
-
-```
-$ fastscore model add sqrt
-action <- function(x) emit(x*x)
-^D
-$ fastscore run sqrt rest: rest:
-$ fastscore model input
-2
-3
-5
-^D
-$ fastscore model output -c
-4
-9
-25
-```
-
-The `model interact` command combines the effects of `model input` and `model output`
-commands. It allows the user to both send inputs to the REST stream and observe
-the outputs. The `model interact` also shows records rejected either by encoding
-or the schema.
-
-Example:
-
-```
-$ fastscore model add sqrt
-action <- function(x) emit(x*x)
-^D
-$ fastscore run sqrt rest: rest:
-$ fastscore model interact
-> 7
-49
-> foobar
->
-REJECTED-By-Encoding:0: foobar
-> 11
-121
-> 100
-10000
-> ^D
-```
-
-Note that these commands do not close input/output streams. They may be run
-multiple times.
-
-## Active sensor operations
-<a name="sensor-install"></a>
-
-```
-fastscore sensor install <sensor-name>
-fastscore sensor uninstall <tap-id>
-fastscore sensor inspect [ <tap-id> ]
-fastscore sensor points
-```
-
-The `sensor install` command adds the sensor to the current service instance.
-See `use` command. Upon success, the command prints `<tap-id>` of installed
-sensor. Other active sensor operations take `<tap-id>` as an argument.
-
-The `sensor install` prints information about all active sensors for the current
-service instance or a particular active sensor if `<tap-id>` is present.
-
-The `sensor uninstall` command removes the active sensor identified by
-`<tap-id>`.
-
-The `sensor points` command outputs the list of tapping points provided by the
-current instance. A sensor descriptor includes a tapping point as a value of the
-"Tap" element.
-
-Example:
-
-```
-$ fastscore sensor install sensor1
-15
-$ fastscore sensor inspect 15 -v
-Sensor id 15 is attached to 'manifold.debug' at 'engine-1'.
-$ fastscore sensor uninstall 15 -v
-Sensor uninstalled
-```
-
-```
-$ fastscore sensor points
-manifold.0.debug
-jet.71581093.output.records.size
-jet.71581093.output.records.count
-jet.71581093.input.records.size
-jet.71581093.input.records.count
-...
-manifold.deadlock
-manifold.debug
-sys.test.tagged.bytes
-sys.test.tagged.float
-sys.test.tagged.int
-sys.test.bytes
-sys.test.float
-sys.test.int
-sys.memory
-sys.cpu.utilization
-```
-
-## Managing engine state
-<a name="engine-state"></a>
-
-```
-fastscore engine reset
-fastscore engine inspect
-fastscore engine pause
-fastscore engine unpause
-```
-
-A FastScore engine has one of the following seven states:
-
-State | Description
-------|------------
-INIT | Initialization - data pipleline is incomplete
-RUNNING | Data is being processed
-PIGGING | Pigging is in effect
-FINISHING | All inputs at EOF - processing continues
-FINISHED | Both inputs and outputs at EOF
-PAUSED | Data processing is paused
-ERROR | Unrecoverable error encountered - see logs
-
-The `engine reset` command puts the engine into the INIT state regardless of its
-current state. The commands unload the model and detaches all streams. Use
-`engine reset` to start using an engine again after it reached the FIHISHED
-state.
-
-The `engine inspect` prints the current state of the engine.
-
-Example:
-
-```
-$ fastscore engine inspect -v
-The current engine state is RUNNING.
-
-The engine is reading data from input streams, passing them to model instances,
-collecting outputs from the model, and writing them to output streams.
-$ fastscore engine reset
-$ fastscore engine inspect
-INIT
-```
-
-The `engine pause` puts the engine into the PAUSED state. It is not possible to
-pause an engine which is currently in FINISHING, FINISHED, or ERROR state. If
-the pause is requested during initialization, the engine becomes paused
-when it is about to enter the RUNNING state. Use `engine unpause` to continue
-data processing.
-
-Example:
-
-```
-$ fastscore engine inspect
-INIT
-$ fastscore engine pause
-$ fastscore engine inspect
-INIT
-$ fastscore run cube rest: rest:
-$ fastscore engine inspect
-PAUSED
-$ fastscore engine unpause
-$ fastscore engine inspect
-RUNNING
-```
-
-## Running simple models
-<a name="run-simple"></a>
-
-```
-fastscore run <model-name> <stream-0> <stream-1>
-```
-
-The `run` is a convience command mostly equivalent to the following sequence of commands:
-
-```
-fastscore model load <model-name>
-fastscore stream attach <stream-0> 0
-fastscore stream attach <stream-1> 1
-```
-
-Models with a single input and single output stream are widespread. The command
-allows building such pipelines quickly, especially if `<stream-0>` and
-`<stream-1>` are [literal streams](#literal-streams).
-
-Example:
-
-```
-$ fastscore model add cube
-action <- function(x) emit(x*x*x)
-^D
-$ fastscore run cube rest: rest:
-$ fastscore model interact
-> 2
-8
-> 10
-1000
-```
-
-## Managing state snapshots
-<a name="snapshot-mgmt"></a>
-
-```
-fastscore snapshot list <model-name> [ -since:DATETIME ] [ -until:DATETIME ] [ -count:NNN ]
-fastscore snapshot show <model-name> <snapshot-id>
-fastscore snapshot remove <model-name> <snapshot-id>
-```
-
-The engine automatically makes snapshots of the model state at the end of the
-run, if instructed by the corresponding model annotation. The `snapshot list` prints
-a list of snapshots taken for the `<model-name>`. `-since:DATETIME`,
-`-until:DATETIME`, and `-count:NNN` options limit the range of snapshots listed.
-`DATETIME` must follow ISO 8601 format, e.g. 2018-01-17 or 2018-01-17T08:30:00Z.
-The `snapshot show` command prints information about a specific snapshot. The
-`snapshot remove` command delete the model state snapshot.
-
-Example:
-
-```
-$ fastscore model add sqrt
-# fastscore.snapshots: eof
-action <- function(x) emit(x*x)
-^D
-$ fastscore run sqrt inline:2,3,5 discard:
-$ fastscore engine inspect
-FINISHED
-$ fastscore snapshot list sqrt
-8qxtf4yw
-$ fastscore snapshot list sqrt -v
-Id        Model    Date/Time             Type      Size
---------  -------  --------------------  ------  ------
-8qxtf4yw  sqrt     2018-01-17T10:29:15Z  ETS1       355
-$ fastscore snapshot show sqrt 8qxtf4yw
-id:         8qxtf4yw
-created-on: 2018-01-17T10:29:15Z
-stype:      ETS1
-size:       355
-$ fastscore snapshot remove sqrt 8qxtf4yw -v
-Snapshot '8qxtf4yw' removed
-```
-
-## Restoring state snapshots
-<a name="snapshot-restore"></a>
-
-```
-fastscore snapshot restore <model-name> [ <snapshot-id> ]
-```
-
-The `snapshot restore` command restores the state of the model. The command must
-be run durining initialization, before or after loading the model. If
-`<snapshot-id>` is omitted, the command restores the latest snapshot taken.
-
-```
-$ fastscore model add sqrt
-# fastscore.snapshots: eof
-action <- function(x) emit(x*x)
-^D
-$ fastscore run sqrt inline:2,3,5 discard:
-$ fastscore snapshot list sqrt -v
-Id        Model    Date/Time             Type      Size
---------  -------  --------------------  ------  ------
-8qxtf4yw  sqrt     2018-01-17T10:29:15Z  ETS1       355
-$ fastscore engine reset
-$ fastscore snapshot restore sqrt 8qxtf4yw -v
-Model state restored
-$ fastscore run sqrt ...
-```
-
-## Managing model environments
-<a name="policy"></a>
-
-```
-fastscore policy set [ <policy-file> ] -type:<model-type> [ -preinstall ]
-fastscore policy show -type:<model-type>
-```
-
-The `policy set` updates the engine library import policy for a specific
-`<model-type>`. See [more](../../Product Manuals/Import Policies/) about
-import policies. If `<policy-file>` is omitted, the command reads the policy
-from its standard input. With `-preinstall` option the command installs all
-libraries mentioned in the policy shortening the model loading time. The policy
-can be preinstalled no more than once.
-
-The `policy show` retrieves the active import policy from the engine.
-
-Example:
-
-```
-$ fastscore policy set -type:python
-scikit-learn: install
-^D
-$ fastcore policy show -type:python
-scikit-learn: install
-```
-
-## Collecting statistics
-<a name="stats"></a>
-
-```
-fastscore stats memory
-fastscore stats cpu-utilization
-fastscore stats jets
-fastscore stats streams
-```
-
-The `stats` commands continuously report various statistics. The `stats memory`
-and `stats cpu-utilization` commands show the current memory footprint and CPU
-utilization of the engine. `stats jets` shows the records per second throughput
-of all runnings jets. `stats streams` reports the throughput at each stream
-slot.
-
-Example (assuming the engine is running):
-
-```
-$ fastscore use engine-1
-$ fastscore stats memory
-engine-1: 2163.5mb
-engine-1: 2163.5mb
-engine-1: 2161.5mb
-...
-$ fastscore stats cpu-utilization
-engine-1: kernel: 152.1 user: 69.0
-engine-1: kernel: 152.7 user: 69.2
-engine-1: kernel: 153.0 user: 69.5
-...
-$ fastscore model scale 3
-$ fastscore stats jets
-engine-1: 1000.0 rps/--- 1000.0 rps/1744.8 rps 1000.0 rps/1859.4 rps
-engine-1: 1745.2 rps/1696.0 rps 1886.8 rps/1911.0 rps 1924.9 rps/1821.0 rps
-engine-1: 1766.8 rps/1739.2 rps 1928.6 rps/1910.0 rps 1869.2 rps/---
-engine-1: ---/--- ---/--- ---/---
-engine-1: 1823.2 rps/1832.0 rps 1838.2 rps/1972.0 rps 1910.2 rps/1954.0 rps
-engine-1: 1556.4 rps/1626.4 rps 1492.5 rps/1251.0 rps 1448.2 rps/1321.0 rps
-...
-$ fastscore stats streams
-engine-1: 0:25.0 rps | 1:1.0 rps
-engine-1: 0:6000.0 rps | 1:5675.0 rps
-engine-1: 0:6000.0 rps | 1:5711.0 rps
-engine-1: 0:6000.0 rps | 1:5574.0 rps
-...
-```
-
-The `stats` commands rely on sensor to collect statistics. `---` indicate that
-data is not available at the moment.
-
-## Troubleshooting data pipelines
-<a name="debug"></a>
-
-```
-fastscore debug manifold
-fastscore debug stream [ <slot> ]
-```
-
-The `debug` commands enable generation of a debug messages that describe
-internal operations of the engine. These commands are not related to debugging
-of the model source code. The commands are for advanced users only.
-
-Example:
-
-```
-# In a separate window run: fastscore run cube inline:1,2,3 discard
-$ fastscore debug manifold
-14:40:22.491: model loaded
-14:40:22.528: schema match: ok
-14:40:22.536: stream open: ok
-14:40:22.568: schema match: ok
-14:40:22.575: stream open: ok
-14:40:22.576: requesting data from slot 0
-14:40:22.576: starting initial jet 1
-14:40:22.882: state changes to RUNNING
-14:40:22.885: jet <0.1474.0> is ready
-14:40:22.885: 3 record(s) received from slot 0
-14:40:22.885: dispatched to jet <0.1474.0>
-14:40:22.885: more data requested from slot 0
-14:40:22.885: stream at slot 0 reaches EOF
-14:40:22.886: pending state change: FINISHING
-14:40:22.892: writing output 1 record(s) to slot 1
-14:40:22.893: write confirmed for slot 1
-14:40:22.893: writing output 1 record(s) to slot 1
-14:40:22.893: write confirmed for slot 1
-14:40:22.893: writing output 1 record(s) to slot 1
-14:40:22.893: write confirmed for slot 1
-14:40:22.893: jet <0.1474.0> is ready
-14:40:22.893: state changes to FINISHING
-14:40:22.893: sending EOF to jet <0.1474.0>
-14:40:22.894: jet <0.1474.0> finished
-14:40:22.894: state changes to FINISHED
-```
-
-## Profiling internal operations
-<a name="profile"></a>
-
-```
-fastscore profile stream <slot>
-```
-
-The `profile stream` command measures time spent by the stream on certain
-operations, such as schema validation. The profiling may be useful when making
-decision about the best data format for your streams.
-
-Example (assuming the engine is running):
-
-```
-$ fastscore profile stream 0
-Operation                  Time, s    Count
------------------------  ---------  -------
-Validate output records      0.316    15229
-Validate input records       0.024      600
-Wrap envelope                0.002       15
-Unwrap envelope              0.023     1200
-```
-
-## Pneumo access
-<a name="pneumo"></a>
-
-```
-fastscore pneumo [ history ]
-```
-
-The `pneumo` commands provide an access to Pneumo -- the internal message bus of
-FastScore. `pneumo history` prints a few most recent Pneumo messages (60 max).
-The `pneumo` command continuously prints Pneumo messages as they appear on the
-bus.
-
-## Monitoring engine operations
-<a name="monitor"></a>
-
-```
-fastscore monitor
-(or -m option)
-```
-
-The `monitor` command shows a live text-based UI that shows information about
-the state of the engine, loaded model, attached streams, and running jets. It is
-possible to add the `-m` option to any CLI command to request the monitor
-display after the command completes.
-
-Example (assuming the engine is running):
-
-```
-$ fastscore monitor
-==================================================
-Engine: engine-1 [RUNNING]
-Model:  cube (r)
-
-Stream
---------------------------------------------------
-input          I:0          4,649 rps     0.0 mbps
-output         O:1          5,496 rps     0.0 mbps
-
-Jet                             Input       Output
---------------------------------------------------
-cube                        1,833 rps    1,885 rps
-cube                        1,825 rps    1,935 rps
-cube                        1,845 rps    1,944 rps
-```
-
-## <a name="literal-streams"></a>URL-like stream descriptors
+### URL-like stream descriptors
 
 An URL-like or literal stream descriptor is a shortened representation of a
 stream descriptor. It can be used instead of the stream name for commands, such
@@ -1245,3 +664,364 @@ $ fastscore stream verify inline:1,2,3 0
 }
 The stream descriptor contains no errors
 ```
+
+### Sampling streams
+
+```
+fastscore stream sample <stream-name> [ sample count ]
+```
+
+The `stream sample` reads a few data records from the stream. This happens in
+the context of the engine. Otherwise, stream sampling is unrelated to the data
+pipeline. If `sample count` option is omitted, the commands attempts to read 10
+records max.
+
+```
+$ fastscore stream sample inline:2,3,5,7,11 3
+   1: 2
+   2: 3
+   3: 5
+```
+
+## Managing sensors
+<a name="sensor"></a>
+
+```
+fastscore sensor add <sensor-name> <sensor-file>
+fastscore sensor show <sensor-name> [ -e ]
+fastscore sensor list
+fastscore sensor remove <sensor-name>
+```
+
+The `sensor add` command adds a sensor descriptor to FastScore. The syntax of
+a sensor descriptor is described [here](../../Product Manuals/Sensors/).
+
+The `sensor show` prints the sensor descriptor to the standard output. The `-e`
+(edit) option allows editing the sensor descriptor. The edit option spawns an
+editor and updates the descriptor after the editor closes. The editor name
+is taken from the EDITOR environment variable. By default, the
+editor name is 'vi'.
+
+The `sensor list` command shows the list of sensor descriptors known to
+FastScore. The `sensor remove` command removes the corresponding sensor
+descriptor.
+
+Note that the above commands operate on sensor descriptors, not active sensors.
+See `sensor install/uninstall/inspect` commands for more.
+
+Example:
+
+```
+$ fastscore sensor add watchdog-1 ./watchdog.json
+$ fastscore sensor list
+watchdog
+$ fastcore sensor remove watchdog-1
+```
+
+### Active sensor operations
+
+```
+fastscore sensor install <sensor-name>
+fastscore sensor uninstall <tap-id>
+fastscore sensor inspect [ <tap-id> ]
+fastscore sensor points
+```
+
+The `sensor install` command adds the sensor to the current service instance.
+See `use` command. Upon success, the command prints `<tap-id>` of installed
+sensor. Other active sensor operations take `<tap-id>` as an argument.
+
+The `sensor inspect` prints information about all active sensors for the current
+service instance or a particular active sensor if `<tap-id>` is present.
+
+The `sensor uninstall` command removes the active sensor identified by
+`<tap-id>`.
+
+The `sensor points` command outputs the list of tapping points provided by the
+current instance. A sensor descriptor includes a tapping point as a value of the
+"Tap" element.
+
+Example:
+
+```
+$ fastscore sensor install sensor1
+15
+$ fastscore sensor inspect 15 -v
+Sensor id 15 is attached to manifold.debug at engine-1.
+$ fastscore sensor uninstall 15
+```
+
+```
+$ fastscore sensor points
+manifold.0.debug
+jet.71581093.output.records.size
+jet.71581093.output.records.count
+jet.71581093.input.records.size
+jet.71581093.input.records.count
+...
+manifold.deadlock
+manifold.debug
+sys.test.tagged.bytes
+sys.test.tagged.float
+sys.test.tagged.int
+sys.test.bytes
+sys.test.float
+sys.test.int
+sys.memory
+sys.cpu.utilization
+```
+
+## Managing engine state
+<a name="engine"></a>
+
+```
+fastscore engine reset [ <engine-name> ] [ --all ]
+fastscore engine inspect [ <engine-name> ]
+fastscore engine pause [ <engine-name> ]
+fastscore engine unpause [ <engine-name> ]
+```
+
+A FastScore engine has one of the following seven states:
+
+State | Description
+------|------------
+INIT | Initialization - data pipleline is incomplete
+RUNNING | Data is being processed
+PIGGING | Pigging is in effect
+FINISHING | All inputs at EOF - processing continues
+FINISHED | Both inputs and outputs at EOF
+PAUSED | Data processing is paused
+ERROR | Unrecoverable error encountered - see logs
+
+The `engine reset` command puts the engine into the INIT state regardless of its
+current state. The commands unload the model and detaches all streams. Use
+`engine reset` to start using an engine again after it reached the FIHISHED
+state.
+
+The `engine inspect` prints the current state of the engine.
+
+Example:
+
+```
+$ fastscore engine inspect
+engine engine-1 is init
+$ fastscore engine reset
+```
+
+The `engine pause` puts the engine into the PAUSED state. It is not possible to
+pause an engine which is currently in FINISHING, FINISHED, or ERROR state. If
+the pause is requested during initialization, the engine becomes paused
+when it is about to enter the RUNNING state. Use `engine unpause` to continue
+data processing.
+
+Example:
+
+```
+$ fastscore engine inspect
+engine engine-1 is init
+$ fastscore engine pause
+$ fastscore engine inspect
+engine engine-1 is init
+$ fastscore run cube rest: rest:
+$ fastscore engine inspect
+engine engine-1 is paused
+$ fastscore engine unpause
+$ fastscore engine inspect
+engine engine-1 is running
+```
+
+## Model attachments
+<a name="attachment"></a>
+
+```
+fastscore attachment upload <model-name> <file-to-upload>
+fastscore attachment download <model-name> <attachment-name>
+fastscore attachment list <model-name>
+fastscore attachment remove <model-name> <attachment-name>
+```
+
+FastScore models may have attachments - archives containing arbitrary data made
+available to the model when it runs. The `attachment upload` command adds the
+attachment to the model. The `<file-to-upload>` must have one of the following
+extensions:
+
+Extension | Archive format
+----------|---------------
+.zip | zip
+.tgz | gzipped tar
+.tar.gz | gzipped tar
+
+Upon upload the `<file-to-upload>` becomes the name of the model attachment. The
+attachment can be downloaded using the `attachment download` command. Use
+`attachment remove` command to remove the attachment.
+
+Note that there is no hard limit on the size of the attachment.
+
+Example:
+
+```
+$ fastscore upload cube data1.zip
+$ fastscore attachment list cube
+     NAME   | TYPE | SIZE
+------------+------+-------
+  data1.zip | zip  |  1048904
+$ fastscore attachment remove cube data1.zip
+```
+
+## Pneumo access
+<a name="pneumo"></a>
+
+```
+fastscore pneumo [ history ]
+```
+
+The `pneumo` commands provide an access to Pneumo -- the internal message bus of
+FastScore. `pneumo history` prints a few most recent Pneumo messages (60 max).
+The `pneumo` command continuously prints Pneumo messages as they appear on the
+bus.
+
+
+
+
+
+
+
+
+
+
+## Monitoring engine operations
+<a name="monitor"></a>
+
+```
+fastscore monitor
+```
+
+The `monitor` command shows a live text-based UI that shows information about
+the state of the engine, loaded model, attached streams, and running jets. 
+
+Example (assuming the engine is running):
+```
+$ fastscore monitor
+==================================================
+Engine: engine-1 [RUNNING]
+Model:  cube (r)
+
+Stream
+--------------------------------------------------
+input          I:0          4,649 rps     0.0 mbps
+output         O:1          5,496 rps     0.0 mbps
+
+Jet                             Input       Output
+--------------------------------------------------
+cube                        1,833 rps    1,885 rps
+cube                        1,825 rps    1,935 rps
+cube                        1,845 rps    1,944 rps
+```
+
+## User authentication
+<a name="login"></a>
+
+```
+fastscore login <authentication mode> [ <username> ] [ <password> ]
+```
+
+```
+DESCRIPTION:
+   Use any of the login method: basic, oauth2, ldap, session cookie. (Case insensitive)
+
+OPTIONS:
+   --verbose, -V  Be verbose
+```
+
+## Troubleshooting data pipelines
+<a name="debug"></a>
+
+```
+fastscore debug manifold
+fastscore debug stream [ <slot> ]
+```
+
+The `debug` commands enable generation of a debug messages that describe
+internal operations of the engine. These commands are not related to debugging
+of the model source code. The commands are for advanced users only.
+
+Example:
+
+```
+# In a separate window run: fastscore run cube inline:1,2,3 discard
+$ fastscore debug manifold
+14:40:22.491: model loaded
+14:40:22.528: schema match: ok
+14:40:22.536: stream open: ok
+14:40:22.568: schema match: ok
+14:40:22.575: stream open: ok
+14:40:22.576: requesting data from slot 0
+14:40:22.576: starting initial jet 1
+14:40:22.882: state changes to RUNNING
+14:40:22.885: jet <0.1474.0> is ready
+14:40:22.885: 3 record(s) received from slot 0
+14:40:22.885: dispatched to jet <0.1474.0>
+14:40:22.885: more data requested from slot 0
+14:40:22.885: stream at slot 0 reaches EOF
+14:40:22.886: pending state change: FINISHING
+14:40:22.892: writing output 1 record(s) to slot 1
+14:40:22.893: write confirmed for slot 1
+14:40:22.893: writing output 1 record(s) to slot 1
+14:40:22.893: write confirmed for slot 1
+14:40:22.893: writing output 1 record(s) to slot 1
+14:40:22.893: write confirmed for slot 1
+14:40:22.893: jet <0.1474.0> is ready
+14:40:22.893: state changes to FINISHING
+14:40:22.893: sending EOF to jet <0.1474.0>
+14:40:22.894: jet <0.1474.0> finished
+14:40:22.894: state changes to FINISHED
+```
+
+## Collecting statistics
+<a name="stats"></a>
+
+```
+fastscore stats memory
+fastscore stats cpu-utilization
+fastscore stats jets
+fastscore stats streams
+```
+
+The `stats` commands continuously report various statistics. The `stats memory`
+and `stats cpu-utilization` commands show the current memory footprint and CPU
+utilization of the engine. `stats jets` shows the records per second throughput
+of all runnings jets. `stats streams` reports the throughput at each stream
+slot.
+
+Example (assuming the engine is running):
+
+```
+$ fastscore use engine-1
+$ fastscore stats memory
+engine-1: 2163.5mb
+engine-1: 2163.5mb
+engine-1: 2161.5mb
+...
+$ fastscore stats cpu-utilization
+engine-1: kernel: 152.1 user: 69.0
+engine-1: kernel: 152.7 user: 69.2
+engine-1: kernel: 153.0 user: 69.5
+...
+$ fastscore stats jets
+engine-1: 1000.0 rps/--- 
+engine-1: 1745.2 rps/1696.0 rps 
+engine-1: 1766.8 rps/1739.2 rps 
+engine-1: ---/---
+engine-1: 1823.2 rps/1832.0 rps 
+engine-1: 1556.4 rps/1626.4 rps 
+...
+$ fastscore stats streams
+engine-1: 0:25.0 rps | 1:1.0 rps
+engine-1: 0:6000.0 rps | 1:5675.0 rps
+engine-1: 0:6000.0 rps | 1:5711.0 rps
+engine-1: 0:6000.0 rps | 1:5574.0 rps
+...
+```
+
+The `stats` commands rely on sensor to collect statistics. `---` indicate that
+data is not available at the moment.
