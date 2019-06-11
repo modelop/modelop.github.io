@@ -4,7 +4,7 @@ title: "Python Model Runner"
 
 # Conforming Python Models
 
-FastScore supports the management and execution of both Python 2 and Python models. The below links provide information and examples on how to on-board your Python models into FastScore.
+FastScore supports the management and execution of both Python 2 and Python 3 models. The below links provide information and examples on how to on-board your Python models into FastScore.
 
 ### References:
 
