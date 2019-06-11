@@ -16,18 +16,16 @@ Welcome to Open Data Group's documentation!
 
 - [FastScore Getting Started Guide](/Getting Started/Getting Started with FastScore)
 - [FastScore Specifications](/Getting Started/FastScore Specs/)
-- [1.9 Release Notes](/Getting Started/Release Notes/)
-
-### Knowledge Center
-
 - [Tutorials](/Knowledge Center/Tutorials/)
-- [FastScore Interactive Scenarios](/Knowledge Center/Katacoda/)
+- [Conform and Deploy a Model](/Getting Started/Conform and Deploy a Model)
+- [FastScore Terms Glossary](/Glossary/)
 
-### Glossary
+### Product Versions
+- [1.10 Release Notes](/Getting Started/Release Notes/)
 
-- [FastScore Glossary](/Glossary/)
 
-### FastScore Product Manuals
+
+### FastScore Microservices Overview
 
 - [FastScore Engine](/Product Manuals/Engine/)
 - [FastScore Lineage](/Product Manuals/Lineage/)
@@ -37,23 +35,33 @@ Welcome to Open Data Group's documentation!
 - [FastScore Manage](/Product Manuals/Manage/)
 - [FastScore Compare](/Product Manuals/Compare/)
 
-#### Configurations and Settings
+
+
+### Reference
+
+#### Interfacing with FastScore
+- [FastScore SDKs](/Reference/FastScore SDKs/)
+- [FastScore API](/Reference/FastScore API/)
+- [FastScore CLI](/Reference/FastScore CLI/)
+
+#### Configurations and Advanced Functionality
 
 - [Fastscore Configuration](/Product Manuals/Configuration/)
 - [Model Annotations](/Product Manuals/Model Annotations/)
 - [Schema Reference](/Product Manuals/Schema Reference/)
 - [Sensors](/Product Manuals/Sensors/)
-- [Import Policies](/Product Manuals/Import Policies/)
 - [State Sharing and Snapshotting](/Product Manuals/State Sharing and Snapshotting/)
 - [Record Sets and Control Records](/Product Manuals/Record Sets and Control Records/)
 - [GitHub Integration](/Product Manuals/Github Integration/)
 - [Standalone Baked Engines](/Product Manuals/Standalone Baked Engines/)
 
-#### Model Runners
+#### Model On-Boarding
 
-- [C/C++ Model Runner](/Product Manuals/C Model Runner/)
-- [Matlab (Octave) Model Runner](/Product Manuals/MATLAB Model Runner/)
-- [Java Model Runner](/Product Manuals/Java Model Runner/)
+- [Conforming Python Models](/Product Manuals/Python Model Runner/)
+- [Conforming R Models](/Product Manuals/R Model Runner/)
+- [Conforming C/C++ Models](/Product Manuals/C Model Runner/)
+- [Conforming Matlab (Octave) Models](/Product Manuals/MATLAB Model Runner/)
+- [Conforming Java Models](/Product Manuals/Java Model Runner/)
 
 #### Streams Descriptors
 
@@ -61,15 +69,10 @@ Welcome to Open Data Group's documentation!
 - [Multiple Input and Output Streams](/Product Manuals/Multiple Input and Output Streams/)
 - [CSV Support](/Product Manuals/CSV Support/)
 
-### Reference
 
-- [FastScore SDKs](/Reference/FastScore SDKs/)
-- [FastScore API](/Reference/FastScore API/)
-- [FastScore CLI](/Reference/FastScore CLI/)
+### Other Projects
 
-## Other Projects
-
-### Hadrian and Titus (PFA)
+## Hadrian and Titus (PFA)
 
 The Portable Format for Analytics (PFA) is a specification for scoring engines.
 Hadrian is Open Data Group's complete implementation of a PFA scoring engine for
