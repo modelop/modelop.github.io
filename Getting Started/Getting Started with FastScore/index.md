@@ -293,7 +293,7 @@ fastscore model add -type:python3 my_py3_model path/to/model.py
 
 #### Python Models
 There are two ways to write models to run in FastScore for Python. 
-<b>Style 1</b>New in the 1.10 release, we now support an additional  style of conformance to make it easier for Data Scientist to get their models ready for deployment for even more classes of models. This style is geared for models that follow a classic pattern of: (a) read data in (b) perform a prediction, and (c) write the output to a consumer. This new approach uses  `slot` objects to control the scoring behavior of the model as shown in this example below.  For a full guide, refer to this How-to and example (LINK TO CONFORM DEPLOY).
+<b>Style 1</b>New in the 1.10 release, we now support an additional  style of conformance to make it easier for Data Scientist to get their models ready for deployment for even more classes of models. This style is geared for models that follow a classic pattern of: (a) read data in (b) perform a prediction, and (c) write the output to a consumer. This new approach uses  `slot` objects to control the scoring behavior of the model as shown in this example below.  For a full guide, refer to this [how-to and example](https://opendatagroup.github.io/Getting%20Started/Conform%20and%20Deploy%20a%20Model/).
 
 ```python
 # fastscore.action: unused
