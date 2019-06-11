@@ -298,8 +298,8 @@ To continue learning, check out some additional examples here:
 - [TensorFlow LTSM](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Tensorflow%20LSTM/)
 
 Additionally, consult the detailed Product Reference documentation:
-- [Product Manuals] (Product%20Manuals)
-- [FastScore CLI Reference] (Reference/FastScore%20CLI)
-- [FastScore SDK Reference] (Reference/FastScore%20SDKs)
+- [Product Manuals](Product%20Manuals)
+- [FastScore CLI Reference](Reference/FastScore%20CLI)
+- [FastScore SDK Reference](Reference/FastScore%20SDKs)
 
 If you need support or have questions, please email us: support@opendatagroup.com
