@@ -40,7 +40,7 @@ systems using a specific example. [GroupLens](https://grouplens.org/), a researc
 of Minnesota, has generously made available [the MovieLens dataset](https://grouplens.org/datasets/movielens/).
 This dataset consists of approximately 20 million user ratings applied to
 27,000 movies by 138,000 users. In addition, the movies include genre and
-date information. We'll use this dataset to build
+date information. We'll use this dataset to build our model.
 
 Simple Content-based Filtering
 ------------------------------
