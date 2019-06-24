@@ -13,10 +13,12 @@ If you need support or have questions, please email us: support@opendatagroup.co
 
 1. [Pre-requisites](#Prerequisites)
 2. [Intro to Streams](#intro-to-streams)
-3. [Building Streams](#building-a-stream)
-4. [Test Model](#Test-Model)
-5. [Next Steps](#next-steps)
-
+3. [Use Cases](#use-cases)
+    1. [Deploying as REST](#deploying-as-rest)
+    2. [Reading and Writing with S3](#reading-and-writing-from-s3)
+    3. [Streaming to Kafka](#streaming-to-kafka)
+    4. [Reading and Writing with ODBC](#reading-and-writing-database)
+4. [Next Steps](#next-steps)
 
 ## <a name="Prerequisites"></a>Pre-requisites
 Before we walk through how to build and test streams, we will need the following:
@@ -33,6 +35,7 @@ To download the repo and setup the environment:
 `cd Getting-Started`
 `git checkout examples`
 `make`
+`bash -x load.sh`
 
 
 ## <a name="intro-to-streams"></a>Intro to Streams
@@ -44,7 +47,6 @@ Here are the parts of the stream that we define:
 - Encoding - expected record encoding
 - Envelope - framing of messages (delimited, fixed, ocf-block,delimited-csv)
 - Schema - a “language-neutral type signature” for the model, checked by the stream
-
 
 ```
 {
@@ -58,16 +60,24 @@ Here are the parts of the stream that we define:
   ...
 }
 ```
-## <a name="building-a-stream"></a>
+
 We're going to be walking through some examples of utilizing streams, but first we'll cover how to construct them and add them to FastScore. Streams are added to Model Manage to be made available for attaching to models deployed in FastScore Engines. 
 
 ```bash
 fastscore stream add <stream-name> <stream-descriptor-file>
+```
+To save headache down the road, it's best to validate and test the stream before utilizing it with a model. First we can verify the syntax is correct to make sure the Stream Descriptor is well-formed.
 
+```bash
+fastscore stream verify <stream-name> <slot-number>
 ```
 
+We can also sample it to ensure it's connecting to the data source and returning the data as expected. 
+```bash
+fastscore stream sample <stream-name>
+```
 
-## <a name="intro-to-streams"></a>Use Cases for Streams 
+## <a name="use-cases"></a>Use Cases 
 As a model goes through the journey to production, the data pipeline is going to change for various use cases and testing. The Stream abstraction is FastScore is going to make this possible. We're going to walk through some common datapipeline integrations we've seen our users commonly use as shown in the table below.
 
 | Use Case                        | Description                                                                        |
@@ -76,7 +86,6 @@ As a model goes through the journey to production, the data pipeline is going to
 | [Reading and Writing with S3](#reading-and-writing-from-s3)      | Pull input data from AWS S3 and write the results.                                 |
 | [Streaming to Kafka](#streaming-to-kafka)               | Loop over input file and write output data to Kafka topic for streaming use cases. |
 | [Reading and Writing to Database](#reading-and-writing-database)   | Use ODBC for reading and writing from a MySQL Database.                            |
-
 
 
 
@@ -91,7 +100,7 @@ fastscore engine reset
 fastscore run <model-name> rest: rest:
 fastscore engine inspect
 ```
-
+For example, the following will set 
 ```
 fastscore use engine-1
 fastscore engine reset
@@ -99,7 +108,8 @@ fastscore run xgboost_iris-py3 rest: rest:
 fastscore engine inspect
 ```
 
-For deploying as REST for an application, we can right a custom stream that enables round-trip REST calls for sending data and recieving back scores.   
+This deployment is gonig to create simple REST endpoints for the model.  For deploying as REST for an application, we will need a custom stream that enables round-trip REST calls. Let's define this stream descriptor in a json file and save it as `rest-trip.json` under `library/streams`.
+
 ```bash
 {
 "Transport": "REST",
@@ -110,18 +120,107 @@ For deploying as REST for an application, we can right a custom stream that enab
     }
 }
 ```
+Next, we add it to Model Manage with `fastscore stream add rest-trip rest-trip.json`.
 
-To test via curl command we can use the following command to send our data to the model.
+To deploy it with our new stream, we run the following commands:
+```bash
+fastscore use engine-1
+fastscore engine reset
+fastscore run xgboost_iris-py3 rest-trip rest-trip
+```
+
+Now we can test it by sending our test data to the API end point for the model. Here is the format for the curl command for roundtrip calls:
 
 ```curl -i -k -u fastscore:fastscore -H "Content-Type: application/json" --data-binary "@path/to/file" https://<dashboard-url>/api/1/service/<engine-name>/2/active/model/roundtrip/0/1```
 
-## <a name="reading-and-writing-from-s3"></a>Reading and Writing with S3
+For our example, we can run the following from within the `scripts` directory
+```
+curl -i -k -u fastscore:fastscore -H "Content-Type: application/json" --data-binary "@xgboost_iris_single.json" https://localhost:8000/api/1/service/engine-1/2/active/model/roundtrip/0/1
+```
+And we'll get the following prediction back:
+`{"A": 0.0032884993124753237, "B": 0.004323431756347418, "C": 0.992388129234314}`
 
+## <a name="reading-and-writing-from-s3"></a>Reading and Writing with S3
+Pull and pushing data to/from S3 is a common pattern for teams running in AWS.  To get started we'll need to upload `library/scripts/xgboost_iris_inputs.jsons` to an S3 bucket.  
+
+Here is the general template for the transport in the Stream Descriptor access S3:
+
+```
+{
+...
+    "Transport": {
+        "Type": "S3",
+        "Bucket": "<bucket-name>",
+        "ObjectKey": "<file-name>",
+        "AccessKeyID": "<AccessKeyID>",
+        "SecretAccessKey": "<SecretAccessKey>"
+        },
+    ...
+}
+```
+You'll notice that to we'll need to provide our AccessKeyID and SecretAccessKey credentials. Credentials like this should not be stored in plain text and defintely not added to Git if we're backing [Model Manage with Git](https://opendatagroup.github.io/Product%20Manuals/Github%20Integration/). To keep these safe, we can use [Docker Secrets](https://docs.docker.com/engine/reference/commandline/secret_create/) to obscure these credentials. 
+
+First, we're going to create the secrets for AccessKeyID and SecretAccessKey. These can also be added via a file if you prefer. 
+```
+echo <insert-AccessKeyID-here> | docker secret create AccessKeyID -
+echo <insert-SecretAccessKey-here> | docker secret create SecretAccessKey -
+```
+echo AKIAZ7M6XMJ7TFSKYTEK | docker secret create AccessKeyID -
+echo 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 | docker secret create SecretAccessKey -
+
+Next, we need to add these secrets to the Docker Compose to make them avaialble to the Engine.
+```
+secrets:
+  AccessKeyID:
+    external: true
+  SecretAccessKey:
+    external: true
+```
+
+Now we need to inject these secrets 
+```
+secret://AccessKeyID
+secret://SecretAccessKey
+```
 
 ## <a name="streaming-to-kafka"></a>Streaming to Kafka
+Kafka provides a fantastic 
+
+```
+{
+    "Version": "1.2",
+    "Envelope": "delimited",
+    "Loop": true,
+    "Transport": {
+        "Path": "/tmp/close_prices.jsons",
+        "Type": "file"
+        },
+        "Encoding": "json"
+}
+```
+
+`fastscore engine put engine-1 library/scripts/xgboost_iris_inputs.jsons`
 
 
-`fastscore engine put xgboost_iris_inputs.jsons xgboost_iris_inputs.jsons`
+## <a name="reading-and-writing-database"></a>Reading and Writing with ODBC
+Databases tend to be a bit more  
+
+* Recordsets must be off for the slot using the stream.
+* The model must pass data to the slot as a tuple.
+* The data must be formatted to match the types of the columns within the table.
 
 
-## <a name="reading-and-writing-database"></a>Reading and Writing to Database
+## <a name="next-steps"></a>Next Steps
+At this point, our model is integrated to our data pipeline and can score data for a variety of business applciations. If there is a 
+
+To continue learning, check out some additional examples here:
+- [Gradient Boosting Regressor](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/)
+- [TensorFlow LTSM](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Tensorflow%20LSTM/)
+
+Additionally, consult the detailed Product Reference documentation:
+- [Stream Descriptor](https://opendatagroup.github.io/Product%20Manuals/Stream%20Descriptors/)
+- [Multiple Input/Output Streams](https://opendatagroup.github.io/Product%20Manuals/Multiple%20Input%20and%20Output%20Streams/)
+- [FastScore CLI Reference](https://opendatagroup.github.io/Reference/FastScore%20CLI)
+- [FastScore SDK Reference](https://opendatagroup.github.io/Reference/FastScore%20SDKs)
+
+If you need support or have questions, please email us: support@opendatagroup.com
