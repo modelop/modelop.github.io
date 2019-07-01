@@ -26,7 +26,7 @@ Before we walk through how to build and test streams, we will need the following
 2. [FastScore CLI Installed](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20FastScore/#installing-the-fastscore-cli)
 3. [Example repo downloaded](https://github.com/opendatagroup/Getting-Started/tree/examples)
 
-This guide walks through a multi-class classification model that determines the species of iris based on four features: sepal length/width, petal length/width using the XGBoost framework. It is available in the repo above. For details on how we defined this Model Deployment Package, refer to this guide: [Conform and Deploy a Model Guide](https://opendatagroup.github.io/Getting%20Started/Conform%and%Deploy%20a%20Model/).
+This guide walks through a multi-class classification model that determines the species of iris based on four features: sepal length/width, petal length/width using the XGBoost framework. It is available in the repo above. For details on how we defined this Model Deployment Package, refer to this guide: [Conform and Deploy a Model Guide](https://opendatagroup.github.io/Getting%20Started/Conform%20and%20Deploy%20a%20Model/).
 
 To download the repo, setup the environment, and add the assets we will be using, run the following:
 
