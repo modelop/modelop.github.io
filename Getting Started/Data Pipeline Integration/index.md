@@ -14,10 +14,9 @@ If you need support or have questions, please email us: support@opendatagroup.co
 1. [Pre-requisites](#Prerequisites)
 2. [Intro to Streams](#intro-to-streams)
 3. [Use Cases and Scoring Modes](#use-cases)
-1. [On-demand Scoring: REST](#deploying-as-rest)
-2. [Batch Scoring: S3](#reading-and-writing-from-s3)
-3. [Credentials with Docker Secrets](#docker-secrets)
-3. [Streaming Scoring: Kafka](#streaming-to-kafka)
+    1. [On-demand Scoring: REST](#deploying-as-rest)
+    2. [Batch Scoring: S3](#reading-and-writing-from-s3)
+    3. [Streaming Scoring: Kafka](#streaming-to-kafka)
 4. [Next Steps](#next-steps)
 
 ## <a name="Prerequisites"></a>Pre-requisites
