@@ -3,7 +3,7 @@ description: "This is a step by step guide for integrating a data pipeline for a
 ---
 
 # Data Pipeline Integration: Streams
-This is a step by step guide for integrating and testing a model's data pipeline in FastScore. It contains instructions for Data and ModelOps engineer to define and test the Streams that manage data input and outputs in FastScore. We will also walk through using Streams to set model scoring mode including On-demand, Batch, and Streaming.  This guide was last updated for v1.10 of FastScore. 
+This is a step by step guide for integrating and testing a model's data pipeline in FastScore. It contains instructions for Data and ModelOps engineers to define and test the Streams that manage data inputs and outputs in FastScore. We will also walk through using Streams to set model scoring mode including On-demand, Batch, and Streaming.  This guide was last updated for v1.10 of FastScore. 
 
 As we go, we will be referring to an example XGBoost model available in the `examples` branch of this repo (https://github.com/opendatagroup/Getting-Started/tree/examples).
 
@@ -40,7 +40,7 @@ To download the repo, setup the environment, and add the assets we will be using
 ## <a name="intro-to-streams"></a>Intro to Streams
 As a model goes through the Model Lifecycle, the data pipeline is going to dynamically change for various use cases and environments. The Stream abstraction is FastScore is going to allow us to quickly change the data pipeline and scoring behavior without constantly recoding the model. Streams define the integration to our data pipeline. They will read records from underlying transport, verify them against the schema, and feed them to the model. They also will determine how the model will score data while deployed (on-demand, batch, or streaming). Streams are attached to input and output slots of the FastScore Engine that provide the Model Execution Script access for reading and writing data. Even slot numbers respond to the model inputs and odd numbers for data outputs. It is possible to have multiple input and output streams as described in [this guide](https://opendatagroup.github.io/Product%20Manuals/Multiple%20Input%20and%20Output%20Streams/).
 
-The streams are defined via a Stream Descriptor, a JSON file that contain connection information and components that define scoring behavior. Full documentation on Stream Descriptors is available [here](https://opendatagroup.github.io/Product%20Manuals/Stream%20Descriptors/). 
+Each stream is defined via a Stream Descriptor, a JSON file that contains connection information and components that define scoring behavior. Full documentation on Stream Descriptors is available [here](https://opendatagroup.github.io/Product%20Manuals/Stream%20Descriptors/). 
 
 Here are the components of the stream that we define in the Stream Descriptor:
 - Description - optional description of the stream
@@ -76,11 +76,28 @@ We can also sample it to ensure it is connecting to the data source and returnin
 ```bash
 fastscore stream sample <stream-name>
 ```
+For example, when we add a [file stream](#streaming-to-kafka)  later in this guide, we can use the following commands to view the data returned by the stream: 
+```bash
+fastscore stream sample iris_file_input
+```
+And it will return our sample data:
+```bash
+1 : {"sepal_length": 6.9, "sepal_width": 3.1, "petal_length": 5.4, "petal_width": 2.1}
+2 : {"sepal_length": 4.6, "sepal_width": 3.1, "petal_length": 1.5, "petal_width": 0.2}
+3 : {"sepal_length": 5.7, "sepal_width": 2.6, "petal_length": 3.5, "petal_width": 1.0}
+4 : {"sepal_length": 6.0, "sepal_width": 3.4, "petal_length": 4.5, "petal_width": 1.6}
+5 : {"sepal_length": 6.4, "sepal_width": 2.8, "petal_length": 5.6, "petal_width": 2.1}
+6 : {"sepal_length": 5.6, "sepal_width": 2.8, "petal_length": 4.9, "petal_width": 2.0}
+7 : {"sepal_length": 6.2, "sepal_width": 2.9, "petal_length": 4.3, "petal_width": 1.3}
+8 : {"sepal_length": 5.7, "sepal_width": 2.9, "petal_length": 4.2, "petal_width": 1.3}
+9 : {"sepal_length": 6.3, "sepal_width": 2.7, "petal_length": 4.9, "petal_width": 1.8}
+10 : {"sepal_length": 6.3, "sepal_width": 3.3, "petal_length": 4.7, "petal_width": 1.6}
+```
 
 ## <a name="use-cases"></a>Use Cases and Scoring Modes 
 The scoring and data needs of a model will change often along the Model Lifecycle and as business needs change. FastScore Streams will allow our model the flexibility to meet these evolving needs. 
 
-We are going to walk through several use cases using streams for the same model to show how we can leverage streams.
+We are going to walk through several use cases using different streams for the same model to show how we can leverage streams.
 
 | Use Case                        | Description                                                                        |
 |---------------------------------|------------------------------------------------------------------------------------|
@@ -110,13 +127,13 @@ fastscore engine reset
 fastscore run xgboost_iris-py3 rest: rest:
 fastscore engine inspect
 ```
-If the Engine Inspect returns `engine-1 is running`, the model is ready for data inputs as is ready for data inputs. If it returns an error, check the docker logs for potential issues. It is most likely missing dependencies for the model or missing attachments.
+If the `fastscore engine inspect` command returns `engine-1 is running`, the model is ready for data inputs. If it returns an error, check the docker logs for potential issues. It is most likely missing dependencies for the model or missing attachments.
 
 Now we can send the model data through the CLI and view the output:
 
 ```
-head -10 library/scripts/xgboost_iris_inputs.jsons | fastscore model input
-fastscore model output
+cat library/scripts/xgboost_iris_inputs.jsons | fastscore model input
+fastscore model output -c
 ```
 
 To deploy the model as REST for an application, we will need a custom stream that enables round-trip REST calls. Now we define this stream descriptor in a JSON file and save it as `rest-trip.json` under `library/streams`.
@@ -131,7 +148,7 @@ To deploy the model as REST for an application, we will need a custom stream tha
         }
 }
 ```
-Next, we add it to Model Manage with `fastscore stream add rest-trip rest-trip.json`.
+Next, we add it to Model Manage with `fastscore stream add rest-trip library/streams/rest-trip.json`.
 
 To deploy it with our new stream, we run the following commands:
 ```bash
@@ -140,7 +157,7 @@ fastscore engine reset
 fastscore run xgboost_iris-py3 rest-trip rest-trip
 ```
 
-Now we can test it by sending our test data to the API end point for the model. Here is the format for the curl command for roundtrip calls:
+Now, we can test our deployment by sending a single test input to the API end point for the model, similar to how an application would request the prediction. Here is the format for the curl command for roundtrip calls:
 
 ```curl -i -k -u fastscore:fastscore -H "Content-Type: application/json" --data-binary "@path/to/file" https://<dashboard-url>/api/1/service/<engine-name>/2/active/model/roundtrip/0/1```
 
@@ -201,7 +218,7 @@ We also create the output stream as `s3-out.json` that will create a new output 
     }
 }
 ```
-Now we add the Streams to FastScore using the following. We can also use the fastscore stream verify and sample above to make sure they are defined correctly.
+Now we add the Streams to FastScore using the following. We can also use the `fastscore stream verify` and `fastscore sample` commands detailed above to make sure they are defined correctly.
 ```
 fastscore stream add s3-input s3-input.json
 fastscore stream add s3-out s3-out.json
@@ -215,13 +232,13 @@ fastscore run xgboost_iris-py3 s3-input s3-out
 fastscore engine inspect
 ```
 
-When the run through the data has completed, the Engine will be in the Finished state and the model's output data will be available in the S3 bucket.
+When the model has scored all the input data, the Engine will be in the `Finished` state and the model's output will be available in the S3 bucket.
 
 
 
 
 ## <a name="streaming-to-kafka"></a>Streaming Scoring: Kafka
-Kafka provides a fantastic way to stream data into and out of models. It is also useful to handle communication between models in FastScore for modular data processing and inference.   
+Kafka provides a fantastic way to stream data into and out of models. It is also useful for handling communication between models in FastScore for modular data processing and inference.   
 
 For this example, we are going to have the model loop over a data file to mimic an incoming data stream. This pattern is useful for testing, but not recommended for Production and higher-level environments. In the stream descriptor, you will notice that we set `Loop` to `True` to initiate the looping behavior.   
 
@@ -238,11 +255,11 @@ We will create the descriptor as shown below and save it as `iris_file_input.jso
     "Encoding": "json"
 }
 ```
-The transport is going to point to a file in the container at `/tmp/close_prices.jsons`. This file can be copied into the container via the Dockerfile, or we can use a CLI command to place that file there. This approach is not recommended for Production, but useful for testing in lower environments. We can run the following command to upload it to the container:
+The transport is going to point to a file in the container at `/tmp/xgboost_iris_inputs.jsons`. This file can be copied into the container via a command in the Dockerfile, or we can use a CLI command to place that file there. This approach is not recommended for Production, but useful for testing in lower environments. We can run the following command to upload the input file to the container:
 
 `fastscore engine put engine-1 xgboost_iris_inputs.jsons xgboost_iris_inputs.jsons`
 
-Now for our output stream, we will set up a Stream to point to our Kafka container. The Kafka container is available in our deployment via the docker-compose. We create the following descriptor and save it as `iris_stream.json`.
+For our output stream, we will set up a Stream to point to our Kafka container. The Kafka container is available in our deployment via the docker-compose.yaml file. We create the following descriptor and save it as `iris_stream.json`.
 
 ```
 {
@@ -255,11 +272,11 @@ Now for our output stream, we will set up a Stream to point to our Kafka contain
     "Encoding": "json"
 }
 ```
-Now we ready to add these in and deploy the model with them.
+Now we are ready to add these streams to Model Manage and deploy the model with them.
 
 ```
 fastscore stream add iris_kafka iris_stream.json
-fastscore stream add iris_file iris_file_input.json
+fastscore stream add iris_file_input iris_file_input.json
 ```
 We can also run `fastscore stream verify` and `fastscore stream sample` to make sure they are configured correctly.
 
@@ -268,7 +285,7 @@ Now to deploy our model with these streams, we run the following commands:
 ```
 fastscore use engine-1
 fastscore engine reset
-fastscore run xgboost_iris-py3 iris_file iris_kafka
+fastscore run xgboost_iris-py3 iris_file_input iris_kafka
 fastscore engine inspect
 ``` 
 
