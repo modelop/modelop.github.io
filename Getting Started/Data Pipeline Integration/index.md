@@ -160,13 +160,13 @@ Here is the general template for the transport in the Stream Descriptor access S
 {
 ...
 "Transport": {
-"Type": "S3",
-"Bucket": "<bucket-name>",
-"ObjectKey": "<file-name>",
-"AccessKeyID": "<AccessKeyID>",
-"SecretAccessKey": "<SecretAccessKey>",
-"Region": "aws-region"
-},
+    "Type": "S3",
+    "Bucket": "<bucket-name>",
+    "ObjectKey": "<file-name>",
+    "AccessKeyID": "<AccessKeyID>",
+    "SecretAccessKey": "<SecretAccessKey>",
+    "Region": "aws-region"
+    },
 ...
 }
 ```
@@ -175,30 +175,30 @@ For our model, we'll point to the `xgboost_iris_inputs.jsons` file with the foll
 
 ```
 {
-"Encoding": "JSON",
-"Transport": {
-"Type": "S3",
-"Bucket": "iris-data-bucket",
-"ObjectKey": "xgboost_iris_inputs.jsons",
-"AccessKeyID": "AccessKeyID",
-"SecretAccessKey": "SecretAccessKey",
-"Region": "us-east-2"
-}
+    "Encoding": "JSON",
+    "Transport": {
+        "Type": "S3",
+        "Bucket": "iris-data-bucket",
+        "ObjectKey": "xgboost_iris_inputs.jsons",
+        "AccessKeyID": "AccessKeyID",
+        "SecretAccessKey": "SecretAccessKey",
+        "Region": "us-east-2"
+    }
 }
 ```
 
 We also create the output stream as `s3-out.json` that will create a new output file `xgboost_iris_outputs.jsons`.
 ```
 {
-"Encoding": "JSON",
-"Transport": {
-"Type": "S3",
-"Bucket": "iris-data-bucket",
-"ObjectKey": "xgboost_iris_outputs.jsons",
-"AccessKeyID": "AccessKeyID",
-"SecretAccessKey": "SecretAccessKey",
-"Region": "us-east-2"
-}
+    "Encoding": "JSON",
+    "Transport": {
+        "Type": "S3",
+        "Bucket": "iris-data-bucket",
+        "ObjectKey": "xgboost_iris_outputs.jsons",
+        "AccessKeyID": "AccessKeyID",
+        "SecretAccessKey": "SecretAccessKey",
+        "Region": "us-east-2"
+    }
 }
 ```
 Now we add the Streams to FastScore using the following. We can also use the fastscore stream verify and sample above to make sure they are defined correctly.
@@ -228,14 +228,14 @@ For this example, we are going to have the model loop over a data file to mimic 
 We will create the descriptor as shown below and save it as `iris_file_input.json` 
 ```
 {
-"Version": "1.2",
-"Envelope": "delimited",
-"Loop": true,
-"Transport": {
-"Path": "/tmp/xgboost_iris_inputs.jsons",
-"Type": "file"
-},
-"Encoding": "json"
+    "Version": "1.2",
+    "Envelope": "delimited",
+    "Loop": true,
+    "Transport": {
+        "Path": "/tmp/xgboost_iris_inputs.jsons",
+        "Type": "file"
+    },
+    "Encoding": "json"
 }
 ```
 The transport is going to point to a file in the container at `/tmp/close_prices.jsons`. This file can be copied into the container via the Dockerfile, or we can use a CLI command to place that file there. This approach is not recommended for Production, but useful for testing in lower environments. We can run the following command to upload it to the container:
@@ -246,13 +246,13 @@ Now for our output stream, we will set up a Stream to point to our Kafka contain
 
 ```
 {
-"Envelope": null,
-"Transport": {
-"Topic": "iris",
-"BootstrapServers": ["kafka:9092"],
-"Type": "kafka"
-},
-"Encoding": "json"
+    "Envelope": null,
+    "Transport": {
+        "Topic": "iris",
+        "BootstrapServers": ["kafka:9092"],
+        "Type": "kafka"
+        },
+    "Encoding": "json"
 }
 ```
 Now we ready to add these in and deploy the model with them.
