@@ -52,13 +52,13 @@ Here are the components of the stream that we define in the Stream Descriptor:
 ```
 {
 "Description": "A stream descriptor template",
-"Transport": {
-"Type": "REST" | "HTTP" | "Kafka" | "S3" | "file" | "ODBC" | "TCP" | "UDP" | "exec" | "inline"
-},
-"Encoding": null | "json" | "avro-binary" | ...,
-"Envelope": null | "delimited" | ...,
-"Schema": { ... },
-}
+    "Transport": {
+        "Type": "REST" | "HTTP" | "Kafka" | "S3" | "file" | "ODBC" | "TCP" | "UDP" | "exec" | "inline"
+        },
+    "Encoding": null | "json" | "avro-binary" | ...,
+    "Envelope": null | "delimited" | ...,
+    "Schema": { ... },
+    }
 ```
 
 We are going to be walking through some examples of utilizing streams, but first let us cover how to build them and add them to FastScore. We add streams to FastScore using the following [CLI](https://opendatagroup.github.io/Reference/FastScore%20CLI/) command: 
@@ -123,12 +123,12 @@ To deploy the model as REST for an application, we will need a custom stream tha
 
 ```bash
 {
-"Transport": "REST",
-"Encoding": "json",
-"Batching": {
-"NagleTime": 0,
-"Watermark": null
-}
+    "Transport": "REST",
+    "Encoding": "json",
+    "Batching": {
+        "NagleTime": 0,
+        "Watermark": null
+        }
 }
 ```
 Next, we add it to Model Manage with `fastscore stream add rest-trip rest-trip.json`.
