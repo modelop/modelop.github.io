@@ -16,7 +16,8 @@ If you need support or have questions, please email us: support@opendatagroup.co
 3. [Use Cases and Scoring Modes](#use-cases)
     1. [On-demand Scoring: REST](#deploying-as-rest)
     2. [Batch Scoring: S3](#reading-and-writing-from-s3)
-    3. [Streaming Scoring: Kafka](#streaming-to-kafka)
+    3. [Credentials with Docker Secrets](#docker-secrets)
+    4. [Streaming Scoring: Kafka](#streaming-to-kafka)
 4. [Next Steps](#next-steps)
 
 ## <a name="Prerequisites"></a>Pre-requisites
@@ -159,11 +160,11 @@ fastscore run xgboost_iris-py3 rest-trip rest-trip
 
 Now, we can test our deployment by sending a single test input to the API end point for the model, similar to how an application would request the prediction. Here is the format for the curl command for roundtrip calls:
 
-```curl -i -k -u fastscore:fastscore -H "Content-Type: application/json" --data-binary "@path/to/file" https://<dashboard-url>/api/1/service/<engine-name>/2/active/model/roundtrip/0/1```
+```curl -i -k -H "Content-Type: application/json" --data-binary "@path/to/file" https://<dashboard-url>/api/1/service/<engine-name>/2/active/model/roundtrip/0/1```
 
 For our example, we can run the following from within the `library/scripts` directory
 ```
-curl -i -k -u fastscore:fastscore -H "Content-Type: application/json" --data-binary "@xgboost_iris_single.json" https://localhost:8000/api/1/service/engine-1/2/active/model/roundtrip/0/1
+curl -i -k -H "Content-Type: application/json" --data-binary "@xgboost_iris_single.json" https://localhost:8000/api/1/service/engine-1/2/active/model/roundtrip/0/1
 ```
 And we'll get the following prediction back:
 `{"A": 0.0032884993124753237, "B": 0.004323431756347418, "C": 0.992388129234314}`
@@ -188,7 +189,7 @@ Here is the general template for the transport in the Stream Descriptor access S
 }
 ```
 
-For our model, we'll point to the `xgboost_iris_inputs.jsons` file with the following in a stream descriptor. We will then save it as `s3-input.json`. Make sure to include your SecretAccessKey and AccessKeyID. Warning: if you are using the [Git Integration](https://opendatagroup.github.io/Product%20Manuals/Github%20Integration/), do not add these credentials in plain text. They will be added to Git, which is very insecure.
+For our model, we'll point to the `xgboost_iris_inputs.jsons` file with the following in a stream descriptor. We will then save it as `s3-input.json`. Make sure to include your SecretAccessKey and AccessKeyID. Storing credentials in plain text is not recommended, especially if utilizing the [Git Integration](https://opendatagroup.github.io/Product%20Manuals/Github%20Integration/) to manage Model Assets. [The section](#docker-secrets) below details how to utilize secrets to obscure the credentials
 
 ```
 {
@@ -235,6 +236,87 @@ fastscore engine inspect
 When the model has scored all the input data, the Engine will be in the `Finished` state and the model's output will be available in the S3 bucket.
 
 
+## <a name="docker-secrets"></a>Credentials with Docker Secrets
+Credentials need to be handled appropriately especially when we are using the [Git Integration](https://opendatagroup.github.io/Product%20Manuals/Github%20Integration/) to store model assets in Git. To keep connection credentials secure, we can use [Docker Secrets](https://docs.docker.com/engine/reference/commandline/secret_create/) within our Stream Descriptors to obscure these credentials. 
+
+We will need to create the Docker Secrets then restart the environment with the Secrets available to the Engine.  If you have a running environment, run `make stop` to spin down the environment.
+
+First, we initialize the Docker Swarm with `docker swarm init`.  Then, we're going to create the secrets for AccessKeyID and SecretAccessKey via the command line. Note that we use `printf` instead of `echo` to prevent any issues with new lines being added to the Secret.
+
+```
+printf  <insert-access-key> | docker secret create AccessKeyID -
+printf  <insert-secret-access-key. | docker secret create SecretAccessKey -
+```
+Next, we need to add these secrets to the Docker Compose to make them avaialble to the Engine. We add the Secrets to the Swarm at the bottom as well as make them available to the individual Engine containers in the `docker-compose` file. There is a full example in `Getting-Started` called `docker-compose-secrets.yaml`.
+```
+engine-1:
+    image: fastscore/engine:xgboost
+    ports:
+        - "8003:8003"
+    volumes:
+        - ./data:/data
+    environment:
+        CONNECT_PREFIX: https://connect:8001
+    networks:
+        - fsnet
+    secrets:
+        - SecretAccessKey
+        - AccessKeyID
+
+------ 
+
+secrets:
+    AccessKeyID:
+        external: true
+    SecretAccessKey:
+        external: true
+```
+
+Now, we deploy the containers and set up the FastScore environment and assets using the following commands:
+`docker stack deploy -c docker-compose-deploy.yaml --resolve-image changed fs-vanilla`
+`bash -x setup.sh`
+`bash -x load.sh`
+
+Now, we need to inject these secrets into the Stream Descriptors by referencing to the secret with `secret://<secret-name>` in place of the value.  Save them as `s3-input-secret.json` and `s3-ouput-secret.json`. 
+
+For the input:
+```
+{
+    "Encoding": "JSON",
+    "Transport": {
+        "Type": "S3",
+        "Bucket": "iris-data-bucket",
+        "ObjectKey": "xgboost_iris_inputs.jsons",
+        "AccessKeyID": "secret://AccessKeyID",
+        "SecretAccessKey": "secret://SecretAccessKey",
+    "Region": "us-east-2"
+    }
+}
+```
+And for the output:
+```
+{
+"Encoding": "JSON",
+    "Transport": {
+        "Type": "S3",
+        "Bucket": "iris-data-bucket",
+        "ObjectKey": "xgboost_iris_outputs.jsons",
+        "AccessKeyID": "secret://AccessKeyID",
+        "SecretAccessKey": "secret://SecretAccessKey",
+        "Region": "us-east-2"
+    }
+}
+```
+And add them and run the model with the following commands :
+```
+fastscore stream add s3-input-secret s3-input-secret.json
+fastscore stream add s3-out-secret s3-ouput-secret.json
+fastscore use engine-1
+fastscore engine reset
+fastscore run xgboost_iris-py3 s3-input-secret s3-out-secret
+```
+
+ 
 
 
 ## <a name="streaming-to-kafka"></a>Streaming Scoring: Kafka
@@ -288,8 +370,6 @@ fastscore engine reset
 fastscore run xgboost_iris-py3 iris_file_input iris_kafka
 fastscore engine inspect
 ``` 
-
-
 
 ## <a name="next-steps"></a>Next Steps
 At this point, our sample model is integrated to our data pipeline and can score data for a variety of use cases. Now it’s time to integrate your team’s models and get scoring! 
