@@ -1,3 +1,4 @@
+---
 title: "Data Pipeline Integration: Streams"
 description: "This is a step by step guide for integrating a data pipeline for a model in FastScore. It contains instructions for ModelOps and Data Engineers to prepare, deploy and test their model's data pipeline. This guide was last updated for v1.10 of FastScore.\n\nIf you need support or have questions, please email us:  [support@opendatagroup.com](mailto:support@opendatagroup.com)"
 ---
@@ -31,12 +32,13 @@ This guide walks through a multi-class classification model that determines the 
 
 To download the repo, setup the environment, and add the assets we will be using, run the following:
 
-`git clone https://github.com/opendatagroup/Getting-Started.git`
-`cd Getting-Started`
-`git checkout examples`
-`make`
-`bash -x load.sh`
-
+``` bash
+git clone https://github.com/opendatagroup/Getting-Started.git
+cd Getting-Started
+git checkout examples
+make
+bash -x load.sh
+```
 
 ## <a name="intro-to-streams"></a>Intro to Streams
 As a model goes through the Model Lifecycle, the data pipeline is going to dynamically change for various use cases and environments. The Stream abstraction is FastScore is going to allow us to quickly change the data pipeline and scoring behavior without constantly recoding the model. Streams define the integration to our data pipeline. They will read records from underlying transport, verify them against the schema, and feed them to the model. They also will determine how the model will score data while deployed (on-demand, batch, or streaming). Streams are attached to input and output slots of the FastScore Engine that provide the Model Execution Script access for reading and writing data. Even slot numbers respond to the model inputs and odd numbers for data outputs. It is possible to have multiple input and output streams as described in [this guide](https://opendatagroup.github.io/Product%20Manuals/Multiple%20Input%20and%20Output%20Streams/).
@@ -277,7 +279,7 @@ Now, we deploy the containers and set up the FastScore environment and assets us
 `bash -x setup.sh`
 `bash -x load.sh`
 
-Now, we need to inject these secrets into the Stream Descriptors by referencing to the secret with `secret://<secret-name>` in place of the value.  Save them as `s3-input-secret.json` and `s3-ouput-secret.json`. 
+Next, we need to inject these secrets into the Stream Descriptors by referencing to the secret with `secret://<secret-name>` in place of the value.  Save them as `s3-input-secret.json` and `s3-ouput-secret.json`. 
 
 For the input:
 ```
@@ -316,7 +318,6 @@ fastscore engine reset
 fastscore run xgboost_iris-py3 s3-input-secret s3-out-secret
 ```
 
- 
 
 
 ## <a name="streaming-to-kafka"></a>Streaming Scoring: Kafka
