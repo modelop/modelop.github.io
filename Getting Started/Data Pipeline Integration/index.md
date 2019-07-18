@@ -6,7 +6,7 @@ description: "This is a step by step guide for integrating a data pipeline for a
 # Data Pipeline Integration: Streams
 This is a step by step guide for integrating and testing a model's data pipeline in FastScore. It contains instructions for Data and ModelOps engineers to define and test the Streams that manage data inputs and outputs in FastScore. We will also walk through using Streams to set model scoring mode including On-demand, Batch, and Streaming.  This guide was last updated for v1.10 of FastScore. 
 
-As we go, we will be referring to an example XGBoost model available in the `examples` branch of this repo (https://github.com/opendatagroup/Getting-Started/tree/examples).
+As we go, we will be referring to an example XGBoost model available in the `examples` branch of this [repo](https://github.com/opendatagroup/Getting-Started/tree/examples).
 
 If you need support or have questions, please email us: support@opendatagroup.com
 
