@@ -162,7 +162,7 @@ records. Seting CommitOffset to false disable this behaviour. Typically, the
 model then uses a special stream of type 'kafka-offset' to commit offsets. See
 below.
 
-#### <a name="section-kafka-offset"
+#### <a name="section-kafka-offset">Kafka Offset
 
 It is a special purpose stream transport used in conjunction with a Kafka stream
 those CommitOffset property is set to false. The stream uses same fields as a
