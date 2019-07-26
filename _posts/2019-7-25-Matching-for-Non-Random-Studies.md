@@ -90,7 +90,7 @@ A second approach is to use the propensity score to weight subjects and proceed 
 
 It is important when doing any of matching or score adjustments to make sure that the adjusted groups (test and control) resemble each other as much as possible. To determine the effect of the matching, we look at each variable in turn regressed against both treatment and propensity score. In the following plot, filled circles show the t-statistics for each treatment difference for each of the confounder variable before adjusting for propensity score, and the open circles after adjustment. The propensity score appears to have made the test and control groups look much more similar to each other than before.
 
-![](/assets/posts/images/2019-5-23/plot3-1.png)
+![](/assets/posts/images/2019-7-25/plot3-1.png)
 
 Summarizing the results, we see that all the adjustment methods give similar results in terms of measuring the effect of the test treatment. It is often the case that logistic regression, which produces an estimate of the *conditional* effect of treatment given the confounding variables, is very similar to the adjusted analyses that produce estimates of the *marginal* effect of the treatment on the population. Whenever there is interest in estimating the effects of treatments, it is recommended that a propensity-based analysis be conducted to ensure that potential biases due to non-random design are mitigated to the highest degree possible.
 
