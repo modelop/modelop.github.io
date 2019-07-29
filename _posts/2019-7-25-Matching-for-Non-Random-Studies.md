@@ -2,12 +2,11 @@
 layout: post
 title: "Matching for Non-Random Studies"
 categories: [data science]
-tags: [A/B testing, ]
+tags: [A/B testing, Causal inference]
 author: Shane Pederson
 mathjax: true
 ---
 
-### Introduction
 
 Experimental designs such as A/B testing are a cornerstone of statistical practice. By randomly assigning treatments to subjects, we can test the effect of a test versus a control (as in a clinical trial for a proposed new drug) or can determine which of several web page layouts for a promotional offer receives the largest response. Designed, controlled experiments are a common feature of much of scientific and business research. The internet is a natural platform from which to launch tests on almost any topic, and the principles of randomization are easily understood.
 
