@@ -2,12 +2,11 @@
 layout: post
 title: "Matching for Non-Random Studies"
 categories: [data science]
-tags: [A/B testing, ]
+tags: [A/B testing, Causal inference]
 author: Shane Pederson
 mathjax: true
 ---
 
-### Introduction
 
 Experimental designs such as A/B testing are a cornerstone of statistical practice. By randomly assigning treatments to subjects, we can test the effect of a test versus a control (as in a clinical trial for a proposed new drug) or can determine which of several web page layouts for a promotional offer receives the largest response. Designed, controlled experiments are a common feature of much of scientific and business research. The internet is a natural platform from which to launch tests on almost any topic, and the principles of randomization are easily understood.
 
@@ -62,9 +61,9 @@ This corresponds to an odds ratio of 0.687, suggesting lower overall mortality f
 
 However, as suggested above, it does not appear that the treatment and control are completely similar in terms of their covariates, as might be expected in a fully randomized design - it appears that older subjects and those with higher severity scores (a clinical rating of disease severity) received the test at higher rates than the control:
 
-![](/assets/posts/images/2019-7-25/plot1-1.png)
+![png](/assets/posts/images/2019-7-25/plot1-1.png)
 
-![](/assets/posts/images/2019-7-25/plot2-1.png)
+![png](/assets/posts/images/2019-7-25/plot2-1.png)
 
 Quantification of the treatment effect is at least partially confounded with some of the underlying conditions that correlate with increased expected mortality. So how to proceed? Regression (in this case, logistic regression) is typically used to measure the effects of a variable conditional on levels of the other variables, adjusting for inequities in the distributions of the explanatory factors. Using a logistic regression in this case, with a binary variable for treatment (0 = Control, 1 = Test) and also linear variables for Age, Serverity, and Risk Score (another prognostic assessment), we find that the odds ratio for treatment vs control drops to 0.549, and is significantly less than 1 at *α* = 0.05, with a 95% confidence interval of (0.31, 0.969).
 
@@ -90,7 +89,7 @@ A second approach is to use the propensity score to weight subjects and proceed 
 
 It is important when doing any of matching or score adjustments to make sure that the adjusted groups (test and control) resemble each other as much as possible. To determine the effect of the matching, we look at each variable in turn regressed against both treatment and propensity score. In the following plot, filled circles show the t-statistics for each treatment difference for each of the confounder variable before adjusting for propensity score, and the open circles after adjustment. The propensity score appears to have made the test and control groups look much more similar to each other than before.
 
-![](/assets/posts/images/2019-7-25/plot3-1.png)
+![png](/assets/posts/images/2019-7-25/plot3-1.png)
 
 Summarizing the results, we see that all the adjustment methods give similar results in terms of measuring the effect of the test treatment. It is often the case that logistic regression, which produces an estimate of the *conditional* effect of treatment given the confounding variables, is very similar to the adjusted analyses that produce estimates of the *marginal* effect of the treatment on the population. Whenever there is interest in estimating the effects of treatments, it is recommended that a propensity-based analysis be conducted to ensure that potential biases due to non-random design are mitigated to the highest degree possible.
 
