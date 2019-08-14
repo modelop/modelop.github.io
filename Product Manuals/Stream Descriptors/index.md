@@ -463,6 +463,9 @@ Parameter | Default | Description
 Separator | "\r\n" | The record separator
 SkipHeader | true | The CSV header present?
 SkipBlankLines | true | Ignore blank lines
+NullValues | ["\N"] | A list of values to be interpreted as "null"
+ParseFormulas | true | Interpret Excel-style formulas of the form =XXXX as strings "XXXX"
+StripWhitespace | "all" | Remove leading/trailing whitespace ("all"/"leading"/"trailing"/"none")
 
 For example:
 ``` json
@@ -485,6 +488,11 @@ Note that the following settings are not
 * "SkipBlankLines": true
 * "QuoteCharacter": (anything other than double quote)
 * "Delimiter": (anything other than comma)
+
+The following settings are designed for CSV files exported from Excel:
+* "NullValues": ["\N"]
+* "ParseFormulas": true
+* "StripWhitespace": "all"
 
 ### <a name="default-envelope">Default envelope
 
