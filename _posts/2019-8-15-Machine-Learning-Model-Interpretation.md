@@ -28,10 +28,8 @@ At this point, we are talking about a model as an asset in business. We need to 
 
 One of the easier ways to handle model interpretation is to start with an interpretable model, such as linear regression, logistic regression, decision tree, CNN, etc. High interpretability and efficiency are part of the main reasons that these models are widely used across different industries. They have a relative easy algorithm and training process, which are easy to monitor and adjust as a result. 
 
-<figure>
-  <img src="/assets/posts/images/2019-8-15/pictures/Drop1.png" style="margin-left: 60px; width: 250px;"/> <img src="/assets/posts/images/2019-8-15/pictures/sk-learn.png" style="margin-left: 60px; width: 400px;"/>
-  <figcaption> Source: [Kaggle Housing Price](https://www.kaggle.com/c/house-prices-advanced-regression-techniques), [Scikit-Learn](https://scikit-learn.org/stable/auto_examples/ensemble/plot_forest_importances.html)</figcaption>
-</figure>
+![png](/assets/posts/images/2019-8-15/pictures/Drop1.png) | ![png](/assets/posts/images/2019-8-15/pictures/sk-learn.png) 
+ *[Kaggle Housing Price](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)* | *[Scikit-Learn](https://scikit-learn.org/stable/auto_examples/ensemble/plot_forest_importances.html)*
 
 Feature importance is a very intuitive score that is implemented in many packages. A feature with higher importance not only contributes more to the prediction made by the model but also accounts for more in the prediction error. As a numerical score, importance can be used to create easy visualizations to present model training results. Feature importance not only provides a straightforward understanding of features but also provides a reliable metric for the dimension reduction process.
 
@@ -43,17 +41,15 @@ Feature importance is a very intuitive score that is implemented in many package
 
 People have seen how powerful some of the neural network models can be. Cool visualizations illustrating how these models work help a lot for people to understand them more. Examples include illustrating cues to find the “focus” of deep neural networks in image recognition. Because of the linear nature of some neural networks, it is not hard to trace back several layers of neurons and figure out where the model is focusing on when it is making a prediction.
 
-<figure>
-  <img src="/assets/posts/images/2019-8-15/pictures/openAI.png" style="display: block; margin-left: auto; margin-right: auto; width: 80%;"/>
-  <figcaption> Source: [Open AI](https://openai.com/blog/introducing-activation-atlases/)</figcaption>
-</figure>
+![png](/assets/posts/images/2019-8-15/pictures/openAI.png) 
+
+*Source: [Open AI](https://openai.com/blog/introducing-activation-atlases/)*
 
 However, even though sometimes a nice neural network demo looks nice and informative, it may not show you the feature importance information, i.e. which factors drive the model to make such a prediction. The classic example of tensorflow MNIST model using Convolutional Neural Network has an easy trace-back of which pixels are driving the prediction:
 
-<figure>
-  <img src="/assets/posts/images/2019-8-15/pictures/mnist.gif" style="display: block; margin-left: auto; margin-right: auto; width: 60%;"/>
-  <figcaption> Source: [Not another MNIST tutorial with TensorFlow](https://www.oreilly.com/learning/not-another-mnist-tutorial-with-tensorflow)</figcaption>
-</figure>
+![png](/assets/posts/images/2019-8-15/pictures/mnist.gif) 
+
+*Source: [Not another MNIST tutorial with TensorFlow](https://www.oreilly.com/learning/not-another-mnist-tutorial-with-tensorflow)*
 
 Recently, tensorflow also introduced a new `tf-explain` package that helps to generate such trace-back for image recognition as well.
 
@@ -74,10 +70,9 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 !tensorboard --logdir logs
 ```
 
-<figure>
-  <img src="/assets/posts/images/2019-8-15/pictures/tf-explain.png" style="display: block; margin-left: auto; margin-right: auto; width: 20%;"/>
-  <figcaption> Source: [TensorFlow Explain](https://tf-explain.readthedocs.io)</figcaption>
-</figure>
+![png](/assets/posts/images/2019-8-15/pictures/tf-explain.png)
+
+*Source: [TensorFlow Explain](https://tf-explain.readthedocs.io)*
 
 We have to keep in mind that each example above uses methods designed for the specific type of models or problems. There are a lot of exploratory works and hyperparameter tuning to do before such a nice demonstration can be made.
 
@@ -86,10 +81,8 @@ We have to keep in mind that each example above uses methods designed for the sp
 
 Over the years, data scientists and researchers have developed tools to help with model interpretation, and Local Interpretable Model-Agnostic Explanations (LIME) is one of the tools based on the paper ["Why Should I Trust You?": Explaining the Predictions of Any Classifier](https://arxiv.org/abs/1602.04938). The goal is obvious from the title of the paper. LIME does a good job of giving a meaningful estimate of feature importance for a given test data using the idea of Shapley Values, which is a game theory method of assigning weights to features depending on their contribution to the final prediction. 
 
-<figure>
-  <img src="/assets/posts/images/2019-8-15/pictures/lime.png" style="display: block; margin-left: auto; margin-right: auto; width: 70%;"/>
-  <figcaption> Source: [UC Business Analytics R Programming Guide ](https://uc-r.github.io/lime)</figcaption>
-</figure>
+![png](/assets/posts/images/2019-8-15/pictures/lime.png)  
+*Source: [UC Business Analytics R Programming Guide ](https://uc-r.github.io/lime)*
 
 However, in contrast to a global surrogate model, which is an approximated interpretable model of a black-box model, being local is one of the biggest disadvantages. Seeing LIME results for a particular data point, which could be quite an abnormal one, does not tell enough story of the whole model. The correct interpretation of "local" is hard to answer as well. To have a better understanding of the model, we would need to run tests on a large number of data points. To go from a local observation to a global picture could cost us a lot of computation power. Also, creating a local surrogate model works fine when the black box model consists of a smooth function, but not so well when the black box model contains many discrete (categorical) variables.
 
