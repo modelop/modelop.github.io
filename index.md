@@ -26,7 +26,7 @@ Please note: as of October 2019 and Version 2, ModelOp Center is the new name fo
 
 
 ### Product Versions
-- [1.10 Release Notes](/GettingStarted/Release Notes/)
+- [1.10 Release Notes](/Getting Started/Release Notes/)
 
 
 
