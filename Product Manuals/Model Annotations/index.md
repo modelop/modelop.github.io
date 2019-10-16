@@ -12,15 +12,9 @@ format for such annotations is as follows:
 # <tag>: <value>
 ```
 
-The annotation must be a comment in the target language and it must occupy the
-whole line. If the annotation tag is recognized, the value becomes associated
-with the tag. A tag contains a series of tag elements separated by dots. The
-first tag element is either 'ModelOp Center' or 'ModelOp'.
+The annotation must be a comment in the target language and it must occupy the whole line. If the annotation tag is recognized, the value becomes associated with the tag. A tag contains a series of tag elements separated by dots. The first tag element is either 'fastscore' or 'ModelOp'.
 
-Certain annotations are slot-specific. They are relevant for a particular
-stream slot or a group of slots. The slot scope is always the last element of
-the tag of a slot-specific annotation. The following slot scopes are
-supported:
+Certain annotations are slot-specific. They are relevant for a particular stream slot or a group of slots. The slot scope is always the last element of the tag of a slot-specific annotation. The following slot scopes are supported:
 
 Slot scope	| Applicable to	| Example
 ------------|---------------|--------
@@ -30,31 +24,29 @@ $all | All stream slots | #fastscore.schema.$all: schema-1
 $in | All input slots (0, 2, 4,...) | #fastscore.recordsets.$in: yes
 $out | All output slots (1, 3, 5,...) | #fastscore.recordsets.$out: false
 
-The slot scope can be omitted. If omitted, the default slot scope is assumed.
-The default scope depends on the annotation tag.
+The slot scope can be omitted. If omitted, the default slot scope is assumed. The default scope depends on the annotation tag.
 
 The current list of supported model annotations is given in the table below.
 
 Tag	| Slot-specific | Description | Allowed values | Example
 ----|---------------|-------------|----------------|--------
-ModelOp Center.schema.&lt;slot> | Yes (default scope: $all) | The name of the Avro schema | | # ModelOp.schema.0: schema-1
-ModelOp Center.recordsets.&lt;slot> | Yes (default scope: $all) | The 'recordsets' flag | true / false / yes / no | # ModelOp.recordsets.$in: yes
-ModelOp Center.action.&lt;slot> | Yes (default score: $in) | The name of the action function (defaults to 'action') | <func-name> / none | # ModelOp.action: score_report
-ModelOp Center.slot.&lt;slot> | Yes (default score: $all) | Set to 'unused' to disable the slot. | in-use / unused | #fastscore.slot.1: unused
-ModelOp Center.module-attached | No | The name of the code module included as a model attachment | | #fastscore.module-attached: mylib
-ModelOp Center.snapshots | No | Set to 'eof' to automatically take a model snapshot when the run completes. | none / eof | #fastscore.snapshots: eof
+fastscore.schema.&lt;slot> | Yes (default scope: $all) | The name of the Avro schema | | # fastscore.schema.0: schema-1
+fastscore.recordsets.&lt;slot> | Yes (default scope: $all) | The 'recordsets' flag | true / false / yes / no | # fastscore.recordsets.$in: yes
+fastscore.action.&lt;slot> | Yes (default score: $in) | The name of the action function (defaults to 'action') | <func-name> / none | # fastscore.action: score_report
+fastscore.slot.&lt;slot> | Yes (default score: $all) | Set to 'unused' to disable the slot. | in-use / unused | #fastscore.slot.1: unused
+fastscore.module-attached | No | The name of the code module included as a model attachment | | #fastscore.module-attached: mylib
+fastscore.snapshots | No | Set to 'eof' to automatically take a model snapshot when the run completes. | none / eof | #fastscore.snapshots: eof
 
-A `ModelOp Center.slot.<num-or-name>: in-use` annotation marks the slot as being
-used by the model. If a slot number or name is mentioned in the
+A `fastscore.slot.<num-or-name>: in-use` annotation marks the slot as being used by the model. If a slot number or name is mentioned in the
 schema/recordsets/action annotation it implicitly marks the slot as being in
 use. Note that in-use annotation can not refer to $all/$in/$out scopes.  On the
-other hand, the `ModelOp Center.slot.<slot-scope>: unused`  annotation cancels the
+other hand, the `fastscore.slot.<slot-scope>: unused`  annotation cancels the
 effect of any previous annotations that mentioned the &lt;slot-scope>. For
-example, `ModelOp Center.slot.$output: unused` indicate that the model does not
+example, `fastscore.slot.$output: unused` indicate that the model does not
 produce any outputs. The 'unused' annotation can remove the default slots (0
 and 1) from consideration.
 
-Setting `ModelOp Center.action` to `none` disables the action callbacks. The model
+Setting `fastscore.action` to `none` disables the action callbacks. The model
 becomes purely explicit. Explicit models read from stream slots directly and may
 exit before all streams reach EOF.
 
@@ -63,9 +55,9 @@ new models. However, they are recognized by the Engine.
 
 Deprecated annotation | Equivalent annotation(s)
 ----------------------|-------------------------
-ModelOp Center.input: &lt;schema> |fastscore.schema.0: &lt;schema>
-ModelOp Center.output: &lt;schema> |fastscore.schema.1: &lt;schema>
-ModelOp Center.recordsets: none/input/output/both |fastscore.recordsets.0: &lt;yes/no> /fastscore.recordsets.1: &lt;yes/no>
+fastscore.input: &lt;schema> |fastscore.schema.0: &lt;schema>
+fastscore.output: &lt;schema> |fastscore.schema.1: &lt;schema>
+fastscore.recordsets: none/input/output/both |fastscore.recordsets.0: &lt;yes/no> /fastscore.recordsets.1: &lt;yes/no>
 
 ## PFA models
 
