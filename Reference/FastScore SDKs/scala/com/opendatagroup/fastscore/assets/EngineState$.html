@@ -1,0 +1,1295 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+          <title></title>
+          <meta name="description" content="" />
+          <meta name="keywords" content="" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../lib/index.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery.panzoom.min.js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery.mousewheel.min.js"></script>
+      <script type="text/javascript" src="../../../../lib/index.js"></script>
+      <script type="text/javascript" src="../../../../index.js"></script>
+      <script type="text/javascript" src="../../../../lib/scheduler.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+        /* this variable can be used by the JS to determine the path to the root document */
+        var toRoot = '../../../../';
+      </script>
+    
+        </head>
+        <body>
+      <div id="search">
+        <span id="doc-title"><span id="doc-version"></span></span>
+        <span class="close-results"><span class="left">&lt;</span> Back</span>
+        <div id="textfilter">
+          <span class="input">
+            <input autocapitalize="none" placeholder="Search" id="index-input" type="text" accesskey="/" />
+            <i class="clear material-icons"></i>
+            <i id="search-icon" class="material-icons"></i>
+          </span>
+        </div>
+    </div>
+      <div id="search-results">
+        <div id="search-progress">
+          <div id="progress-fill"></div>
+        </div>
+        <div id="results-content">
+          <div id="entity-results"></div>
+          <div id="member-results"></div>
+        </div>
+      </div>
+      <div id="content-scroll-container" style="-webkit-overflow-scrolling: touch;">
+        <div id="content-container" style="-webkit-overflow-scrolling: touch;">
+          <div id="subpackage-spacer">
+            <div id="packages">
+              <h1>Packages</h1>
+              <ul>
+                <li name="_root_.root" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="_root_"></a><a id="root:_root_"></a>
+      <span class="permalink">
+      <a href="index.html#_root_" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../../index.html"><span class="name">root</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="_root_.com" visbl="pub" class="indented1 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="com"></a><a id="com:com"></a>
+      <span class="permalink">
+      <a href="index.html#com" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../index.html"><span class="name">com</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="com.opendatagroup" visbl="pub" class="indented2 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="opendatagroup"></a><a id="opendatagroup:opendatagroup"></a>
+      <span class="permalink">
+      <a href="../com/index.html#opendatagroup" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../index.html"><span class="name">opendatagroup</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../index.html" class="extype" name="com">com</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore" visbl="pub" class="indented3 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fastscore"></a><a id="fastscore:fastscore"></a>
+      <span class="permalink">
+      <a href="../../com/opendatagroup/index.html#fastscore" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="An example interaction with FastScore" href="../index.html"><span class="name">fastscore</span></a>
+      </span>
+      
+      <p class="shortcomment cmt">An example interaction with FastScore</p><div class="fullcomment"><div class="comment cmt"><p>An example interaction with FastScore</p><pre>scala&gt; <span class="kw">import</span> com.opendatagroup.fastscore.fleet._
+scala&gt; <span class="kw">implicit</span> <span class="kw">val</span> proxy = <span class="kw">new</span> Proxy(<span class="lit">"https://localhost:8000"</span>)
+scala&gt; <span class="kw">val</span> connect = <span class="kw">new</span> Connect()
+scala&gt; <span class="kw">import</span> com.opendatagroup.fastscore.assets._
+scala&gt; <span class="kw">val</span> model = Model.fromFile(<span class="lit">"./preprocessor.R"</span>)
+scala&gt; <span class="kw">val</span> modelmanage = connect.lookup(<span class="lit">"model-manage"</span>) <span class="kw">match</span> { <span class="kw">case</span> l: <span class="std">List</span>[ModelManage] <span class="kw">if</span> l.length == <span class="num">1</span> <span class="kw">=&gt;</span> l(<span class="num">0</span>) }
+scala&gt; modelmanage.models.put(<span class="lit">"preprocessor"</span>, model)</pre></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="com.opendatagroup">opendatagroup</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.assets" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="assets"></a><a id="assets:assets"></a>
+      <span class="permalink">
+      <a href="../../../com/opendatagroup/fastscore/index.html#assets" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="index.html"><span class="name">assets</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore">fastscore</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.assets.builders" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="builders"></a><a id="builders:builders"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/index.html#builders" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="builders/index.html"><span class="name">builders</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="index.html" class="extype" name="com.opendatagroup.fastscore.assets">assets</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.assets.serializers" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="serializers"></a><a id="serializers:serializers"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/index.html#serializers" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="serializers/index.html"><span class="name">serializers</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="index.html" class="extype" name="com.opendatagroup.fastscore.assets">assets</a></dd></dl></div>
+    </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="Asset.html" title="Parent Asset interface"></a>
+                        <a href="Asset.html" title="Parent Asset interface">Asset</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="Bag.html" title="Parent Bag interface"></a>
+                        <a href="Bag.html" title="Parent Bag interface">Bag</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="Constants$.html" title="Constants"></a>
+                        <a href="Constants$.html" title="Constants">Constants</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="EngineConfigItem$.html" title="Pneumo EngineConfigItem values"></a>
+                        <a href="EngineConfigItem$.html" title="Pneumo EngineConfigItem values">EngineConfigItem</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="EngineConfigMessage.html" title="Pneumo Engine Config Message"></a>
+                        <a href="EngineConfigMessage.html" title="Pneumo Engine Config Message">EngineConfigMessage</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="" title="EngineState parameter values"></a>
+                        <a href="" title="EngineState parameter values">EngineState</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="EngineStateMessage.html" title="Pneumo Engine State Message"></a>
+                        <a href="EngineStateMessage.html" title="Pneumo Engine State Message">EngineStateMessage</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="HealthMessage.html" title="Pneumo Health Message"></a>
+                        <a href="HealthMessage.html" title="Pneumo Health Message">HealthMessage</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="InputBatch.html" title="Pneumo Input Batch Message"></a>
+                        <a href="InputBatch.html" title="Pneumo Input Batch Message">InputBatch</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="KafkaSkipToRecord$.html" title="Kafka SkipToRecord parameter"></a>
+                        <a href="KafkaSkipToRecord$.html" title="Kafka SkipToRecord parameter">KafkaSkipToRecord</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="LogMessage.html" title="Pneumo Engine Log Message"></a>
+                        <a href="LogMessage.html" title="Pneumo Engine Log Message">LogMessage</a>
+                      </li><li class="current-entities indented4">
+                        <a class="object" href="Model$.html" title="Model factory"></a>
+                        <a class="class" href="Model.html" title="Model"></a>
+                        <a href="Model.html" title="Model">Model</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="ModelBag.html" title="A live collection of models in ModelManage"></a>
+                        <a href="ModelBag.html" title="A live collection of models in ModelManage">ModelBag</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="ModelConsoleMessage.html" title="Pneumo Model Console Message"></a>
+                        <a href="ModelConsoleMessage.html" title="Pneumo Model Console Message">ModelConsoleMessage</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="ModelErrorMessage.html" title="Pneumo Model Error Message"></a>
+                        <a href="ModelErrorMessage.html" title="Pneumo Model Error Message">ModelErrorMessage</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="ModelMetaOps.html" title="ModelMetadata companion trait"></a>
+                        <a href="ModelMetaOps.html" title="ModelMetadata companion trait">ModelMetaOps</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="ModelMetadata.html" title="ModelMetadata"></a>
+                        <a href="ModelMetadata.html" title="ModelMetadata">ModelMetadata</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="ModelParseOps$.html" title="Model Parsing helper functions"></a>
+                        <a href="ModelParseOps$.html" title="Model Parsing helper functions">ModelParseOps</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="ModelSerializer.html" title="Model Serialization companion trait"></a>
+                        <a href="ModelSerializer.html" title="Model Serialization companion trait">ModelSerializer</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="PneumoMessage.html" title="Pneumo Message parent trait"></a>
+                        <a href="PneumoMessage.html" title="Pneumo Message parent trait">PneumoMessage</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="PneumoMessageType$.html" title="Pneumo message types"></a>
+                        <a href="PneumoMessageType$.html" title="Pneumo message types">PneumoMessageType</a>
+                      </li><li class="current-entities indented4">
+                        <a class="object" href="Schema$.html" title="Schema factory"></a>
+                        <a class="class" href="Schema.html" title="Schema object"></a>
+                        <a href="Schema.html" title="Schema object">Schema</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SchemaBag.html" title="A live collection of schemas in ModelManage"></a>
+                        <a href="SchemaBag.html" title="A live collection of schemas in ModelManage">SchemaBag</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="SchemaMetaOps.html" title="SchemaMetadata companion trait"></a>
+                        <a href="SchemaMetaOps.html" title="SchemaMetadata companion trait">SchemaMetaOps</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SchemaMetadata.html" title="SchemaMetadata"></a>
+                        <a href="SchemaMetadata.html" title="SchemaMetadata">SchemaMetadata</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="SchemaSerializer.html" title="Schema serializer companion trait"></a>
+                        <a href="SchemaSerializer.html" title="Schema serializer companion trait">SchemaSerializer</a>
+                      </li><li class="current-entities indented4">
+                        <a class="object" href="Sensor$.html" title="Sensor factory"></a>
+                        <a class="class" href="Sensor.html" title="Sensor object"></a>
+                        <a href="Sensor.html" title="Sensor object">Sensor</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorActivate.html" title="Sensor Activate parameter"></a>
+                        <a href="SensorActivate.html" title="Sensor Activate parameter">SensorActivate</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorActivateIntensity.html" title="Sensor Activate Intensity parameter"></a>
+                        <a href="SensorActivateIntensity.html" title="Sensor Activate Intensity parameter">SensorActivateIntensity</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="SensorActivateIntensityOrInterval.html" title="Sensor Activate Intensity/Interval parent trait"></a>
+                        <a href="SensorActivateIntensityOrInterval.html" title="Sensor Activate Intensity/Interval parent trait">SensorActivateIntensityOrInterval</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorActivateInterval.html" title="Sensor Activate Interval parameter"></a>
+                        <a href="SensorActivateInterval.html" title="Sensor Activate Interval parameter">SensorActivateInterval</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="SensorActivateType$.html" title="Sensor Activate parameter"></a>
+                        <a href="SensorActivateType$.html" title="Sensor Activate parameter">SensorActivateType</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorAggregate.html" title="Sensor Aggregate parameter"></a>
+                        <a href="SensorAggregate.html" title="Sensor Aggregate parameter">SensorAggregate</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="SensorAggregateType$.html" title="Sensor Aggregate Type parameter"></a>
+                        <a href="SensorAggregateType$.html" title="Sensor Aggregate Type parameter">SensorAggregateType</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorBag.html" title="A live collection of sensors in ModelManage"></a>
+                        <a href="SensorBag.html" title="A live collection of sensors in ModelManage">SensorBag</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorFilter.html" title="Sensor Filter parameter"></a>
+                        <a href="SensorFilter.html" title="Sensor Filter parameter">SensorFilter</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="SensorFilterType$.html" title="Sensor Activate Filter parameter type"></a>
+                        <a href="SensorFilterType$.html" title="Sensor Activate Filter parameter type">SensorFilterType</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="SensorJSONSerializer.html" title="Sensor serializer helper trait"></a>
+                        <a href="SensorJSONSerializer.html" title="Sensor serializer helper trait">SensorJSONSerializer</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="SensorMetaOps.html" title="SensorMetadata helper trait"></a>
+                        <a href="SensorMetaOps.html" title="SensorMetadata helper trait">SensorMetaOps</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorMetadata.html" title="SensorMetadata"></a>
+                        <a href="SensorMetadata.html" title="SensorMetadata">SensorMetadata</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorReport.html" title="Sensor Report parameter"></a>
+                        <a href="SensorReport.html" title="Sensor Report parameter">SensorReport</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorReportMessage.html" title="Pneumo Sensor Report Message"></a>
+                        <a href="SensorReportMessage.html" title="Pneumo Sensor Report Message">SensorReportMessage</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="SensorSink.html" title="Sensor Sink parameter parent trait"></a>
+                        <a href="SensorSink.html" title="Sensor Sink parameter parent trait">SensorSink</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorSinkKafka.html" title="Sensor Sink Kafka"></a>
+                        <a href="SensorSinkKafka.html" title="Sensor Sink Kafka">SensorSinkKafka</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="SensorSinkPneumo$.html" title="Sensor Sink Pneumo"></a>
+                        <a href="SensorSinkPneumo$.html" title="Sensor Sink Pneumo">SensorSinkPneumo</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="SensorSinkType$.html" title="Sensor Sink parameter type"></a>
+                        <a href="SensorSinkType$.html" title="Sensor Sink parameter type">SensorSinkType</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorTap.html" title="Sensor Tap parameter"></a>
+                        <a href="SensorTap.html" title="Sensor Tap parameter">SensorTap</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="SensorTapInstance.html" title="SensorTapInstance"></a>
+                        <a href="SensorTapInstance.html" title="SensorTapInstance">SensorTapInstance</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="SensorTapInstanceSerializer.html" title="SensorTapInstance serializer helper trait"></a>
+                        <a href="SensorTapInstanceSerializer.html" title="SensorTapInstance serializer helper trait">SensorTapInstanceSerializer</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="SensorTapPrefix$.html" title="Sensor tap prefix"></a>
+                        <a href="SensorTapPrefix$.html" title="Sensor tap prefix">SensorTapPrefix</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="SensorTapSerializer.html" title="Sensor Tap serializer"></a>
+                        <a href="SensorTapSerializer.html" title="Sensor Tap serializer">SensorTapSerializer</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="SensorTapSuffix$.html" title="Sensor tap suffix"></a>
+                        <a href="SensorTapSuffix$.html" title="Sensor tap suffix">SensorTapSuffix</a>
+                      </li><li class="current-entities indented4">
+                        <a class="object" href="Stream$.html" title="Stream factory"></a>
+                        <a class="class" href="Stream.html" title="Stream object"></a>
+                        <a href="Stream.html" title="Stream object">Stream</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamBag.html" title="A live collection of streams in ModelManage"></a>
+                        <a href="StreamBag.html" title="A live collection of streams in ModelManage">StreamBag</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamBatching.html" title="Stream Batching"></a>
+                        <a href="StreamBatching.html" title="Stream Batching">StreamBatching</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="StreamBatchingMode$.html" title="Stream Batching Mode parameter"></a>
+                        <a href="StreamBatchingMode$.html" title="Stream Batching Mode parameter">StreamBatchingMode</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="StreamEncoding$.html" title="Stream Encoding Parameter"></a>
+                        <a href="StreamEncoding$.html" title="Stream Encoding Parameter">StreamEncoding</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="StreamEnvelope.html" title="Stream Envelope Parent Trait"></a>
+                        <a href="StreamEnvelope.html" title="Stream Envelope Parent Trait">StreamEnvelope</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamEnvelopeDelimited.html" title="Delimited Stream Envelope"></a>
+                        <a href="StreamEnvelopeDelimited.html" title="Delimited Stream Envelope">StreamEnvelopeDelimited</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamEnvelopeFixed.html" title="Fixed Stream Envelope"></a>
+                        <a href="StreamEnvelopeFixed.html" title="Fixed Stream Envelope">StreamEnvelopeFixed</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamEnvelopeOcfBlock.html" title="OCF-Block Stream Envelope"></a>
+                        <a href="StreamEnvelopeOcfBlock.html" title="OCF-Block Stream Envelope">StreamEnvelopeOcfBlock</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="StreamEnvelopeType$.html" title="Stream Envelope Type"></a>
+                        <a href="StreamEnvelopeType$.html" title="Stream Envelope Type">StreamEnvelopeType</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="StreamJSONSerializer.html" title="Stream Serializer helper trait"></a>
+                        <a href="StreamJSONSerializer.html" title="Stream Serializer helper trait">StreamJSONSerializer</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="StreamMetaOps.html" title="StreamMetadata helper trait"></a>
+                        <a href="StreamMetaOps.html" title="StreamMetadata helper trait">StreamMetaOps</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamMetadata.html" title="StreamMetadata"></a>
+                        <a href="StreamMetadata.html" title="StreamMetadata">StreamMetadata</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamSchemaRef.html" title="Stream Schema name reference"></a>
+                        <a href="StreamSchemaRef.html" title="Stream Schema name reference">StreamSchemaRef</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="trait" href="StreamTransport.html" title="Stream transport parameter parent trait"></a>
+                        <a href="StreamTransport.html" title="Stream transport parameter parent trait">StreamTransport</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="StreamTransportDiscard$.html" title="Discard Stream Transport"></a>
+                        <a href="StreamTransportDiscard$.html" title="Discard Stream Transport">StreamTransportDiscard</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportExec.html" title="Exec Stream Transport"></a>
+                        <a href="StreamTransportExec.html" title="Exec Stream Transport">StreamTransportExec</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportFile.html" title="File Stream Transport"></a>
+                        <a href="StreamTransportFile.html" title="File Stream Transport">StreamTransportFile</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportHTTP.html" title="HTTP Stream transport"></a>
+                        <a href="StreamTransportHTTP.html" title="HTTP Stream transport">StreamTransportHTTP</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportInline.html" title="Inline Stream Transport"></a>
+                        <a href="StreamTransportInline.html" title="Inline Stream Transport">StreamTransportInline</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportKafka.html" title="Kafka Stream transport"></a>
+                        <a href="StreamTransportKafka.html" title="Kafka Stream transport">StreamTransportKafka</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportODBC.html" title="ODBC Stream Transport"></a>
+                        <a href="StreamTransportODBC.html" title="ODBC Stream Transport">StreamTransportODBC</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportREST.html" title="REST Stream Transport Mode parameter"></a>
+                        <a href="StreamTransportREST.html" title="REST Stream Transport Mode parameter">StreamTransportREST</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="StreamTransportRESTMode$.html" title="REST Stream Transport"></a>
+                        <a href="StreamTransportRESTMode$.html" title="REST Stream Transport">StreamTransportRESTMode</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportTCP.html" title="TCP Stream Transport"></a>
+                        <a href="StreamTransportTCP.html" title="TCP Stream Transport">StreamTransportTCP</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="object" href="StreamTransportType$.html" title="Stream Transport parameter Type"></a>
+                        <a href="StreamTransportType$.html" title="Stream Transport parameter Type">StreamTransportType</a>
+                      </li><li class="current-entities indented4">
+                        <span class="separator"></span>
+                        <a class="class" href="StreamTransportUDP.html" title="UDP Stream Transport"></a>
+                        <a href="StreamTransportUDP.html" title="UDP Stream Transport">StreamTransportUDP</a>
+                      </li>
+              </ul>
+            </div>
+          </div>
+          <div id="content">
+            <body class="object value">
+      <div id="definition">
+        <div class="big-circle object">o</div>
+        <p id="owner"><a href="../../../index.html" class="extype" name="com">com</a>.<a href="../../index.html" class="extype" name="com.opendatagroup">opendatagroup</a>.<a href="../index.html" class="extype" name="com.opendatagroup.fastscore">fastscore</a>.<a href="index.html" class="extype" name="com.opendatagroup.fastscore.assets">assets</a></p>
+        <h1>EngineState<span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span></h1>
+        <h3><span class="morelinks"></span></h3>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <span class="name">EngineState</span><span class="result"> extends <span class="extype" name="scala.Enumeration">Enumeration</span></span>
+      </span>
+      </h4>
+
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>EngineState parameter values</p></div><div class="toggleContainer block">
+          <span class="toggle">
+            Linear Supertypes
+          </span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Enumeration">Enumeration</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div class="toggle"></div>
+        <div id="memberfilter">
+          <i class="material-icons arrow"></i>
+          <span class="input">
+            <input id="mbrsel-input" placeholder="Filter all members" type="text" accesskey="/" />
+          </span>
+          <i class="clear material-icons"></i>
+        </div>
+        <div id="filterby">
+          <div id="order">
+            <span class="filtertype">Ordering</span>
+            <ol>
+              
+              <li class="alpha in"><span>Alphabetic</span></li>
+              <li class="inherit out"><span>By Inheritance</span></li>
+            </ol>
+          </div>
+          <div class="ancestors">
+                  <span class="filtertype">Inherited<br />
+                  </span>
+                  <ol id="linearization">
+                    <li class="in" name="com.opendatagroup.fastscore.assets.EngineState"><span>EngineState</span></li><li class="in" name="scala.Enumeration"><span>Enumeration</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  </ol>
+                </div><div class="ancestors">
+              <span class="filtertype"></span>
+              <ol>
+                <li class="hideall out"><span>Hide All</span></li>
+                <li class="showall in"><span>Show All</span></li>
+              </ol>
+            </div>
+          <div id="visbl">
+              <span class="filtertype">Visibility</span>
+              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+            </div>
+        </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="scala.Enumeration.Val" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ValextendsEnumeration.this.ValuewithSerializable"></a><a id="Val:Val"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#ValextendsEnumeration.this.ValuewithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">Val</span><span class="result"> extends <span class="extype" name="scala.Enumeration.Value">Value</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Enumeration</dd><dt>Annotations</dt><dd>
+                <span class="name">@SerialVersionUID</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.Enumeration.Value" visbl="pub" class="indented0 " data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="ValueextendsOrdered[Enumeration.this.Value]withSerializable"></a><a id="Value:Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">Value</span><span class="result"> extends <span class="extype" name="scala.Ordered">Ordered</span>[<span class="extype" name="scala.Enumeration.Value">Value</span>] with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Enumeration</dd><dt>Annotations</dt><dd>
+                <span class="name">@SerialVersionUID</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.Enumeration.ValueSet" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ValueSetextendsAbstractSet[Enumeration.this.Value]withSortedSet[Enumeration.this.Value]withSortedSetLike[Enumeration.this.Value,Enumeration.this.ValueSet]withSerializable"></a><a id="ValueSet:ValueSet"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#ValueSetextendsAbstractSet[Enumeration.this.Value]withSortedSet[Enumeration.this.Value]withSortedSetLike[Enumeration.this.Value,Enumeration.this.ValueSet]withSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ValueSet</span><span class="result"> extends <span class="extype" name="scala.collection.AbstractSet">AbstractSet</span>[<span class="extype" name="scala.Enumeration.Value">Value</span>] with <span class="extype" name="scala.collection.immutable.SortedSet">SortedSet</span>[<span class="extype" name="scala.Enumeration.Value">Value</span>] with <span class="extype" name="scala.collection.SortedSetLike">SortedSetLike</span>[<span class="extype" name="scala.Enumeration.Value">Value</span>, <span class="extype" name="scala.Enumeration.ValueSet">ValueSet</span>] with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Enumeration</dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div class="values members">
+              <h3>Value Members</h3>
+              <ol>
+                <li name="scala.AnyRef#!=" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a><a id="!=(Any):Boolean"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#!=(x$1:Any):Boolean" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html###():Int" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a><a id="==(Any):Boolean"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#==(x$1:Any):Boolean" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Enumeration#Value" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="Value(i:Int,name:String):Enumeration.this.Value"></a><a id="Value(Int,String):Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#Value(i:Int,name:String):Enumeration.this.Value" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">Value</span><span class="params">(<span name="i">i: <span class="extype" name="scala.Int">Int</span></span>, <span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.Value">Value</a></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Enumeration</dd></dl></div>
+    </li><li name="scala.Enumeration#Value" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="Value(name:String):Enumeration.this.Value"></a><a id="Value(String):Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#Value(name:String):Enumeration.this.Value" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">Value</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.Value">Value</a></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Enumeration</dd></dl></div>
+    </li><li name="scala.Enumeration#Value" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="Value(i:Int):Enumeration.this.Value"></a><a id="Value(Int):Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#Value(i:Int):Enumeration.this.Value" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">Value</span><span class="params">(<span name="i">i: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.Value">Value</a></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Enumeration</dd></dl></div>
+    </li><li name="scala.Enumeration#Value" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="Value:Enumeration.this.Value"></a><a id="Value:Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#Value:Enumeration.this.Value" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">Value</span><span class="result">: <a href="#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.Value">Value</a></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Enumeration</dd></dl></div>
+    </li><li name="scala.Enumeration#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="apply(x:Int):Enumeration.this.Value"></a><a id="apply(Int):Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#apply(x:Int):Enumeration.this.Value" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">apply</span><span class="params">(<span name="x">x: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.Value">Value</a></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Enumeration</dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#asInstanceOf[T0]:T0" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef#clone" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a><a id="clone():AnyRef"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#clone():Object" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../java/lang/index.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@native</span><span class="args">()</span>
+              
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a><a id="eq(AnyRef):Boolean"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#eq(x$1:AnyRef):Boolean" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a><a id="equals(Any):Boolean"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#equals(x$1:Any):Boolean" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#finalize():Unit" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../java/lang/index.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.assets.EngineState#finished" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="finished:com.opendatagroup.fastscore.assets.EngineState.Value"></a><a id="finished:Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#finished:com.opendatagroup.fastscore.assets.EngineState.Value" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finished</span><span class="result">: <a href="#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.Value">Value</a></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.assets.EngineState#finishing" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="finishing:com.opendatagroup.fastscore.assets.EngineState.Value"></a><a id="finishing:Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#finishing:com.opendatagroup.fastscore.assets.EngineState.Value" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finishing</span><span class="result">: <a href="#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.Value">Value</a></span>
+      </span>
+      
+      
+    </li><li name="scala.AnyRef#getClass" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#getClass():Class[_]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd><dt>Annotations</dt><dd>
+                <span class="name">@native</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#hashCode():Int" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd><dt>Annotations</dt><dd>
+                <span class="name">@native</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.assets.EngineState#init" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="init:com.opendatagroup.fastscore.assets.EngineState.Value"></a><a id="init:Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#init:com.opendatagroup.fastscore.assets.EngineState.Value" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">init</span><span class="result">: <a href="#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.Value">Value</a></span>
+      </span>
+      
+      
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#isInstanceOf[T0]:Boolean" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.Enumeration#maxId" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="maxId:Int"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#maxId:Int" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">maxId</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Enumeration</dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a><a id="ne(AnyRef):Boolean"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#ne(x$1:AnyRef):Boolean" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.Enumeration#nextId" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="nextId:Int"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#nextId:Int" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">nextId</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Enumeration</dd></dl></div>
+    </li><li name="scala.Enumeration#nextName" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="nextName:Iterator[String]"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#nextName:Iterator[String]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">nextName</span><span class="result">: <span class="extype" name="scala.Iterator">Iterator</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Enumeration</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#notify():Unit" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@native</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#notifyAll():Unit" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@native</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.assets.EngineState#paused" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="paused:com.opendatagroup.fastscore.assets.EngineState.Value"></a><a id="paused:Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#paused:com.opendatagroup.fastscore.assets.EngineState.Value" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">paused</span><span class="result">: <a href="#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.Value">Value</a></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.assets.EngineState#pigging" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="pigging:com.opendatagroup.fastscore.assets.EngineState.Value"></a><a id="pigging:Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#pigging:com.opendatagroup.fastscore.assets.EngineState.Value" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">pigging</span><span class="result">: <a href="#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.Value">Value</a></span>
+      </span>
+      
+      
+    </li><li name="scala.Enumeration#readResolve" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readResolve():AnyRef"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#readResolve():AnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readResolve</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Enumeration</dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.assets.EngineState#running" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="running:com.opendatagroup.fastscore.assets.EngineState.Value"></a><a id="running:Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#running:com.opendatagroup.fastscore.assets.EngineState.Value" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">running</span><span class="result">: <a href="#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.Value">Value</a></span>
+      </span>
+      
+      
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a><a id="synchronized[T0](⇒T0):T0"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#synchronized[T0](x$1:=&gt;T0):T0" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.Enumeration#toString" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#toString():String" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Enumeration → AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Enumeration#values" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="values:Enumeration.this.ValueSet"></a><a id="values:ValueSet"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#values:Enumeration.this.ValueSet" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">values</span><span class="result">: <a href="#ValueSetextendsAbstractSet[Enumeration.this.Value]withSortedSet[Enumeration.this.Value]withSortedSetLike[Enumeration.this.Value,Enumeration.this.ValueSet]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.ValueSet">ValueSet</a></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Enumeration</dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#wait():Unit" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a><a id="wait(Long,Int):Unit"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#wait(x$1:Long,x$2:Int):Unit" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a><a id="wait(Long):Unit"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#wait(x$1:Long):Unit" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@native</span><span class="args">()</span>
+              
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.Enumeration#withName" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="withName(s:String):Enumeration.this.Value"></a><a id="withName(String):Value"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/assets/EngineState$.html#withName(s:String):Enumeration.this.Value" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">withName</span><span class="params">(<span name="s">s: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="com.opendatagroup.fastscore.assets.EngineState.Value">Value</a></span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Enumeration</dd></dl></div>
+    </li>
+              </ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.Enumeration">
+              <h3>Inherited from <span class="extype" name="scala.Enumeration">Enumeration</span></h3>
+            </div><div class="parent" name="scala.Serializable">
+              <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="java.io.Serializable">
+              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+    </body>
+          </div>
+        </div>
+      </div>
+    </body>
+      </html>

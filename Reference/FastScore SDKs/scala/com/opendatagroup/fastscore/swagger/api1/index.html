@@ -1,0 +1,391 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+          <title></title>
+          <meta name="description" content="" />
+          <meta name="keywords" content="" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../../lib/index.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery.panzoom.min.js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery.mousewheel.min.js"></script>
+      <script type="text/javascript" src="../../../../../lib/index.js"></script>
+      <script type="text/javascript" src="../../../../../index.js"></script>
+      <script type="text/javascript" src="../../../../../lib/scheduler.js"></script>
+      <script type="text/javascript" src="../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+        /* this variable can be used by the JS to determine the path to the root document */
+        var toRoot = '../../../../../';
+      </script>
+    
+        </head>
+        <body>
+      <div id="search">
+        <span id="doc-title"><span id="doc-version"></span></span>
+        <span class="close-results"><span class="left">&lt;</span> Back</span>
+        <div id="textfilter">
+          <span class="input">
+            <input autocapitalize="none" placeholder="Search" id="index-input" type="text" accesskey="/" />
+            <i class="clear material-icons"></i>
+            <i id="search-icon" class="material-icons"></i>
+          </span>
+        </div>
+    </div>
+      <div id="search-results">
+        <div id="search-progress">
+          <div id="progress-fill"></div>
+        </div>
+        <div id="results-content">
+          <div id="entity-results"></div>
+          <div id="member-results"></div>
+        </div>
+      </div>
+      <div id="content-scroll-container" style="-webkit-overflow-scrolling: touch;">
+        <div id="content-container" style="-webkit-overflow-scrolling: touch;">
+          <div id="subpackage-spacer">
+            <div id="packages">
+              <h1>Packages</h1>
+              <ul>
+                <li name="_root_.root" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="_root_"></a><a id="root:_root_"></a>
+      <span class="permalink">
+      <a href="index.html#_root_" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../../../index.html"><span class="name">root</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="_root_.com" visbl="pub" class="indented1 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="com"></a><a id="com:com"></a>
+      <span class="permalink">
+      <a href="index.html#com" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../../index.html"><span class="name">com</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../../index.html" class="extype" name="_root_">root</a></dd></dl></div>
+    </li><li name="com.opendatagroup" visbl="pub" class="indented2 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="opendatagroup"></a><a id="opendatagroup:opendatagroup"></a>
+      <span class="permalink">
+      <a href="../com/index.html#opendatagroup" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../../../index.html"><span class="name">opendatagroup</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../../index.html" class="extype" name="com">com</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore" visbl="pub" class="indented3 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fastscore"></a><a id="fastscore:fastscore"></a>
+      <span class="permalink">
+      <a href="../../com/opendatagroup/index.html#fastscore" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="An example interaction with FastScore" href="../../index.html"><span class="name">fastscore</span></a>
+      </span>
+      
+      <p class="shortcomment cmt">An example interaction with FastScore</p><div class="fullcomment"><div class="comment cmt"><p>An example interaction with FastScore</p><pre>scala&gt; <span class="kw">import</span> com.opendatagroup.fastscore.fleet._
+scala&gt; <span class="kw">implicit</span> <span class="kw">val</span> proxy = <span class="kw">new</span> Proxy(<span class="lit">"https://localhost:8000"</span>)
+scala&gt; <span class="kw">val</span> connect = <span class="kw">new</span> Connect()
+scala&gt; <span class="kw">import</span> com.opendatagroup.fastscore.assets._
+scala&gt; <span class="kw">val</span> model = Model.fromFile(<span class="lit">"./preprocessor.R"</span>)
+scala&gt; <span class="kw">val</span> modelmanage = connect.lookup(<span class="lit">"model-manage"</span>) <span class="kw">match</span> { <span class="kw">case</span> l: <span class="std">List</span>[ModelManage] <span class="kw">if</span> l.length == <span class="num">1</span> <span class="kw">=&gt;</span> l(<span class="num">0</span>) }
+scala&gt; modelmanage.models.put(<span class="lit">"preprocessor"</span>, model)</pre></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../../index.html" class="extype" name="com.opendatagroup">opendatagroup</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger" visbl="pub" class="indented4 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="swagger"></a><a id="swagger:swagger"></a>
+      <span class="permalink">
+      <a href="../../../com/opendatagroup/fastscore/index.html#swagger" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../index.html"><span class="name">swagger</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../index.html" class="extype" name="com.opendatagroup.fastscore">fastscore</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.api1" visbl="pub" class="indented5 current" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="api1"></a><a id="api1:api1"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#api1" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">api1</span>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="ConnectApi.html" title=""></a>
+                        <a href="ConnectApi.html" title="">ConnectApi</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="EngineApi.html" title=""></a>
+                        <a href="EngineApi.html" title="">EngineApi</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="LoginApi.html" title=""></a>
+                        <a href="LoginApi.html" title="">LoginApi</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="ModelManageApi.html" title=""></a>
+                        <a href="ModelManageApi.html" title="">ModelManageApi</a>
+                      </li><li name="com.opendatagroup.fastscore.swagger.api2" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="api2"></a><a id="api2:api2"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#api2" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../api2/index.html"><span class="name">api2</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.invoker1" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="invoker1"></a><a id="invoker1:invoker1"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#invoker1" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../invoker1/index.html"><span class="name">invoker1</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.invoker2" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="invoker2"></a><a id="invoker2:invoker2"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#invoker2" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../invoker2/index.html"><span class="name">invoker2</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.models1" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="models1"></a><a id="models1:models1"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#models1" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../models1/index.html"><span class="name">models1</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li><li name="com.opendatagroup.fastscore.swagger.models2" visbl="pub" class="indented5 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="models2"></a><a id="models2:models2"></a>
+      <span class="permalink">
+      <a href="../../../../com/opendatagroup/fastscore/swagger/index.html#models2" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="../models2/index.html"><span class="name">models2</span></a>
+      </span>
+      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></dd></dl></div>
+    </li>
+              </ul>
+            </div>
+          </div>
+          <div id="content">
+            <body class="package value">
+      <div id="definition">
+        <div class="big-circle package">p</div>
+        <p id="owner"><a href="../../../../index.html" class="extype" name="com">com</a>.<a href="../../../index.html" class="extype" name="com.opendatagroup">opendatagroup</a>.<a href="../../index.html" class="extype" name="com.opendatagroup.fastscore">fastscore</a>.<a href="../index.html" class="extype" name="com.opendatagroup.fastscore.swagger">swagger</a></p>
+        <h1>api1<span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/index.html" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span></h1>
+        
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">api1</span>
+      </span>
+      </h4>
+
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="com.opendatagroup.fastscore.swagger.api1.ConnectApi" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ConnectApiextendsAnyRef"></a><a id="ConnectApi:ConnectApi"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/index.html#ConnectApiextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="ConnectApi.html"><span class="name">ConnectApi</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.EngineApi" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="EngineApiextendsAnyRef"></a><a id="EngineApi:EngineApi"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/index.html#EngineApiextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="EngineApi.html"><span class="name">EngineApi</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.LoginApi" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LoginApiextendsAnyRef"></a><a id="LoginApi:LoginApi"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/index.html#LoginApiextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="LoginApi.html"><span class="name">LoginApi</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      
+    </li><li name="com.opendatagroup.fastscore.swagger.api1.ModelManageApi" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ModelManageApiextendsAnyRef"></a><a id="ModelManageApi:ModelManageApi"></a>
+      <span class="permalink">
+      <a href="../../../../../com/opendatagroup/fastscore/swagger/api1/index.html#ModelManageApiextendsAnyRef" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="ModelManageApi.html"><span class="name">ModelManageApi</span></a><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+    </body>
+          </div>
+        </div>
+      </div>
+    </body>
+      </html>

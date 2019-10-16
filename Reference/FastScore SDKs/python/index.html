@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>FastScore SDK for Python &#8212; FastScore SDK 1.7 documentation</title>
+
+    <link rel="stylesheet" href="static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction" href="user/intro.html" /> 
+  </head>
+  <body role="document">
+      <div class="header" role="banner"><h1 class="heading"><a href="#">
+          <span>FastScore SDK 1.7 documentation</span></a></h1>
+        <h2 class="heading"><span>FastScore SDK for Python</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+
+        <p>
+        <a class="uplink" href="#">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="user/intro.html">Introduction</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+
+
+  <div class="section" id="fastscore-sdk-for-python">
+<h1>FastScore SDK for Python<a class="headerlink" href="#fastscore-sdk-for-python" title="Permalink to this headline">¶</a></h1>
+<p>Release 1.7</p>
+<p>An example of an interaction with FastScore:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fastscore</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">connect</span> <span class="o">=</span> <span class="n">fastscore</span><span class="o">.</span><span class="n">Connect</span><span class="p">(</span><span class="s2">&quot;https://localhost:8000&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">fastscore</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="s1">&#39;model-1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s1">&#39;...&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span> <span class="o">=</span> <span class="n">connect</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;model-manage&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">names</span><span class="p">()</span>
+<span class="go">[&#39;model-1&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">mm</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s1">&#39;model-1&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="the-user-guide">
+<h2>The User Guide<a class="headerlink" href="#the-user-guide" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/advanced.html">Advanced Usage</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-api-documentation-guide">
+<h2>The API documentation / Guide<a class="headerlink" href="#the-api-documentation-guide" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Developer interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastscore.suite">Service instances</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#exceptions">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#pneumo">Pneumo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#models">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#attachments">Attachments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#snapshots">Snapshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#streams">Streams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#schemata">Schemata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#sensors">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastscore.deploy">Deploy</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-developer-guide">
+<h2>The Developer Guide<a class="headerlink" href="#the-developer-guide" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev/todo.html">Unfinished/incomplete</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+
+        <p>
+        <a class="uplink" href="#">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="user/intro.html">Introduction</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Open Data Group.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

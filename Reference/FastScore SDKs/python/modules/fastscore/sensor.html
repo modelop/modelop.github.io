@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>fastscore.sensor &#8212; FastScore SDK 1.7 documentation</title>
+
+    <link rel="stylesheet" href="../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  </head>
+  <body role="document">
+      <div class="header" role="banner"><h1 class="heading"><a href="../../index.html">
+          <span>FastScore SDK 1.7 documentation</span></a></h1>
+        <h2 class="heading"><span>fastscore.sensor</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+
+
+  <h1>Source code for fastscore.sensor</h1><div class="highlight"><pre>
+<span></span>
+<span class="k">class</span> <span class="nc">SensorMetadata</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="Sensor"><a class="viewcode-back" href="../../api.html#fastscore.Sensor">[docs]</a><span class="k">class</span> <span class="nc">Sensor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a FastScore sensor. A sensor can be created directly:</span>
+
+<span class="sd">    &gt;&gt;&gt; sensor = fastscore.Sensor(&#39;sensor-1&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; sensor.desc = {&#39;tap&#39;: &#39;manifold.input.records.size&#39;,...}</span>
+
+<span class="sd">    Or, retreieved from Model Manage:</span>
+
+<span class="sd">    &gt;&gt;&gt; mm = connect.lookup(&#39;model-manage&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; mm.sensors[&#39;sensor-1&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; mm.desc</span>
+<span class="sd">    {...}</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">DEFAULT_INTERVAL</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model_manage</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="n">desc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">=</span> <span class="n">model_manage</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">prep</span><span class="p">(</span><span class="n">tap</span><span class="p">,</span> <span class="n">activate</span><span class="o">=</span><span class="s1">&#39;permanent&#39;</span><span class="p">,</span> <span class="n">aggregate</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">DEFAULT_INTERVAL</span><span class="p">):</span>
+        <span class="n">desc</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Tap&#39;</span><span class="p">:</span> <span class="n">tap</span><span class="p">,</span>
+            <span class="s1">&#39;Activate&#39;</span><span class="p">:</span> <span class="n">activate</span><span class="p">,</span>
+            <span class="s1">&#39;Aggregate&#39;</span><span class="p">:</span> <span class="n">aggregate</span><span class="p">,</span>
+            <span class="s1">&#39;Sink&#39;</span><span class="p">:</span> <span class="s1">&#39;pneumo&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Report&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;Interval&#39;</span><span class="p">:</span> <span class="n">interval</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">Sensor</span><span class="p">(</span><span class="s1">&#39;(no-name)&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A sensor name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A sensor descriptor (a dict).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_desc</span>
+
+    <span class="nd">@desc</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">desc</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_desc</span> <span class="o">=</span> <span class="n">desc</span>
+
+<div class="viewcode-block" id="Sensor.install"><a class="viewcode-back" href="../../api.html#fastscore.Sensor.install">[docs]</a>    <span class="k">def</span> <span class="nf">install</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Install/attach the sensor.</span>
+
+<span class="sd">        :param target: The instance to attach the sensor to.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">target</span><span class="o">.</span><span class="n">install_sensor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Sensor.update"><a class="viewcode-back" href="../../api.html#fastscore.Sensor.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manage</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the sensor to Model Manage.</span>
+
+<span class="sd">        :param model_manage: The Model Manage instance to use. If None, the Model Manage instance</span>
+<span class="sd">            must have been provided when then sensor was created.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">model_manage</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScore</span><span class="p">(</span><span class="s2">&quot;Sensor &#39;</span><span class="si">%s</span><span class="s2">&#39; not associated with Model Manage&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">=</span> <span class="n">model_manage</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">save_sensor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
+
+</pre></div>
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Open Data Group.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>fastscore.stream &#8212; FastScore SDK 1.7 documentation</title>
+
+    <link rel="stylesheet" href="../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  </head>
+  <body role="document">
+      <div class="header" role="banner"><h1 class="heading"><a href="../../index.html">
+          <span>FastScore SDK 1.7 documentation</span></a></h1>
+        <h2 class="heading"><span>fastscore.stream</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+
+
+  <h1>Source code for fastscore.stream</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+<span class="k">if</span> <span class="n">six</span><span class="o">.</span><span class="n">PY2</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib</span> <span class="k">import</span> <span class="n">unquote</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">unquote</span>
+<span class="kn">from</span> <span class="nn">base64</span> <span class="k">import</span> <span class="n">b64encode</span>
+
+<span class="kn">from</span> <span class="nn">fastscore.errors</span> <span class="k">import</span> <span class="n">FastScoreError</span>
+
+<span class="n">LITERAL_EXAMPLES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;http&quot;</span><span class="p">:</span> <span class="s2">&quot;https://myhost.com/mydata.json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;https&quot;</span><span class="p">:</span> <span class="s2">&quot;https://myhost.com/mydata.json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kafka&quot;</span><span class="p">:</span> <span class="s2">&quot;kafka:mybroker:9092/topic.json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rest&quot;</span><span class="p">:</span> <span class="s2">&quot;rest:&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rest-chunked&quot;</span><span class="p">:</span> <span class="s2">&quot;rest-chunked:&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;file:/path/to/mydata.json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tcp&quot;</span><span class="p">:</span> <span class="s2">&quot;tcp:myhost.com:1234&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;udp&quot;</span><span class="p">:</span> <span class="s2">&quot;udp:10.0.0.1:124&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;exec&quot;</span><span class="p">:</span> <span class="s2">&quot;exec:myscript.sh&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;inline&quot;</span><span class="p">:</span> <span class="s2">&quot;inline:1,2,3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;inline-chunked&quot;</span><span class="p">:</span> <span class="s2">&quot;inline-chunked:%06abc&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;discard&quot;</span><span class="p">:</span> <span class="s2">&quot;discard:&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">StreamMetadata</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="Stream"><a class="viewcode-back" href="../../api.html#fastscore.Stream">[docs]</a><span class="k">class</span> <span class="nc">Stream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A FastScore stream. A stream can be created directly:</span>
+
+<span class="sd">    &gt;&gt;&gt; stream = Stream(&#39;stream-1&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; stream.desc = {&#39;Transport&#39;:...}</span>
+
+<span class="sd">    Or, retrieved from a Model Manage instance:</span>
+
+<span class="sd">    &gt;&gt;&gt; mm = connect.lookup(&#39;model-manage&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; stream = mm.streams[&#39;stream-1&#39;]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model_manage</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="n">desc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">=</span> <span class="n">model_manage</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A stream name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A stream descriptor (a dict).</span>
+
+<span class="sd">        &gt;&gt;&gt; stream = mm.streams[&#39;stream-1&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; stream.desc</span>
+<span class="sd">        {&#39;Transport&#39;: {&#39;Type&#39;: &#39;discard&#39;}, &#39;Encoding&#39;: &#39;json&#39;}</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_desc</span>
+
+    <span class="nd">@desc</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">desc</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_desc</span> <span class="o">=</span> <span class="n">desc</span>
+
+<div class="viewcode-block" id="Stream.sample"><a class="viewcode-back" href="../../api.html#fastscore.Stream.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves a few sample records from the stream.</span>
+
+<span class="sd">        :param engine: An Engine instance to use.</span>
+<span class="sd">        :param n: A number of records to retrieve (default: 10).</span>
+<span class="sd">        :returns: An array of base64-encoded records.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">engine</span><span class="o">.</span><span class="n">sample_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Stream.rate"><a class="viewcode-back" href="../../api.html#fastscore.Stream.rate">[docs]</a>    <span class="k">def</span> <span class="nf">rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Measures the stream throughput outside of a data pipeline.</span>
+
+<span class="sd">        :param engine: An Engine instance to use.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">engine</span><span class="o">.</span><span class="n">rate_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Stream.update"><a class="viewcode-back" href="../../api.html#fastscore.Stream.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manage</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the stream to Model Manage.</span>
+
+<span class="sd">        :param model_manage: The Model Manage instance to use. If None, the Model Manage instance</span>
+<span class="sd">            must have been provided when then stream was created.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">model_manage</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScore</span><span class="p">(</span><span class="s2">&quot;Stream &#39;</span><span class="si">%s</span><span class="s2">&#39; not associated with Model Manage&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">=</span> <span class="n">model_manage</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">save_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Stream.attach"><a class="viewcode-back" href="../../api.html#fastscore.Stream.attach">[docs]</a>    <span class="k">def</span> <span class="nf">attach</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Attach the stream to the engine.</span>
+
+<span class="sd">        :param slot: The stream slot.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">engine</span><span class="o">.</span><span class="n">attach_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">dry_run</span><span class="p">)</span></div>
+
+    <span class="c1"># See https://opendatagoup.atlassian.net/wiki/x/GgCHBQ</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">expand</span><span class="p">(</span><span class="n">urllike</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">urllike</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not a literal descriptor&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">urllike</span><span class="p">))</span>
+        <span class="n">tag</span><span class="p">,</span><span class="n">more</span> <span class="o">=</span> <span class="n">urllike</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">LITERAL_EXAMPLES</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;transport tag unknown: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">))</span>
+
+        <span class="k">def</span> <span class="nf">parse_literal</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">more</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;http&#39;</span> <span class="ow">or</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;https&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">{</span>
+                    <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTP&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Url&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">more</span><span class="p">),</span>
+                <span class="p">},</span> <span class="n">more</span>
+
+            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;kafka&#39;</span><span class="p">:</span>
+                <span class="n">broker</span><span class="p">,</span><span class="n">topic</span> <span class="o">=</span> <span class="n">more</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+                <span class="n">port</span> <span class="o">=</span> <span class="mi">9092</span>
+                <span class="k">if</span> <span class="n">broker</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">broker</span><span class="p">,</span><span class="n">port</span> <span class="o">=</span> <span class="n">broker</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+                    <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="n">topic</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">pos</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">topic</span> <span class="o">=</span> <span class="n">topic</span><span class="p">[:</span><span class="n">pos</span><span class="p">]</span>
+                <span class="k">return</span> <span class="p">{</span>
+                    <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;Kafka&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;BootstrapServers&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">broker</span><span class="p">,</span> <span class="n">port</span><span class="p">)],</span>
+                    <span class="s2">&quot;Topic&quot;</span><span class="p">:</span> <span class="n">topic</span><span class="p">,</span>
+                    <span class="p">},</span> <span class="n">more</span>
+
+            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;rest&#39;</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">more</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">return</span> <span class="s2">&quot;REST&quot;</span><span class="p">,</span> <span class="kc">None</span>
+
+            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;rest-chunked&#39;</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">more</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">return</span> <span class="p">{</span>
+                    <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;REST&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Mode&quot;</span><span class="p">:</span> <span class="s2">&quot;chunked&quot;</span>
+                <span class="p">},</span> <span class="kc">None</span>
+
+            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;file&#39;</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">more</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="c1"># absolute paths only</span>
+                <span class="k">return</span> <span class="p">{</span>
+                    <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Path&quot;</span><span class="p">:</span> <span class="n">more</span>
+                <span class="p">},</span> <span class="n">more</span>
+
+            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;tcp&#39;</span><span class="p">:</span>
+                <span class="n">host</span><span class="p">,</span><span class="n">port</span> <span class="o">=</span> <span class="n">more</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+                <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">{</span>
+                    <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;TCP&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Host&quot;</span><span class="p">:</span> <span class="n">host</span> <span class="k">if</span> <span class="n">host</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="k">else</span> <span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span>
+                    <span class="s2">&quot;Port&quot;</span><span class="p">:</span> <span class="n">port</span><span class="p">,</span>
+                <span class="p">},</span> <span class="kc">None</span>
+
+            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;udp&#39;</span><span class="p">:</span>
+                <span class="n">host</span><span class="p">,</span><span class="n">port</span> <span class="o">=</span> <span class="n">more</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+                <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+                <span class="n">tt</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;UDP&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Port&quot;</span><span class="p">:</span> <span class="n">port</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="k">if</span> <span class="n">host</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="n">tt</span><span class="p">[</span><span class="s2">&quot;Host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">host</span>
+                <span class="k">return</span> <span class="n">tt</span><span class="p">,</span><span class="kc">None</span>
+
+            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;exec&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">{</span>
+                    <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;exec&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Run&quot;</span><span class="p">:</span> <span class="n">more</span>
+                <span class="p">},</span> <span class="kc">None</span>
+
+            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;inline&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">more</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;%&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>    <span class="c1"># url-encoded</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">more</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span> <span class="n">b64encode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span> <span class="p">]</span>
+                    <span class="k">return</span> <span class="p">{</span>
+                        <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;inline&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;DataBinary&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span>
+                    <span class="p">},</span> <span class="kc">None</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">{</span>
+                        <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;inline&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Data&quot;</span><span class="p">:</span> <span class="n">more</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+                    <span class="p">},</span> <span class="kc">None</span>
+
+            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;inline-chunked&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">more</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;%&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>    <span class="c1"># url-encoded</span>
+                    <span class="k">return</span> <span class="p">{</span>
+                        <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;inline&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;DataBinary&quot;</span><span class="p">:</span> <span class="n">b64encode</span><span class="p">(</span><span class="n">unquote</span><span class="p">(</span><span class="n">more</span><span class="p">))</span>
+                    <span class="p">},</span> <span class="kc">None</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">{</span>
+                        <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;inline&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Data&quot;</span><span class="p">:</span> <span class="n">more</span>
+                    <span class="p">},</span> <span class="kc">None</span>
+
+            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;discard&#39;</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">more</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">return</span> <span class="s2">&quot;discard&quot;</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tt</span><span class="p">,</span><span class="n">guess</span> <span class="o">=</span> <span class="n">parse_literal</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">more</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;a valid </span><span class="si">{}</span><span class="s2"> literal example: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">LITERAL_EXAMPLES</span><span class="p">[</span><span class="n">tag</span><span class="p">])</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;literal descriptor parse error (</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;json&#39;</span>
+        <span class="k">if</span> <span class="n">guess</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">guess</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.json&#39;</span><span class="p">):</span>
+                <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;json&#39;</span>
+            <span class="k">elif</span> <span class="n">guess</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.avro&#39;</span><span class="p">):</span>
+                <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;avro-binary&#39;</span>
+            <span class="k">elif</span> <span class="n">guess</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.utf8&#39;</span><span class="p">):</span>
+                <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;utf8&#39;</span>
+            <span class="k">elif</span> <span class="n">guess</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.bin&#39;</span><span class="p">):</span>
+                <span class="n">encoding</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;inline-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">))</span>
+        <span class="n">desc</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Transport&#39;</span><span class="p">:</span> <span class="n">tt</span><span class="p">,</span>
+            <span class="s1">&#39;Encoding&#39;</span><span class="p">:</span> <span class="n">encoding</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">Stream</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">desc</span><span class="p">)</span></div>
+</pre></div>
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Open Data Group.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{% include head.html %}
+
+        <!-- Current Path -->
+        <div class="docspath">
+        <a href="{{ "/" | absolute_url }}">Home</a> {{ page.dir | replace: "%20", " " | replace: "/", " > " }} {{ page.title }}
+        </div>
+
+        <!-- Markdown content -->
+        <div class="container-lg px-3 my-5 markdown-body">
+
+
+          {{ content }}
+
+          {% if site.github.private != true and site.github.license %}
+          <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+            This site is open source. {% github_edit_link "Improve this page" %}.
+          </div>
+          {% endif %}
+        </div>
+        <!-- end markdown content -->
+
+{% include foot.html %}

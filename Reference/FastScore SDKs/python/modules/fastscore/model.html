@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>fastscore.model &#8212; FastScore SDK 1.7 documentation</title>
+
+    <link rel="stylesheet" href="../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  </head>
+  <body role="document">
+      <div class="header" role="banner"><h1 class="heading"><a href="../../index.html">
+          <span>FastScore SDK 1.7 documentation</span></a></h1>
+        <h2 class="heading"><span>fastscore.model</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+
+
+  <h1>Source code for fastscore.model</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="k">import</span> <span class="n">MODEL_CONTENT_TYPES</span><span class="p">,</span> <span class="n">ATTACHMENT_CONTENT_TYPES</span>
+
+<span class="kn">from</span> <span class="nn">.attachment</span> <span class="k">import</span> <span class="n">Attachment</span>
+<span class="kn">from</span> <span class="nn">.snapshot</span> <span class="k">import</span> <span class="n">Snapshot</span>
+
+<span class="kn">from</span> <span class="nn">.errors</span> <span class="k">import</span> <span class="n">FastScoreError</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+<span class="k">class</span> <span class="nc">ModelMetadata</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">mtype</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mtype</span> <span class="o">=</span> <span class="n">mtype</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mtype</span>
+
+    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="s1">&#39;mtype&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mtype</span> <span class="p">}</span>
+
+<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../api.html#fastscore.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents an analytic model. A model can be created directly:</span>
+
+<span class="sd">    &gt;&gt;&gt; model = fastscore.Model(&#39;model-1&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; model.mtype = &#39;python&#39;</span>
+<span class="sd">    &gt;&gt;&gt; model.source = &#39;...&#39;</span>
+
+<span class="sd">    Or, retrieved from a Model Manage instance:</span>
+
+<span class="sd">    &gt;&gt;&gt; mm = connect.lookup(&#39;model-manage&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; model = mm.models[&#39;model-1&#39;]</span>
+
+<span class="sd">    A directly-created model must be saved to make attachment and snapshot</span>
+<span class="sd">    manipulation functions available:</span>
+
+<span class="sd">    &gt;&gt;&gt; mm = connect.lookup(&#39;model-manage&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; model.update(mm)</span>
+<span class="sd">    &gt;&gt;&gt; model.attachments.names()</span>
+<span class="sd">    []</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">TYPES</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">MODEL_CONTENT_TYPES</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">AttachmentBag</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+        <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">list_attachments</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">list_attachments</span><span class="p">():</span>
+                <span class="p">(</span><span class="n">atype</span><span class="p">,</span><span class="n">sz</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_attachment</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">Attachment</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">atype</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">datasize</span><span class="o">=</span><span class="n">sz</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="p">(</span><span class="n">atype</span><span class="p">,</span><span class="n">sz</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_attachment</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Attachment</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">atype</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">datasize</span><span class="o">=</span><span class="n">sz</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">remove_attachment</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">SnapshotBag</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+        <span class="k">def</span> <span class="nf">browse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">date2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="n">page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">list_snapshots</span><span class="p">(</span><span class="n">date1</span><span class="p">,</span> <span class="n">date2</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span> <span class="n">Snapshot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+                              <span class="n">x</span><span class="p">[</span><span class="s1">&#39;created_on&#39;</span><span class="p">],</span>
+                              <span class="n">x</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span>
+                              <span class="n">x</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">page</span> <span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapid</span><span class="p">):</span>
+            <span class="n">info</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_snapshot</span><span class="p">(</span><span class="n">snapid</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Snapshot</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+                            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;created_on&#39;</span><span class="p">],</span>
+                            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span>
+                            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapid</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">remove_snapshot</span><span class="p">(</span><span class="n">snapid</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">mtype</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model_manage</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">=</span> <span class="n">model_manage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mtype</span> <span class="o">=</span> <span class="n">mtype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attachments</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">AttachmentBag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_snapshots</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">SnapshotBag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A model name, e.g. &#39;model-1&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A model type:</span>
+
+<span class="sd">        * **pfa-json**: a PFA model in JSON format.</span>
+<span class="sd">        * **pfa-yaml**: a PFA model in YAML format.</span>
+<span class="sd">        * **pfa-pretty**: a PrettyPFA model.</span>
+<span class="sd">        * **h2o-java**: an H20 model.</span>
+<span class="sd">        * **python**: a Python model.</span>
+<span class="sd">        * **python3**: a Python 3 model.</span>
+<span class="sd">        * **R**: an R model.</span>
+<span class="sd">        * **java**: a Java model.</span>
+<span class="sd">        * **c**: a C model.</span>
+<span class="sd">        * **octave**: an Octave model.</span>
+<span class="sd">        * **sas**: a SAS model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mtype</span>
+
+    <span class="nd">@mtype</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">mtype</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mtype</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">mtype</span> <span class="ow">in</span> <span class="n">MODEL_CONTENT_TYPES</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mtype</span> <span class="o">=</span> <span class="n">mtype</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The source code of the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_source</span>
+
+    <span class="nd">@source</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_source</span> <span class="o">=</span> <span class="n">source</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A collection of model attachments. See :class:`.Attachment`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attachments</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">snapshots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_snapshots</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manage</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">model_manage</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Model &#39;</span><span class="si">%s</span><span class="s2">&#39; not associated with Model Manage&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">=</span> <span class="n">model_manage</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">saved</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Model &#39;</span><span class="si">%s</span><span class="s2">&#39; not saved (use update() method)&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">list_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">attachment_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot list attachments&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_attachment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">headers</span><span class="p">)</span> <span class="o">=</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">attachment_head_with_http_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> \
+                            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">ct</span> <span class="o">=</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;content-type&#39;</span><span class="p">]</span>
+            <span class="n">sz</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;content-length&#39;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">atype</span><span class="p">,</span><span class="n">ct1</span> <span class="ow">in</span> <span class="n">ATTACHMENT_CONTENT_TYPES</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">ct1</span> <span class="o">==</span> <span class="n">ct</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="n">atype</span><span class="p">,</span><span class="n">sz</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Unrecognized attachment MIME type &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">ct</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot retrieve attachment &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">download_attachment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">six</span><span class="o">.</span><span class="n">PY2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">attachment_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># Python 3</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">api_client</span><span class="o">.</span><span class="n">host</span><span class="p">,</span>
+                          <span class="s1">&#39;instance&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                          <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                          <span class="s1">&#39;attachment&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{host}</span><span class="s2">/</span><span class="si">{instance}</span><span class="s2">/1/model/</span><span class="si">{model}</span><span class="s2">/attachment/</span><span class="si">{attachment}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">name</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot download attachment &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot download attachment &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">remove_attachment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">attachment_delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot remove attachment &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">save_attachment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">att</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ct</span> <span class="o">=</span> <span class="n">ATTACHMENT_CONTENT_TYPES</span><span class="p">[</span><span class="n">att</span><span class="o">.</span><span class="n">atype</span><span class="p">]</span>
+
+            <span class="c1">##</span>
+            <span class="c1">## schema: { type: file }</span>
+            <span class="c1">##   is not supported by Swagger 2.0 for in-body parameters.</span>
+            <span class="c1">##</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">att</span><span class="o">.</span><span class="n">datafile</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">six</span><span class="o">.</span><span class="n">PY2</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">attachment_put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> \
+                        <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">att</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="n">ct</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">api_client</span><span class="o">.</span><span class="n">host</span><span class="p">,</span>
+                          <span class="s1">&#39;instance&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                          <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                          <span class="s1">&#39;attachment&#39;</span><span class="p">:</span> <span class="n">att</span><span class="o">.</span><span class="n">name</span><span class="p">}</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{host}</span><span class="s2">/</span><span class="si">{instance}</span><span class="s2">/1/model/</span><span class="si">{model}</span><span class="s2">/attachment/</span><span class="si">{attachment}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;content-type&quot;</span><span class="p">:</span><span class="n">ct</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">201</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">204</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Error uploading attachment.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+           <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot upload attachment &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">att</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> \
+                   <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">list_snapshots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date1</span><span class="p">,</span> <span class="n">date2</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="n">date1</span> <span class="ow">or</span> <span class="n">date2</span><span class="p">:</span>
+                <span class="n">date_range</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">if</span> <span class="n">date1</span><span class="p">:</span>
+                    <span class="n">date_range</span> <span class="o">+=</span> <span class="n">date1</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+                <span class="n">date_range</span> <span class="o">+=</span> <span class="s1">&#39;--&#39;</span>
+                <span class="k">if</span> <span class="n">date2</span><span class="p">:</span>
+                    <span class="n">date_range</span> <span class="o">+=</span> <span class="n">date2</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;date_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">date_range</span>
+            <span class="k">if</span> <span class="n">count</span><span class="p">:</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">snapshot_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot list snapshots&quot;</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapid</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">snapshot_get_metadata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">snapid</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot retrieve snapshot &#39;</span><span class="si">%s</span><span class="s2">&#39; metadata&quot;</span> <span class="o">%</span> <span class="n">snapid</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">download_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapid</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">snapshot_get_contents</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">snapid</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot retrieve snapshot &#39;</span><span class="si">%s</span><span class="s2">&#39; contents&quot;</span> <span class="o">%</span> <span class="n">snapid</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">remove_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapid</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">swg</span><span class="o">.</span><span class="n">snapshot_delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">snapid</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Cannot remove snapshot &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">snapid</span><span class="p">,</span> <span class="n">caused_by</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Model.deploy"><a class="viewcode-back" href="../../api.html#fastscore.Model.deploy">[docs]</a>    <span class="k">def</span> <span class="nf">deploy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deploy this model to an engine.</span>
+
+<span class="sd">        :param engine: The Engine instance to use.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">engine</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
+</pre></div>
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Open Data Group.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

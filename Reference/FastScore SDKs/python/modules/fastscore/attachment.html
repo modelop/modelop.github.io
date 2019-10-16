@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>fastscore.attachment &#8212; FastScore SDK 1.7 documentation</title>
+
+    <link rel="stylesheet" href="../../static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../static/jquery.js"></script>
+    <script type="text/javascript" src="../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  </head>
+  <body role="document">
+      <div class="header" role="banner"><h1 class="heading"><a href="../../index.html">
+          <span>FastScore SDK 1.7 documentation</span></a></h1>
+        <h2 class="heading"><span>fastscore.attachment</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+
+
+  <h1>Source code for fastscore.attachment</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">getsize</span>
+
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="k">import</span> <span class="n">ATTACHMENT_CONTENT_TYPES</span>
+<span class="kn">from</span> <span class="nn">.errors</span> <span class="k">import</span> <span class="n">FastScoreError</span>
+
+<div class="viewcode-block" id="Attachment"><a class="viewcode-back" href="../../api.html#fastscore.model.Attachment">[docs]</a><span class="k">class</span> <span class="nc">Attachment</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a model attachment. An attachment can be created directly but it</span>
+<span class="sd">    must (ultimately) associated with the model:</span>
+
+<span class="sd">    &gt;&gt;&gt; att = fastscore.Attachment(&#39;att-1&#39;, datafile=&#39;/tmp/att1.zip&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; model = mm.models[&#39;model-1&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; att.upload(model)</span>
+
+<span class="sd">    :param atype: An attachment type. Guessed from the data file name if omitted.</span>
+<span class="sd">    :param datafile: The data file.</span>
+<span class="sd">    :param model: The model instance.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">atype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">datafile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">datasize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">if</span> <span class="n">atype</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">datafile</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">atype</span> <span class="o">=</span> <span class="n">guess_type</span><span class="p">(</span><span class="n">datafile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_atype</span> <span class="o">=</span> <span class="n">atype</span>
+        <span class="k">if</span> <span class="n">datasize</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">datafile</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">datasize</span> <span class="o">=</span> <span class="n">getsize</span><span class="p">(</span><span class="n">datafile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datasize</span> <span class="o">=</span> <span class="n">datasize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datafile</span> <span class="o">=</span> <span class="n">datafile</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">model</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An attachment name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">atype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An attachment type.</span>
+
+<span class="sd">        * **zip** A ZIP archive.</span>
+<span class="sd">        * **tgz** A gzipped tarball.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atype</span>
+
+    <span class="nd">@atype</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">atype</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atype</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">atype</span> <span class="ow">in</span> <span class="n">ATTACHMENT_CONTENT_TYPES</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_atype</span> <span class="o">=</span> <span class="n">atype</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">datafile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A name of the file that contains the attachment data. The attachment is downloaded</span>
+<span class="sd">        when this property is first accessed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datafile</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_datafile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">download_attachment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datafile</span>
+
+    <span class="nd">@datafile</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">datafile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datafile</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datafile</span> <span class="o">=</span> <span class="n">datafile</span>
+        <span class="k">if</span> <span class="n">datafile</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_datasize</span> <span class="o">=</span> <span class="n">getsize</span><span class="p">(</span><span class="n">datafile</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_datasize</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">datasize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The size of the attachment. Checking the attachment size does NOT trigger the download.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datasize</span>
+
+<div class="viewcode-block" id="Attachment.upload"><a class="viewcode-back" href="../../api.html#fastscore.model.Attachment.upload">[docs]</a>    <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds the attachment to the model.</span>
+
+<span class="sd">        :param model: The model instance. Can be None if the model instance has been provided</span>
+<span class="sd">          when the attachemnet was created.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Attachment &#39;</span><span class="si">%s</span><span class="s2">&#39; not associated with a model&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">save_attachment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
+
+<span class="k">def</span> <span class="nf">guess_type</span><span class="p">(</span><span class="n">datafile</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">datafile</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.zip&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;zip&#39;</span>
+    <span class="k">elif</span> <span class="n">datafile</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.tar.gz&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;tgz&#39;</span>
+    <span class="k">elif</span> <span class="n">datafile</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.tgz&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;tgz&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">FastScoreError</span><span class="p">(</span><span class="s2">&quot;Unable to guess attachment type for &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">datafile</span><span class="p">)</span>
+</pre></div>
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Open Data Group.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>
