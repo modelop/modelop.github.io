@@ -11,8 +11,6 @@ Welcome to ModelOp's documentation!
 
 Please note: as of October 2019 and Version 2, ModelOp Center is the new name for the product previously known as FastScore. Documentation for 1.x refers to FastScore and ModelOp Center, while all Version 2 documentation will refer to ModelOp Center. Please reach out to support@opendatagroup.com with questions or issues.
 
-## UNDER CONSTRUCTION - 10/16 - PARDON OUR DUST/ BROKEN LINKS
-
 ## ModelOp Center
 
 ### Getting Started
