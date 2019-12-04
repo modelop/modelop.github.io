@@ -202,7 +202,7 @@ Loading our GBR model to ModelOp Center can be broken into two steps: preparing 
 
 In the previous section, we created a small Python script to score our incoming auto records using the trained gradient boosting regressor and our custom feature transformer. In this example, the training of the model has already been done, so we'll only need to adapt the trained model to produce scores.
 
-As discussed in the [Getting Started Guide](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/), Python models in ModelOp Center must deliver scores using an `action` method. Note that the `action` method operates as a generator, so scores are obtained from `yield` statements, rather than `return` statements. Additionally, because we don't want to re-load our trained model with every score, we'll define a `begin` method to do all of the model initialization. If a model defines a `begin` method, this method will be called at the start of the job.
+As discussed in the [Getting Started Guide](https://modelop.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/), Python models in ModelOp Center must deliver scores using an `action` method. Note that the `action` method operates as a generator, so scores are obtained from `yield` statements, rather than `return` statements. Additionally, because we don't want to re-load our trained model with every score, we'll define a `begin` method to do all of the model initialization. If a model defines a `begin` method, this method will be called at the start of the job.
 
 After these alterations, our model looks like this:
 
@@ -315,7 +315,7 @@ The input stream descriptor includes the more complicated schema, encapsulating 
 
 ### Starting and Configuring ModelOp Center
 
-This step may differ if you're using a custom ModelOp Center deployment. If you're just using the  [standard deployment from the Getting Started Guide](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/), starting up ModelOp Center is as easy as executing the following command:
+This step may differ if you're using a custom ModelOp Center deployment. If you're just using the  [standard deployment from the Getting Started Guide](https://modelop.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/), starting up ModelOp Center is as easy as executing the following command:
 
 ``` bash
 docker-compose up -d
@@ -415,7 +415,7 @@ fastscore model add GBM score_auto_gbm.py
 fastscore attachment upload GBM gbm.tar.gz
 ```
 
-Steps for setting configuration through the Dashboard are covered in the [Getting Started Guide](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/#section-using-the-ModelOp%20Center-dashboard).
+Steps for setting configuration through the Dashboard are covered in the [Getting Started Guide](https://modelop.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/#section-using-the-ModelOp%20Center-dashboard).
 
 After adding the model, attachment, and streams to ModelOp Center, you can inspect them from the ModelOp Center Dashboard:
 

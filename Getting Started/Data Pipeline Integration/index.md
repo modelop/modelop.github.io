@@ -24,11 +24,11 @@ If you need support or have questions, please email us: support@opendatagroup.co
 ## <a name="Prerequisites"></a>Pre-requisites
 Before we walk through how to build and test streams, we will need the following:
 
-1. [ModelOp Center Environment Installed](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/)
-2. [ModelOp Center CLI Installed](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/#installing-the-ModelOp%20Center-cli)
+1. [ModelOp Center Environment Installed](https://modelop.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/)
+2. [ModelOp Center CLI Installed](https://modelop.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/#installing-the-ModelOp%20Center-cli)
 3. [Example repo downloaded](https://github.com/opendatagroup/Getting-Started/tree/examples)
 
-This guide walks through a multi-class classification model that determines the species of iris based on four features: sepal length/width, petal length/width using the XGBoost framework. It is available in the repo above. For details on how we defined this Model Deployment Package, refer to this guide: [Conform and Deploy a Model Guide](https://opendatagroup.github.io/Getting%20Started/Conform%20and%20Deploy%20a%20Model/).
+This guide walks through a multi-class classification model that determines the species of iris based on four features: sepal length/width, petal length/width using the XGBoost framework. It is available in the repo above. For details on how we defined this Model Deployment Package, refer to this guide: [Conform and Deploy a Model Guide](https://modelop.github.io/Getting%20Started/Conform%20and%20Deploy%20a%20Model/).
 
 To download the repo, setup the environment, and add the assets we will be using, run the following:
 
@@ -41,9 +41,9 @@ bash -x load.sh
 ```
 
 ## <a name="intro-to-streams"></a>Intro to Streams
-As a model goes through the Model Lifecycle, the data pipeline is going to dynamically change for various use cases and environments. The Stream abstraction is ModelOp Center is going to allow us to quickly change the data pipeline and scoring behavior without constantly recoding the model. Streams define the integration to our data pipeline. They will read records from underlying transport, verify them against the schema, and feed them to the model. They also will determine how the model will score data while deployed (on-demand, batch, or streaming). Streams are attached to input and output slots of the ModelOp Center Engine that provide the Model Execution Script access for reading and writing data. Even slot numbers respond to the model inputs and odd numbers for data outputs. It is possible to have multiple input and output streams as described in [this guide](https://opendatagroup.github.io/Product%20Manuals/Multiple%20Input%20and%20Output%20Streams/).
+As a model goes through the Model Lifecycle, the data pipeline is going to dynamically change for various use cases and environments. The Stream abstraction is ModelOp Center is going to allow us to quickly change the data pipeline and scoring behavior without constantly recoding the model. Streams define the integration to our data pipeline. They will read records from underlying transport, verify them against the schema, and feed them to the model. They also will determine how the model will score data while deployed (on-demand, batch, or streaming). Streams are attached to input and output slots of the ModelOp Center Engine that provide the Model Execution Script access for reading and writing data. Even slot numbers respond to the model inputs and odd numbers for data outputs. It is possible to have multiple input and output streams as described in [this guide](https://modelop.github.io/Product%20Manuals/Multiple%20Input%20and%20Output%20Streams/).
 
-Each stream is defined via a Stream Descriptor, a JSON file that contains connection information and components that define scoring behavior. Full documentation on Stream Descriptors is available [here](https://opendatagroup.github.io/Product%20Manuals/Stream%20Descriptors/). 
+Each stream is defined via a Stream Descriptor, a JSON file that contains connection information and components that define scoring behavior. Full documentation on Stream Descriptors is available [here](https://modelop.github.io/Product%20Manuals/Stream%20Descriptors/). 
 
 Here are the components of the stream that we define in the Stream Descriptor:
 - Description - optional description of the stream
@@ -64,7 +64,7 @@ Here are the components of the stream that we define in the Stream Descriptor:
     }
 ```
 
-We are going to be walking through some examples of utilizing streams, but first let us cover how to build them and add them to ModelOp Center. We add streams to ModelOp Center using the following [CLI](https://opendatagroup.github.io/Reference/ModelOp%20Center%20CLI/) command: 
+We are going to be walking through some examples of utilizing streams, but first let us cover how to build them and add them to ModelOp Center. We add streams to ModelOp Center using the following [CLI](https://modelop.github.io/Reference/ModelOp%20Center%20CLI/) command: 
 
 ```bash
 fastscore stream add <stream-name> <stream-descriptor-file>
@@ -191,7 +191,7 @@ Here is the general template for the transport in the Stream Descriptor access S
 }
 ```
 
-For our model, we'll point to the `xgboost_iris_inputs.jsons` file with the following in a stream descriptor. We will then save it as `s3-input.json`. Make sure to include your SecretAccessKey and AccessKeyID. Storing credentials in plain text is not recommended, especially if utilizing the [Git Integration](https://opendatagroup.github.io/Product%20Manuals/Github%20Integration/) to manage Model Assets. [The section](#docker-secrets) below details how to utilize secrets to obscure the credentials
+For our model, we'll point to the `xgboost_iris_inputs.jsons` file with the following in a stream descriptor. We will then save it as `s3-input.json`. Make sure to include your SecretAccessKey and AccessKeyID. Storing credentials in plain text is not recommended, especially if utilizing the [Git Integration](https://modelop.github.io/Product%20Manuals/Github%20Integration/) to manage Model Assets. [The section](#docker-secrets) below details how to utilize secrets to obscure the credentials
 
 ```
 {
@@ -239,7 +239,7 @@ When the model has scored all the input data, the Engine will be in the `Finishe
 
 
 ## <a name="docker-secrets"></a>Credentials with Docker Secrets
-Credentials need to be handled appropriately especially when we are using the [Git Integration](https://opendatagroup.github.io/Product%20Manuals/Github%20Integration/) to store model assets in Git. To keep connection credentials secure, we can use [Docker Secrets](https://docs.docker.com/engine/reference/commandline/secret_create/) within our Stream Descriptors to obscure these credentials. 
+Credentials need to be handled appropriately especially when we are using the [Git Integration](https://modelop.github.io/Product%20Manuals/Github%20Integration/) to store model assets in Git. To keep connection credentials secure, we can use [Docker Secrets](https://docs.docker.com/engine/reference/commandline/secret_create/) within our Stream Descriptors to obscure these credentials. 
 
 We will need to create the Docker Secrets then restart the environment with the Secrets available to the Engine.  If you have a running environment, run `make stop` to spin down the environment.
 
@@ -376,14 +376,14 @@ fastscore engine inspect
 At this point, our sample model is integrated to our data pipeline and can score data for a variety of use cases. Now it’s time to integrate your team’s models and get scoring! 
 
 To continue learning, check out some additional examples here:
-- [Gradient Boosting Regressor](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/)
-- [TensorFlow LTSM](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Tensorflow%20LSTM/)
+- [Gradient Boosting Regressor](https://modelop.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/)
+- [TensorFlow LTSM](https://modelop.github.io/Knowledge%20Center/Tutorials/Tensorflow%20LSTM/)
 
 Additionally, consult the detailed Product Reference documentation:
-- [Stream Descriptor](https://opendatagroup.github.io/Product%20Manuals/Stream%20Descriptors/)
-- [Multiple Input/ Output Streams](https://opendatagroup.github.io/Product%20Manuals/Multiple%20Input%20and%20Output%20Streams/)
-- [ModelOp Center CLI Reference](https://opendatagroup.github.io/Reference/ModelOp%20Center%20CLI)
-- [ModelOp Center SDK Reference](https://opendatagroup.github.io/Reference/ModelOp%20Center%20SDKs)
+- [Stream Descriptor](https://modelop.github.io/Product%20Manuals/Stream%20Descriptors/)
+- [Multiple Input/ Output Streams](https://modelop.github.io/Product%20Manuals/Multiple%20Input%20and%20Output%20Streams/)
+- [ModelOp Center CLI Reference](https://modelop.github.io/Reference/ModelOp%20Center%20CLI)
+- [ModelOp Center SDK Reference](https://modelop.github.io/Reference/ModelOp%20Center%20SDKs)
 
 If you need support or have questions, please email us: support@opendatagroup.com
 

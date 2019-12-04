@@ -11,7 +11,7 @@ Starting with FastScore v1.4, the FastScore Dashboard and Proxy support Microsof
 
 This section assumes you already possess an existing Vault service. If you haven't configured Vault yet, [read the Vault configuration section below](#configuring-vault-in-docker).
 
-Authentication in FastScore is achieved through the Dashboard service. Recall from the [Getting Started Guide](https://opendatagroup.github.io/Guides/Getting%20Started%20with%20FastScore%20v1-6-1.html) that Dashboard is designed to serve as a proxy for the FastScore fleet's REST API, as well as a visual configuration and diagnostic aid. By default, authentication is not enabled in Dashboard. To enable it, set the following environment variables:
+Authentication in FastScore is achieved through the Dashboard service. Recall from the [Getting Started Guide](https://modelop.github.io/Guides/Getting%20Started%20with%20FastScore%20v1-6-1.html) that Dashboard is designed to serve as a proxy for the FastScore fleet's REST API, as well as a visual configuration and diagnostic aid. By default, authentication is not enabled in Dashboard. To enable it, set the following environment variables:
 
 | Name | Default Value | Description |
 | --- | --- | --- |

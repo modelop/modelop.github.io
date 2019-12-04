@@ -361,7 +361,7 @@ to skip ahead to the next section---you can
 It's easy to deploy ModelOp Center Composer using Docker Compose or Docker Swarm. For
 this example, we'll use Swarm. Docker Swarm uses the same YAML definition files
 as Docker Compose, so you can re-use the example Docker Compose file from the
-[Getting Started Guide](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp Center/) or
+[Getting Started Guide](https://modelop.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp Center/) or
 download [all the files needed for this step here](https://s3-us-west-1.amazonaws.com/ModelOp Center-examples/tf_composer_files.tar.gz).
 
 Composer consists of three microservices: Designer (a web GUI), Composer (the

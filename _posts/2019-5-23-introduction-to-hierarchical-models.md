@@ -8,7 +8,7 @@ mathjax: true
 ---
 
 
-In a previous [post](https://opendatagroup.github.io/data%20science/2019/01/24/introduction-to-bayesian-modeling.html) we gave an introduction to Stan and PyStan using a basic Bayesian logistic regression model. There isn't generally a compelling reason to use sophisticated Bayesian techniques to build a logistic regression model. This could be easily replicated using simpler techniques. In this post, we shall really unlock the power of Stan and full Bayesian inference in the form of a hierarchical model. Suppose we have a dataset which is stratified into N groups. We have a couple of choices for how to handle this situation. We can effectively ignore the stratification and pool all of the data together and train a model on all of the data at once. The cost of this is that we are losing information added by the stratification. We can fit a separate model for each group, but this runs the risk of overfitting. As we shall see below, groups with few observations will typically represent outliers, but this is not indicative that all observations in the group will behave the same way. If some of the groups have few samples and have significant outlying behavior, it is likely that the behavior is driven by the small sample size rather than the group exhibiting behavior that deviates significantly from the mean behavior. 
+In a previous [post](https://modelop.github.io/data%20science/2019/01/24/introduction-to-bayesian-modeling.html) we gave an introduction to Stan and PyStan using a basic Bayesian logistic regression model. There isn't generally a compelling reason to use sophisticated Bayesian techniques to build a logistic regression model. This could be easily replicated using simpler techniques. In this post, we shall really unlock the power of Stan and full Bayesian inference in the form of a hierarchical model. Suppose we have a dataset which is stratified into N groups. We have a couple of choices for how to handle this situation. We can effectively ignore the stratification and pool all of the data together and train a model on all of the data at once. The cost of this is that we are losing information added by the stratification. We can fit a separate model for each group, but this runs the risk of overfitting. As we shall see below, groups with few observations will typically represent outliers, but this is not indicative that all observations in the group will behave the same way. If some of the groups have few samples and have significant outlying behavior, it is likely that the behavior is driven by the small sample size rather than the group exhibiting behavior that deviates significantly from the mean behavior. 
 
 Hierarchical models split the difference between these two approaches; groups are each assigned their own model coefficients, but, in the Bayesian language, those model coefficients are drawn from the same prior and thus the coefficient posterior distributions are shrunk toward the global mean. This allows for a model which is robust to overfitting but at the same time remains as interpretable as ordinary regression models. 
 
@@ -55,7 +55,7 @@ df_raw.shape
 
 
 ### The Data
-We shall use the same data that we used in our previous [post](https://opendatagroup.github.io/data%20science/2019/01/24/introduction-to-bayesian-modeling.html):
+We shall use the same data that we used in our previous [post](https://modelop.github.io/data%20science/2019/01/24/introduction-to-bayesian-modeling.html):
 'loan_amnt': The amount of principle given in the loan
 
 'int_rate': The interest rate
@@ -125,7 +125,7 @@ features = ['loan_amnt', 'int_rate', 'sub_grade', 'annual_inc', 'dti']
 ```
 
 ### Normalization
-We shall use the same normalizations as in the [post](https://opendatagroup.github.io/data%20science/2019/01/24/introduction-to-bayesian-modeling.html).
+We shall use the same normalizations as in the [post](https://modelop.github.io/data%20science/2019/01/24/introduction-to-bayesian-modeling.html).
 
 
 ```python
@@ -586,7 +586,7 @@ print(fit)
 ```
 
 ### Assessment of Convergence
-We use the Arviz library again to give a brief assessment of convergence of the MCMC method. Refer back to the previous [post](https://opendatagroup.github.io/data%20science/2019/01/24/introduction-to-bayesian-modeling.html) for an interpretation of the metrics below. We seem to be in good shape.
+We use the Arviz library again to give a brief assessment of convergence of the MCMC method. Refer back to the previous [post](https://modelop.github.io/data%20science/2019/01/24/introduction-to-bayesian-modeling.html) for an interpretation of the metrics below. We seem to be in good shape.
 
 
 ```python

@@ -10,7 +10,7 @@ The Engine has multiple slots to attached streams where the even slot numbers st
 
 This is particularly useful when the output of the models provides data for multiple purposes or the model requires data from multiple data sources to run. An example might be that a model produces a score that will be consumed by a down stream application and also generates additional data that describes the logic that was used to produce the score for auditing purposes. The auditing data may or may not need to go to the downstream application but may also need to be stored in a database. In this case you would have two output streams, one for the downstream application and one for the database to store auditing data.
 
-You can attach and detach streams to an engine while it is not running, see [FastScore Command Line Interface](https://opendatagroup.github.io/Product%20Documentation/FastScore%20Command%20Line%20Interface.html) for information on controlling streams with the engine.
+You can attach and detach streams to an engine while it is not running, see [FastScore Command Line Interface](https://modelop.github.io/Product%20Documentation/FastScore%20Command%20Line%20Interface.html) for information on controlling streams with the engine.
 
 This capability allows your to create complex analytic workflows with multiple engines, inputs, and outputs.
 

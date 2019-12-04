@@ -238,7 +238,7 @@ This will install the required dependencies. The FastScore CLI is a Python tool,
 > ```
 
 
-Once you've installed the FastScore CLI, check that it works by executing the following command in your terminal. Also see [FastScore Command Line Interface](https://opendatagroup.github.io/Product%20Documentation/FastScore%20Command%20Line%20Interface.html) for more information on subcommands.
+Once you've installed the FastScore CLI, check that it works by executing the following command in your terminal. Also see [FastScore Command Line Interface](https://modelop.github.io/Product%20Documentation/FastScore%20Command%20Line%20Interface.html) for more information on subcommands.
 
 ``` bash
 $ fastscore help
@@ -435,7 +435,7 @@ def end():
     pass
 ```
 
-This model returns the sum of two numbers. Note that we are able to import Python's standard modules, such as the `pickle` module. Non-default packages can also be added using [Import Policies, as described here](https://opendatagroup.github.io/Product%20Documentation/Import%20Policies.html). Custom classes and packages can be loaded using attachments, as described in the [Gradient Boosting Regressor tutorial](https://opendatagroup.github.io/Examples%20and%20Tutorials/Gradient%20Boosting%20Regressor.html).
+This model returns the sum of two numbers. Note that we are able to import Python's standard modules, such as the `pickle` module. Non-default packages can also be added using [Import Policies, as described here](https://modelop.github.io/Product%20Documentation/Import%20Policies.html). Custom classes and packages can be loaded using attachments, as described in the [Gradient Boosting Regressor tutorial](https://modelop.github.io/Examples%20and%20Tutorials/Gradient%20Boosting%20Regressor.html).
 
 #### R Models
 R models feature much of the same functionality as Python models, as well as the same constraint: the user must define an action function to perform the actual scoring. For example, the analogous model to the Python model above is
@@ -613,4 +613,4 @@ To run a model using the FastScore CLI, use the `fastscore job` sequence of comm
   * `fastscore job status` and `fastscore job statistics` display various information about the currently running job.
 Some of the statistics displayed by the `fastscore job statistics` command, such as memory usage, are also shown on the Dashboard.
 
-This concludes the FastScore Getting Started guide. Additional FastScore API documentation is available at [https://opendatagroup.github.io/API/](https://opendatagroup.github.io/API/). Happy scoring!
+This concludes the FastScore Getting Started guide. Additional FastScore API documentation is available at [https://modelop.github.io/API/](https://modelop.github.io/API/). Happy scoring!

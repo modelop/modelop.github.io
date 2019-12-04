@@ -164,7 +164,7 @@ Add and remove AVRO schema objects in Model Manage.
     
 ### Sensor
 
-Add or remove sensor descriptors. These commands are covered in more detail at [the Sensors page](https://opendatagroup.github.io/Product%20Documentation/Sensors.html).
+Add or remove sensor descriptors. These commands are covered in more detail at [the Sensors page](https://modelop.github.io/Product%20Documentation/Sensors.html).
 
 | Subcommand | Input(s) | Description | Example |
 | --- | --- | --- | --- |

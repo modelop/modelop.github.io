@@ -70,6 +70,6 @@ expects. The following model uses three input (0, 2, and 4) and two output slots
 # fastscore.schema.1: schema-2
 # fastscore.slot.3: in-use
 ```
-See [Model Annotations](https://opendatagroup.github.io/Product%20Manuals/Model%20Annotations/) for more information about the
+See [Model Annotations](https://modelop.github.io/Product%20Manuals/Model%20Annotations/) for more information about the
 new-style model annotations.
 

@@ -30,9 +30,9 @@ Enhanced the core logging framework to leverage the ELK (Elasticsearch, Logstash
 
 ## Release v1.9
 
-* [HDFS Native Stream](https://opendatagroup.github.io/Product%Manuals/Stream%Descriptors/#section-hdfs)
-* [Ubuntu and Alpine based Engines](https://opendatagroup.github.io/Product%Manuals/Engine)
-* [Kubernetes Support for Conductor](https://opendatagroup.github.io/Product%Manuals/ModelOp%20Center%Composer)
+* [HDFS Native Stream](https://modelop.github.io/Product%Manuals/Stream%Descriptors/#section-hdfs)
+* [Ubuntu and Alpine based Engines](https://modelop.github.io/Product%Manuals/Engine)
+* [Kubernetes Support for Conductor](https://modelop.github.io/Product%Manuals/ModelOp%20Center%Composer)
 * General improvements to performance and stability
 
 ## Release v1.8

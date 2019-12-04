@@ -11,7 +11,7 @@ Starting with ModelOp Center v1.4, the ModelOp Center Dashboard and Proxy suppor
 
 This section assumes you already possess an existing Vault service. If you haven't configured Vault yet, [read the Vault configuration section below](#configuring-vault-in-docker).
 
-Authentication in ModelOp Center is achieved through the Dashboard service. Recall from the [Getting Started Guide](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/) that Dashboard is designed to serve as a proxy for the ModelOp Center fleet's REST API, as well as a visual configuration and diagnostic aid. By default, authentication is not enabled in Dashboard. To enable it, set the following environment variables:
+Authentication in ModelOp Center is achieved through the Dashboard service. Recall from the [Getting Started Guide](https://modelop.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/) that Dashboard is designed to serve as a proxy for the ModelOp Center fleet's REST API, as well as a visual configuration and diagnostic aid. By default, authentication is not enabled in Dashboard. To enable it, set the following environment variables:
 
 | Name | Default Value | Description |
 | --- | --- | --- |

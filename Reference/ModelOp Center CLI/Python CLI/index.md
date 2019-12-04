@@ -5,7 +5,7 @@ css: buttondown.css
 ---
 
 # ModelOp Center Python CLI
-This page provides information on the ModelOp Center Python CLI. However, note that the ModelOp Center Go CLI ([Go CLI reference](https://opendatagroup.github.io/Reference/ModelOp Center%20CLI)) is the primary supported ModelOp Center CLI. 
+This page provides information on the ModelOp Center Python CLI. However, note that the ModelOp Center Go CLI ([Go CLI reference](https://modelop.github.io/Reference/ModelOp%20Center%20CLI)) is the primary supported ModelOp Center CLI. 
 
 Note: the Python CLI will be deprecated, starting in ModelOp Center version 2.x.
 

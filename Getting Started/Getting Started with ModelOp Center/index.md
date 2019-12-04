@@ -77,9 +77,9 @@ For Mac (Darwin) and Linux make it executable:
 
 And finally add to $Path. For Mac users, copy to `/usr/local/bin/`.
 
-The CLI is a statically-linked binary written in Go. We also have a Python implementation of the CLI available [here](https://opendatagroup.github.io/Reference/ModelOp%20Center%20CLI/Python%20CLI).
+The CLI is a statically-linked binary written in Go. We also have a Python implementation of the CLI available [here](https://modelop.github.io/Reference/ModelOp%20Center%20CLI/Python%20CLI).
 
-Once you've installed the ModelOp Center CLI, check that it works by executing the following command in your terminal. Also see [ModelOp Center Command Line Interface](https://opendatagroup.github.io/Reference/ModelOp%20Center%20CLI/) for more information on the CLI commands.
+Once you've installed the ModelOp Center CLI, check that it works by executing the following command in your terminal. Also see [ModelOp Center Command Line Interface](https://modelop.github.io/Reference/ModelOp%20Center%20CLI/) for more information on the CLI commands.
 
 ``` bash
 $ fastscore
@@ -225,7 +225,7 @@ engine-2        engine        ok
 model-manage-1  model-manage  ok
 ```
 
-Finally, the load.sh file will load in some models, attachments, schemas, and streams into ModelOp Center so you can start deploying! We are loading these into the MySql backing of Model Manage for this example. Alternatively, you can connect [Model Manage to your own github repository](https://opendatagroup.github.io/Product%20Manuals/Github%20Integration/) that already has models, attachments, streams, and schemas in it!
+Finally, the load.sh file will load in some models, attachments, schemas, and streams into ModelOp Center so you can start deploying! We are loading these into the MySql backing of Model Manage for this example. Alternatively, you can connect [Model Manage to your own github repository](https://modelop.github.io/Product%20Manuals/Github%20Integration/) that already has models, attachments, streams, and schemas in it!
 Now we're ready to start scoring.
 
 ## <a name="section-using-the-ModelOp-Center-dashboard"></a>Using the ModelOp Center Dashboard
@@ -293,7 +293,7 @@ fastscore model add -type:python3 my_py3_model path/to/model.py
 
 #### Python Models
 There are two ways to write models to run in ModelOp Center for Python. 
-<b>Style 1</b>New in the 1.10 release, we now support an additional  style of conformance to make it easier for Data Scientist to get their models ready for deployment for even more classes of models. This style is geared for models that follow a classic pattern of: (a) read data in (b) perform a prediction, and (c) write the output to a consumer. This new approach uses  `slot` objects to control the scoring behavior of the model as shown in this example below.  For a full guide, refer to this [how-to and example](https://opendatagroup.github.io/Getting%20Started/Conform%20and%20Deploy%20a%20Model/).
+<b>Style 1</b>New in the 1.10 release, we now support an additional  style of conformance to make it easier for Data Scientist to get their models ready for deployment for even more classes of models. This style is geared for models that follow a classic pattern of: (a) read data in (b) perform a prediction, and (c) write the output to a consumer. This new approach uses  `slot` objects to control the scoring behavior of the model as shown in this example below.  For a full guide, refer to this [how-to and example](https://modelop.github.io/Getting%20Started/Conform%20and%20Deploy%20a%20Model/).
 
 ```python
 # fastscore.action: unused
@@ -350,7 +350,7 @@ def end():
     pass
 ```
 
-This model returns the sum of two numbers. Note that we are able to import Python's standard modules, such as the `pickle` module. Non-default packages can also be added by using `#fastscore.module-attached: <module-nam>` once installed in the Engine via the Dockerfile. Custom classes and packages can be loaded using attachments, as described in the [Gradient Boosting Regressor tutorial](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/).
+This model returns the sum of two numbers. Note that we are able to import Python's standard modules, such as the `pickle` module. Non-default packages can also be added by using `#fastscore.module-attached: <module-nam>` once installed in the Engine via the Dockerfile. Custom classes and packages can be loaded using attachments, as described in the [Gradient Boosting Regressor tutorial](https://modelop.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/).
 
 #### R Models
 R models feature much of the same functionality as Python models, as well as the same constraint: the user must define an action function to perform the actual scoring. For example, the analogous model to the Python model above is
@@ -429,7 +429,7 @@ Stream Descriptors are small JSON files containing information about the stream.
 }
 ```
 
-Stream descriptors are documented in more detail [on the stream descriptor page](https://opendatagroup.github.io/Product%20Manuals/Stream%20Descriptors/). The easiest type of stream to use is a file stream, which reads or writes records directly from/to a file inside of the ModelOp Center engine container. Here is an example of such a stream:
+Stream descriptors are documented in more detail [on the stream descriptor page](https://modelop.github.io/Product%20Manuals/Stream%20Descriptors/). The easiest type of stream to use is a file stream, which reads or writes records directly from/to a file inside of the ModelOp Center engine container. Here is an example of such a stream:
 
 ``` json
 {
@@ -532,6 +532,6 @@ To run a model using the ModelOp Center CLI, use the `fastscore run` sequence of
 
 Some of the statistics displayed by the `fastscore job statistics` command, such as memory usage, are also shown on the Dashboard.
 
-This concludes the ModelOp Center Getting Started guide. Now that you're familar with ModelOp Center, check out our guide on [Conforming and Deploying a Model](https://opendatagroup.github.io/Getting%20Started/Conform%20and%20Deploy%20a%20Model/) for a detailed walkthrough to help you get your model ready for deployment in ModelOp Center!
+This concludes the ModelOp Center Getting Started guide. Now that you're familar with ModelOp Center, check out our guide on [Conforming and Deploying a Model](https://modelop.github.io/Getting%20Started/Conform%20and%20Deploy%20a%20Model/) for a detailed walkthrough to help you get your model ready for deployment in ModelOp Center!
 
-Additional ModelOp Center API documentation is available at [https://opendatagroup.github.io/Reference/FastScore%20API/](https://opendatagroup.github.io/Reference/FastScore%20API/). Happy scoring!
+Additional ModelOp Center API documentation is available at [https://modelop.github.io/Reference/FastScore%20API/](https://modelop.github.io/Reference/FastScore%20API/). Happy scoring!

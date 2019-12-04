@@ -26,8 +26,8 @@ If you need support or have questions, please email us: support@opendatagroup.co
 ## <a name="Prerequisites"></a>Pre-requisites
 Before we walk through how to conform and deploy a model, we will need the following pre-requisites:
 
-1. [ModelOp Center Environment Installed](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/)
-2. [ModelOp Center CLI Installed](https://opendatagroup.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/#installing-the-ModelO%20 Center-cli)
+1. [ModelOp Center Environment Installed](https://modelop.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/)
+2. [ModelOp Center CLI Installed](https://modelop.github.io/Getting%20Started/Getting%20Started%20with%20ModelOp%20Center/#installing-the-ModelO%20 Center-cli)
 3. [Example repo downloaded](https://github.com/opendatagroup/Getting-Started/tree/examples)
 
 This guide walks through a multi-class classification model that returns a probability vector of the species of iris based on four features: sepal length/width, petal length/width using the XGBoost framework. It is available in the repo above. 
@@ -222,7 +222,7 @@ Here are the options for model annotations in ModelOp Center to control the beha
 | Module Attached         | `# fastscore.module-attached:<module-name>` | Disables the import policy checking for imported module |
 | Disable Schema Checking | `# fastscore.schema.:<slot #>: in-use`  | Used during testing to disable schema checking          |
 
-For our example, the first annotation designates we will not be using the 'call-back'-style conformance. Note: this model and guide focus on a new form of conformance that is released in Version 1.10. There is also the ability to use the 'call-back conformance' which utilizes `begin` and `action` functions instead of the `slot` object as shown in [this example](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/). Both will run within the latest versions of the ModelOp Center Engine. 
+For our example, the first annotation designates we will not be using the 'call-back'-style conformance. Note: this model and guide focus on a new form of conformance that is released in Version 1.10. There is also the ability to use the 'call-back conformance' which utilizes `begin` and `action` functions instead of the `slot` object as shown in [this example](https://modelop.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/). Both will run within the latest versions of the ModelOp Center Engine. 
 
 Once we've defined this, we need to add the model execution script to ModelOp Center with the following command:
 `fastscore model add <model-name> <source-file>`
@@ -296,12 +296,12 @@ Troubleshooting Tip: If the output command returns nothing, use `ModelOp Center 
 At this point as a Data Scientist, we can confidently hand off the Model Deployment Package to the Data Engineering or ModelOps team knowing it's ready for operationalization and productionalization. 
 
 To continue learning, check out some additional examples here:
-- [Gradient Boosting Regressor](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/)
-- [TensorFlow LTSM](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Tensorflow%20LSTM/)
+- [Gradient Boosting Regressor](https://modelop.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor/)
+- [TensorFlow LTSM](https://modelop.github.io/Knowledge%20Center/Tutorials/Tensorflow%20LSTM/)
 
 Additionally, consult the detailed Product Reference documentation:
-- [Product Manuals](https://opendatagroup.github.io/)
-- [ModelOp Center CLI Reference](https://opendatagroup.github.io/Reference/ModelOp%20Center%20CLI)
-- [ModelOp Center SDK Reference](https://opendatagroup.github.io/Reference/ModelOp%20Center%20SDKs)
+- [Product Manuals](https://modelop.github.io/)
+- [ModelOp Center CLI Reference](https://modelop.github.io/Reference/ModelOp%20Center%20CLI)
+- [ModelOp Center SDK Reference](https://modelop.github.io/Reference/ModelOp%20Center%20SDKs)
 
 If you need support or have questions, please email us: support@opendatagroup.com

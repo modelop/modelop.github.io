@@ -10,5 +10,5 @@ ModelOp Center supports the management and execution of both Python 2 and Python
 
 - [Getting Started](/Getting Started/Conform and Deploy a Model/)
 - [Specifications](/Getting Started/ModelOp Center Specs)
-- [Tutorial: Gradient Boosted Regressor](https://opendatagroup.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor)
+- [Tutorial: Gradient Boosted Regressor](https://modelop.github.io/Knowledge%20Center/Tutorials/Gradient%20Boosting%20Regressor)
 

@@ -199,7 +199,7 @@ Loading our GBR model to FastScore can be broken into two steps: preparing the m
 
 In the previous section, we created a small Python script to score our incoming auto records using the trained gradient boosting regressor and our custom feature transformer. In this example, the training of the model has already been done, so we'll only need to adapt the trained model to produce scores.
 
-As discussed in the [Getting Started Guide](https://opendatagroup.github.io/Guides/Getting%20Started%20with%20FastScore%20v1-6-1.html), Python models in FastScore must deliver scores using an `action` method. Note that the `action` method operates as a generator, so scores are obtained from `yield` statements, rather than `return` statements. Additionally, because we don't want to re-load our trained model with every score, we'll define a `begin` method to do all of the model initialization. If a model defines a `begin` method, this method will be called at the start of the job.
+As discussed in the [Getting Started Guide](https://modelop.github.io/Guides/Getting%20Started%20with%20FastScore%20v1-6-1.html), Python models in FastScore must deliver scores using an `action` method. Note that the `action` method operates as a generator, so scores are obtained from `yield` statements, rather than `return` statements. Additionally, because we don't want to re-load our trained model with every score, we'll define a `begin` method to do all of the model initialization. If a model defines a `begin` method, this method will be called at the start of the job.
 
 After these alterations, our model looks like this:
 
@@ -412,7 +412,7 @@ fastscore model add GBM score_auto_gbm.py
 fastscore attachment upload GBM gbm.tar.gz
 ```
 
-Steps for setting configuration through the Dashboard are covered in the [Getting Started Guide](https://opendatagroup.github.io/Guides/Getting%20Started%20with%20FastScore%20v1-6-1.html#section-using-the-fastscore-dashboard). 
+Steps for setting configuration through the Dashboard are covered in the [Getting Started Guide](https://modelop.github.io/Guides/Getting%20Started%20with%20FastScore%20v1-6-1.html#section-using-the-fastscore-dashboard). 
 
 After adding the model, attachment, and streams to FastScore, you can inspect them from the FastScore Dashboard:
 
